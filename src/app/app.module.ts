@@ -9,6 +9,7 @@ import {RouterModule} from '@angular/router';
 import {AppComponent} from './app.component';
 import {NavigationComponent} from './components/navigation/navigation.component';
 import {UsersService} from './services/users.service';
+import {AuthModule} from "./modules/auth/auth.module";
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import {UsersService} from './services/users.service';
         FormsModule,
         HttpModule,
         UsersModule,
+        AuthModule,
         AppRoutingModule
     ],
     providers: [UsersService],
