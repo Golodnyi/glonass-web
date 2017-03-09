@@ -11,11 +11,13 @@ import {NavigationComponent} from './components/navigation/navigation.component'
 import {UsersService} from './services/users.service';
 import {AuthModule} from "./modules/auth/auth.module";
 import {AuthService} from "./services/auth.service";
+import {AuthGuard} from "./guards/auth.guard";
+import {DashboardModule} from "./modules/dashboard/dashboard.module";
 
 @NgModule({
     declarations: [
         AppComponent,
-        NavigationComponent
+        NavigationComponent,
     ],
     imports: [
         RouterModule,
@@ -23,10 +25,11 @@ import {AuthService} from "./services/auth.service";
         FormsModule,
         HttpModule,
         UsersModule,
+        DashboardModule,
         AuthModule,
         AppRoutingModule
     ],
-    providers: [UsersService, AuthService],
+    providers: [UsersService, AuthService, AuthGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {

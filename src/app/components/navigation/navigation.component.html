@@ -9,16 +9,16 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/">Глонасс</a>
       </li>
-      <li *ngIf="usr" class="nav-item">
+      <li *ngIf="user" class="nav-item">
         <a class="nav-link" routerLink="/users">Пользователи</a>
       </li>
     </ul>
     <ul class="form-inline my-2 my-lg-0">
-      <li *ngIf="!usr" class="nav-item">
+      <li *ngIf="!user" class="nav-item">
         <a class="nav-link" routerLink="/login">Вход</a>
       </li>
-      <li *ngIf="usr" class="nav-item">
-        <a class="nav-link" routerLink="/profile">usr.name</a>
+      <li *ngIf="user" class="nav-item">
+        <a class="nav-link" routerLink="/logout">{{user.name}}</a>
       </li>
     </ul>
   </div>

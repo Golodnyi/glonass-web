@@ -1,6 +1,7 @@
 <div class="container">
     <div class="form-signin">
         <h2 class="form-signin-heading">Авторизация</h2>
+        <div *ngIf="error" class="alert alert-danger">{{error}}</div>
         <label for="inputLogin" class="sr-only">Имя пользователя</label>
         <input [value]="auth.email" type="login" id="inputLogin" class="form-control" placeholder="Имя пользователя" required autofocus>
         <label for="inputPassword" class="sr-only">Пароль</label>
