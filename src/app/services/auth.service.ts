@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {User} from '../models/User';
 
-import {Observable, Subject} from 'rxjs/Rx';
+import {Observable, BehaviorSubject} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {env} from "../../env";
@@ -12,9 +12,14 @@ import {Auth} from "../models/Auth";
 export class AuthService {
     private loginUrl = '/v1/auth/login';
 
-    private logger = new Subject<boolean>();
+    private logger: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     constructor(private http: Http) {
+        this.logger.next(false);
+        if (localStorage.getItem('user'))
+        {
+            this.logger.next(true);
+        }
     }
 
     public login(auth: Auth): Observable<User> {
@@ -35,9 +40,10 @@ export class AuthService {
     {
         localStorage.removeItem('user');
         this.logger.next(false);
+        //TODO: удалять куку с токеном
     }
 
-    isLoggedIn(): Observable<boolean> {
+    public isLoggedIn(): Observable<boolean> {
         return this.logger.asObservable();
     }
 }
