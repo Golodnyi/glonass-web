@@ -17,6 +17,8 @@ export class NavigationComponent implements OnInit {
 
     ngOnInit() {
         this.authService.isLoggedIn().subscribe(loggedIn => {
+            this.user = null;
+            
             if (loggedIn) {
                 this.user = JSON.parse(localStorage.getItem('user'));
             }
