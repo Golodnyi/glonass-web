@@ -23,14 +23,13 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        this.authService.login(this.auth).subscribe(res => {
-            if (res)
-            {
-                this.router.navigate(['/dashboard']);
+        this.authService.login(this.auth).subscribe(
+            user => {
+                this.router.navigate(['/dashboard'])
+            },
+            error => {
+                this.error = error
             }
-            else {
-                this.error = 'Username or password is incorrect';
-            }
-        });
+        );
     }
 }

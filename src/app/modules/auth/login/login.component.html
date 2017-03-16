@@ -3,12 +3,12 @@
         <h2 class="form-signin-heading">Авторизация</h2>
         <div *ngIf="error" class="alert alert-danger">{{error}}</div>
         <label for="inputLogin" class="sr-only">Имя пользователя</label>
-        <input [value]="auth.email" type="login" id="inputLogin" class="form-control" placeholder="Имя пользователя" required autofocus>
+        <input [(ngModel)]="auth.email" type="email" id="inputLogin" class="form-control" placeholder="email" required autofocus>
         <label for="inputPassword" class="sr-only">Пароль</label>
-        <input [value]="auth.password" type="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
+        <input [(ngModel)]="auth.password" type="password" id="inputPassword" class="form-control" placeholder="password" required>
         <div class="checkbox">
             <label>
-                <input type="checkbox" value="remember-me" [value]="auth.remember"> Запомнить меня
+                <input type="checkbox" value="remember-me" [(ngModel)]="auth.remember"> Запомнить меня
             </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="login()">Войти</button>
