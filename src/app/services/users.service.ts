@@ -15,13 +15,21 @@ export class UsersService {
     constructor (private http: Http) {}
 
     public getUsers(): Observable<User[]> {
-        return this.http.get(env.backend + this.usersUrl)
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        var options = new RequestOptions({headers: headers, withCredentials: true});
+
+        return this.http.get(env.backend + this.usersUrl, options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     public getUser(id): Observable<User> {
-        return this.http.get(env.backend + this.userUrl.replace(':id', id))
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        var options = new RequestOptions({headers: headers, withCredentials: true});
+
+        return this.http.get(env.backend + this.userUrl.replace(':id', id), options)
             .map((res:Response) => res.json())
             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
