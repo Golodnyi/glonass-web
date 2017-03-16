@@ -11,7 +11,6 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
 
-    private user: User;
     private auth: Auth;
     private error = '';
 
@@ -24,17 +23,14 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        this.authService.login(this.auth).subscribe(user => {
-            this.user = {id: 1, email: 'demo@demo.ru', login: 'demo', name: 'demo'};
-
-            if (this.user) {
-                localStorage.setItem('user', JSON.stringify(this.user));
+        this.authService.login(this.auth).subscribe(res => {
+            if (res)
+            {
                 this.router.navigate(['/dashboard']);
             }
             else {
                 this.error = 'Username or password is incorrect';
             }
-
         });
     }
 }

@@ -15,13 +15,22 @@ export class AuthService {
     constructor(private http: Http) {
     }
 
-    public login(auth: Auth): Observable<User> {
+    public login(auth: Auth): Observable<boolean> {
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         var options = new RequestOptions({ headers: headers, withCredentials: true });
 
         return this.http.post(env.backend + this.loginUrl, 'email=' + auth.email + '&password=' + auth.password + '&remember=' + auth.remember, options)
-            .map((res: Response) => res.json())
+            .map((res: Response) => {
+            console.log(res);
+                if (!res.ok)
+                {
+                    return false;
+                }
+
+                localStorage.setItem('user', res.json());
+                return true;
+            })
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 }
