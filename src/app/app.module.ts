@@ -13,6 +13,7 @@ import {AuthModule} from "./modules/auth/auth.module";
 import {AuthService} from "./services/auth.service";
 import {AuthGuard} from "./guards/auth.guard";
 import {DashboardModule} from "./modules/dashboard/dashboard.module";
+import {CookieService} from 'angular2-cookie/services/cookies.service';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,7 @@ import {DashboardModule} from "./modules/dashboard/dashboard.module";
         AuthModule,
         AppRoutingModule
     ],
-    providers: [UsersService, AuthService, AuthGuard],
+    providers: [UsersService, AuthService, AuthGuard, CookieService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

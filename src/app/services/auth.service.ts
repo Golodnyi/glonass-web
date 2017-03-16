@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {env} from "../../env";
 import {Auth} from "../models/Auth";
+import {CookieService} from 'angular2-cookie/core';
 
 @Injectable()
 export class AuthService {
@@ -14,10 +15,9 @@ export class AuthService {
 
     private logger: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-    constructor(private http: Http) {
+    constructor(private http: Http, private cookieService:CookieService) {
         this.logger.next(false);
-        if (localStorage.getItem('user'))
-        {
+        if (localStorage.getItem('user')) {
             this.logger.next(true);
         }
     }
@@ -36,11 +36,10 @@ export class AuthService {
             .catch((error: any) => Observable.throw(error.json().message || 'Server error'));
     }
 
-    public logout()
-    {
+    public logout() {
         localStorage.removeItem('user');
         this.logger.next(false);
-        //TODO: удалять куку с токеном
+        this.cookieService.remove('token');
     }
 
     public isLoggedIn(): Observable<boolean> {
