@@ -17,7 +17,7 @@ export class AuthService {
 
     constructor(private http: Http, private cookieService:CookieService) {
         this.logger.next(false);
-        if (localStorage.getItem('user')) {
+        if (localStorage.getItem('user') && this.cookieService.get('token')) {
             this.logger.next(true);
         }
     }
