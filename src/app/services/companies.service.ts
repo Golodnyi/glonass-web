@@ -13,7 +13,8 @@ import {AuthService} from "./auth.service";
 export class CompaniesService {
     private companiesUrl = '/v1/companies';
 
-    constructor (private http: Http, private authService: AuthService) {}
+    constructor(private http: Http, private authService: AuthService) {
+    }
 
     public getCompanies(): Observable<Company[]> {
         var headers = new Headers();
@@ -21,15 +22,14 @@ export class CompaniesService {
         var options = new RequestOptions({headers: headers, withCredentials: true});
 
         return this.http.get(env.backend + this.companiesUrl, options)
-            .map((response:Response) => {
-                if (response.status == 200) {
-                    return response.json()
-                } else if (response.status == 401)
-                {
+            .map((response: Response) => {
+                return response.json()
+            })
+            .catch((error: any) => {
+                if (error.status == 401) {
                     this.authService.logout();
                 }
-
-            })
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+                return Observable.throw(error.json().error || 'Server error')
+            });
     }
 }

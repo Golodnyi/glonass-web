@@ -15,7 +15,7 @@ export class AuthService {
 
     private logger: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-    constructor(private http: Http, private cookieService:CookieService) {
+    constructor(private http: Http, private cookieService: CookieService) {
         this.logger.next(false);
         if (localStorage.getItem('user') && this.cookieService.get('token')) {
             this.logger.next(true);
@@ -29,16 +29,14 @@ export class AuthService {
 
         return this.http.post(env.backend + this.loginUrl, 'email=' + auth.email + '&password=' + auth.password + '&remember=' + auth.remember, options)
             .map((response: Response) => {
-                if (response.status == 200) {
-                    localStorage.setItem('user', JSON.stringify(response.json()));
-                    this.logger.next(true);
-                    return response.json();
-                }
-
-                this.logger.next(false);
-
+                localStorage.setItem('user', JSON.stringify(response.json()));
+                this.logger.next(true);
+                return response.json();
             })
-            .catch((error: any) => Observable.throw(error.json().message || 'Server error'));
+            .catch((error: any) => {
+                this.logger.next(false);
+                return Observable.throw(error.json().message || 'Server error')
+            });
     }
 
     public logout() {

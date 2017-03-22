@@ -13,7 +13,8 @@ export class UsersService {
     private usersUrl = '/v1/users';
     private userUrl = '/v1/users/:id';
 
-    constructor (private http: Http, private authService: AuthService) {}
+    constructor(private http: Http, private authService: AuthService) {
+    }
 
     public getUsers(): Observable<User[]> {
         var headers = new Headers();
@@ -21,8 +22,15 @@ export class UsersService {
         var options = new RequestOptions({headers: headers, withCredentials: true});
 
         return this.http.get(env.backend + this.usersUrl, options)
-            .map((res:Response) => res.json())
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+            .map((response: Response) => {
+                return response.json()
+            })
+            .catch((error: any) => {
+                if (error.status == 401) {
+                    this.authService.logout();
+                }
+                return Observable.throw(error.json().error || 'Server error')
+            });
     }
 
     public getUser(id): Observable<User> {
@@ -31,15 +39,15 @@ export class UsersService {
         var options = new RequestOptions({headers: headers, withCredentials: true});
 
         return this.http.get(env.backend + this.userUrl.replace(':id', id), options)
-            .map((response:Response) => {
-                if (response.status == 200) {
-                    return response.json()
-                } else if (response.status == 401)
-                {
+            .map((response: Response) => {
+                return response.json()
+            })
+            .catch((error: any) => {
+                if (error.status == 401) {
                     this.authService.logout();
                 }
-            })
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+                return Observable.throw(error.json().error || 'Server error')
+            });
     }
 
 }
