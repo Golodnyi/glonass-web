@@ -29,9 +29,14 @@ export class AuthService {
 
         return this.http.post(env.backend + this.loginUrl, 'email=' + auth.email + '&password=' + auth.password + '&remember=' + auth.remember, options)
             .map((response: Response) => {
-                localStorage.setItem('user', JSON.stringify(response.json()));
-                this.logger.next(true);
-                return response.json();
+                if (response.status == 200) {
+                    localStorage.setItem('user', JSON.stringify(response.json()));
+                    this.logger.next(true);
+                    return response.json();
+                }
+
+                this.logger.next(false);
+
             })
             .catch((error: any) => Observable.throw(error.json().message || 'Server error'));
     }
