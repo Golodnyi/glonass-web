@@ -27,7 +27,13 @@ export class AuthService {
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         var options = new RequestOptions({headers: headers, withCredentials: true});
 
-        return this.http.post(env.backend + this.loginUrl, 'email=' + auth.email + '&password=' + auth.password + '&remember=' + auth.remember, options)
+        var remember = 0;
+        if (auth.remember)
+        {
+            remember = 1;
+        }
+
+        return this.http.post(env.backend + this.loginUrl, 'email=' + auth.email + '&password=' + auth.password + '&remember=' + remember, options)
             .map((response: Response) => {
                 localStorage.setItem('user', JSON.stringify(response.json()));
                 this.logger.next(true);

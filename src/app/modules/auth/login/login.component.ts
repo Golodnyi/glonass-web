@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
     private error = '';
 
     constructor(private router: Router, private authService: AuthService) {
-        this.auth = {email: 'demo@demo.ru', password: 'demo', remember: 0};
+        this.auth = {email: 'demo@demo.ru', password: 'demo', remember: false};
     }
 
     ngOnInit() {
