@@ -1,18 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
-import {CookieService} from 'angular2-cookie/core';
+import {AuthService} from "../services/auth.service";
 
 @Injectable()
 export class GuestGuard implements CanActivate {
 
-    constructor(private router: Router, private cookieService:CookieService) { }
+    constructor(private router: Router, private authService:AuthService) { }
 
     canActivate() {
-        if (localStorage.getItem('user') && this.cookieService.get('token')) {
-            this.router.navigate(['/dashboard']);
-            return false;
+        var guest = false;
+        this.authService.isLoggedIn().subscribe(loggedIn => {
+            if (!loggedIn) {
+                guest = true;
+            }
+        });
+
+        if (guest) {
+            return true;
         }
-        
-        return true;
+
+        this.router.navigate(['/dashboard']);
+        return false;
     }
 }

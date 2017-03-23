@@ -16,10 +16,7 @@ export class AuthService {
     private logger: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     constructor(private http: Http, private cookieService: CookieService) {
-        this.logger.next(false);
-        if (localStorage.getItem('user') && this.cookieService.get('token')) {
-            this.logger.next(true);
-        }
+        this.isLoggedIn();
     }
 
     public login(auth: Auth): Observable<User> {
@@ -47,11 +44,19 @@ export class AuthService {
 
     public logout() {
         localStorage.removeItem('user');
-        this.logger.next(false);
         this.cookieService.remove('token');
+        this.logger.next(false);
     }
 
     public isLoggedIn(): Observable<boolean> {
+        if (localStorage.getItem('user') !== undefined && this.cookieService.get('token') !== undefined) {
+            this.logger.next(true);
+        }
+        else
+        {
+            this.logout();
+        }
+
         return this.logger.asObservable();
     }
 }
