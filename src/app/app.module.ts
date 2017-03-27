@@ -18,6 +18,8 @@ import {GuestGuard} from "./guards/guest.guard";
 import {ModalModule} from 'ng2-bootstrap';
 import {ModalComponent} from "./components/modal/modal.component";
 import {ModalService} from "./services/modal.service";
+import { AlertModule } from 'ng2-bootstrap';
+import { DropdownModule } from 'ng2-bootstrap/dropdown';
 
 @NgModule({
     declarations: [
@@ -34,7 +36,9 @@ import {ModalService} from "./services/modal.service";
         DashboardModule,
         AuthModule,
         AppRoutingModule,
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        AlertModule.forRoot(),
+        DropdownModule.forRoot()
     ],
     providers: [UsersService, AuthService, AuthGuard, CookieService, GuestGuard, ModalService],
     bootstrap: [AppComponent]
