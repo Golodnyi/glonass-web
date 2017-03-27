@@ -1,22 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {CompaniesService} from "../../../services/companies.service";
 import {Company} from "../../../models/Company";
+import {ModalService} from "../../../services/modal.service";
 
 @Component({
-  selector: 'app-companies',
-  templateUrl: './companies.component.html',
-  styleUrls: ['./companies.component.css']
+    selector: 'app-companies',
+    templateUrl: './companies.component.html',
+    styleUrls: ['./companies.component.css']
 })
 export class CompaniesComponent implements OnInit {
 
-  private companies: Company[];
+    private companies: Company[];
+    constructor(private companiesService: CompaniesService, private modal: ModalService) {
+    }
 
-  constructor(private companiesService: CompaniesService) { }
-
-  ngOnInit() {
-    this.companiesService.getCompanies().subscribe(data => {
-      this.companies = data;
-    });
-  }
+    ngOnInit() {
+        this.companiesService.getCompanies().subscribe(
+            companies => {
+                this.companies = companies;
+            },
+            error => {
+                this.modal.show('Ошибка', error);
+            }
+        );
+    }
 
 }

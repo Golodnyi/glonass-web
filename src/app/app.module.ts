@@ -15,11 +15,15 @@ import {AuthGuard} from "./guards/auth.guard";
 import {DashboardModule} from "./modules/dashboard/dashboard.module";
 import {CookieService} from 'angular2-cookie/services/cookies.service';
 import {GuestGuard} from "./guards/guest.guard";
+import {ModalModule} from 'ng2-bootstrap';
+import {ModalComponent} from "./components/modal/modal.component";
+import {ModalService} from "./services/modal.service";
 
 @NgModule({
     declarations: [
         AppComponent,
         NavigationComponent,
+        ModalComponent
     ],
     imports: [
         RouterModule,
@@ -29,9 +33,10 @@ import {GuestGuard} from "./guards/guest.guard";
         UsersModule,
         DashboardModule,
         AuthModule,
-        AppRoutingModule
+        AppRoutingModule,
+        ModalModule.forRoot()
     ],
-    providers: [UsersService, AuthService, AuthGuard, CookieService, GuestGuard],
+    providers: [UsersService, AuthService, AuthGuard, CookieService, GuestGuard, ModalService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -7,13 +7,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {env} from "../../env";
 import {AuthService} from "./auth.service";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class UsersService {
     private usersUrl = '/v1/users';
     private userUrl = '/v1/users/:id';
 
-    constructor(private http: Http, private authService: AuthService) {
+    constructor(private http: Http, private authService: AuthService, private router: Router) {
     }
 
     public getUsers(): Observable<User[]> {
@@ -28,8 +29,9 @@ export class UsersService {
             .catch((error: any) => {
                 if (error.status == 401) {
                     this.authService.logout();
+                    this.router.navigate(['/login']);
                 }
-                return Observable.throw(error.json().error || 'Server error')
+                return Observable.throw(error.json().message || 'Server error')
             });
     }
 
@@ -45,8 +47,9 @@ export class UsersService {
             .catch((error: any) => {
                 if (error.status == 401) {
                     this.authService.logout();
+                    this.router.navigate(['/login']);
                 }
-                return Observable.throw(error.json().error || 'Server error')
+                return Observable.throw(error.json().message || 'Server error')
             });
     }
 
