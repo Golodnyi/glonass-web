@@ -16,9 +16,9 @@ export class ModalComponent implements OnInit {
 
     ngOnInit() {
         this.modal.isVisible().subscribe(msg => {
-            this.modalTitle = msg.Title;
-            this.modalBody = msg.Text;
-            this.isModalShown = msg.Show;
+            this.modalTitle = msg.title;
+            this.modalBody = msg.text;
+            this.isModalShown = msg.show;
         });
     }
 

@@ -13,12 +13,12 @@ export class ModalService {
     }
 
     public show(title:string, text:string): void {
-        this.showModal.next({Title: title, Text: text, Show: true});
+        this.showModal.next({title: title, text: text, show: true});
     }
 
     public hide()
     {
-        this.showModal.next({Title: null, Text: null, Show: false});
+        this.showModal.next({title: null, text: null, show: false});
     }
 
 
