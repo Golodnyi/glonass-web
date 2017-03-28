@@ -8,6 +8,7 @@ import 'rxjs/add/operator/catch';
 import {env} from "../../env";
 import {AuthService} from "./auth.service";
 import {Router} from "@angular/router";
+import {Error} from "../models/Error";
 
 @Injectable()
 export class UsersService {
@@ -27,10 +28,7 @@ export class UsersService {
                 return response.json()
             })
             .catch((error: any) => {
-                if (error.status == 401) {
-                    this.authService.logout();
-                    this.router.navigate(['/login']);
-                }
+                new Error(error, this.authService, this.router);
                 return Observable.throw(error.json().message || 'Server error')
             });
     }
@@ -45,10 +43,7 @@ export class UsersService {
                 return response.json()
             })
             .catch((error: any) => {
-                if (error.status == 401) {
-                    this.authService.logout();
-                    this.router.navigate(['/login']);
-                }
+                new Error(error, this.authService, this.router);
                 return Observable.throw(error.json().message || 'Server error')
             });
     }

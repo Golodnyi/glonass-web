@@ -8,6 +8,7 @@ import {env} from "../../env";
 import {Company} from "../models/Company";
 import {AuthService} from "./auth.service";
 import {Router} from "@angular/router";
+import {Error} from "../models/Error";
 
 @Injectable()
 export class CompaniesService {
@@ -26,10 +27,7 @@ export class CompaniesService {
                 return response.json()
             })
             .catch((error: any) => {
-                if (error.status == 401) {
-                    this.authService.logout();
-                    this.router.navigate(['/login']);
-                }
+                new Error(error, this.authService, this.router);
                 return Observable.throw(error.json().message || 'Server error')
             });
     }
