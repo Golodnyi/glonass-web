@@ -4,13 +4,16 @@ import {DashboardRoutingModule} from './dashboard-routing.module';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {CompaniesComponent} from './companies/companies.component';
 import {CompaniesService} from "../../services/companies.service";
+import {SubdivisionsComponent} from "./subdivisions/subdivisions.component";
+import {AccordionModule} from 'ng2-bootstrap/accordion';
 
 @NgModule({
     imports: [
         CommonModule,
-        DashboardRoutingModule
+        DashboardRoutingModule,
+        AccordionModule.forRoot()
     ],
-    declarations: [DashboardComponent, CompaniesComponent],
+    declarations: [DashboardComponent, CompaniesComponent, SubdivisionsComponent],
     bootstrap: [DashboardComponent],
     providers: [CompaniesService],
 })

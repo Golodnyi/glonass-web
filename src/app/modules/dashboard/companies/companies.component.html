@@ -1,5 +1,13 @@
-<ul>
-  <li *ngFor="let company of companies">
-    {{company.id}}) {{company.name}}
-  </li>
-</ul>
+<div class="col-md-3">
+    <h2>Компании</h2>
+    <accordion>
+        <accordion-group #group *ngFor="let company of companies">
+            <div accordion-heading>
+                {{company.name}}
+                <i class="pull-right float-xs-right glyphicon"
+                   [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+            </div>
+            <app-subdivisions></app-subdivisions>
+        </accordion-group>
+    </accordion>
+</div>
