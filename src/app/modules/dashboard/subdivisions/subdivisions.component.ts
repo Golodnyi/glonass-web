@@ -24,8 +24,8 @@ export class SubdivisionsComponent implements OnInit {
         }
 
         this.subdivisionsService.getSubdivisions(this.company).subscribe(
-            subdivision => {
-                this.subdivisions = subdivision;
+            subdivisions => {
+                this.subdivisions = subdivisions;
             },
             error => {
                 this.modal.show('Ошибка', error);

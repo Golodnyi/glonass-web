@@ -1,7 +1,7 @@
-<div [hidden]="!subdivisions">
-    <ul>
-        <li *ngFor="let subdivision of subdivisions">
-            <a>{{subdivision.name}}</a>
-        </li>
-    </ul>
-</div>
+<accordion-group #group *ngFor="let subdivision of subdivisions">
+    <div accordion-heading>
+        {{subdivision.name}}
+        <i class="pull-right float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+    </div>
+    <app-cars [subdivision]="subdivision.id"></app-cars>
+</accordion-group>

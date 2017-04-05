@@ -5,25 +5,24 @@ import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {env} from "../../env";
-import {Company} from "../models/Company";
 import {AuthService} from "./auth.service";
 import {Router} from "@angular/router";
 import {Error} from "../models/Error";
-import {Subdivision} from "../models/Subdivision";
+import {Car} from "../models/Car";
 
 @Injectable()
-export class SubdivisionsService {
-    private subDivisionsCompanyUrl = '/v1/companies/:id/subdivisions';
+export class CarsService {
+    private carsSubDivisionsCompanyUrl = '/v1/companies/:company/subdivisions/:subdivision/cars';
 
     constructor(private http: Http, private authService: AuthService, private router: Router) {
     }
 
-    public getSubdivisions(company): Observable<Subdivision[]> {
+    public getCars(company, subdivision): Observable<Car[]> {
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         var options = new RequestOptions({headers: headers, withCredentials: true});
 
-        return this.http.get(env.backend + this.subDivisionsCompanyUrl.replace(':id', company), options)
+        return this.http.get(env.backend + this.carsSubDivisionsCompanyUrl.replace(':company', '1').replace(':subdivision', '1'), options)
             .map((response: Response) => {
                 return response.json()
             })
