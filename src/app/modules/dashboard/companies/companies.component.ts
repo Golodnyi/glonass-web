@@ -13,7 +13,6 @@ import {Subdivision} from "../../../models/Subdivision";
 export class CompaniesComponent implements OnInit {
 
     private companies: Company[];
-    private subdiv: Subdivision[];
 
     constructor(private companiesService: CompaniesService, private modal: ModalService) {
     }
@@ -27,17 +26,5 @@ export class CompaniesComponent implements OnInit {
                 this.modal.show('Ошибка', error);
             }
         );
-    }
-
-    public subdivisions(company_id: number)
-    {
-        /**this.subDivisionsService.getSubdivisions(company_id).subscribe(
-            subdivisions => {
-                this.subdiv = subdivisions;
-            },
-            error => {
-                this.modal.show('Ошибка', error);
-            }
-        );**/
     }
 }

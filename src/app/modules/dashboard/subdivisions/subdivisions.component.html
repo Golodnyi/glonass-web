@@ -1,3 +1,7 @@
-<p>
-  subdivisions works!
-</p>
+<div [hidden]="!subdivisions">
+    <ul>
+        <li *ngFor="let subdivision of subdivisions">
+            <a>{{subdivision.name}}</a>
+        </li>
+    </ul>
+</div>

@@ -1,13 +1,12 @@
 <div class="col-md-3">
     <h2>Компании</h2>
     <accordion>
-        <accordion-group #group *ngFor="let company of companies">
+        <accordion-group #group *ngFor="let company of companies" (click)="subdivisions(company.id)">
             <div accordion-heading>
                 {{company.name}}
-                <i class="pull-right float-xs-right glyphicon"
-                   [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+                <i class="pull-right float-xs-right glyphicon" [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
             </div>
-            <app-subdivisions></app-subdivisions>
+            <app-subdivisions [company]="company.id"></app-subdivisions>
         </accordion-group>
     </accordion>
 </div>

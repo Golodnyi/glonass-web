@@ -6,6 +6,7 @@ import {CompaniesComponent} from './companies/companies.component';
 import {CompaniesService} from "../../services/companies.service";
 import {SubdivisionsComponent} from "./subdivisions/subdivisions.component";
 import {AccordionModule} from 'ng2-bootstrap/accordion';
+import {SubdivisionsService} from "../../services/subdivisions.service";
 
 @NgModule({
     imports: [
@@ -15,7 +16,7 @@ import {AccordionModule} from 'ng2-bootstrap/accordion';
     ],
     declarations: [DashboardComponent, CompaniesComponent, SubdivisionsComponent],
     bootstrap: [DashboardComponent],
-    providers: [CompaniesService],
+    providers: [CompaniesService, SubdivisionsService],
 })
 export class DashboardModule {
 }
