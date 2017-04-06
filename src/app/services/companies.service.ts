@@ -9,10 +9,13 @@ import {Company} from "../models/Company";
 import {AuthService} from "./auth.service";
 import {Router} from "@angular/router";
 import {Error} from "../models/Error";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class CompaniesService {
     private companiesUrl = '/v1/companies';
+    private company: Subject<Company> = new Subject();
 
     constructor(private http: Http, private authService: AuthService, private router: Router) {
     }
@@ -30,5 +33,13 @@ export class CompaniesService {
                 new Error(error, this.authService, this.router);
                 return Observable.throw(error.json().message || 'Server error')
             });
+    }
+
+    public setCompany(company: Company): void {
+        this.company.next(company);
+    }
+
+    public getCompany(): Observable<Company> {
+        return this.company.asObservable();
     }
 }

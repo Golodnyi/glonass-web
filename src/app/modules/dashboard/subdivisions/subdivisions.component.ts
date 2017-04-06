@@ -4,6 +4,7 @@ import {Subdivision} from "../../../models/Subdivision";
 import {ModalService} from "../../../services/modal.service";
 import {Input} from '@angular/core';
 import {Company} from "../../../models/Company";
+import {CompaniesService} from "../../../services/companies.service";
 
 @Component({
     selector: 'app-subdivisions',
@@ -11,26 +12,27 @@ import {Company} from "../../../models/Company";
     styleUrls: ['./subdivisions.component.css']
 })
 export class SubdivisionsComponent implements OnInit {
-    @Input() company: number = null;
     private subdivisions: Subdivision[];
+    @Input() company: Company;
 
-    constructor(private subdivisionsService: SubdivisionsService, private modal: ModalService) {
+    constructor(private subdivisionsService: SubdivisionsService, private modal: ModalService, private companiesService: CompaniesService) {
     }
 
     ngOnInit() {
-        if (this.company == null)
-        {
-            return false;
-        }
-
-        this.subdivisionsService.getSubdivisions(this.company).subscribe(
-            subdivisions => {
-                this.subdivisions = subdivisions;
-            },
-            error => {
-                this.modal.show('Ошибка', error);
-            }
-        );
+        this.companiesService.getCompany().subscribe(company => {
+            this.subdivisionsService.getSubdivisions(company).subscribe(
+                subdivisions => {
+                    this.subdivisions = subdivisions;
+                },
+                error => {
+                    this.modal.show('Ошибка', error);
+                }
+            );
+        });
     }
 
+    public changeSubdivision(subdivision: Subdivision)
+    {
+        this.subdivisionsService.setSubdivision(subdivision);
+    }
 }

@@ -2,8 +2,6 @@ import {Component, OnInit, Output} from '@angular/core';
 import {CompaniesService} from "../../../services/companies.service";
 import {Company} from "../../../models/Company";
 import {ModalService} from "../../../services/modal.service";
-import {SubdivisionsService} from "../../../services/subdivisions.service";
-import {Subdivision} from "../../../models/Subdivision";
 
 @Component({
     selector: 'app-companies',
@@ -26,5 +24,10 @@ export class CompaniesComponent implements OnInit {
                 this.modal.show('Ошибка', error);
             }
         );
+    }
+
+    public changeCompany(company: Company)
+    {
+        this.companiesService.setCompany(company);
     }
 }
