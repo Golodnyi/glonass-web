@@ -20,6 +20,8 @@ import {ModalComponent} from "./components/modal/modal.component";
 import {ModalService} from "./services/modal.service";
 import {AlertModule} from 'ng2-bootstrap';
 import {DropdownModule} from 'ng2-bootstrap/dropdown';
+import {AdminModule} from "./modules/admin/admin.module";
+import {AdminGuard} from "./guards/admin.guard";
 
 @NgModule({
     declarations: [
@@ -36,11 +38,12 @@ import {DropdownModule} from 'ng2-bootstrap/dropdown';
         DashboardModule,
         AuthModule,
         AppRoutingModule,
+        AdminModule,
         ModalModule.forRoot(),
         AlertModule.forRoot(),
         DropdownModule.forRoot()
     ],
-    providers: [UsersService, AuthService, AuthGuard, CookieService, GuestGuard, ModalService],
+    providers: [UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ModalService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

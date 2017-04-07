@@ -8,6 +8,9 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/dashboard">Дашборд</a>
                 </li>
+                <li *ngIf="user.role.is_global" class="nav-item">
+                    <a class="nav-link" routerLink="/admin">Админ панель</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/users">Пользователи</a>
                 </li>

@@ -15,6 +15,7 @@ export class AuthService {
     private loginUrl = '/v1/auth/login';
 
     private logger: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    private admin: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     constructor(private http: Http, private cookieService: CookieService) {
         this.isLoggedIn();
@@ -56,5 +57,19 @@ export class AuthService {
         }
 
         return this.logger.asObservable();
+    }
+
+    public isAdmin(): Observable<boolean> {
+        var user: User = JSON.parse(localStorage.getItem('user'));
+
+        if (
+            localStorage.getItem('user') !== undefined &&
+            this.cookieService.get('token') !== undefined &&
+            user.role.is_global
+        ) {
+            this.admin.next(true);
+        }
+
+        return this.admin.asObservable();
     }
 }
