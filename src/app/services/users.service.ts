@@ -9,11 +9,13 @@ import {env} from "../../env";
 import {AuthService} from "./auth.service";
 import {Router} from "@angular/router";
 import {Error} from "../models/Error";
+import {Role} from "../models/Role";
 
 @Injectable()
 export class UsersService {
     private usersUrl = '/v1/users';
     private userUrl = '/v1/users/:id';
+    private roleUrl = '/v1/roles/:id';
 
     constructor(private http: Http, private authService: AuthService, private router: Router) {
     }
@@ -48,4 +50,18 @@ export class UsersService {
             });
     }
 
+    public getRole(id: Number): Observable<Role> {
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        var options = new RequestOptions({headers: headers, withCredentials: true});
+
+        return this.http.get(env.backend + this.roleUrl.replace(':id', String(id)), options)
+            .map((response: Response) => {
+                return response.json()
+            })
+            .catch((error: any) => {
+                new Error(error, this.authService, this.router);
+                return Observable.throw(error.json().message || 'Server error')
+            });
+    }
 }

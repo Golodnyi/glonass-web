@@ -8,6 +8,7 @@ import 'rxjs/add/operator/catch';
 import {env} from "../../env";
 import {Auth} from "../models/Auth";
 import {CookieService} from 'angular2-cookie/core';
+import {UsersService} from "./users.service";
 
 @Injectable()
 export class AuthService {
@@ -25,14 +26,12 @@ export class AuthService {
         var options = new RequestOptions({headers: headers, withCredentials: true});
 
         var remember = 0;
-        if (auth.remember)
-        {
+        if (auth.remember) {
             remember = 1;
         }
 
         return this.http.post(env.backend + this.loginUrl, 'email=' + auth.email + '&password=' + auth.password + '&remember=' + remember, options)
             .map((response: Response) => {
-                localStorage.setItem('user', JSON.stringify(response.json()));
                 this.logger.next(true);
                 return response.json();
             })
@@ -52,8 +51,7 @@ export class AuthService {
         if (localStorage.getItem('user') !== undefined && this.cookieService.get('token') !== undefined) {
             this.logger.next(true);
         }
-        else
-        {
+        else {
             this.logout();
         }
 
