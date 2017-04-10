@@ -52,9 +52,11 @@ export class CompaniesService {
                     items.push(
                         {
                             "label": item.name,
+                            "type": "company",
                             "data": item.id,
                             "expandedIcon": "fa-folder-open",
-                            "collapsedIcon": "fa-folder"
+                            "collapsedIcon": "fa-folder",
+                            "leaf": false
                         }
                     );
                 });
