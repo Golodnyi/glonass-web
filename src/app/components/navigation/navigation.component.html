@@ -19,10 +19,9 @@
                 <li *ngIf="!user" class="nav-item">
                     <a class="nav-link" routerLink="/login">Вход</a>
                 </li>
-                <ul *ngIf="user">
-                    <li>{{user.name}}</li>
-                    <li><a routerLink="/logout" (click)="logout()">Выход</a></li>
-                </ul>
+                <li class="no-style" *ngIf="user">
+                    <a routerLink="/logout" (click)="logout()">Выход</a>
+                </li>
             </ul>
         </div>
     </div>
