@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {TreeModule, TreeNode} from 'primeng/primeng';
+import {TreeNode} from 'primeng/primeng';
 import {CompaniesService} from "../../../services/companies.service";
 import {ModalService} from "../../../services/modal.service";
-import {Company} from "../../../models/Company";
 import {SubdivisionsService} from "../../../services/subdivisions.service";
+import {CarsService} from "../../../services/cars.service";
 
 @Component({
     selector: 'app-navigation',
@@ -15,7 +15,7 @@ export class NavigationComponent implements OnInit {
     public companies: TreeNode[];
     public select: TreeNode;
 
-    constructor(private companiesService: CompaniesService, private modal: ModalService, private subdivisionsService: SubdivisionsService) {
+    constructor(private companiesService: CompaniesService, private modal: ModalService, private subdivisionsService: SubdivisionsService, private carsService: CarsService) {
     }
 
     ngOnInit() {
@@ -35,6 +35,17 @@ export class NavigationComponent implements OnInit {
             if (event.node.type == 'company')
             {
                 this.subdivisionsService.getSubdivisionsAsTree(event.node.data).subscribe(
+                    tree => {
+                        event.node.children = tree;
+                    },
+                    error => {
+                        this.modal.show('Ошибка', error);
+                    }
+                );
+            } else if (event.node.type == 'subdivision')
+            {
+                console.log(event.node);
+                this.carsService.getCarsAsTree(event.node.parent.data, event.node.data).subscribe(
                     tree => {
                         event.node.children = tree;
                     },

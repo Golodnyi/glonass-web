@@ -37,7 +37,7 @@ export class SubdivisionsService {
     }
 
 
-    public getSubdivisionsAsTree(id: number): Observable<TreeNode[]> {
+    public getSubdivisionsAsTree(company: number): Observable<TreeNode[]> {
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         var options = new RequestOptions({headers: headers, withCredentials: true});
@@ -45,16 +45,15 @@ export class SubdivisionsService {
         var subdivisions: Subdivision[];
         var items = [];
 
-        return this.http.get(env.backend + this.subDivisionsCompanyUrl.replace(':id', String(id)), options)
+        return this.http.get(env.backend + this.subDivisionsCompanyUrl.replace(':id', String(company)), options)
             .map((response: Response) => {
                 subdivisions = response.json();
                 subdivisions.forEach(function (item) {
                     items.push(
                         {
                             "label": item.name,
-                            "type": "subdivisions",
+                            "type": "subdivision",
                             "data": item.id,
-                            "parent": item.company_id,
                             "expandedIcon": "fa-folder-open",
                             "collapsedIcon": "fa-folder",
                             "leaf": false
