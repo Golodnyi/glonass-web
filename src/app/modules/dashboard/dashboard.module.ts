@@ -10,15 +10,18 @@ import {TabsModule} from 'ng2-bootstrap/tabs';
 import {SubdivisionsService} from "../../services/subdivisions.service";
 import {CarsService} from "../../services/cars.service";
 import {CarsComponent} from "./cars/cars.component";
+import {NavigationComponent} from "./navigation/navigation.component";
+import {TreeModule,TreeNode} from 'primeng/primeng';
 
 @NgModule({
     imports: [
         CommonModule,
         DashboardRoutingModule,
         AccordionModule.forRoot(),
-        TabsModule.forRoot()
+        TabsModule.forRoot(),
+        TreeModule
     ],
-    declarations: [DashboardComponent, CompaniesComponent, SubdivisionsComponent, CarsComponent],
+    declarations: [DashboardComponent, CompaniesComponent, SubdivisionsComponent, CarsComponent, NavigationComponent],
     bootstrap: [DashboardComponent],
     providers: [CompaniesService, SubdivisionsService, CarsService],
 })

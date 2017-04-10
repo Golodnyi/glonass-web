@@ -11,6 +11,8 @@ import {Router} from "@angular/router";
 import {Error} from "../models/Error";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Subject} from "rxjs/Subject";
+import {TreeNode} from "primeng/primeng";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Injectable()
 export class CompaniesService {
@@ -28,6 +30,36 @@ export class CompaniesService {
         return this.http.get(env.backend + this.companiesUrl, options)
             .map((response: Response) => {
                 return response.json()
+            })
+            .catch((error: any) => {
+                new Error(error, this.authService, this.router);
+                return Observable.throw(error.json().message || 'Server error')
+            });
+    }
+
+    public getCompaniesAsTree(): Observable<TreeNode[]> {
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        var options = new RequestOptions({headers: headers, withCredentials: true});
+
+        var companies: Company[];
+        var items: TreeNode[] = [];
+
+        return this.http.get(env.backend + this.companiesUrl, options)
+            .map((response: Response) => {
+                companies = response.json();
+                companies.forEach(function (item) {
+                    items.push(
+                        {
+                            "label": item.name,
+                            "data": item.id,
+                            "expandedIcon": "fa-folder-open",
+                            "collapsedIcon": "fa-folder"
+                        }
+                    );
+                });
+
+                return items;
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router);
