@@ -16,6 +16,7 @@ import {CookieService} from 'angular2-cookie/services/cookies.service';
 import {GuestGuard} from "./guards/guest.guard";
 import {AdminModule} from "./modules/admin/admin.module";
 import {AdminGuard} from "./guards/admin.guard";
+import {ChartsService} from "./services/charts.service";
 
 @NgModule({
     declarations: [
@@ -33,7 +34,7 @@ import {AdminGuard} from "./guards/admin.guard";
         AppRoutingModule,
         AdminModule
     ],
-    providers: [UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard],
+    providers: [UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ChartsService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
