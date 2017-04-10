@@ -21,7 +21,6 @@ export class NavigationComponent implements OnInit {
         this.companiesService.getCompaniesAsTree().subscribe(
             tree => {
                 this.companies = tree;
-                console.log(this.companies);
             },
             error => {
                 this.modal.show('Ошибка', error);
@@ -58,6 +57,5 @@ export class NavigationComponent implements OnInit {
 
     public onNodeSelect(event: any)
     {
-        console.log(event.node);
     }
 }
