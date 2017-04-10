@@ -5,7 +5,6 @@ import {HttpModule} from '@angular/http';
 import {AppRoutingModule} from './app.routing.module';
 import {UsersModule} from './modules/users/users.module';
 import {RouterModule} from '@angular/router';
-
 import {AppComponent} from './app.component';
 import {NavigationComponent} from './components/navigation/navigation.component';
 import {UsersService} from './services/users.service';
@@ -15,19 +14,13 @@ import {AuthGuard} from "./guards/auth.guard";
 import {DashboardModule} from "./modules/dashboard/dashboard.module";
 import {CookieService} from 'angular2-cookie/services/cookies.service';
 import {GuestGuard} from "./guards/guest.guard";
-import {ModalModule} from 'ng2-bootstrap';
-import {ModalComponent} from "./components/modal/modal.component";
-import {ModalService} from "./services/modal.service";
-import {AlertModule} from 'ng2-bootstrap';
-import {BsDropdownModule} from 'ng2-bootstrap/dropdown/bs-dropdown.module';
 import {AdminModule} from "./modules/admin/admin.module";
 import {AdminGuard} from "./guards/admin.guard";
 
 @NgModule({
     declarations: [
         AppComponent,
-        NavigationComponent,
-        ModalComponent
+        NavigationComponent
     ],
     imports: [
         RouterModule,
@@ -38,12 +31,9 @@ import {AdminGuard} from "./guards/admin.guard";
         DashboardModule,
         AuthModule,
         AppRoutingModule,
-        AdminModule,
-        ModalModule.forRoot(),
-        AlertModule.forRoot(),
-        BsDropdownModule.forRoot(),
+        AdminModule
     ],
-    providers: [UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ModalService],
+    providers: [UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {

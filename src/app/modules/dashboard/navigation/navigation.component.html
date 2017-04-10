@@ -1,4 +1,4 @@
-<div class="col-lg-4 navigation">
+<div class="col-md-3 navigation">
     <h3>Компании</h3>
     <p-tree [value]="companies"
             selectionMode="single"
@@ -9,4 +9,5 @@
             <span>{{node.data}}</span>
         </ng-template>
     </p-tree>
+    <p-growl [value]="msgs"></p-growl>
 </div>

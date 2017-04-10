@@ -4,6 +4,7 @@ import {Auth} from "../../../models/Auth";
 import {Router} from "@angular/router";
 import {UsersService} from "../../../services/users.service";
 import {User} from "../../../models/User";
+import {Message} from 'primeng/primeng';
 
 @Component({
     selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
 
     private auth: Auth;
     private user: User;
-    private error = '';
+    private msgs: Message[] = [];
 
     constructor(private router: Router, private authService: AuthService, private usersService: UsersService) {
         this.auth = {email: 'demo@demo.ru', password: 'demo', remember: false};
@@ -35,12 +36,12 @@ export class LoginComponent implements OnInit {
                         this.router.navigate(['/dashboard'])
                     },
                     error => {
-                        this.error = error
+                        this.msgs.push({severity: 'warn', summary: 'Ошибка', detail: error});
                     }
                 );
             },
             error => {
-                this.error = error
+                this.msgs.push({severity: 'error', summary: 'Ошибка', detail: error});
             }
         );
     }
