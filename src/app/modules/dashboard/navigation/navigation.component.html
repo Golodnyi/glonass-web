@@ -1,6 +1,7 @@
 <div class="col-lg-4">
     <p-tree [value]="companies"
             selectionMode="single"
+            [(selection)]="node"
             (onNodeExpand)="onNodeExpand($event)"
             (onNodeSelect)="onNodeSelect($event)"
     ></p-tree>

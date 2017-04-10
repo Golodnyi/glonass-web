@@ -13,6 +13,7 @@ import {CarsService} from "../../../services/cars.service";
 export class NavigationComponent implements OnInit {
 
     public companies: TreeNode[];
+    public node: TreeNode;
 
     constructor(private companiesService: CompaniesService, private modal: ModalService, private subdivisionsService: SubdivisionsService, private carsService: CarsService) {
     }
