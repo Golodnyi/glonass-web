@@ -1,8 +1,12 @@
-<div class="col-lg-4">
+<div class="col-lg-4 navigation">
+    <h3>Компании</h3>
     <p-tree [value]="companies"
             selectionMode="single"
             [(selection)]="node"
             (onNodeExpand)="onNodeExpand($event)"
-            (onNodeSelect)="onNodeSelect($event)"
-    ></p-tree>
+            (onNodeSelect)="onNodeSelect($event)">
+        <ng-template let-node pTemplate type="default">
+            <span>{{node.data}}</span>
+        </ng-template>
+    </p-tree>
 </div>

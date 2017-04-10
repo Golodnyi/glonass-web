@@ -15,24 +15,10 @@ export class SubdivisionsComponent implements OnInit {
     private subdivisions: Subdivision[];
     @Input() company: Company;
 
-    constructor(private subdivisionsService: SubdivisionsService, private modal: ModalService, private companiesService: CompaniesService) {
+    constructor() {
     }
 
     ngOnInit() {
-        this.companiesService.getCompany().subscribe(company => {
-            this.subdivisionsService.getSubdivisions(company).subscribe(
-                subdivisions => {
-                    this.subdivisions = subdivisions;
-                },
-                error => {
-                    this.modal.show('Ошибка', error);
-                }
-            );
-        });
-    }
 
-    public changeSubdivision(subdivision: Subdivision)
-    {
-        this.subdivisionsService.setSubdivision(subdivision);
     }
 }

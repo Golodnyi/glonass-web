@@ -19,16 +19,10 @@ export class CompaniesComponent implements OnInit {
         this.companiesService.getCompanies().subscribe(
             companies => {
                 this.companies = companies;
-                this.companiesService.setCompany(companies[0]);
             },
             error => {
                 this.modal.show('Ошибка', error);
             }
         );
-    }
-
-    public changeCompany(company: Company)
-    {
-        this.companiesService.setCompany(company);
     }
 }

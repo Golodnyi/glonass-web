@@ -17,7 +17,6 @@ import {forEach} from "@angular/router/src/utils/collection";
 @Injectable()
 export class CompaniesService {
     private companiesUrl = '/v1/companies';
-    private company: Subject<Company> = new Subject();
 
     constructor(private http: Http, private authService: AuthService, private router: Router) {
     }
@@ -68,13 +67,5 @@ export class CompaniesService {
                 new Error(error, this.authService, this.router);
                 return Observable.throw(error.json().message || 'Server error')
             });
-    }
-
-    public setCompany(company: Company): void {
-        this.company.next(company);
-    }
-
-    public getCompany(): Observable<Company> {
-        return this.company.asObservable();
     }
 }

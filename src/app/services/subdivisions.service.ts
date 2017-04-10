@@ -16,7 +16,6 @@ import {TreeNode} from "primeng/primeng";
 @Injectable()
 export class SubdivisionsService {
     private subDivisionsCompanyUrl = '/v1/companies/:id/subdivisions';
-    private subdivision: Subject<Subdivision> = new Subject();
 
     constructor(private http: Http, private authService: AuthService, private router: Router) {
     }
@@ -68,13 +67,5 @@ export class SubdivisionsService {
                 new Error(error, this.authService, this.router);
                 return Observable.throw(error.json().message || 'Server error')
             });
-    }
-
-    public setSubdivision(subdivision: Subdivision): void {
-        this.subdivision.next(subdivision);
-    }
-
-    public getSubdivision(): Observable<Subdivision> {
-        return this.subdivision.asObservable();
     }
 }

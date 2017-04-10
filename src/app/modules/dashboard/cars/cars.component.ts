@@ -14,20 +14,11 @@ export class CarsComponent implements OnInit {
     private cars: Car[];
     @Input() company: Company;
 
-    constructor(private carsService: CarsService, private modal: ModalService, private subdivisionService: SubdivisionsService) {
+    constructor() {
     }
 
     ngOnInit() {
-        this.subdivisionService.getSubdivision().subscribe(subdivision => {
-            this.carsService.getCars(this.company.id, subdivision).subscribe(
-                cars => {
-                    this.cars = cars;
-                },
-                error => {
-                    this.modal.show('Ошибка', error);
-                }
-            );
-        });
+
     }
 
 }

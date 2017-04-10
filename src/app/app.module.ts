@@ -19,7 +19,7 @@ import {ModalModule} from 'ng2-bootstrap';
 import {ModalComponent} from "./components/modal/modal.component";
 import {ModalService} from "./services/modal.service";
 import {AlertModule} from 'ng2-bootstrap';
-import {DropdownModule} from 'ng2-bootstrap/dropdown';
+import {BsDropdownModule} from 'ng2-bootstrap/dropdown/bs-dropdown.module';
 import {AdminModule} from "./modules/admin/admin.module";
 import {AdminGuard} from "./guards/admin.guard";
 
@@ -41,7 +41,7 @@ import {AdminGuard} from "./guards/admin.guard";
         AdminModule,
         ModalModule.forRoot(),
         AlertModule.forRoot(),
-        DropdownModule.forRoot()
+        BsDropdownModule.forRoot(),
     ],
     providers: [UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ModalService],
     bootstrap: [AppComponent]
