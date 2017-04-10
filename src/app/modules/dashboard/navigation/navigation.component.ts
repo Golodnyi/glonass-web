@@ -43,7 +43,7 @@ export class NavigationComponent implements OnInit {
                 );
             } else if (event.node.type == 'subdivision')
             {
-                this.carsService.getCarsAsTree(event.node.parent.data, event.node.data).subscribe(
+                this.carsService.getCarsAsTree(event.node.parent.data, event.node.data, true, true).subscribe(
                     tree => {
                         event.node.children = tree;
                     },

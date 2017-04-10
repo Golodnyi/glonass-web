@@ -37,7 +37,7 @@ export class CompaniesService {
             });
     }
 
-    public getCompaniesAsTree(): Observable<TreeNode[]> {
+    public getCompaniesAsTree(leaf: boolean = false, selectable: boolean = false): Observable<TreeNode[]> {
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         var options = new RequestOptions({headers: headers, withCredentials: true});
@@ -56,8 +56,8 @@ export class CompaniesService {
                             "data": item.id,
                             "expandedIcon": "fa-folder-open",
                             "collapsedIcon": "fa-folder",
-                            "leaf": false,
-                            "selectable": false
+                            "leaf": leaf,
+                            "selectable": selectable
                         }
                     );
                 });

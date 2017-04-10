@@ -37,7 +37,7 @@ export class SubdivisionsService {
     }
 
 
-    public getSubdivisionsAsTree(company: number): Observable<TreeNode[]> {
+    public getSubdivisionsAsTree(company: number, leaf: boolean = false, selectable: boolean = false): Observable<TreeNode[]> {
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         var options = new RequestOptions({headers: headers, withCredentials: true});
@@ -56,8 +56,8 @@ export class SubdivisionsService {
                             "data": item.id,
                             "expandedIcon": "fa-folder-open",
                             "collapsedIcon": "fa-folder",
-                            "leaf": false,
-                            "selectable": false
+                            "leaf": leaf,
+                            "selectable": selectable
                         }
                     );
                 });

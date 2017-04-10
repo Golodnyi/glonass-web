@@ -33,7 +33,7 @@ export class CarsService {
             });
     }
 
-    public getCarsAsTree(company, subdivision): Observable<TreeNode[]> {
+    public getCarsAsTree(company, subdivision, leaf: boolean = false, selectable: boolean = false): Observable<TreeNode[]> {
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         var options = new RequestOptions({headers: headers, withCredentials: true});
@@ -51,7 +51,9 @@ export class CarsService {
                             "type": "car",
                             "data": item.id,
                             "expandedIcon": "fa-folder-open",
-                            "collapsedIcon": "fa-folder"
+                            "collapsedIcon": "fa-folder",
+                            "leaf": leaf,
+                            "selectable": selectable
                         }
                     );
                 });
