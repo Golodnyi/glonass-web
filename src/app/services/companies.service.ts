@@ -56,7 +56,8 @@ export class CompaniesService {
                             "data": item.id,
                             "expandedIcon": "fa-folder-open",
                             "collapsedIcon": "fa-folder",
-                            "leaf": false
+                            "leaf": false,
+                            "selectable": false
                         }
                     );
                 });

@@ -56,7 +56,8 @@ export class SubdivisionsService {
                             "data": item.id,
                             "expandedIcon": "fa-folder-open",
                             "collapsedIcon": "fa-folder",
-                            "leaf": false
+                            "leaf": false,
+                            "selectable": false
                         }
                     );
                 });

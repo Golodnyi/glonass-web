@@ -13,7 +13,6 @@ import {CarsService} from "../../../services/cars.service";
 export class NavigationComponent implements OnInit {
 
     public companies: TreeNode[];
-    public select: TreeNode;
 
     constructor(private companiesService: CompaniesService, private modal: ModalService, private subdivisionsService: SubdivisionsService, private carsService: CarsService) {
     }
@@ -30,7 +29,7 @@ export class NavigationComponent implements OnInit {
         );
     }
 
-    public loadNode(event: any) {
+    public onNodeExpand(event: any) {
         if (event.node) {
             if (event.node.type == 'company')
             {
@@ -55,5 +54,10 @@ export class NavigationComponent implements OnInit {
                 );
             }
         }
+    }
+
+    public onNodeSelect(event: any)
+    {
+        console.log(event.node);
     }
 }
