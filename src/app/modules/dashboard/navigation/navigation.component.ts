@@ -42,7 +42,6 @@ export class NavigationComponent implements OnInit {
                 );
             } else if (event.node.type == 'subdivision')
             {
-                console.log(event.node);
                 this.carsService.getCarsAsTree(event.node.parent.data, event.node.data).subscribe(
                     tree => {
                         event.node.children = tree;
