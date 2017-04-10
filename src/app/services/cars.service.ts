@@ -10,10 +10,12 @@ import {Router} from "@angular/router";
 import {Error} from "../models/Error";
 import {Car} from "../models/Car";
 import {TreeNode} from "primeng/primeng";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class CarsService {
     private carsSubDivisionsCompanyUrl = '/v1/companies/:company/subdivisions/:subdivision/cars';
+    private car: BehaviorSubject<number> = new BehaviorSubject(0);
 
     constructor(private http: Http, private authService: AuthService, private router: Router) {
     }
@@ -64,5 +66,13 @@ export class CarsService {
                 new Error(error, this.authService, this.router);
                 return Observable.throw(error.json().message || 'Server error')
             });
+    }
+
+    public setCar(car: number): void {
+        this.car.next(car);
+    }
+
+    public getCar(): Observable<number> {
+        return this.car.asObservable();
     }
 }

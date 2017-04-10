@@ -57,5 +57,9 @@ export class NavigationComponent implements OnInit {
 
     public onNodeSelect(event: any)
     {
+        if (event.node.type == 'car')
+        {
+            this.carsService.setCar(event.node.data);
+        }
     }
 }
