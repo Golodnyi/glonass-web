@@ -11,7 +11,7 @@ import {SubdivisionsService} from "../../services/subdivisions.service";
 import {CarsService} from "../../services/cars.service";
 import {CarsComponent} from "./cars/cars.component";
 import {NavigationComponent} from "./navigation/navigation.component";
-import {TreeModule,TreeNode} from 'primeng/primeng';
+import {TreeModule} from 'primeng/primeng';
 
 @NgModule({
     imports: [
