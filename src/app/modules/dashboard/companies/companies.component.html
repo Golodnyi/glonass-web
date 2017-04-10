@@ -1,5 +1,0 @@
-<tabset #staticTabs>
-    <tab *ngFor="let company of companies" heading="{{company.name}}" (select)="changeCompany(company)">
-        <app-subdivisions [company]="company"></app-subdivisions>
-    </tab>
-</tabset>
