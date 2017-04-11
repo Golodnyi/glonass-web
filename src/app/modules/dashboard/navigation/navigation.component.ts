@@ -19,6 +19,8 @@ export class NavigationComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.carsService.setCar(null);
+
         this.companiesService.getCompaniesAsTree().subscribe(
             tree => {
                 this.companies = tree;

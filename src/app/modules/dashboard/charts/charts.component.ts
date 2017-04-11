@@ -17,6 +17,11 @@ export class ChartsComponent implements OnInit {
     ngOnInit() {
         this.carsService.getCar().subscribe(
             car => {
+                if (car == null)
+                {
+                    return false;
+                }
+                
                 this.car = car;
                 this.chartsService.getData(car).subscribe(
                     data => {
