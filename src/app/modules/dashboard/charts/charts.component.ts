@@ -21,7 +21,7 @@ export class ChartsComponent implements OnInit {
                 {
                     return false;
                 }
-                
+
                 this.car = car;
                 this.chartsService.getData(car).subscribe(
                     data => {

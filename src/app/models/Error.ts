@@ -13,8 +13,7 @@ export class Error {
         if (this.error.status == 401) {
             this.authService.logout();
             this.router.navigate(['/login']);
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText);
-        }else if (this.error.status != 200) {
+        }else if (this.error.status == 500) {
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText);
         }
     }
