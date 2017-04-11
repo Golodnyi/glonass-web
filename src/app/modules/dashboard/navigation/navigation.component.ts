@@ -3,6 +3,7 @@ import {Message, TreeNode} from 'primeng/primeng';
 import {CompaniesService} from "../../../services/companies.service";
 import {SubdivisionsService} from "../../../services/subdivisions.service";
 import {CarsService} from "../../../services/cars.service";
+import {MsgService} from "../../../services/msg";
 
 @Component({
     selector: 'app-navigation',
@@ -13,9 +14,8 @@ export class NavigationComponent implements OnInit {
 
     public companies: TreeNode[];
     public node: TreeNode;
-    private msgs: Message[] = [];
 
-    constructor(private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService, private carsService: CarsService) {
+    constructor(private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService, private carsService: CarsService, private msgService: MsgService) {
     }
 
     ngOnInit() {
@@ -24,7 +24,7 @@ export class NavigationComponent implements OnInit {
                 this.companies = tree;
             },
             error => {
-                this.msgs.push({severity: 'error', summary: 'Ошибка', detail: error});
+                this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
             }
         );
     }
@@ -38,7 +38,7 @@ export class NavigationComponent implements OnInit {
                         event.node.children = tree;
                     },
                     error => {
-                        this.msgs.push({severity: 'error', summary: 'Ошибка', detail: error});
+                        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
                     }
                 );
             } else if (event.node.type == 'subdivision')
@@ -48,7 +48,7 @@ export class NavigationComponent implements OnInit {
                         event.node.children = tree;
                     },
                     error => {
-                        this.msgs.push({severity: 'error', summary: 'Ошибка', detail: error});
+                        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
                     }
                 );
             }

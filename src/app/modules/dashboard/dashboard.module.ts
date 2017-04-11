@@ -8,14 +8,12 @@ import {CarsService} from "../../services/cars.service";
 import {NavigationComponent} from "./navigation/navigation.component";
 import {TreeModule} from 'primeng/primeng';
 import {ChartsComponent} from "./charts/charts.component";
-import {GrowlModule} from 'primeng/primeng';
 
 @NgModule({
     imports: [
         CommonModule,
         DashboardRoutingModule,
-        TreeModule,
-        GrowlModule
+        TreeModule
     ],
     declarations: [DashboardComponent, NavigationComponent, ChartsComponent],
     bootstrap: [DashboardComponent],

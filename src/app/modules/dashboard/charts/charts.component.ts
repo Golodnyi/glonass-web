@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ChartsService} from "../../../services/charts.service";
-import {Message} from "primeng/primeng";
 import {CarsService} from "../../../services/cars.service";
+import {MsgService} from "../../../services/msg";
 
 @Component({
     selector: 'app-charts',
@@ -9,10 +9,9 @@ import {CarsService} from "../../../services/cars.service";
     styleUrls: ['./charts.component.css']
 })
 export class ChartsComponent implements OnInit {
-    private msgs: Message[] = [];
     private car: number;
 
-    constructor(private chartsService: ChartsService, private carsService: CarsService) {
+    constructor(private chartsService: ChartsService, private carsService: CarsService, private msgService: MsgService) {
     }
 
     ngOnInit() {
@@ -23,7 +22,7 @@ export class ChartsComponent implements OnInit {
                     data => {
                     },
                     error => {
-                        this.msgs.push({severity: 'error', summary: 'Ошибка', detail: error});
+                        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
                     }
                 );
             }

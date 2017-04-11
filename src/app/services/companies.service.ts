@@ -13,12 +13,13 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Subject} from "rxjs/Subject";
 import {TreeNode} from "primeng/primeng";
 import {forEach} from "@angular/router/src/utils/collection";
+import {MsgService} from "./msg";
 
 @Injectable()
 export class CompaniesService {
     private companiesUrl = '/v1/companies';
 
-    constructor(private http: Http, private authService: AuthService, private router: Router) {
+    constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
     }
 
     public getCompanies(): Observable<Company[]> {
@@ -31,7 +32,7 @@ export class CompaniesService {
                 return response.json()
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router);
+                new Error(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error')
             });
     }
@@ -64,7 +65,7 @@ export class CompaniesService {
                 return items;
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router);
+                new Error(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error')
             });
     }

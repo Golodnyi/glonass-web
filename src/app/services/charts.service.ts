@@ -9,12 +9,13 @@ import {AuthService} from "./auth.service";
 import {Router} from "@angular/router";
 import {Error} from "../models/Error";
 import {Car} from "../models/Car";
+import {MsgService} from "./msg";
 
 @Injectable()
 export class ChartsService {
     private carsSubDivisionsCompanyUrl = '/v1/companies/:car/notfound';
 
-    constructor(private http: Http, private authService: AuthService, private router: Router) {
+    constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
     }
 
     public getData(car): Observable<Car[]> {
@@ -27,7 +28,7 @@ export class ChartsService {
                 return response.json()
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router);
+                new Error(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error')
             });
     }

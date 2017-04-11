@@ -17,6 +17,8 @@ import {GuestGuard} from "./guards/guest.guard";
 import {AdminModule} from "./modules/admin/admin.module";
 import {AdminGuard} from "./guards/admin.guard";
 import {ChartsService} from "./services/charts.service";
+import {GrowlModule, MessagesModule} from "primeng/primeng";
+import {MsgService} from "./services/msg";
 
 @NgModule({
     declarations: [
@@ -32,9 +34,11 @@ import {ChartsService} from "./services/charts.service";
         DashboardModule,
         AuthModule,
         AppRoutingModule,
-        AdminModule
+        AdminModule,
+        GrowlModule,
+        MessagesModule
     ],
-    providers: [UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ChartsService],
+    providers: [MsgService, UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ChartsService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

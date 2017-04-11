@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UsersService} from '../../../services/users.service';
 import {User} from "../../../models/User";
 import {ActivatedRoute} from '@angular/router';
-import {Message} from "primeng/primeng";
+import {MsgService} from "../../../services/msg";
 
 @Component({
     selector: 'app-show',
@@ -12,9 +12,8 @@ import {Message} from "primeng/primeng";
 export class ShowComponent implements OnInit {
 
     private user: User;
-    private msgs: Message[] = [];
 
-    constructor(private usersService: UsersService, private route: ActivatedRoute) {
+    constructor(private usersService: UsersService, private route: ActivatedRoute, private msgService: MsgService) {
     }
 
     ngOnInit() {
@@ -23,7 +22,7 @@ export class ShowComponent implements OnInit {
                 this.user = user;
             },
             error => {
-                this.msgs.push({severity: 'error', summary: 'Ошибка', detail: error});
+                this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
             }
         );
     }

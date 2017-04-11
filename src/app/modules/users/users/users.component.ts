@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UsersService} from '../../../services/users.service';
 import {User} from "../../../models/User";
-import {Message} from "primeng/primeng";
+import {MsgService} from "../../../services/msg";
 
 @Component({
     selector: 'app-users',
@@ -11,9 +11,8 @@ import {Message} from "primeng/primeng";
 export class UsersComponent implements OnInit {
 
     private users: User[];
-    private msgs: Message[] = [];
 
-    constructor(private usersService: UsersService) {
+    constructor(private usersService: UsersService, private msgService: MsgService) {
     }
 
     ngOnInit() {
@@ -22,7 +21,7 @@ export class UsersComponent implements OnInit {
                 this.users = users;
             },
             error => {
-                this.msgs.push({severity: 'error', summary: 'Ошибка', detail: error});
+                this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
             }
          );
     }

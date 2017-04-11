@@ -12,12 +12,13 @@ import {Error} from "../models/Error";
 import {Subdivision} from "../models/Subdivision";
 import {Subject} from "rxjs/Subject";
 import {TreeNode} from "primeng/primeng";
+import {MsgService} from "./msg";
 
 @Injectable()
 export class SubdivisionsService {
     private subDivisionsCompanyUrl = '/v1/companies/:id/subdivisions';
 
-    constructor(private http: Http, private authService: AuthService, private router: Router) {
+    constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
     }
 
     public getSubdivisions(company: Company): Observable<Subdivision[]> {
@@ -30,7 +31,7 @@ export class SubdivisionsService {
                 return response.json()
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router);
+                new Error(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error')
             });
     }
@@ -64,7 +65,7 @@ export class SubdivisionsService {
                 return items;
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router);
+                new Error(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error')
             });
     }

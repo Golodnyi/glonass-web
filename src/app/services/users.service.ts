@@ -10,6 +10,7 @@ import {AuthService} from "./auth.service";
 import {Router} from "@angular/router";
 import {Error} from "../models/Error";
 import {Role} from "../models/Role";
+import {MsgService} from "./msg";
 
 @Injectable()
 export class UsersService {
@@ -17,7 +18,7 @@ export class UsersService {
     private userUrl = '/v1/users/:id';
     private roleUrl = '/v1/roles/:id';
 
-    constructor(private http: Http, private authService: AuthService, private router: Router) {
+    constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
     }
 
     public getUsers(): Observable<User[]> {
@@ -30,7 +31,7 @@ export class UsersService {
                 return response.json()
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router);
+                new Error(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error')
             });
     }
@@ -45,7 +46,7 @@ export class UsersService {
                 return response.json()
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router);
+                new Error(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error')
             });
     }
@@ -60,7 +61,7 @@ export class UsersService {
                 return response.json()
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router);
+                new Error(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error')
             });
     }

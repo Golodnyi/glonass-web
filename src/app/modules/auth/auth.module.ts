@@ -3,14 +3,12 @@ import {CommonModule} from '@angular/common';
 import {AuthRoutingModule} from './auth-routing.module';
 import {LoginComponent} from "./login/login.component";
 import {FormsModule} from "@angular/forms";
-import {GrowlModule} from 'primeng/primeng';
 
 @NgModule({
     imports: [
         CommonModule,
         AuthRoutingModule,
-        FormsModule,
-        GrowlModule
+        FormsModule
     ],
     declarations: [LoginComponent],
     bootstrap: [LoginComponent]
