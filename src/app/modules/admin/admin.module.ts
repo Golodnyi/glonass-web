@@ -3,14 +3,17 @@ import {CommonModule} from '@angular/common';
 import {AdminRoutingModule} from './admin-routing.module';
 import {AdminComponent} from "./admin/admin.component";
 import {FormsModule} from "@angular/forms";
+import {NavigationComponent} from "./navigation/navigation.component";
+import {TreeModule} from 'primeng/primeng';
 
 @NgModule({
     imports: [
         CommonModule,
         AdminRoutingModule,
-        FormsModule
+        FormsModule,
+        TreeModule
     ],
-    declarations: [AdminComponent],
+    declarations: [AdminComponent,  NavigationComponent],
     bootstrap: [AdminComponent]
 })
 export class AdminModule {
