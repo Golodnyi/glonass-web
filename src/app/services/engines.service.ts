@@ -13,7 +13,7 @@ import {MsgService} from './msg';
 import {Engine} from '../models/Engine';
 
 @Injectable()
-export class EngineService {
+export class EnginesService {
     private engineByCarUrl = '/v1/companies/:company/subdivisions/:subdivision/cars/:car/engine';
 
     constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
@@ -37,7 +37,7 @@ export class EngineService {
             });
     }
 
-    public getEngineAsTree(company, subdivision, car, leaf = false, selectable = false): Observable<TreeNode> {
+    public getEngineAsTree(company, subdivision, car, leaf = false, selectable = false): Observable<TreeNode[]> {
         const headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         const options = new RequestOptions({headers: headers, withCredentials: true});
@@ -49,16 +49,20 @@ export class EngineService {
             .map((response: Response) => {
                 let engine: Engine;
                 engine = response.json();
-                const item: TreeNode = {
-                    'label': String(engine.esn),
-                    'type': 'car',
-                    'data': engine.id,
-                    'expandedIcon': 'fa-folder-open',
-                    'collapsedIcon': 'fa-folder',
-                    'leaf': leaf,
-                    'selectable': selectable
-                };
-                return item;
+                if (engine.id) {
+                    const item: TreeNode[] = [{
+                        'label': String(engine.esn),
+                        'type': 'engine',
+                        'data': engine.id,
+                        'expandedIcon': 'fa-folder-open',
+                        'collapsedIcon': 'fa-folder',
+                        'leaf': leaf,
+                        'selectable': selectable
+                    }];
+                    return item;
+                }
+
+                return [];
             });
     }
 }

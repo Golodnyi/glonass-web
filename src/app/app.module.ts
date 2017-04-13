@@ -19,6 +19,7 @@ import {AdminGuard} from './guards/admin.guard';
 import {ChartsService} from './services/charts.service';
 import {GrowlModule, MessagesModule} from 'primeng/primeng';
 import {MsgService} from './services/msg';
+import {EnginesService} from "./services/engines.service";
 
 @NgModule({
     declarations: [
@@ -38,7 +39,7 @@ import {MsgService} from './services/msg';
         GrowlModule,
         MessagesModule
     ],
-    providers: [MsgService, UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ChartsService],
+    providers: [MsgService, UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ChartsService, EnginesService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

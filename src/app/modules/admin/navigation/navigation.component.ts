@@ -4,6 +4,7 @@ import {CompaniesService} from '../../../services/companies.service';
 import {SubdivisionsService} from '../../../services/subdivisions.service';
 import {CarsService} from '../../../services/cars.service';
 import {MsgService} from '../../../services/msg';
+import {EnginesService} from '../../../services/engines.service';
 
 @Component({
     selector: 'app-navigation',
@@ -15,7 +16,7 @@ export class NavigationComponent implements OnInit {
     public companies: TreeNode[];
     public node: TreeNode;
 
-    constructor(private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService, private carsService: CarsService, private msgService: MsgService) {
+    constructor(private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService, private carsService: CarsService, private msgService: MsgService, private enginesService: EnginesService) {
     }
 
     ngOnInit() {
@@ -43,7 +44,16 @@ export class NavigationComponent implements OnInit {
                     }
                 );
             } else if (event.node.type === 'subdivision') {
-                this.carsService.getCarsAsTree(event.node.parent.data, event.node.data, true, true).subscribe(
+                this.carsService.getCarsAsTree(event.node.parent.data, event.node.data, false, true).subscribe(
+                    tree => {
+                        event.node.children = tree;
+                    },
+                    error => {
+                        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+                    }
+                );
+            } else if (event.node.type === 'car') {
+                this.enginesService.getEngineAsTree(event.node.parent.parent.data, event.node.parent.data, event.node.data, true, true).subscribe(
                     tree => {
                         event.node.children = tree;
                     },
