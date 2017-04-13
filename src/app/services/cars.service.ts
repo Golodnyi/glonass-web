@@ -26,7 +26,7 @@ export class CarsService {
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         const options = new RequestOptions({headers: headers, withCredentials: true});
 
-        return this.http.get(env.backend + this.carsSubDivisionsCompanyUrl.replace(':company', '1').replace(':subdivision', '1'), options)
+        return this.http.get(env.backend + this.carsSubDivisionsCompanyUrl.replace(':company', String(company)).replace(':subdivision', String(subdivision)), options)
             .map((response: Response) => {
                 return response.json();
             })
