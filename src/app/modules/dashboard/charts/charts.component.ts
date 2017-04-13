@@ -9,28 +9,11 @@ import {MsgService} from '../../../services/msg';
     styleUrls: ['./charts.component.css']
 })
 export class ChartsComponent implements OnInit {
-    private car: number;
 
-    constructor(private chartsService: ChartsService, private carsService: CarsService, private msgService: MsgService) {
+    constructor() {
     }
 
     ngOnInit() {
-        this.carsService.getCar().subscribe(
-            car => {
-                if (car == null) {
-                    return false;
-                }
-
-                this.car = car;
-                this.chartsService.getData(car).subscribe(
-                    data => {
-                    },
-                    error => {
-                        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-                    }
-                );
-            }
-        );
     }
 
 }

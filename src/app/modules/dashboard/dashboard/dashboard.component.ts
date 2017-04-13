@@ -7,17 +7,11 @@ import {CarsService} from '../../../services/cars.service';
     styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-    private car: number;
 
-    constructor(private carService: CarsService) {
+    constructor() {
     }
 
     ngOnInit() {
-        this.carService.getCar().subscribe(
-            car => {
-                this.car = car;
-            }
-        );
     }
 
 }

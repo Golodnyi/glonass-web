@@ -4,6 +4,7 @@ import {CompaniesService} from '../../../services/companies.service';
 import {SubdivisionsService} from '../../../services/subdivisions.service';
 import {CarsService} from '../../../services/cars.service';
 import {MsgService} from '../../../services/msg';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-navigation',
@@ -15,12 +16,10 @@ export class NavigationComponent implements OnInit {
     public companies: TreeNode[];
     public node: TreeNode;
 
-    constructor(private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService, private carsService: CarsService, private msgService: MsgService) {
+    constructor(private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService, private carsService: CarsService, private msgService: MsgService, private router: Router) {
     }
 
     ngOnInit() {
-        this.carsService.setCar(null);
-
         this.companiesService.getCompaniesAsTree().subscribe(
             tree => {
                 this.companies = tree;
@@ -56,8 +55,6 @@ export class NavigationComponent implements OnInit {
     }
 
     public onNodeSelect(event: any) {
-        if (event.node.type === 'car') {
-            this.carsService.setCar(event.node.data);
-        }
+        this.router.navigate(['dashboard/charts/' + event.node.data]);
     }
 }

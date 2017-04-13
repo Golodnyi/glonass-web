@@ -16,7 +16,6 @@ import {MsgService} from './msg';
 @Injectable()
 export class CarsService {
     private carsSubDivisionsCompanyUrl = '/v1/companies/:company/subdivisions/:subdivision/cars';
-    private car: BehaviorSubject<number> = new BehaviorSubject(0);
 
     constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
     }
@@ -67,13 +66,5 @@ export class CarsService {
                 new Error(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
-    }
-
-    public setCar(car: number): void {
-        this.car.next(car);
-    }
-
-    public getCar(): Observable<number> {
-        return this.car.asObservable();
     }
 }
