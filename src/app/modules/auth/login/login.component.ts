@@ -4,8 +4,8 @@ import {Auth} from "../../../models/Auth";
 import {Router} from "@angular/router";
 import {UsersService} from "../../../services/users.service";
 import {User} from "../../../models/User";
-import {Message} from 'primeng/primeng';
 import {MsgService} from "../../../services/msg";
+import {CookieService} from "angular2-cookie/core";
 
 @Component({
     selector: 'app-login',
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
     private auth: Auth;
     private user: User;
 
-    constructor(private router: Router, private authService: AuthService, private usersService: UsersService, private msgService: MsgService) {
+    constructor(private router: Router, private authService: AuthService, private usersService: UsersService, private msgService: MsgService, private cookieService: CookieService) {
         this.auth = {email: 'demo@demo.ru', password: 'demo', remember: false};
     }
 
@@ -33,14 +33,16 @@ export class LoginComponent implements OnInit {
                     role => {
                         this.user.role = role;
                         localStorage.setItem('user', JSON.stringify(this.user));
-                        this.router.navigate(['/dashboard'])
+                        this.router.navigate(['/dashboard']);
                     },
                     error => {
+                        this.cookieService.remove('token');
                         this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
                     }
                 );
             },
             error => {
+                this.cookieService.remove('token');
                 this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
             }
         );
