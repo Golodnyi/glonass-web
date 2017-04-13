@@ -19,7 +19,7 @@ import {AdminGuard} from './guards/admin.guard';
 import {ChartsService} from './services/charts.service';
 import {GrowlModule, MessagesModule} from 'primeng/primeng';
 import {MsgService} from './services/msg';
-import {EnginesService} from "./services/engines.service";
+import {EnginesService} from './services/engines.service';
 
 @NgModule({
     declarations: [

@@ -5,6 +5,7 @@ import {SubdivisionsService} from '../../../services/subdivisions.service';
 import {CarsService} from '../../../services/cars.service';
 import {MsgService} from '../../../services/msg';
 import {EnginesService} from '../../../services/engines.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-navigation',
@@ -16,7 +17,7 @@ export class NavigationComponent implements OnInit {
     public companies: TreeNode[];
     public node: TreeNode;
 
-    constructor(private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService, private carsService: CarsService, private msgService: MsgService, private enginesService: EnginesService) {
+    constructor(private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService, private carsService: CarsService, private msgService: MsgService, private enginesService: EnginesService, private router: Router) {
     }
 
     ngOnInit() {
@@ -66,6 +67,7 @@ export class NavigationComponent implements OnInit {
     }
 
     public onNodeSelect(event: any) {
-        alert(event.node.type);
+        const object = event.node;
+        this.router.navigate(['/admin/' + object.type + '/' + object.data]);
     }
 }
