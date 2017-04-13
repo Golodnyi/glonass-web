@@ -7,7 +7,7 @@ import {ChartsComponent} from './charts/charts.component';
 const routes: Routes = [{
     path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard],
     children: [
-        {path: 'charts/:carID', component: ChartsComponent},
+        {path: 'charts/:car', component: ChartsComponent},
     ]
 }];
 

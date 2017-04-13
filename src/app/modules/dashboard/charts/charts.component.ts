@@ -14,7 +14,7 @@ export class ChartsComponent implements OnInit {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-            this.car = +params['carID'];
+            this.car = +params['car'];
         });
     }
 
