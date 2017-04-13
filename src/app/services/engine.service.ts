@@ -37,7 +37,7 @@ export class EngineService {
             });
     }
 
-    public getCarsAsTree(company, subdivision, car, leaf = false, selectable = false): Observable<TreeNode> {
+    public getEngineAsTree(company, subdivision, car, leaf = false, selectable = false): Observable<TreeNode> {
         const headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         const options = new RequestOptions({headers: headers, withCredentials: true});
