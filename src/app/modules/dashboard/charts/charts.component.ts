@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ChartsService} from '../../../services/charts.service';
-import {CarsService} from '../../../services/cars.service';
-import {MsgService} from '../../../services/msg';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
     selector: 'app-charts',
@@ -10,10 +8,14 @@ import {MsgService} from '../../../services/msg';
 })
 export class ChartsComponent implements OnInit {
 
-    constructor() {
+    private car: number;
+    constructor(private route: ActivatedRoute) {
     }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            this.car = +params['carID'];
+        });
     }
 
 }
