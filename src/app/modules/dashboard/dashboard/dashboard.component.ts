@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {CarsService} from '../../../services/cars.service';
 
 @Component({
     selector: 'app-dashboard',

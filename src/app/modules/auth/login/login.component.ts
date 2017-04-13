@@ -14,8 +14,8 @@ import {CookieService} from 'angular2-cookie/core';
 })
 export class LoginComponent implements OnInit {
 
-    private auth: Auth;
-    private user: User;
+    public auth: Auth;
+    public user: User;
 
     constructor(private router: Router, private authService: AuthService, private usersService: UsersService, private msgService: MsgService, private cookieService: CookieService) {
         this.auth = {email: 'demo@demo.ru', password: 'demo', remember: false};

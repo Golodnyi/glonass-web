@@ -8,7 +8,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ChartsComponent implements OnInit {
 
-    private car: number;
+    public car: number;
     constructor(private route: ActivatedRoute) {
     }
 

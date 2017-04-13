@@ -8,8 +8,8 @@ import {Message} from 'primeng/primeng';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    private growl: Message[] = [];
-    private msg: Message[] = [];
+    public growl: Message[] = [];
+    public msg: Message[] = [];
 
     constructor(private msgService: MsgService) {
     }

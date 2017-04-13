@@ -11,7 +11,7 @@ import {MsgService} from '../../../services/msg';
 })
 export class ShowComponent implements OnInit {
 
-    private user: User;
+    public user: User;
 
     constructor(private usersService: UsersService, private route: ActivatedRoute, private msgService: MsgService) {
     }
