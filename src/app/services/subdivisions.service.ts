@@ -4,15 +4,14 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {env} from "../../env";
-import {Company} from "../models/Company";
-import {AuthService} from "./auth.service";
-import {Router} from "@angular/router";
-import {Error} from "../models/Error";
-import {Subdivision} from "../models/Subdivision";
-import {Subject} from "rxjs/Subject";
-import {TreeNode} from "primeng/primeng";
-import {MsgService} from "./msg";
+import {env} from '../../env';
+import {Company} from '../models/Company';
+import {AuthService} from './auth.service';
+import {Router} from '@angular/router';
+import {Error} from '../models/Error';
+import {Subdivision} from '../models/Subdivision';
+import {TreeNode} from 'primeng/primeng';
+import {MsgService} from './msg';
 
 @Injectable()
 export class SubdivisionsService {
@@ -22,28 +21,28 @@ export class SubdivisionsService {
     }
 
     public getSubdivisions(company: Company): Observable<Subdivision[]> {
-        var headers = new Headers();
+        const headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        var options = new RequestOptions({headers: headers, withCredentials: true});
+        const options = new RequestOptions({headers: headers, withCredentials: true});
 
         return this.http.get(env.backend + this.subDivisionsCompanyUrl.replace(':id', String(company.id)), options)
             .map((response: Response) => {
-                return response.json()
+                return response.json();
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router, this.msgService);
-                return Observable.throw(error.json().message || 'Server error')
+                return Observable.throw(error.json().message || 'Server error');
             });
     }
 
 
-    public getSubdivisionsAsTree(company: number, leaf: boolean = false, selectable: boolean = false): Observable<TreeNode[]> {
-        var headers = new Headers();
+    public getSubdivisionsAsTree(company: number, leaf = false, selectable = false): Observable<TreeNode[]> {
+        const headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        var options = new RequestOptions({headers: headers, withCredentials: true});
+        const options = new RequestOptions({headers: headers, withCredentials: true});
 
-        var subdivisions: Subdivision[];
-        var items = [];
+        let subdivisions: Subdivision[];
+        const items = [];
 
         return this.http.get(env.backend + this.subDivisionsCompanyUrl.replace(':id', String(company)), options)
             .map((response: Response) => {
@@ -51,13 +50,13 @@ export class SubdivisionsService {
                 subdivisions.forEach(function (item) {
                     items.push(
                         {
-                            "label": item.name,
-                            "type": "subdivision",
-                            "data": item.id,
-                            "expandedIcon": "fa-folder-open",
-                            "collapsedIcon": "fa-folder",
-                            "leaf": leaf,
-                            "selectable": selectable
+                            'label': item.name,
+                            'type': 'subdivision',
+                            'data': item.id,
+                            'expandedIcon': 'fa-folder-open',
+                            'collapsedIcon': 'fa-folder',
+                            'leaf': leaf,
+                            'selectable': selectable
                         }
                     );
                 });
@@ -66,7 +65,7 @@ export class SubdivisionsService {
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router, this.msgService);
-                return Observable.throw(error.json().message || 'Server error')
+                return Observable.throw(error.json().message || 'Server error');
             });
     }
 }

@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Message} from "primeng/primeng";
-import {Subject} from "rxjs/Subject";
-import {Observable} from "rxjs/Observable";
+import {Message} from 'primeng/primeng';
+import {Subject} from 'rxjs/Subject';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class MsgService {

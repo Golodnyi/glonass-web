@@ -4,14 +4,14 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {env} from "../../env";
-import {AuthService} from "./auth.service";
-import {Router} from "@angular/router";
-import {Error} from "../models/Error";
-import {Car} from "../models/Car";
-import {TreeNode} from "primeng/primeng";
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import {MsgService} from "./msg";
+import {env} from '../../env';
+import {AuthService} from './auth.service';
+import {Router} from '@angular/router';
+import {Error} from '../models/Error';
+import {Car} from '../models/Car';
+import {TreeNode} from 'primeng/primeng';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {MsgService} from './msg';
 
 @Injectable()
 export class CarsService {
@@ -22,27 +22,27 @@ export class CarsService {
     }
 
     public getCars(company, subdivision): Observable<Car[]> {
-        var headers = new Headers();
+        const headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        var options = new RequestOptions({headers: headers, withCredentials: true});
+        const options = new RequestOptions({headers: headers, withCredentials: true});
 
         return this.http.get(env.backend + this.carsSubDivisionsCompanyUrl.replace(':company', '1').replace(':subdivision', '1'), options)
             .map((response: Response) => {
-                return response.json()
+                return response.json();
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router, this.msgService);
-                return Observable.throw(error.json().message || 'Server error')
+                return Observable.throw(error.json().message || 'Server error');
             });
     }
 
-    public getCarsAsTree(company, subdivision, leaf: boolean = false, selectable: boolean = false): Observable<TreeNode[]> {
-        var headers = new Headers();
+    public getCarsAsTree(company, subdivision, leaf = false, selectable = false): Observable<TreeNode[]> {
+        const headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        var options = new RequestOptions({headers: headers, withCredentials: true});
+        const options = new RequestOptions({headers: headers, withCredentials: true});
 
-        var cars: Car[];
-        var items = [];
+        let cars: Car[];
+        const items = [];
 
         return this.http.get(env.backend + this.carsSubDivisionsCompanyUrl.replace(':company', String(company)).replace(':subdivision', String(subdivision)), options)
             .map((response: Response) => {
@@ -50,13 +50,13 @@ export class CarsService {
                 cars.forEach(function (item) {
                     items.push(
                         {
-                            "label": item.name,
-                            "type": "car",
-                            "data": item.id,
-                            "expandedIcon": "fa-folder-open",
-                            "collapsedIcon": "fa-folder",
-                            "leaf": leaf,
-                            "selectable": selectable
+                            'label': item.name,
+                            'type': 'car',
+                            'data': item.id,
+                            'expandedIcon': 'fa-folder-open',
+                            'collapsedIcon': 'fa-folder',
+                            'leaf': leaf,
+                            'selectable': selectable
                         }
                     );
                 });
@@ -65,7 +65,7 @@ export class CarsService {
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router, this.msgService);
-                return Observable.throw(error.json().message || 'Server error')
+                return Observable.throw(error.json().message || 'Server error');
             });
     }
 

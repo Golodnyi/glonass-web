@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Message, TreeNode} from 'primeng/primeng';
-import {CompaniesService} from "../../../services/companies.service";
-import {SubdivisionsService} from "../../../services/subdivisions.service";
-import {CarsService} from "../../../services/cars.service";
-import {MsgService} from "../../../services/msg";
+import {TreeNode} from 'primeng/primeng';
+import {CompaniesService} from '../../../services/companies.service';
+import {SubdivisionsService} from '../../../services/subdivisions.service';
+import {CarsService} from '../../../services/cars.service';
+import {MsgService} from '../../../services/msg';
 
 @Component({
     selector: 'app-navigation',
@@ -33,8 +33,7 @@ export class NavigationComponent implements OnInit {
 
     public onNodeExpand(event: any) {
         if (event.node) {
-            if (event.node.type == 'company')
-            {
+            if (event.node.type === 'company') {
                 this.subdivisionsService.getSubdivisionsAsTree(event.node.data, false, true).subscribe(
                     tree => {
                         event.node.children = tree;
@@ -43,8 +42,7 @@ export class NavigationComponent implements OnInit {
                         this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
                     }
                 );
-            } else if (event.node.type == 'subdivision')
-            {
+            } else if (event.node.type === 'subdivision') {
                 this.carsService.getCarsAsTree(event.node.parent.data, event.node.data, true, true).subscribe(
                     tree => {
                         event.node.children = tree;
@@ -57,8 +55,7 @@ export class NavigationComponent implements OnInit {
         }
     }
 
-    public onNodeSelect(event: any)
-    {
+    public onNodeSelect(event: any) {
         alert(event.node.type);
     }
 }

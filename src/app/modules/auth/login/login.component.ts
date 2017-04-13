@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../../../services/auth.service";
-import {Auth} from "../../../models/Auth";
-import {Router} from "@angular/router";
-import {UsersService} from "../../../services/users.service";
-import {User} from "../../../models/User";
-import {MsgService} from "../../../services/msg";
-import {CookieService} from "angular2-cookie/core";
+import {AuthService} from '../../../services/auth.service';
+import {Auth} from '../../../models/Auth';
+import {Router} from '@angular/router';
+import {UsersService} from '../../../services/users.service';
+import {User} from '../../../models/User';
+import {MsgService} from '../../../services/msg';
+import {CookieService} from 'angular2-cookie/core';
 
 @Component({
     selector: 'app-login',

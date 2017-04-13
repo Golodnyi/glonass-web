@@ -4,16 +4,13 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {env} from "../../env";
-import {Company} from "../models/Company";
-import {AuthService} from "./auth.service";
-import {Router} from "@angular/router";
-import {Error} from "../models/Error";
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import {Subject} from "rxjs/Subject";
-import {TreeNode} from "primeng/primeng";
-import {forEach} from "@angular/router/src/utils/collection";
-import {MsgService} from "./msg";
+import {env} from '../../env';
+import {Company} from '../models/Company';
+import {AuthService} from './auth.service';
+import {Router} from '@angular/router';
+import {Error} from '../models/Error';
+import {TreeNode} from 'primeng/primeng';
+import {MsgService} from './msg';
 
 @Injectable()
 export class CompaniesService {
@@ -23,41 +20,41 @@ export class CompaniesService {
     }
 
     public getCompanies(): Observable<Company[]> {
-        var headers = new Headers();
+        const headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        var options = new RequestOptions({headers: headers, withCredentials: true});
+        const options = new RequestOptions({headers: headers, withCredentials: true});
 
         return this.http.get(env.backend + this.companiesUrl, options)
             .map((response: Response) => {
-                return response.json()
+                return response.json();
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router, this.msgService);
-                return Observable.throw(error.json().message || 'Server error')
+                return Observable.throw(error.json().message || 'Server error');
             });
     }
 
-    public getCompaniesAsTree(leaf: boolean = false, selectable: boolean = false): Observable<TreeNode[]> {
-        var headers = new Headers();
+    public getCompaniesAsTree(leaf = false, selectable = false): Observable<TreeNode[]> {
+        const headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        var options = new RequestOptions({headers: headers, withCredentials: true});
-
-        var companies: Company[];
-        var items: TreeNode[] = [];
+        const options = new RequestOptions({headers: headers, withCredentials: true});
 
         return this.http.get(env.backend + this.companiesUrl, options)
             .map((response: Response) => {
+                let companies: Company[];
+                const items: TreeNode[] = [];
+
                 companies = response.json();
                 companies.forEach(function (item) {
                     items.push(
                         {
-                            "label": item.name,
-                            "type": "company",
-                            "data": item.id,
-                            "expandedIcon": "fa-folder-open",
-                            "collapsedIcon": "fa-folder",
-                            "leaf": leaf,
-                            "selectable": selectable
+                            'label': item.name,
+                            'type': 'company',
+                            'data': item.id,
+                            'expandedIcon': 'fa-folder-open',
+                            'collapsedIcon': 'fa-folder',
+                            'leaf': leaf,
+                            'selectable': selectable
                         }
                     );
                 });
@@ -66,7 +63,7 @@ export class CompaniesService {
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router, this.msgService);
-                return Observable.throw(error.json().message || 'Server error')
+                return Observable.throw(error.json().message || 'Server error');
             });
     }
 }

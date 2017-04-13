@@ -5,8 +5,8 @@ import {User} from '../models/User';
 import {Observable, BehaviorSubject} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {env} from "../../env";
-import {Auth} from "../models/Auth";
+import {env} from '../../env';
+import {Auth} from '../models/Auth';
 import {CookieService} from 'angular2-cookie/core';
 
 @Injectable()
@@ -21,11 +21,11 @@ export class AuthService {
     }
 
     public login(auth: Auth): Observable<User> {
-        var headers = new Headers();
+        const headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        var options = new RequestOptions({headers: headers, withCredentials: true});
+        const options = new RequestOptions({headers: headers, withCredentials: true});
 
-        var remember = 0;
+        let remember = 0;
         if (auth.remember) {
             remember = 1;
         }
@@ -37,7 +37,7 @@ export class AuthService {
             })
             .catch((error: any) => {
                 this.logger.next(false);
-                return Observable.throw(error.json().message || 'Server error')
+                return Observable.throw(error.json().message || 'Server error');
             });
     }
 
@@ -50,8 +50,7 @@ export class AuthService {
     public isLoggedIn(): Observable<boolean> {
         if (localStorage.getItem('user') !== undefined && this.cookieService.get('token') !== undefined) {
             this.logger.next(true);
-        }
-        else {
+        } else {
             this.logout();
         }
 
@@ -59,7 +58,7 @@ export class AuthService {
     }
 
     public isAdmin(): Observable<boolean> {
-        var user: User = JSON.parse(localStorage.getItem('user'));
+        const user: User = JSON.parse(localStorage.getItem('user'));
 
         if (
             localStorage.getItem('user') !== undefined &&

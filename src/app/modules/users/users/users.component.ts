@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UsersService} from '../../../services/users.service';
-import {User} from "../../../models/User";
-import {MsgService} from "../../../services/msg";
+import {User} from '../../../models/User';
+import {MsgService} from '../../../services/msg';
 
 @Component({
     selector: 'app-users',
@@ -25,5 +25,4 @@ export class UsersComponent implements OnInit {
             }
          );
     }
-
 }

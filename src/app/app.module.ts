@@ -8,17 +8,17 @@ import {RouterModule} from '@angular/router';
 import {AppComponent} from './app.component';
 import {NavigationComponent} from './components/navigation/navigation.component';
 import {UsersService} from './services/users.service';
-import {AuthModule} from "./modules/auth/auth.module";
-import {AuthService} from "./services/auth.service";
-import {AuthGuard} from "./guards/auth.guard";
-import {DashboardModule} from "./modules/dashboard/dashboard.module";
+import {AuthModule} from './modules/auth/auth.module';
+import {AuthService} from './services/auth.service';
+import {AuthGuard} from './guards/auth.guard';
+import {DashboardModule} from './modules/dashboard/dashboard.module';
 import {CookieService} from 'angular2-cookie/services/cookies.service';
-import {GuestGuard} from "./guards/guest.guard";
-import {AdminModule} from "./modules/admin/admin.module";
-import {AdminGuard} from "./guards/admin.guard";
-import {ChartsService} from "./services/charts.service";
-import {GrowlModule, MessagesModule} from "primeng/primeng";
-import {MsgService} from "./services/msg";
+import {GuestGuard} from './guards/guest.guard';
+import {AdminModule} from './modules/admin/admin.module';
+import {AdminGuard} from './guards/admin.guard';
+import {ChartsService} from './services/charts.service';
+import {GrowlModule, MessagesModule} from 'primeng/primeng';
+import {MsgService} from './services/msg';
 
 @NgModule({
     declarations: [

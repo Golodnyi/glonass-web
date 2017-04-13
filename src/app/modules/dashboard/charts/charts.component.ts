@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ChartsService} from "../../../services/charts.service";
-import {CarsService} from "../../../services/cars.service";
-import {MsgService} from "../../../services/msg";
+import {Component, OnInit} from '@angular/core';
+import {ChartsService} from '../../../services/charts.service';
+import {CarsService} from '../../../services/cars.service';
+import {MsgService} from '../../../services/msg';
 
 @Component({
     selector: 'app-charts',
@@ -17,8 +17,7 @@ export class ChartsComponent implements OnInit {
     ngOnInit() {
         this.carsService.getCar().subscribe(
             car => {
-                if (car == null)
-                {
+                if (car == null) {
                     return false;
                 }
 

@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UsersService} from '../../../services/users.service';
-import {User} from "../../../models/User";
+import {User} from '../../../models/User';
 import {ActivatedRoute} from '@angular/router';
-import {MsgService} from "../../../services/msg";
+import {MsgService} from '../../../services/msg';
 
 @Component({
     selector: 'app-show',
@@ -26,5 +26,4 @@ export class ShowComponent implements OnInit {
             }
         );
     }
-
 }
