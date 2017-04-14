@@ -49,7 +49,7 @@ export class AuthService {
     }
 
     public isLoggedIn(): Observable<boolean> {
-        if (localStorage.getItem('user') !== undefined && this.cookieService.get('token') !== undefined) {
+        if (localStorage.getItem('user') !== null && this.cookieService.get('token') !== undefined) {
             this.logger.next(true);
         } else {
             this.logout();
@@ -62,11 +62,16 @@ export class AuthService {
         const user: User = JSON.parse(localStorage.getItem('user'));
 
         if (
-            localStorage.getItem('user') !== undefined &&
-            this.cookieService.get('token') !== undefined &&
-            user.role.is_global
+            localStorage.getItem('user') !== null &&
+            this.cookieService.get('token') !== undefined
         ) {
-            this.admin.next(true);
+            if (user.role.is_global) {
+                this.admin.next(true);
+            } else {
+                this.admin.next(false);
+            }
+        } else {
+            this.logout();
         }
 
         return this.admin.asObservable();
