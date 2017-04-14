@@ -7,6 +7,6 @@ export class User {
     role_id: number;
     role: Role;
     active: number;
-    created_at: string;
-    updated_at: string;
+    created_at: Date;
+    updated_at: Date;
 }

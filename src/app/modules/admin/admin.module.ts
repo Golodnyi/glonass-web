@@ -9,13 +9,21 @@ import {CompanyComponent} from './company/company.component';
 import {SubdivisionComponent} from './subdivision/subdivision.component';
 import {CarComponent} from './car/car.component';
 import {EngineComponent} from './engine/engine.component';
+import {InputTextModule} from 'primeng/primeng';
+import {ButtonModule} from 'primeng/primeng';
+import {CalendarModule} from 'primeng/primeng';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
         CommonModule,
         AdminRoutingModule,
         FormsModule,
-        TreeModule
+        TreeModule,
+        InputTextModule,
+        ButtonModule,
+        CalendarModule,
+        BrowserAnimationsModule
     ],
     declarations: [AdminComponent, NavigationComponent, CompanyComponent, SubdivisionComponent, CarComponent, EngineComponent],
     bootstrap: [AdminComponent]

@@ -1,8 +1,8 @@
 export class Company {
     id: number;
     name: string;
-    created_at: string;
-    updated_at: string;
-    active_till: string;
+    created_at: Date;
+    updated_at: Date;
+    active_till: Date;
     author_id: number;
 }
