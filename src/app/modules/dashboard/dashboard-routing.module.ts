@@ -5,7 +5,7 @@ import {AuthGuard} from '../../guards/auth.guard';
 import {ChartsComponent} from './charts/charts.component';
 
 const routes: Routes = [{
-    path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard],
+    path: '', component: DashboardComponent, canActivate: [AuthGuard],
     children: [
         {path: 'charts/:car', component: ChartsComponent},
     ]

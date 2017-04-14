@@ -5,11 +5,11 @@ import {AdminComponent} from './admin/admin.component';
 
 const routes: Routes = [
     {
-        path: 'admin', component: AdminComponent, canActivate: [AdminGuard],
+        path: '', component: AdminComponent, canActivate: [AdminGuard],
         children: [
             {
                 path: 'companies',
-                loadChildren: './companies/companies-routing.module#CompaniesRoutingModule'
+                loadChildren: './companies/companies.module#CompaniesModule'
             }
         ]
     }

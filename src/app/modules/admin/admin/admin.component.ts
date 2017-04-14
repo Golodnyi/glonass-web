@@ -25,6 +25,5 @@ export class AdminComponent implements OnInit {
     }
 
     public onSelect(event: any) {
-        alert(event);
     }
 }

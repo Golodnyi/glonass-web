@@ -6,16 +6,16 @@ const routes: Routes = [
         path: '',
         children: [
             {
-                path: 'users',
-                loadChildren: './modules/users/users-routing.module#UsersRoutingModule'
-            },
-            {
                 path: 'login',
-                loadChildren: './modules/auth/auth-routing.module#AuthRoutingModule'
+                loadChildren: './modules/auth/auth.module#AuthModule'
             },
             {
                 path: 'dashboard',
-                loadChildren: './modules/dashboard/dashboard-routing.module#DashboardRoutingModule'
+                loadChildren: './modules/dashboard/dashboard.module#DashboardModule'
+            },
+            {
+                path: 'admin',
+                loadChildren: './modules/admin/admin.module#AdminModule'
             }
         ]
     }
