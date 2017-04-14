@@ -8,6 +8,7 @@ import 'rxjs/add/operator/catch';
 import {env} from '../../env';
 import {Auth} from '../models/Auth';
 import {CookieService} from 'angular2-cookie/core';
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthService {
