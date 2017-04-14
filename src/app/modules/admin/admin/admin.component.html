@@ -1,4 +1,14 @@
-<div class="row">
-    <app-navigation></app-navigation>
-    <router-outlet></router-outlet>
-</div>
+<p-tabView>
+    <p-tabPanel header="Компании">
+        <div class="row">
+            <app-navigation></app-navigation>
+            <router-outlet></router-outlet>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Пользователи">
+        Content 2
+    </p-tabPanel>
+    <p-tabPanel header="Настройки">
+        Content 3
+    </p-tabPanel>
+</p-tabView>

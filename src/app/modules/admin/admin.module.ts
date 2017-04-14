@@ -13,6 +13,7 @@ import {InputTextModule} from 'primeng/primeng';
 import {ButtonModule} from 'primeng/primeng';
 import {CalendarModule} from 'primeng/primeng';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TabViewModule} from 'primeng/primeng';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
         InputTextModule,
         ButtonModule,
         CalendarModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        TabViewModule
     ],
     declarations: [AdminComponent, NavigationComponent, CompanyComponent, SubdivisionComponent, CarComponent, EngineComponent],
     bootstrap: [AdminComponent]
