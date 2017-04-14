@@ -37,7 +37,7 @@ import {EnginesService} from './services/engines.service';
         AppRoutingModule,
         AdminModule,
         GrowlModule,
-        MessagesModule
+        MessagesModule,
     ],
     providers: [MsgService, UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ChartsService, EnginesService],
     bootstrap: [AppComponent]

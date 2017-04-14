@@ -16,7 +16,6 @@ import {ChartsComponent} from './charts/charts.component';
         TreeModule
     ],
     declarations: [DashboardComponent, NavigationComponent, ChartsComponent],
-    bootstrap: [DashboardComponent],
     providers: [CompaniesService, SubdivisionsService, CarsService],
 })
 export class DashboardModule {

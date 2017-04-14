@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {TreeNode} from 'primeng/primeng';
-import {CompaniesService} from '../../../services/companies.service';
-import {SubdivisionsService} from '../../../services/subdivisions.service';
-import {CarsService} from '../../../services/cars.service';
-import {MsgService} from '../../../services/msg';
-import {EnginesService} from '../../../services/engines.service';
+import {CompaniesService} from '../../../../services/companies.service';
+import {SubdivisionsService} from '../../../../services/subdivisions.service';
+import {CarsService} from '../../../../services/cars.service';
+import {MsgService} from '../../../../services/msg';
+import {EnginesService} from '../../../../services/engines.service';
 import {Router} from '@angular/router';
 
 @Component({
-    selector: 'app-navigation',
+    selector: 'app-navigation-company',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.css']
 })
@@ -66,6 +66,6 @@ export class NavigationComponent implements OnInit {
 
     public onNodeSelect(event: any) {
         const object = event.node;
-        this.router.navigate(['/admin/' + object.type + '/' + object.data]);
+        this.router.navigate(['/admin/companies/' + object.type + '/' + object.data]);
     }
 }
