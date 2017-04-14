@@ -5,7 +5,7 @@ import {HttpModule} from '@angular/http';
 import {AppRoutingModule} from './app.routing.module';
 import {RouterModule} from '@angular/router';
 import {AppComponent} from './app.component';
-import {NavigationComponent} from './components/navigation/navigation.component';
+import {NavigationComponent} from './navigation.component';
 import {UsersService} from './services/users.service';
 import {AuthService} from './services/auth.service';
 import {AuthGuard} from './guards/auth.guard';

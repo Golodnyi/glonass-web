@@ -8,6 +8,10 @@ export class AdminGuard implements CanActivate {
     constructor(private authService: AuthService) {
     }
 
+    /**
+     * TODO: переписать говнокод
+     * @returns {boolean}
+     */
     canActivate() {
         let admin = false;
         this.authService.isAdmin().subscribe(isAdmin => {

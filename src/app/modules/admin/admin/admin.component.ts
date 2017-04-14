@@ -14,6 +14,11 @@ export class AdminComponent implements OnInit {
     constructor(private router: Router) {
     }
 
+    /**
+     * TODO: в текущем табе отсутствуют события
+     * нельзя отслеживать изменение вкладки (вроде как)
+     * разобраться или заменить другим компонентом с событиями
+     */
     ngOnInit() {
         this.items = [
             {label: 'Компании'},

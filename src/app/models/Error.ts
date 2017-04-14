@@ -9,6 +9,13 @@ import {MsgService} from '../services/msg';
 @Injectable()
 export class Error {
 
+    /**
+     * TODO: переписать на статический метод или че нить такое
+     * @param error
+     * @param authService
+     * @param router
+     * @param msgService
+     */
     constructor(private error: any, private authService: AuthService, private router: Router, private msgService: MsgService) {
         if (this.error.status === 401) {
             this.authService.logout();

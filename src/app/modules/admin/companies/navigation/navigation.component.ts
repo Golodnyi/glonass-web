@@ -20,6 +20,11 @@ export class NavigationComponent implements OnInit {
     constructor(private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService, private carsService: CarsService, private msgService: MsgService, private enginesService: EnginesService, private router: Router) {
     }
 
+    /**
+     * TODO: разобраться каким образом можно перезагружать компонент
+     * из другого компонента, нужно для актуализации информации
+     * после ее редактированяи в дочерних модулях/компонентах
+     */
     ngOnInit() {
         this.companiesService.getCompaniesAsTree(false, true).subscribe(
             tree => {

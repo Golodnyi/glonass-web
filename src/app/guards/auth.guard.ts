@@ -7,6 +7,10 @@ export class AuthGuard implements CanActivate {
 
     constructor(private router: Router, private authService: AuthService) { }
 
+    /**
+     * TODO: переписать говнокод
+     * @returns {boolean}
+     */
     canActivate() {
         let auth = false;
         this.authService.isLoggedIn().subscribe(loggedIn => {
