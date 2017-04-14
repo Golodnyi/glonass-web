@@ -8,12 +8,11 @@ import 'rxjs/add/operator/catch';
 import {env} from '../../env';
 import {Auth} from '../models/Auth';
 import {CookieService} from 'angular2-cookie/core';
-import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthService {
     private loginUrl = '/v1/auth/login';
-
+    private user: BehaviorSubject<User> = new BehaviorSubject(null);
     private logger: BehaviorSubject<boolean> = new BehaviorSubject(false);
     private admin: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -33,8 +32,9 @@ export class AuthService {
 
         return this.http.post(env.backend + this.loginUrl, 'email=' + auth.email + '&password=' + auth.password + '&remember=' + remember, options)
             .map((response: Response) => {
+                const user: User = response.json();
                 this.logger.next(true);
-                return response.json();
+                return user;
             })
             .catch((error: any) => {
                 this.logger.next(false);
@@ -45,6 +45,7 @@ export class AuthService {
     public logout() {
         localStorage.removeItem('user');
         this.cookieService.remove('token');
+        this.setCurrentUser(null);
         this.logger.next(false);
     }
 
@@ -75,5 +76,13 @@ export class AuthService {
         }
 
         return this.admin.asObservable();
+    }
+
+    public setCurrentUser(user: User): void {
+        this.user.next(user);
+    }
+
+    public getCurrentUser(): Observable<User> {
+        return this.user.asObservable();
     }
 }

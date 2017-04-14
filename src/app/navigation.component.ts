@@ -16,12 +16,8 @@ export class NavigationComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.authService.isLoggedIn().subscribe(loggedIn => {
-            if (loggedIn) {
-                this.user = JSON.parse(localStorage.getItem('user'));
-            } else {
-                this.user = null;
-            }
+        this.authService.getCurrentUser().subscribe(user => {
+            this.user = user;
         });
     }
 

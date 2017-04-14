@@ -11,13 +11,13 @@ import {Router} from '@angular/router';
 import {Error} from '../models/Error';
 import {Role} from '../models/Role';
 import {MsgService} from './msg';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class UsersService {
     private usersUrl = '/v1/users';
     private userUrl = '/v1/users/:id';
     private roleUrl = '/v1/roles/:id';
-
     constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
     }
 

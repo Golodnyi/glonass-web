@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
                     role => {
                         this.user.role = role;
                         localStorage.setItem('user', JSON.stringify(this.user));
+                        this.authService.setCurrentUser(this.user);
                         this.router.navigate(['/dashboard']);
                     },
                     error => {
