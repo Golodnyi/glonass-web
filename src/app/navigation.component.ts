@@ -29,8 +29,4 @@ export class NavigationComponent implements OnInit {
         this.authService.logout();
         this.router.navigate(['/login']);
     }
-
-    subdivisions() {
-
-    }
 }
