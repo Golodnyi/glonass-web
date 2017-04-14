@@ -13,10 +13,10 @@ import {CarComponent} from './car/car.component';
 import {EngineComponent} from './engine/engine.component';
 import {SubdivisionComponent} from './subdivision/subdivision.component';
 import {CompaniesComponent} from './companies/companies.component';
-import {CompaniesService} from "../../../services/companies.service";
-import {SubdivisionsService} from "../../../services/subdivisions.service";
-import {CarsService} from "../../../services/cars.service";
-import {EnginesService} from "../../../services/engines.service";
+import {CompaniesService} from '../../../services/companies.service';
+import {SubdivisionsService} from '../../../services/subdivisions.service';
+import {CarsService} from '../../../services/cars.service';
+import {EnginesService} from '../../../services/engines.service';
 
 @NgModule({
     imports: [
