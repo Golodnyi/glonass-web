@@ -8,6 +8,7 @@ import 'rxjs/add/operator/catch';
 import {env} from '../../env';
 import {Auth} from '../models/Auth';
 import {CookieService} from 'angular2-cookie/core';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
     private logger: BehaviorSubject<boolean> = new BehaviorSubject(false);
     private admin: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-    constructor(private http: Http, private cookieService: CookieService) {
+    constructor(private http: Http, private cookieService: CookieService, private router: Router) {
         this.isLoggedIn();
     }
 
@@ -46,35 +47,38 @@ export class AuthService {
         localStorage.removeItem('user');
         this.cookieService.remove('token');
         this.setCurrentUser(null);
-        this.logger.next(false);
+        this.router.navigate(['/login']);
     }
 
-    public isLoggedIn(): Observable<boolean> {
+    private setStateAuth(): void {
+        const state = this.logger.getValue();
+
         if (localStorage.getItem('user') !== null && this.cookieService.get('token') !== undefined) {
             this.logger.next(true);
         } else {
-            this.logout();
-        }
+            this.logger.next(false);
 
+            if (state !== false) {
+                this.logout();
+            }
+        }
+    }
+
+    public isLoggedIn(): Observable<boolean> {
+        this.setStateAuth();
         return this.logger.asObservable();
     }
 
     public isAdmin(): Observable<boolean> {
+        this.setStateAuth();
+
         const user: User = JSON.parse(localStorage.getItem('user'));
 
-        if (
-            localStorage.getItem('user') !== null &&
-            this.cookieService.get('token') !== undefined
-        ) {
-            if (user.role.is_global) {
-                this.admin.next(true);
-            } else {
-                this.admin.next(false);
-            }
+        if (user.role.is_global) {
+            this.admin.next(true);
         } else {
-            this.logout();
+            this.admin.next(false);
         }
-
         return this.admin.asObservable();
     }
 
