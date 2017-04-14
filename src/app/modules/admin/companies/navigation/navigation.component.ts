@@ -8,7 +8,7 @@ import {EnginesService} from '../../../../services/engines.service';
 import {Router} from '@angular/router';
 
 @Component({
-    selector: 'app-navigation-company',
+    selector: 'app-navigation',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.css']
 })

@@ -5,7 +5,6 @@ import {TreeModule} from 'primeng/primeng';
 import {InputTextModule} from 'primeng/primeng';
 import {ButtonModule} from 'primeng/primeng';
 import {CalendarModule} from 'primeng/primeng';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TabMenuModule} from 'primeng/primeng';
 import {CompaniesRoutingModule} from './companies-routing.module';
 import {NavigationComponent} from './navigation/navigation.component';
@@ -14,6 +13,10 @@ import {CarComponent} from './car/car.component';
 import {EngineComponent} from './engine/engine.component';
 import {SubdivisionComponent} from './subdivision/subdivision.component';
 import {CompaniesComponent} from './companies/companies.component';
+import {CompaniesService} from "../../../services/companies.service";
+import {SubdivisionsService} from "../../../services/subdivisions.service";
+import {CarsService} from "../../../services/cars.service";
+import {EnginesService} from "../../../services/engines.service";
 
 @NgModule({
     imports: [
@@ -24,10 +27,10 @@ import {CompaniesComponent} from './companies/companies.component';
         InputTextModule,
         ButtonModule,
         CalendarModule,
-        BrowserAnimationsModule,
         TabMenuModule
     ],
     declarations: [NavigationComponent, CompaniesComponent, CompanyComponent, CarComponent, EngineComponent, SubdivisionComponent],
+    providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService],
 })
 export class CompaniesModule {
 }

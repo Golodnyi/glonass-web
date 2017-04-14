@@ -16,6 +16,7 @@ import {ChartsService} from './services/charts.service';
 import {GrowlModule, MessagesModule} from 'primeng/primeng';
 import {MsgService} from './services/msg';
 import {EnginesService} from './services/engines.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import {EnginesService} from './services/engines.service';
         AppRoutingModule,
         GrowlModule,
         MessagesModule,
+        BrowserAnimationsModule
     ],
     providers: [MsgService, UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ChartsService, EnginesService],
     bootstrap: [AppComponent]
