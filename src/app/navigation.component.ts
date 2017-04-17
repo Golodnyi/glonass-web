@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from './models/User';
 import {AuthService} from './services/auth.service';
-import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-navigation',
@@ -12,7 +11,7 @@ export class NavigationComponent implements OnInit {
 
     public user: User;
 
-    constructor(private router: Router, private authService: AuthService) {
+    constructor(private authService: AuthService) {
     }
 
     ngOnInit() {

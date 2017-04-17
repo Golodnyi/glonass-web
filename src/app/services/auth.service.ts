@@ -56,6 +56,7 @@ export class AuthService {
         const state = this.logger.getValue();
 
         if (localStorage.getItem('user') !== null && this.cookieService.get('token') !== undefined) {
+            this.setCurrentUser(JSON.parse(localStorage.getItem('user')));
             this.logger.next(true);
         } else {
             this.logger.next(false);
