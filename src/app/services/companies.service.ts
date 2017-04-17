@@ -11,6 +11,7 @@ import {Router} from '@angular/router';
 import {Error} from '../models/Error';
 import {TreeNode} from 'primeng/primeng';
 import {MsgService} from './msg';
+import * as moment from 'moment';
 
 @Injectable()
 export class CompaniesService {
@@ -76,7 +77,11 @@ export class CompaniesService {
 
         return this.http.get(env.backend + this.getUrl.replace(':id', String(company)), options)
             .map((response: Response) => {
-                return response.json();
+                const companyObj: Company = response.json();
+                companyObj.active_till = moment(companyObj.active_till).toDate();
+                companyObj.created_at = moment(companyObj.created_at).toDate();
+                companyObj.updated_at = moment(companyObj.updated_at).toDate();
+                return companyObj;
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router, this.msgService);
@@ -91,7 +96,7 @@ export class CompaniesService {
 
         return this.http.put(
             env.backend + this.updateUrl.replace(':id', String(company.id)),
-            'name=' + company.name + '&active_till=' + company.active_till,
+            'name=' + company.name + '&active_till=' + moment(company.active_till).format('YYYY-MM-DD HH:mm:ss'),
             options)
             .map((response: Response) => {
                 return response.json();
