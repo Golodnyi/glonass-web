@@ -3,6 +3,8 @@ import {ActivatedRoute} from '@angular/router';
 import {Company} from '../../../../models/Company';
 import {CompaniesService} from '../../../../services/companies.service';
 import {MsgService} from '../../../../services/msg';
+import {User} from "../../../../models/User";
+import {UsersService} from "../../../../services/users.service";
 
 @Component({
     selector: 'app-company',
@@ -19,7 +21,10 @@ export class CompanyComponent implements OnInit {
     private id: number;
     public company: Company;
     public ru: any;
-    constructor(private route: ActivatedRoute, private companiesService: CompaniesService, private msg: MsgService) {
+    public users: User[];
+    public matchUsers: User[];
+
+    constructor(private route: ActivatedRoute, private companiesService: CompaniesService, private msg: MsgService, private usersService: UsersService) {
     }
 
     ngOnInit() {
@@ -28,8 +33,8 @@ export class CompanyComponent implements OnInit {
             dayNames: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
             dayNamesShort: ['Вск', 'Пнд', 'Втр', 'Срд', 'Чтв', 'Птн', 'Сбт'],
             dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-            monthNames: [ 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь' ],
-            monthNamesShort: [ 'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек' ]
+            monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+            monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
         };
 
         this.route.params.subscribe(params => {
@@ -40,6 +45,12 @@ export class CompanyComponent implements OnInit {
                 }
             );
         });
+        this.usersService.getUsers().subscribe(
+            users => {
+                this.users = users;
+                this.matchUsers = this.users;
+            }
+        );
     }
 
     public save() {
@@ -52,5 +63,13 @@ export class CompanyComponent implements OnInit {
                 this.msg.notice(MsgService.ERROR, 'Ошибка', error);
             }
         );
+    }
+
+    public search(event: any) {
+        this.matchUsers = this.usersService.findByName(event.query, this.users);
+    }
+
+    public onSelect(event: User) {
+        this.company.author_id = event.id;
     }
 }

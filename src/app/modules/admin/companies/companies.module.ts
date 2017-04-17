@@ -6,6 +6,7 @@ import {InputTextModule} from 'primeng/primeng';
 import {ButtonModule} from 'primeng/primeng';
 import {CalendarModule} from 'primeng/primeng';
 import {TabMenuModule} from 'primeng/primeng';
+import {AutoCompleteModule} from 'primeng/primeng';
 import {CompaniesRoutingModule} from './companies-routing.module';
 import {NavigationComponent} from './navigation/navigation.component';
 import {CompanyComponent} from './company/company.component';
@@ -27,7 +28,8 @@ import {EnginesService} from '../../../services/engines.service';
         InputTextModule,
         ButtonModule,
         CalendarModule,
-        TabMenuModule
+        TabMenuModule,
+        AutoCompleteModule
     ],
     declarations: [NavigationComponent, CompaniesComponent, CompanyComponent, CarComponent, EngineComponent, SubdivisionComponent],
     providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService],

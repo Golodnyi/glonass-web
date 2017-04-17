@@ -2,7 +2,9 @@
   <label for="name">Название:</label><br/>
   <input class="input-sm" id="name" type="text" [(ngModel)]="company.name" pInputText value="{{company.name}}"/><br/>
   <label for="active_till">Дата блокировки аккаунта:</label><br/>
-  <p-calendar id="active_till" [(ngModel)]="company.active_till" showTime="showTime" hourFormat="24" [locale]="ru"></p-calendar>
+  <p-calendar id="active_till" [(ngModel)]="company.active_till" showTime="showTime" hourFormat="24" [locale]="ru"></p-calendar><br/>
+  <label for="author">Владелец:</label><br/>
+  <p-autoComplete id="author" [(ngModel)]="company.author" field="name" disabled="disabled"></p-autoComplete>
   <hr/>
   <button class="btn btn-success" pButton type="button" (click)="save()" label="Сохранить"></button>
 </fieldset>

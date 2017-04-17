@@ -12,6 +12,7 @@ import {Error} from '../models/Error';
 import {TreeNode} from 'primeng/primeng';
 import {MsgService} from './msg';
 import * as moment from 'moment';
+import {UsersService} from "./users.service";
 
 @Injectable()
 export class CompaniesService {
@@ -19,7 +20,7 @@ export class CompaniesService {
     private getUrl = '/v1/companies/:id';
     private updateUrl = '/v1/companies/:id';
 
-    constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
+    constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService, private usersService: UsersService) {
     }
 
     public getCompanies(): Observable<Company[]> {
@@ -78,6 +79,11 @@ export class CompaniesService {
         return this.http.get(env.backend + this.getUrl.replace(':id', String(company)), options)
             .map((response: Response) => {
                 const companyObj: Company = response.json();
+                this.usersService.getUser(companyObj.author_id).subscribe(
+                    user => {
+                        companyObj.author = user;
+                    }
+                );
                 companyObj.active_till = moment(companyObj.active_till).toDate();
                 companyObj.created_at = moment(companyObj.created_at).toDate();
                 companyObj.updated_at = moment(companyObj.updated_at).toDate();
@@ -99,7 +105,16 @@ export class CompaniesService {
             'name=' + company.name + '&active_till=' + moment(company.active_till).format('YYYY-MM-DD HH:mm:ss'),
             options)
             .map((response: Response) => {
-                return response.json();
+                const companyObj: Company = response.json();
+                this.usersService.getUser(companyObj.author_id).subscribe(
+                    user => {
+                        companyObj.author = user;
+                    }
+                );
+                companyObj.active_till = moment(companyObj.active_till).toDate();
+                companyObj.created_at = moment(companyObj.created_at).toDate();
+                companyObj.updated_at = moment(companyObj.updated_at).toDate();
+                return companyObj;
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router, this.msgService);

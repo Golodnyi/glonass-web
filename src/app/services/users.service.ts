@@ -18,6 +18,7 @@ export class UsersService {
     private usersUrl = '/v1/users';
     private userUrl = '/v1/users/:id';
     private roleUrl = '/v1/roles/:id';
+
     constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
     }
 
@@ -64,5 +65,17 @@ export class UsersService {
                 new Error(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
+    }
+
+    public findByName(name: string, users: User[] = null): User[] {
+        if (users === null) {
+            users = [];
+            // TODO: отправка запроса на бэкенд
+        }
+        const user = users.filter(function (obj) {
+            return obj.name.toLowerCase().startsWith(name.toLowerCase());
+        });
+
+        return user;
     }
 }
