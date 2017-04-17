@@ -25,6 +25,7 @@
         "../node_modules/font-awesome/css/font-awesome.min.css"
       ],
       "scripts": [
+        "../node_modules/moment/min/moment.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
