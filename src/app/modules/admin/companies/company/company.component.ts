@@ -21,8 +21,6 @@ export class CompanyComponent implements OnInit {
     private id: number;
     public company: Company;
     public ru: any;
-    public users: User[];
-    public matchUsers: User[];
 
     constructor(private route: ActivatedRoute, private companiesService: CompaniesService, private msg: MsgService, private usersService: UsersService) {
     }
@@ -45,12 +43,6 @@ export class CompanyComponent implements OnInit {
                 }
             );
         });
-        this.usersService.getUsers().subscribe(
-            users => {
-                this.users = users;
-                this.matchUsers = this.users;
-            }
-        );
     }
 
     public save() {
@@ -63,13 +55,5 @@ export class CompanyComponent implements OnInit {
                 this.msg.notice(MsgService.ERROR, 'Ошибка', error);
             }
         );
-    }
-
-    public search(event: any) {
-        this.matchUsers = this.usersService.findByName(event.query, this.users);
-    }
-
-    public onSelect(event: User) {
-        this.company.author_id = event.id;
     }
 }
