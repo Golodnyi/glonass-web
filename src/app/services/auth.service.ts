@@ -47,6 +47,8 @@ export class AuthService {
         localStorage.removeItem('user');
         this.cookieService.remove('token');
         this.setCurrentUser(null);
+        this.logger.next(false);
+        this.admin.next(false);
         this.router.navigate(['/login']);
     }
 
@@ -74,7 +76,11 @@ export class AuthService {
 
         const user: User = JSON.parse(localStorage.getItem('user'));
 
-        if (user.role.is_global) {
+        if (user === null) {
+            this.logout();
+        }
+
+        if (user.role.is_global && this.logger.getValue()) {
             this.admin.next(true);
         } else {
             this.admin.next(false);
