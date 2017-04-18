@@ -151,7 +151,7 @@ export class CompaniesService {
             });
     }
 
-    public delete(company: Company): Observable<null> {
+    public delete(company: Company): Observable<boolean> {
         if (!confirm('Вы действительно хотите удалить компанию?')) {
             return null;
         }
@@ -161,7 +161,7 @@ export class CompaniesService {
         return this.http.delete(env.backend + this.deleteUrl.replace(':id', String(company.id)), options)
             .map((response: Response) => {
                 this.msgService.notice(MsgService.SUCCESS, 'Удалена', response.json().message);
-                return null;
+                return true;
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router, this.msgService);
