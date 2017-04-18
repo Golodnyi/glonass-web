@@ -1,22 +1,22 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Company} from '../../../../models/Company';
-import {CompaniesService} from '../../../../services/companies.service';
-import {MsgService} from '../../../../services/msg';
-import {User} from "../../../../models/User";
-import {UsersService} from "../../../../services/users.service";
+import {Company} from '../../../../../models/Company';
+import {CompaniesService} from '../../../../../services/companies.service';
+import {MsgService} from '../../../../../services/msg';
+import {User} from "../../../../../models/User";
+import {UsersService} from "../../../../../services/users.service";
 
 @Component({
-    selector: 'app-company',
-    templateUrl: './company.component.html',
-    styleUrls: ['./company.component.css']
+    selector: 'app-company-update',
+    templateUrl: './update.component.html',
+    styleUrls: ['./update.component.css']
 })
 /**
  * TODO:
  * изменить формат дат на DateTime
  * При изменении компаний, обновлять информацию в дереве компаний
  */
-export class CompanyComponent implements OnInit {
+export class CompanyUpdateComponent implements OnInit {
 
     private id: number;
     public company: Company;

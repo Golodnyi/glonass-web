@@ -7,9 +7,9 @@ import {ButtonModule} from 'primeng/primeng';
 import {CalendarModule} from 'primeng/primeng';
 import {TabMenuModule} from 'primeng/primeng';
 import {AutoCompleteModule} from 'primeng/primeng';
+import {ToolbarModule} from 'primeng/primeng';
 import {CompaniesRoutingModule} from './companies-routing.module';
 import {NavigationComponent} from './navigation/navigation.component';
-import {CompanyComponent} from './company/company.component';
 import {CarComponent} from './car/car.component';
 import {EngineComponent} from './engine/engine.component';
 import {SubdivisionComponent} from './subdivision/subdivision.component';
@@ -18,6 +18,7 @@ import {CompaniesService} from '../../../services/companies.service';
 import {SubdivisionsService} from '../../../services/subdivisions.service';
 import {CarsService} from '../../../services/cars.service';
 import {EnginesService} from '../../../services/engines.service';
+import {CompanyUpdateComponent} from './company/update/update.component';
 
 @NgModule({
     imports: [
@@ -29,9 +30,10 @@ import {EnginesService} from '../../../services/engines.service';
         ButtonModule,
         CalendarModule,
         TabMenuModule,
-        AutoCompleteModule
+        AutoCompleteModule,
+        ToolbarModule
     ],
-    declarations: [NavigationComponent, CompaniesComponent, CompanyComponent, CarComponent, EngineComponent, SubdivisionComponent],
+    declarations: [NavigationComponent, CompaniesComponent, CompanyUpdateComponent, CarComponent, EngineComponent, SubdivisionComponent],
     providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService],
 })
 export class CompaniesModule {
