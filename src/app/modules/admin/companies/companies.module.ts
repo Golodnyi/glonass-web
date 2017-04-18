@@ -19,6 +19,7 @@ import {SubdivisionsService} from '../../../services/subdivisions.service';
 import {CarsService} from '../../../services/cars.service';
 import {EnginesService} from '../../../services/engines.service';
 import {CompanyUpdateComponent} from './company/update/update.component';
+import {CompanyCreateComponent} from './company/create/create.component';
 
 @NgModule({
     imports: [
@@ -33,7 +34,7 @@ import {CompanyUpdateComponent} from './company/update/update.component';
         AutoCompleteModule,
         ToolbarModule
     ],
-    declarations: [NavigationComponent, CompaniesComponent, CompanyUpdateComponent, CarComponent, EngineComponent, SubdivisionComponent],
+    declarations: [NavigationComponent, CompaniesComponent, CompanyUpdateComponent, CompanyCreateComponent, CarComponent, EngineComponent, SubdivisionComponent],
     providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService],
 })
 export class CompaniesModule {

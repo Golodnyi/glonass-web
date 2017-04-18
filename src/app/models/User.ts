@@ -1,12 +1,13 @@
-import {Role} from './Role';
-export class User {
-    id: number;
-    login: string;
-    name: string;
-    email: string;
-    role_id: number;
-    role: Role;
-    active: number;
-    created_at: Date;
-    updated_at: Date;
+import {IRole} from './interface/IRole';
+import {IUser} from './interface/IUser';
+export class User implements IUser {
+    id: number = null;
+    login: string = null;
+    name: string = null;
+    email: string = null;
+    role_id: number = null;
+    role: IRole = null;
+    active: number = null;
+    created_at: Date = null;
+    updated_at: Date = null;
 }

@@ -1,26 +1,31 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {Company} from '../../../../../models/Company';
-import {CompaniesService} from '../../../../../services/companies.service';
 import {MsgService} from '../../../../../services/msg';
-import {UsersService} from '../../../../../services/users.service';
+import {AuthService} from '../../../../../services/auth.service';
+import {CompaniesService} from "../../../../../services/companies.service";
 
 @Component({
-    selector: 'app-company-update',
-    templateUrl: './update.component.html',
-    styleUrls: ['./update.component.css']
+    selector: 'app-company-create',
+    templateUrl: './create.component.html',
+    styleUrls: ['./create.component.css']
 })
 
-export class CompanyUpdateComponent implements OnInit {
+export class CompanyCreateComponent implements OnInit {
 
-    private id: number;
-    public company: Company;
+    public company: Company = new Company();
     public ru: any;
 
-    constructor(private route: ActivatedRoute, private companiesService: CompaniesService, private msg: MsgService, private usersService: UsersService) {
+    constructor(private authService: AuthService, private msg: MsgService, private companiesServie: CompaniesService) {
+        this.company.active_till = new Date();
+        this.company.active_till.setMonth(this.company.active_till.getMonth() + 12);
     }
 
     ngOnInit() {
+        this.authService.getCurrentUser().subscribe(
+            user => {
+                this.company.author = user;
+            }
+        );
         this.ru = {
             firstDayOfWeek: 0,
             dayNames: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
@@ -29,26 +34,17 @@ export class CompanyUpdateComponent implements OnInit {
             monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
             monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
         };
-
-        this.route.params.subscribe(params => {
-            this.id = +params['id'];
-            this.companiesService.get(this.id).subscribe(
-                company => {
-                    this.company = company;
-                }
-            );
-        });
     }
 
-    public save() {
-        if (!this.company.name.length) {
-            this.msg.msg(MsgService.ERROR, 'Заполинте все поля', 'Заполните название компании');
+    public create() {
+        if (this.company.name === null) {
+            this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Заполните название компании');
             return false;
         }
-        this.companiesService.update(this.company).subscribe(
+        this.companiesServie.create(this.company).subscribe(
             company => {
                 this.company = company;
-                this.msg.notice(MsgService.SUCCESS, 'Сохранено', 'Компания успешно изменена.');
+                this.msg.notice(MsgService.SUCCESS, 'Сохранено', 'Компания ' + this.company.name + ' создана');
             },
             error => {
                 this.msg.notice(MsgService.ERROR, 'Ошибка', error);

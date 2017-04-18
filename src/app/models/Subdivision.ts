@@ -1,8 +1,9 @@
-export class Subdivision {
-    id: number;
-    name: string;
-    company_id: number;
-    created_at: Date;
-    updated_at: Date;
-    author_id: number;
+import {ISubdivision} from './interface/ISubdivision';
+export class Subdivision implements ISubdivision {
+    id: number = null;
+    name: string = null;
+    company_id: number = null;
+    created_at: Date = null;
+    updated_at: Date = null;
+    author_id: number = null;
 }

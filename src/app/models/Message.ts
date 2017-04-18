@@ -1,5 +1,6 @@
-export class Message {
-    title: string;
-    text: string;
-    show: boolean;
+import {IMessage} from './interface/IMessage';
+export class Message implements IMessage {
+    title: string = null;
+    text: string = null;
+    show: boolean = null;
 }

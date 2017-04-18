@@ -1,10 +1,11 @@
-import {User} from './User';
-export class Company {
-    id: number;
-    name: string;
-    created_at: Date;
-    updated_at: Date;
-    active_till: Date;
-    author_id: number;
-    author: User;
+import {IUser} from './interface/IUser';
+import {ICompany} from './interface/ICompany';
+export class Company implements ICompany {
+    id: number = null;
+    name: string = null;
+    created_at: Date = null;
+    updated_at: Date = null;
+    active_till: Date = null;
+    author_id: number = null;
+    author: IUser = null;
 }

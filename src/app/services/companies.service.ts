@@ -12,13 +12,14 @@ import {Error} from '../models/Error';
 import {TreeNode} from 'primeng/primeng';
 import {MsgService} from './msg';
 import * as moment from 'moment';
-import {UsersService} from "./users.service";
+import {UsersService} from './users.service';
 
 @Injectable()
 export class CompaniesService {
     private companiesUrl = '/v1/companies';
     private getUrl = '/v1/companies/:id';
     private updateUrl = '/v1/companies/:id';
+    private createUrl = '/v1/companies';
 
     constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService, private usersService: UsersService) {
     }
@@ -103,6 +104,33 @@ export class CompaniesService {
         return this.http.put(
             env.backend + this.updateUrl.replace(':id', String(company.id)),
             'name=' + company.name + '&active_till=' + moment(company.active_till).format('YYYY-MM-DD HH:mm:ss'),
+            options)
+            .map((response: Response) => {
+                const companyObj: Company = response.json();
+                this.usersService.getUser(companyObj.author_id).subscribe(
+                    user => {
+                        companyObj.author = user;
+                    }
+                );
+                companyObj.active_till = moment(companyObj.active_till).toDate();
+                companyObj.created_at = moment(companyObj.created_at).toDate();
+                companyObj.updated_at = moment(companyObj.updated_at).toDate();
+                return companyObj;
+            })
+            .catch((error: any) => {
+                new Error(error, this.authService, this.router, this.msgService);
+                return Observable.throw(error.json().message || 'Server error');
+            });
+    }
+
+    public create(company: Company): Observable<Company> {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        const options = new RequestOptions({headers: headers, withCredentials: true});
+
+        return this.http.post(
+            env.backend + this.createUrl,
+            'name=' + company.name + '&active_till=' + moment(company.active_till).format('YYYY-MM-DD HH:mm:ss') + '&author_id=' + company.author.id,
             options)
             .map((response: Response) => {
                 const companyObj: Company = response.json();
