@@ -55,4 +55,8 @@ export class CompanyUpdateComponent implements OnInit {
             }
         );
     }
+
+    public delete() {
+        this.companiesService.delete(this.company).subscribe();
+    }
 }

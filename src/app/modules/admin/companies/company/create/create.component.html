@@ -6,5 +6,6 @@
   <label for="author">Владелец:</label><br/>
   <p-autoComplete id="author" [(ngModel)]="company.author" field="name" disabled="disabled"></p-autoComplete>
   <hr/>
-  <button class="btn btn-success" pButton type="button" (click)="create()" label="Создать"></button>
+  <button class="ui-button-success" icon="fa-check" pButton type="button" (click)="create()" label="Создать"></button>
+  <button pButton type="button"  label="Отмена" routerLink="/admin/companies"></button>
 </fieldset>

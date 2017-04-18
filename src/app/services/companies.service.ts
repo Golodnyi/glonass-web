@@ -18,6 +18,7 @@ import {UsersService} from './users.service';
 export class CompaniesService {
     private companiesUrl = '/v1/companies';
     private getUrl = '/v1/companies/:id';
+    private deleteUrl = '/v1/companies/:id';
     private updateUrl = '/v1/companies/:id';
     private createUrl = '/v1/companies';
 
@@ -143,6 +144,24 @@ export class CompaniesService {
                 companyObj.created_at = moment(companyObj.created_at).toDate();
                 companyObj.updated_at = moment(companyObj.updated_at).toDate();
                 return companyObj;
+            })
+            .catch((error: any) => {
+                new Error(error, this.authService, this.router, this.msgService);
+                return Observable.throw(error.json().message || 'Server error');
+            });
+    }
+
+    public delete(company: Company): Observable<null> {
+        if (!confirm('Вы действительно хотите удалить компанию?')) {
+            return null;
+        }
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        const options = new RequestOptions({headers: headers, withCredentials: true});
+        return this.http.delete(env.backend + this.deleteUrl.replace(':id', String(company.id)), options)
+            .map((response: Response) => {
+                this.msgService.notice(MsgService.SUCCESS, 'Удалена', response.json().message);
+                return null;
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router, this.msgService);
