@@ -14,12 +14,14 @@ import {TreeNode} from 'primeng/primeng';
 import {MsgService} from './msg';
 import {UsersService} from './users.service';
 import {CompaniesService} from './companies.service';
-import {User} from "../models/User";
+import {User} from '../models/User';
 
 @Injectable()
 export class SubdivisionsService {
     private subDivisionsUrl = '/v1/companies/:id/subdivisions';
+    private getSubDivisionsUrl = '/v1/companies/1/subdivisions/:id';
     private createSubDivisionsUrl = '/v1/companies/:id/subdivisions';
+    private updateSubDivisionsUrl = '/v1/companies/:company/subdivisions/:subdivision';
 
     constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService, private usersService: UsersService, private companiesService: CompaniesService) {
     }
@@ -80,10 +82,94 @@ export class SubdivisionsService {
 
         return this.http.post(
             env.backend + this.createSubDivisionsUrl.replace(':id', String(subdivision.company.id)),
-            'name=' + subdivision.name + '&author_id=' + subdivision.author.id + '&company_id=' + subdivision.company.id,
+            'name=' + subdivision.name + '&company_id=' + subdivision.company.id,
             options)
             .map((response: Response) => {
                 const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());
+                this.usersService.getUser(subdivisionObj.author_id).subscribe(
+                    user => {
+                        subdivisionObj.author = Object.assign(new User(), user);
+                    },
+                    error => {
+                        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+                    }
+                );
+                this.companiesService.get(subdivisionObj.company_id).subscribe(
+                    company => {
+                        subdivisionObj.company = Object.assign(new Company(), company);
+                    },
+                    error => {
+                        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+                    }
+                );
+                return subdivisionObj;
+            })
+            .catch((error: any) => {
+                new Error(error, this.authService, this.router, this.msgService);
+                return Observable.throw(error.json().message || 'Server error');
+            });
+    }
+
+    public get(id: number): Observable<Subdivision> {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        const options = new RequestOptions({headers: headers, withCredentials: true});
+
+        return this.http.get(
+            env.backend + this.getSubDivisionsUrl.replace(':id', String(id)), options)
+            .map((response: Response) => {
+                const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());
+                this.usersService.getUser(subdivisionObj.author_id).subscribe(
+                    user => {
+                        subdivisionObj.author = Object.assign(new User(), user);
+                    },
+                    error => {
+                        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+                    }
+                );
+                this.companiesService.get(subdivisionObj.company_id).subscribe(
+                    company => {
+                        subdivisionObj.company = Object.assign(new Company(), company);
+                    },
+                    error => {
+                        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+                    }
+                );
+                return subdivisionObj;
+            })
+            .catch((error: any) => {
+                new Error(error, this.authService, this.router, this.msgService);
+                return Observable.throw(error.json().message || 'Server error');
+            });
+    }
+
+    public update(subdivision: Subdivision): Observable<Subdivision> {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        const options = new RequestOptions({headers: headers, withCredentials: true});
+
+        return this.http.put(
+            env.backend + this.updateSubDivisionsUrl.replace(':company', String(subdivision.company.id)).replace(':subdivision', String(subdivision.id)),
+            'name=' + subdivision.name + '&company_id=' + subdivision.company.id,
+            options)
+            .map((response: Response) => {
+                const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());
+                this.usersService.getUser(subdivisionObj.author_id).subscribe(
+                    user => {
+                        subdivisionObj.author = Object.assign(new User(), user);
+                    },
+                    error => {
+                        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+                    }
+                );
+                this.companiesService.get(subdivisionObj.company_id).subscribe(
+                    company => {
+                        subdivisionObj.company = Object.assign(new Company(), company);
+                    },
+                    error => {
+                        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+                    }
+                );
                 return subdivisionObj;
             })
             .catch((error: any) => {
