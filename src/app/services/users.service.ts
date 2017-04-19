@@ -31,7 +31,7 @@ export class UsersService {
                 return response.json();
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }
@@ -47,7 +47,7 @@ export class UsersService {
                 return user;
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }
@@ -63,7 +63,7 @@ export class UsersService {
                 return role;
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }

@@ -37,7 +37,7 @@ export class SubdivisionsService {
                 return response.json();
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }
@@ -71,7 +71,7 @@ export class SubdivisionsService {
                 return items;
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }
@@ -106,7 +106,7 @@ export class SubdivisionsService {
                 return subdivisionObj;
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }
@@ -139,7 +139,7 @@ export class SubdivisionsService {
                 return subdivisionObj;
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }
@@ -174,7 +174,7 @@ export class SubdivisionsService {
                 return subdivisionObj;
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }
@@ -192,7 +192,7 @@ export class SubdivisionsService {
                 return true;
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }

@@ -28,7 +28,7 @@ export class ChartsService {
                 return response.json();
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }

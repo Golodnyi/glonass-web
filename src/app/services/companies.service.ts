@@ -36,7 +36,7 @@ export class CompaniesService {
                 return response.json();
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }
@@ -69,7 +69,7 @@ export class CompaniesService {
                 return items;
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }
@@ -90,8 +90,7 @@ export class CompaniesService {
                 return companyObj;
             })
             .catch((error: any) => {
-                console.log(error);
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }
@@ -115,8 +114,7 @@ export class CompaniesService {
                 return companyObj;
             })
             .catch((error: any) => {
-                console.log(error);
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }
@@ -140,7 +138,7 @@ export class CompaniesService {
                 return companyObj;
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }
@@ -158,7 +156,7 @@ export class CompaniesService {
                 return true;
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }

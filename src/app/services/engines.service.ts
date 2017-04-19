@@ -33,7 +33,7 @@ export class EnginesService {
                 return engine;
             })
             .catch((error: any) => {
-                new Error(error, this.authService, this.router, this.msgService);
+                Error.check(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
     }
