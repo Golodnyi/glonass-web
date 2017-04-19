@@ -1,7 +1,7 @@
 import {IEngine} from './interface/IEngine';
 export class Engine implements IEngine {
-    id: number = null;
-    esn: number = null;
-    model_id: number = null;
+    id: number;
+    esn: number;
+    model_id: number;
     sensors_config: {};
 }

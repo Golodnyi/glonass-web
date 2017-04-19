@@ -11,7 +11,6 @@ import {Router} from '@angular/router';
 import {Error} from '../models/Error';
 import {Role} from '../models/Role';
 import {MsgService} from './msg';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class UsersService {
@@ -44,7 +43,8 @@ export class UsersService {
 
         return this.http.get(env.backend + this.userUrl.replace(':id', id), options)
             .map((response: Response) => {
-                return response.json();
+                const user: User = Object.assign(new User(), response.json());
+                return user;
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router, this.msgService);
@@ -59,7 +59,8 @@ export class UsersService {
 
         return this.http.get(env.backend + this.roleUrl.replace(':id', String(id)), options)
             .map((response: Response) => {
-                return response.json();
+                const role: Role = Object.assign(new Role(), response.json());
+                return role;
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router, this.msgService);

@@ -33,7 +33,7 @@ export class AuthService {
 
         return this.http.post(env.backend + this.loginUrl, 'email=' + auth.email + '&password=' + auth.password + '&remember=' + remember, options)
             .map((response: Response) => {
-                const user: User = response.json();
+                const user: User = Object.assign(new User, response.json());
                 this.logger.next(true);
                 return user;
             })
@@ -56,7 +56,7 @@ export class AuthService {
         const state = this.logger.getValue();
 
         if (localStorage.getItem('user') !== null && this.cookieService.get('token') !== undefined) {
-            this.setCurrentUser(JSON.parse(localStorage.getItem('user')));
+            this.setCurrentUser(Object.assign(new User(), JSON.parse(localStorage.getItem('user'))));
             this.logger.next(true);
         } else {
             this.logger.next(false);

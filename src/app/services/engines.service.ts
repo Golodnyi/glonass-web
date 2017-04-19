@@ -29,7 +29,8 @@ export class EnginesService {
                 .replace(':subdivision', String(subdivision))
                 .replace(':car', String(car)), options)
             .map((response: Response) => {
-                return response.json();
+                const engine: Engine = Object.assign(new Object(), response.json());
+                return engine;
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router, this.msgService);

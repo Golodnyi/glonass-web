@@ -13,6 +13,7 @@ import {TreeNode} from 'primeng/primeng';
 import {MsgService} from './msg';
 import * as moment from 'moment';
 import {UsersService} from './users.service';
+import {User} from '../models/User';
 
 @Injectable()
 export class CompaniesService {
@@ -80,18 +81,16 @@ export class CompaniesService {
 
         return this.http.get(env.backend + this.getUrl.replace(':id', String(company)), options)
             .map((response: Response) => {
-                const companyObj: Company = response.json();
+                const companyObj: Company = Object.assign(new Company(), response.json());
                 this.usersService.getUser(companyObj.author_id).subscribe(
                     user => {
-                        companyObj.author = user;
+                        companyObj.author = Object.assign(new User, user);
                     }
                 );
-                companyObj.active_till = moment(companyObj.active_till).toDate();
-                companyObj.created_at = moment(companyObj.created_at).toDate();
-                companyObj.updated_at = moment(companyObj.updated_at).toDate();
                 return companyObj;
             })
             .catch((error: any) => {
+                console.log(error);
                 new Error(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
@@ -107,18 +106,16 @@ export class CompaniesService {
             'name=' + company.name + '&active_till=' + moment(company.active_till).format('YYYY-MM-DD HH:mm:ss'),
             options)
             .map((response: Response) => {
-                const companyObj: Company = response.json();
+                const companyObj: Company = Object.assign(new Company(), response.json());
                 this.usersService.getUser(companyObj.author_id).subscribe(
                     user => {
-                        companyObj.author = user;
+                        companyObj.author = Object.assign(new User, user);
                     }
                 );
-                companyObj.active_till = moment(companyObj.active_till).toDate();
-                companyObj.created_at = moment(companyObj.created_at).toDate();
-                companyObj.updated_at = moment(companyObj.updated_at).toDate();
                 return companyObj;
             })
             .catch((error: any) => {
+                console.log(error);
                 new Error(error, this.authService, this.router, this.msgService);
                 return Observable.throw(error.json().message || 'Server error');
             });
@@ -134,15 +131,12 @@ export class CompaniesService {
             'name=' + company.name + '&active_till=' + moment(company.active_till).format('YYYY-MM-DD HH:mm:ss') + '&author_id=' + company.author.id,
             options)
             .map((response: Response) => {
-                const companyObj: Company = response.json();
+                const companyObj: Company = Object.assign(new Company(), response.json());
                 this.usersService.getUser(companyObj.author_id).subscribe(
                     user => {
-                        companyObj.author = user;
+                        companyObj.author = Object.assign(new User, user);
                     }
                 );
-                companyObj.active_till = moment(companyObj.active_till).toDate();
-                companyObj.created_at = moment(companyObj.created_at).toDate();
-                companyObj.updated_at = moment(companyObj.updated_at).toDate();
                 return companyObj;
             })
             .catch((error: any) => {
