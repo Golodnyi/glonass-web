@@ -162,4 +162,16 @@ export class CompaniesService {
                 return Observable.throw(error.json().message || 'Server error');
             });
     }
+
+    public findByName(name: string, companies: Company[] = null): Company[] {
+        if (companies === null) {
+            companies = [];
+            // TODO: отправка запроса на бэкенд
+        }
+        companies = companies.filter(function (obj) {
+            return obj.name.toLowerCase().startsWith(name.toLowerCase());
+        });
+
+        return companies;
+    }
 }

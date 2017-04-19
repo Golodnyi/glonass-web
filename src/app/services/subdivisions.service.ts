@@ -12,12 +12,16 @@ import {Error} from '../models/Error';
 import {Subdivision} from '../models/Subdivision';
 import {TreeNode} from 'primeng/primeng';
 import {MsgService} from './msg';
+import {UsersService} from './users.service';
+import {CompaniesService} from './companies.service';
+import {User} from "../models/User";
 
 @Injectable()
 export class SubdivisionsService {
-    private subDivisionsCompanyUrl = '/v1/companies/:id/subdivisions';
+    private subDivisionsUrl = '/v1/companies/:id/subdivisions';
+    private createSubDivisionsUrl = '/v1/companies/:id/subdivisions';
 
-    constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
+    constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService, private usersService: UsersService, private companiesService: CompaniesService) {
     }
 
     public getSubdivisions(company: Company): Observable<Subdivision[]> {
@@ -25,7 +29,7 @@ export class SubdivisionsService {
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         const options = new RequestOptions({headers: headers, withCredentials: true});
 
-        return this.http.get(env.backend + this.subDivisionsCompanyUrl.replace(':id', String(company.id)), options)
+        return this.http.get(env.backend + this.subDivisionsUrl.replace(':id', String(company.id)), options)
             .map((response: Response) => {
                 return response.json();
             })
@@ -44,7 +48,7 @@ export class SubdivisionsService {
         let subdivisions: Subdivision[];
         const items = [];
 
-        return this.http.get(env.backend + this.subDivisionsCompanyUrl.replace(':id', String(company)), options)
+        return this.http.get(env.backend + this.subDivisionsUrl.replace(':id', String(company)), options)
             .map((response: Response) => {
                 subdivisions = response.json();
                 subdivisions.forEach(function (item) {
@@ -62,6 +66,25 @@ export class SubdivisionsService {
                 });
 
                 return items;
+            })
+            .catch((error: any) => {
+                new Error(error, this.authService, this.router, this.msgService);
+                return Observable.throw(error.json().message || 'Server error');
+            });
+    }
+
+    public create(subdivision: Subdivision): Observable<Subdivision> {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        const options = new RequestOptions({headers: headers, withCredentials: true});
+
+        return this.http.post(
+            env.backend + this.createSubDivisionsUrl.replace(':id', String(subdivision.company.id)),
+            'name=' + subdivision.name + '&author_id=' + subdivision.author.id + '&company_id=' + subdivision.company.id,
+            options)
+            .map((response: Response) => {
+                const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());
+                return subdivisionObj;
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router, this.msgService);

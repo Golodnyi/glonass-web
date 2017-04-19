@@ -12,7 +12,6 @@ import {CompaniesRoutingModule} from './companies-routing.module';
 import {NavigationComponent} from './navigation/navigation.component';
 import {CarComponent} from './car/car.component';
 import {EngineComponent} from './engine/engine.component';
-import {SubdivisionComponent} from './subdivision/subdivision.component';
 import {CompaniesComponent} from './companies/companies.component';
 import {CompaniesService} from '../../../services/companies.service';
 import {SubdivisionsService} from '../../../services/subdivisions.service';
@@ -20,6 +19,7 @@ import {CarsService} from '../../../services/cars.service';
 import {EnginesService} from '../../../services/engines.service';
 import {CompanyUpdateComponent} from './company/update/update.component';
 import {CompanyCreateComponent} from './company/create/create.component';
+import {SubdivisionCreateComponent} from './subdivision/create/create.component';
 
 @NgModule({
     imports: [
@@ -34,7 +34,7 @@ import {CompanyCreateComponent} from './company/create/create.component';
         AutoCompleteModule,
         ToolbarModule
     ],
-    declarations: [NavigationComponent, CompaniesComponent, CompanyUpdateComponent, CompanyCreateComponent, CarComponent, EngineComponent, SubdivisionComponent],
+    declarations: [NavigationComponent, CompaniesComponent, CompanyUpdateComponent, CompanyCreateComponent, CarComponent, EngineComponent, SubdivisionCreateComponent],
     providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService],
 })
 export class CompaniesModule {

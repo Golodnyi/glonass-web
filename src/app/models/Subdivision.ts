@@ -1,10 +1,14 @@
 import {ISubdivision} from './interface/ISubdivision';
 import * as moment from 'moment';
+import {ICompany} from './interface/ICompany';
+import {IUser} from './interface/IUser';
 export class Subdivision implements ISubdivision {
     id: number;
     name: string;
     company_id: number;
+    company: ICompany;
     author_id: number;
+    author: IUser;
     private _created_at: Date;
     private _updated_at: Date;
     get created_at(): Date {

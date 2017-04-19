@@ -15,7 +15,7 @@ export class CompanyCreateComponent implements OnInit {
     public company: Company = new Company();
     public ru: any;
 
-    constructor(private authService: AuthService, private msg: MsgService, private companiesServie: CompaniesService) {
+    constructor(private authService: AuthService, private msg: MsgService, private companiesService: CompaniesService) {
         this.company.active_till = new Date();
         this.company.active_till.setMonth(this.company.active_till.getMonth() + 12);
     }
@@ -41,7 +41,7 @@ export class CompanyCreateComponent implements OnInit {
             this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Заполните название компании');
             return false;
         }
-        this.companiesServie.create(this.company).subscribe(
+        this.companiesService.create(this.company).subscribe(
             company => {
                 this.company = company;
                 this.msg.notice(MsgService.SUCCESS, 'Сохранено', 'Компания ' + this.company.name + ' создана');

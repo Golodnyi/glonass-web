@@ -1,0 +1,11 @@
+<fieldset class="input-group">
+  <label for="name">Название:</label><br/>
+  <input class="input-sm" id="name" type="text" pInputText [(ngModel)]="subdivision.name" placeholder="Название подразделения"/><br/>
+  <label for="company">Компания:</label><br/>
+  <p-autoComplete id="company" [(ngModel)]="subdivision.company" [suggestions]="matchCompanies" (completeMethod)="search($event)" [dropdown]="true" (onSelect)="onSelect($event)" field="name"></p-autoComplete><br/>
+  <label for="author">Владелец:</label><br/>
+  <p-autoComplete id="author" [(ngModel)]="subdivision.author" field="name" disabled="disabled"></p-autoComplete>
+  <hr/>
+  <button class="ui-button-success" icon="fa-check" pButton type="button" (click)="create()" label="Создать"></button>
+  <button pButton type="button"  label="Отмена" routerLink="/admin/companies"></button>
+</fieldset>
