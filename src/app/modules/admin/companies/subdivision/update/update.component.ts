@@ -69,4 +69,8 @@ export class SubdivisionUpdateComponent implements OnInit {
     public onSelect(company: Company) {
         this.subdivision.company = company;
     }
+
+    public delete() {
+        this.subdivisionsService.delete(this.subdivision).subscribe();
+    }
 }

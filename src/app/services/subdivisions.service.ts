@@ -20,6 +20,7 @@ import {User} from '../models/User';
 export class SubdivisionsService {
     private subDivisionsUrl = '/v1/companies/:id/subdivisions';
     private getSubDivisionsUrl = '/v1/companies/1/subdivisions/:id';
+    private deleteSubDivisionsUrl = '/v1/companies/1/subdivisions/:id';
     private createSubDivisionsUrl = '/v1/companies/:id/subdivisions';
     private updateSubDivisionsUrl = '/v1/companies/:company/subdivisions/:subdivision';
 
@@ -171,6 +172,24 @@ export class SubdivisionsService {
                     }
                 );
                 return subdivisionObj;
+            })
+            .catch((error: any) => {
+                new Error(error, this.authService, this.router, this.msgService);
+                return Observable.throw(error.json().message || 'Server error');
+            });
+    }
+
+    public delete(subdivision: Subdivision): Observable<boolean> {
+        if (!confirm('Вы действительно хотите удалить подразделение?')) {
+            return null;
+        }
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        const options = new RequestOptions({headers: headers, withCredentials: true});
+        return this.http.delete(env.backend + this.deleteSubDivisionsUrl.replace(':id', String(subdivision.id)), options)
+            .map((response: Response) => {
+                this.msgService.notice(MsgService.SUCCESS, 'Удалена', response.json().message);
+                return true;
             })
             .catch((error: any) => {
                 new Error(error, this.authService, this.router, this.msgService);
