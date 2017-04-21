@@ -19,22 +19,22 @@ import {EnginesService} from './services/engines.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NavigationComponent
-    ],
-    imports: [
-        RouterModule,
-        BrowserModule,
-        FormsModule,
-        HttpModule,
-        AppRoutingModule,
-        GrowlModule,
-        MessagesModule,
-        BrowserAnimationsModule
-    ],
-    providers: [MsgService, UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ChartsService, EnginesService],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    NavigationComponent
+  ],
+  imports: [
+    RouterModule,
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    AppRoutingModule,
+    GrowlModule,
+    MessagesModule,
+    BrowserAnimationsModule
+  ],
+  providers: [MsgService, UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ChartsService, EnginesService],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

@@ -8,44 +8,44 @@ import {MsgService} from '../../../services/msg';
 import {CookieService} from 'angular2-cookie/core';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: 'login.component.html',
-    styleUrls: ['login.component.css']
+  selector: 'app-login',
+  templateUrl: 'login.component.html',
+  styleUrls: ['login.component.css']
 })
 export class LoginComponent implements OnInit {
 
-    public auth: Auth;
-    public user: User;
+  public auth: Auth;
+  public user: User;
 
-    constructor(private router: Router, private authService: AuthService, private usersService: UsersService, private msgService: MsgService, private cookieService: CookieService) {
-        this.auth = {email: 'demo@demo.ru', password: 'demo', remember: false};
-    }
+  constructor(private router: Router, private authService: AuthService, private usersService: UsersService, private msgService: MsgService, private cookieService: CookieService) {
+    this.auth = {email: 'demo@demo.ru', password: 'demo', remember: false};
+  }
 
-    ngOnInit() {
+  ngOnInit() {
 
-    }
+  }
 
-    login() {
-        this.authService.login(this.auth).subscribe(
-            user => {
-                this.user = user;
-                this.usersService.getRole(user.role_id).subscribe(
-                    role => {
-                        this.user.role = role;
-                        localStorage.setItem('user', JSON.stringify(this.user));
-                        this.authService.setCurrentUser(this.user);
-                        this.router.navigate(['/dashboard']);
-                    },
-                    error => {
-                        this.cookieService.remove('token');
-                        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-                    }
-                );
-            },
-            error => {
-                this.cookieService.remove('token');
-                this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-            }
+  login() {
+    this.authService.login(this.auth).subscribe(
+      user => {
+        this.user = user;
+        this.usersService.getRole(user.role_id).subscribe(
+          role => {
+            this.user.role = role;
+            localStorage.setItem('user', JSON.stringify(this.user));
+            this.authService.setCurrentUser(this.user);
+            this.router.navigate(['/dashboard']);
+          },
+          error => {
+            this.cookieService.remove('token');
+            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+          }
         );
-    }
+      },
+      error => {
+        this.cookieService.remove('token');
+        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+      }
+    );
+  }
 }

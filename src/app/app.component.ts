@@ -3,28 +3,28 @@ import {MsgService} from './services/msg';
 import {Message} from 'primeng/primeng';
 
 @Component({
-    selector: 'app',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+  selector: 'app-run',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-    public growl: Message[] = [];
-    public msg: Message[] = [];
+export class AppComponent implements OnInit {
+  public growl: Message[] = [];
+  public msg: Message[] = [];
 
-    constructor(private msgService: MsgService) {
-    }
+  constructor(private msgService: MsgService) {
+  }
 
-    ngOnInit() {
-        this.msgService.getNotice().subscribe(
-            notice => {
-                this.growl.push(notice);
-            }
-        );
+  ngOnInit() {
+    this.msgService.getNotice().subscribe(
+      notice => {
+        this.growl.push(notice);
+      }
+    );
 
-        this.msgService.getMsg().subscribe(
-            msg => {
-                this.msg.push(msg);
-            }
-        );
-    }
+    this.msgService.getMsg().subscribe(
+      msg => {
+        this.msg.push(msg);
+      }
+    );
+  }
 }

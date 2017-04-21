@@ -2,9 +2,11 @@
     <div class="form-signin">
         <h2 class="form-signin-heading">Авторизация</h2>
         <label for="inputLogin" class="sr-only">Имя пользователя</label>
-        <input [(ngModel)]="auth.email" type="email" id="inputLogin" class="form-control" placeholder="email" required autofocus>
+        <input [(ngModel)]="auth.email" type="email" id="inputLogin" class="form-control" placeholder="email" required
+               autofocus>
         <label for="inputPassword" class="sr-only">Пароль</label>
-        <input [(ngModel)]="auth.password" type="password" id="inputPassword" class="form-control" placeholder="password" required>
+        <input [(ngModel)]="auth.password" type="password" id="inputPassword" class="form-control"
+               placeholder="password" required>
         <div class="checkbox">
             <label>
                 <input type="checkbox" value="true" [(ngModel)]="auth.remember"> Запомнить меня

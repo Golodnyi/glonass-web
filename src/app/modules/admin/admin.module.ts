@@ -5,12 +5,12 @@ import {AdminComponent} from './admin/admin.component';
 import {TabMenuModule} from 'primeng/primeng';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        AdminRoutingModule,
-        TabMenuModule,
-    ],
-    declarations: [AdminComponent],
+  imports: [
+    CommonModule,
+    AdminRoutingModule,
+    TabMenuModule,
+  ],
+  declarations: [AdminComponent],
 })
 export class AdminModule {
 }

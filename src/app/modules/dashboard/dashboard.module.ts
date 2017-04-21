@@ -10,13 +10,13 @@ import {TreeModule} from 'primeng/primeng';
 import {ChartsComponent} from './charts/charts.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        DashboardRoutingModule,
-        TreeModule
-    ],
-    declarations: [DashboardComponent, NavigationComponent, ChartsComponent],
-    providers: [CompaniesService, SubdivisionsService, CarsService],
+  imports: [
+    CommonModule,
+    DashboardRoutingModule,
+    TreeModule
+  ],
+  declarations: [DashboardComponent, NavigationComponent, ChartsComponent],
+  providers: [CompaniesService, SubdivisionsService, CarsService],
 })
 export class DashboardModule {
 }

@@ -5,10 +5,10 @@ import {AuthService} from '../services/auth.service';
 @Injectable()
 export class AdminGuard implements CanActivate {
 
-    constructor(private authService: AuthService) {
-    }
+  constructor(private authService: AuthService) {
+  }
 
-    canActivate() {
-        return this.authService.isAdmin();
-    }
+  canActivate() {
+    return this.authService.isAdmin();
+  }
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, Headers, RequestOptions} from '@angular/http';
+import {Headers, Http, RequestOptions, Response} from '@angular/http';
 
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
@@ -13,23 +13,23 @@ import {MsgService} from './msg';
 
 @Injectable()
 export class ChartsService {
-    private carsSubDivisionsCompanyUrl = '/v1/companies/:car/notfound';
+  private carsSubDivisionsCompanyUrl = '/v1/companies/:car/notfound';
 
-    constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
-    }
+  constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
+  }
 
-    public getData(car): Observable<Car[]> {
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        const options = new RequestOptions({headers: headers, withCredentials: true});
+  public getData(car): Observable<Car[]> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
 
-        return this.http.get(env.backend + this.carsSubDivisionsCompanyUrl.replace(':car', String(car)), options)
-            .map((response: Response) => {
-                return response.json();
-            })
-            .catch((error: any) => {
-                Error.check(error, this.authService, this.router, this.msgService);
-                return Observable.throw(error.json().message || 'Server error');
-            });
-    }
+    return this.http.get(env.backend + this.carsSubDivisionsCompanyUrl.replace(':car', String(car)), options)
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
 }

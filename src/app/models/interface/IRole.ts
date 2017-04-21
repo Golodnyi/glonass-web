@@ -1,5 +1,5 @@
 export interface IRole {
-    id: number;
-    name: string;
-    is_global: number;
+  id: number;
+  name: string;
+  is_global: number;
 }

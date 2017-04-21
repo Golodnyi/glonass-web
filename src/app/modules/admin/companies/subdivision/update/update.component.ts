@@ -7,70 +7,72 @@ import {SubdivisionsService} from '../../../../../services/subdivisions.service'
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
-    selector: 'app-subdivision-update',
-    templateUrl: './update.component.html',
-    styleUrls: ['./update.component.css']
+  selector: 'app-subdivision-update',
+  templateUrl: './update.component.html',
+  styleUrls: ['./update.component.css']
 })
 
 export class SubdivisionUpdateComponent implements OnInit {
 
-    public subdivision: Subdivision;
-    public ru: any;
-    public companies: Company[];
-    public matchCompanies: Company[];
-    constructor(private msg: MsgService, private subdivisionsService: SubdivisionsService, private route: ActivatedRoute, private companiesService: CompaniesService) {
-    }
+  public subdivision: Subdivision;
+  public ru: any;
+  public companies: Company[];
+  public matchCompanies: Company[];
 
-    ngOnInit() {
-        this.route.params.subscribe(params => {
-            const id: number = +params['id'];
-            this.subdivisionsService.get(id).subscribe(
-                subdivision => {
-                    this.subdivision = subdivision;
-                },
-                error => {
-                    this.msg.notice(MsgService.ERROR, 'Ошибка', error);
-                }
-            );
-        });
-        this.companiesService.getCompanies().subscribe(
-            companies => {
-                this.companies = companies;
-            },
-            error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
-            }
-        );
-    }
+  constructor(private msg: MsgService, private subdivisionsService: SubdivisionsService, private route: ActivatedRoute, private companiesService: CompaniesService) {
+  }
 
-    public save() {
-        if (this.subdivision.name === null) {
-            this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Заполните название подразделения');
-            return false;
-        } else if (this.subdivision.company === null) {
-            this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Укажите компанию');
-            return false;
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      const id: number = +params['id'];
+      this.subdivisionsService.get(id).subscribe(
+        subdivision => {
+          this.subdivision = subdivision;
+        },
+        error => {
+          this.msg.notice(MsgService.ERROR, 'Ошибка', error);
         }
+      );
+    });
+    this.companiesService.getCompanies().subscribe(
+      companies => {
+        this.companies = companies;
+      },
+      error => {
+        this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+      }
+    );
+  }
 
-        this.subdivisionsService.update(this.subdivision).subscribe(
-            subdivision => {
-                this.subdivision = subdivision;
-                this.msg.notice(MsgService.SUCCESS, 'Сохранено', 'Подразделение успешно изменено');
-            },
-            error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
-            }
-        );
-    }
-    public search(event: any) {
-        this.matchCompanies = this.companiesService.findByName(event.query, this.companies);
+  public save() {
+    if (this.subdivision.name === null) {
+      this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Заполните название подразделения');
+      return false;
+    } else if (this.subdivision.company === null) {
+      this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Укажите компанию');
+      return false;
     }
 
-    public onSelect(company: Company) {
-        this.subdivision.company = company;
-    }
+    this.subdivisionsService.update(this.subdivision).subscribe(
+      subdivision => {
+        this.subdivision = subdivision;
+        this.msg.notice(MsgService.SUCCESS, 'Сохранено', 'Подразделение успешно изменено');
+      },
+      error => {
+        this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+      }
+    );
+  }
 
-    public delete() {
-        this.subdivisionsService.delete(this.subdivision).subscribe();
-    }
+  public search(event: any) {
+    this.matchCompanies = this.companiesService.findByName(event.query, this.companies);
+  }
+
+  public onSelect(company: Company) {
+    this.subdivision.company = company;
+  }
+
+  public delete() {
+    this.subdivisionsService.delete(this.subdivision).subscribe();
+  }
 }

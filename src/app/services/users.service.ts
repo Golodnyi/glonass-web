@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, Headers, RequestOptions} from '@angular/http';
+import {Headers, Http, RequestOptions, Response} from '@angular/http';
 import {User} from '../models/User';
 
 import {Observable} from 'rxjs/Rx';
@@ -14,69 +14,69 @@ import {MsgService} from './msg';
 
 @Injectable()
 export class UsersService {
-    private usersUrl = '/v1/users';
-    private userUrl = '/v1/users/:id';
-    private roleUrl = '/v1/roles/:id';
+  private usersUrl = '/v1/users';
+  private userUrl = '/v1/users/:id';
+  private roleUrl = '/v1/roles/:id';
 
-    constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
-    }
+  constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
+  }
 
-    public getUsers(): Observable<User[]> {
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        const options = new RequestOptions({headers: headers, withCredentials: true});
+  public getUsers(): Observable<User[]> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
 
-        return this.http.get(env.backend + this.usersUrl, options)
-            .map((response: Response) => {
-                return response.json();
-            })
-            .catch((error: any) => {
-                Error.check(error, this.authService, this.router, this.msgService);
-                return Observable.throw(error.json().message || 'Server error');
-            });
-    }
+    return this.http.get(env.backend + this.usersUrl, options)
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
 
-    public getUser(id): Observable<User> {
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        const options = new RequestOptions({headers: headers, withCredentials: true});
+  public getUser(id): Observable<User> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
 
-        return this.http.get(env.backend + this.userUrl.replace(':id', id), options)
-            .map((response: Response) => {
-                const user: User = Object.assign(new User(), response.json());
-                return user;
-            })
-            .catch((error: any) => {
-                Error.check(error, this.authService, this.router, this.msgService);
-                return Observable.throw(error.json().message || 'Server error');
-            });
-    }
-
-    public getRole(id: Number): Observable<Role> {
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        const options = new RequestOptions({headers: headers, withCredentials: true});
-
-        return this.http.get(env.backend + this.roleUrl.replace(':id', String(id)), options)
-            .map((response: Response) => {
-                const role: Role = Object.assign(new Role(), response.json());
-                return role;
-            })
-            .catch((error: any) => {
-                Error.check(error, this.authService, this.router, this.msgService);
-                return Observable.throw(error.json().message || 'Server error');
-            });
-    }
-
-    public findByName(name: string, users: User[] = null): User[] {
-        if (users === null) {
-            users = [];
-            // TODO: отправка запроса на бэкенд
-        }
-        const user = users.filter(function (obj) {
-            return obj.name.toLowerCase().startsWith(name.toLowerCase());
-        });
-
+    return this.http.get(env.backend + this.userUrl.replace(':id', id), options)
+      .map((response: Response) => {
+        const user: User = Object.assign(new User(), response.json());
         return user;
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
+
+  public getRole(id: Number): Observable<Role> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+
+    return this.http.get(env.backend + this.roleUrl.replace(':id', String(id)), options)
+      .map((response: Response) => {
+        const role: Role = Object.assign(new Role(), response.json());
+        return role;
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
+
+  public findByName(name: string, users: User[] = null): User[] {
+    if (users === null) {
+      users = [];
+      // TODO: отправка запроса на бэкенд
     }
+    const user = users.filter(function (obj) {
+      return obj.name.toLowerCase().startsWith(name.toLowerCase());
+    });
+
+    return user;
+  }
 }

@@ -1,5 +1,5 @@
 export interface IMessage {
-    title: string;
-    text: string;
-    show: boolean;
+  title: string;
+  text: string;
+  show: boolean;
 }

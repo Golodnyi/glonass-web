@@ -7,61 +7,62 @@ import {Subdivision} from '../../../../../models/Subdivision';
 import {SubdivisionsService} from '../../../../../services/subdivisions.service';
 
 @Component({
-    selector: 'app-subdivision-create',
-    templateUrl: './create.component.html',
-    styleUrls: ['./create.component.css']
+  selector: 'app-subdivision-create',
+  templateUrl: './create.component.html',
+  styleUrls: ['./create.component.css']
 })
 
 export class SubdivisionCreateComponent implements OnInit {
 
-    public subdivision: Subdivision = new Subdivision();
-    public ru: any;
-    public companies: Company[];
-    public matchCompanies: Company[];
-    constructor(private authService: AuthService, private msg: MsgService, private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService) {
+  public subdivision: Subdivision = new Subdivision();
+  public ru: any;
+  public companies: Company[];
+  public matchCompanies: Company[];
+
+  constructor(private authService: AuthService, private msg: MsgService, private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService) {
+  }
+
+  ngOnInit() {
+    this.authService.getCurrentUser().subscribe(
+      user => {
+        this.subdivision.author = user;
+      }
+    );
+    this.companiesService.getCompanies().subscribe(
+      companies => {
+        this.companies = companies;
+      },
+      error => {
+        this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+      }
+    );
+  }
+
+  public create() {
+    if (this.subdivision.name === null) {
+      this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Заполните название подразделения');
+      return false;
+    } else if (this.subdivision.company === null) {
+      this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Укажите компанию');
+      return false;
     }
 
-    ngOnInit() {
-        this.authService.getCurrentUser().subscribe(
-            user => {
-                this.subdivision.author = user;
-            }
-        );
-        this.companiesService.getCompanies().subscribe(
-            companies => {
-                this.companies = companies;
-            },
-            error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
-            }
-        );
-    }
+    this.subdivisionsService.create(this.subdivision).subscribe(
+      subdivision => {
+        this.subdivision = subdivision;
+        this.msg.notice(MsgService.SUCCESS, 'Создано', 'Подразделение ' + subdivision.name + ' создано');
+      },
+      error => {
+        this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+      }
+    );
+  }
 
-    public create() {
-        if (this.subdivision.name === null) {
-            this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Заполните название подразделения');
-            return false;
-        } else if (this.subdivision.company === null) {
-            this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Укажите компанию');
-            return false;
-        }
+  public search(event: any) {
+    this.matchCompanies = this.companiesService.findByName(event.query, this.companies);
+  }
 
-        this.subdivisionsService.create(this.subdivision).subscribe(
-            subdivision => {
-                this.subdivision = subdivision;
-                this.msg.notice(MsgService.SUCCESS, 'Создано', 'Подразделение ' + subdivision.name + ' создано');
-            },
-            error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
-            }
-        );
-    }
-
-    public search(event: any) {
-        this.matchCompanies = this.companiesService.findByName(event.query, this.companies);
-    }
-
-    public onSelect(company: Company) {
-        this.subdivision.company = company;
-    }
+  public onSelect(company: Company) {
+    this.subdivision.company = company;
+  }
 }
