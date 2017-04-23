@@ -14,20 +14,16 @@ import {Engine} from '../models/Engine';
 
 @Injectable()
 export class EnginesService {
-  private engineByCarUrl = '/v1/companies/:company/subdivisions/:subdivision/cars/:car/engine';
 
   constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
   }
 
-  public getEngine(company, subdivision, car): Observable<Engine> {
+  public getEngine(company: number, subdivision: number, car: number): Observable<Engine> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + this.engineByCarUrl
-        .replace(':company', String(company))
-        .replace(':subdivision', String(subdivision))
-        .replace(':car', String(car)), options)
+    return this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine', options)
       .map((response: Response) => {
         const engine: Engine = Object.assign(new Object(), response.json());
         return engine;
@@ -38,15 +34,12 @@ export class EnginesService {
       });
   }
 
-  public getEngineAsTree(company, subdivision, car, leaf = false, selectable = false): Observable<TreeNode[]> {
+  public getEngineAsTree(company: number, subdivision: number, car: number, leaf = false, selectable = false): Observable<TreeNode[]> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + this.engineByCarUrl
-        .replace(':company', String(company))
-        .replace(':subdivision', String(subdivision))
-        .replace(':car', String(car)), options)
+    return this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine', options)
       .map((response: Response) => {
         let engine: Engine;
         engine = response.json();

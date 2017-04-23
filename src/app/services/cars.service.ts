@@ -14,7 +14,6 @@ import {MsgService} from './msg';
 
 @Injectable()
 export class CarsService {
-  private carsSubDivisionsCompanyUrl = '/v1/companies/:company/subdivisions/:subdivision/cars';
 
   constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
   }
@@ -24,7 +23,7 @@ export class CarsService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + this.carsSubDivisionsCompanyUrl.replace(':company', String(company)).replace(':subdivision', String(subdivision)), options)
+    return this.http.get(env.backend + '/v1/companies/' + company.id + '/subdivisions/' + subdivision.id + '/cars', options)
       .map((response: Response) => {
         return response.json();
       })
@@ -42,7 +41,7 @@ export class CarsService {
     let cars: Car[];
     const items = [];
 
-    return this.http.get(env.backend + this.carsSubDivisionsCompanyUrl.replace(':company', String(company)).replace(':subdivision', String(subdivision)), options)
+    return this.http.get(env.backend + '/v1/companies/' + company.id + '/subdivisions/' + subdivision.id + '/cars', options)
       .map((response: Response) => {
         cars = response.json();
         cars.forEach(function (item) {

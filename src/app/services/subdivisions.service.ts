@@ -18,11 +18,6 @@ import {User} from '../models/User';
 
 @Injectable()
 export class SubdivisionsService {
-  private subDivisionsUrl = '/v1/companies/:id/subdivisions';
-  private getSubDivisionsUrl = '/v1/companies/1/subdivisions/:id';
-  private deleteSubDivisionsUrl = '/v1/companies/1/subdivisions/:id';
-  private createSubDivisionsUrl = '/v1/companies/:id/subdivisions';
-  private updateSubDivisionsUrl = '/v1/companies/:company/subdivisions/:subdivision';
 
   constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService, private usersService: UsersService, private companiesService: CompaniesService) {
   }
@@ -32,7 +27,7 @@ export class SubdivisionsService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + this.subDivisionsUrl.replace(':id', String(company.id)), options)
+    return this.http.get(env.backend + '/v1/companies/' + company.id + '/subdivisions', options)
       .map((response: Response) => {
         return response.json();
       })
@@ -51,7 +46,7 @@ export class SubdivisionsService {
     let subdivisions: Subdivision[];
     const items = [];
 
-    return this.http.get(env.backend + this.subDivisionsUrl.replace(':id', String(company)), options)
+    return this.http.get(env.backend + '/v1/companies/1/subdivisions/' + company, options)
       .map((response: Response) => {
         subdivisions = response.json();
         subdivisions.forEach(function (item) {
@@ -82,7 +77,7 @@ export class SubdivisionsService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.post(
-      env.backend + this.createSubDivisionsUrl.replace(':id', String(subdivision.company.id)),
+      env.backend + '/v1/companies/' + subdivision.company.id + '/subdivisions',
       'name=' + subdivision.name + '&company_id=' + subdivision.company.id,
       options)
       .map((response: Response) => {
@@ -117,7 +112,7 @@ export class SubdivisionsService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.get(
-      env.backend + this.getSubDivisionsUrl.replace(':id', String(id)), options)
+      env.backend + '/v1/companies/1/subdivisions/' + id, options)
       .map((response: Response) => {
         const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());
         this.usersService.getUser(subdivisionObj.author_id).subscribe(
@@ -150,7 +145,7 @@ export class SubdivisionsService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.put(
-      env.backend + this.updateSubDivisionsUrl.replace(':company', String(subdivision.company.id)).replace(':subdivision', String(subdivision.id)),
+      env.backend + '/v1/companies/' + subdivision.company.id + '/subdivisions/' + subdivision.id,
       'name=' + subdivision.name + '&company_id=' + subdivision.company.id,
       options)
       .map((response: Response) => {
@@ -186,7 +181,7 @@ export class SubdivisionsService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
-    return this.http.delete(env.backend + this.deleteSubDivisionsUrl.replace(':id', String(subdivision.id)), options)
+    return this.http.delete(env.backend + '/v1/companies/1/subdivisions/' + subdivision.id, options)
       .map((response: Response) => {
         this.msgService.notice(MsgService.SUCCESS, 'Удалена', response.json().message);
         return true;

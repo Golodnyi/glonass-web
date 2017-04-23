@@ -14,9 +14,6 @@ import {MsgService} from './msg';
 
 @Injectable()
 export class UsersService {
-  private usersUrl = '/v1/users';
-  private userUrl = '/v1/users/:id';
-  private roleUrl = '/v1/roles/:id';
 
   constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
   }
@@ -26,7 +23,7 @@ export class UsersService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + this.usersUrl, options)
+    return this.http.get(env.backend + '/v1/users', options)
       .map((response: Response) => {
         return response.json();
       })
@@ -36,12 +33,12 @@ export class UsersService {
       });
   }
 
-  public getUser(id): Observable<User> {
+  public getUser(id: number): Observable<User> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + this.userUrl.replace(':id', id), options)
+    return this.http.get(env.backend + '/v1/users/' + id, options)
       .map((response: Response) => {
         const user: User = Object.assign(new User(), response.json());
         return user;
@@ -57,7 +54,7 @@ export class UsersService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + this.roleUrl.replace(':id', String(id)), options)
+    return this.http.get(env.backend + '/v1/roles/' + id, options)
       .map((response: Response) => {
         const role: Role = Object.assign(new Role(), response.json());
         return role;

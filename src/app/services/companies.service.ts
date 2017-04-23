@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http, RequestOptions, Response} from '@angular/http';
-
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -17,11 +16,6 @@ import {User} from '../models/User';
 
 @Injectable()
 export class CompaniesService {
-  private companiesUrl = '/v1/companies';
-  private getUrl = '/v1/companies/:id';
-  private deleteUrl = '/v1/companies/:id';
-  private updateUrl = '/v1/companies/:id';
-  private createUrl = '/v1/companies';
 
   constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService, private usersService: UsersService) {
   }
@@ -31,7 +25,7 @@ export class CompaniesService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + this.companiesUrl, options)
+    return this.http.get(env.backend + '/v1/companies', options)
       .map((response: Response) => {
         return response.json();
       })
@@ -46,7 +40,7 @@ export class CompaniesService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + this.companiesUrl, options)
+    return this.http.get(env.backend + '/v1/companies', options)
       .map((response: Response) => {
         let companies: Company[];
         const items: TreeNode[] = [];
@@ -79,7 +73,7 @@ export class CompaniesService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + this.getUrl.replace(':id', String(company)), options)
+    return this.http.get(env.backend + '/v1/companies/' + company, options)
       .map((response: Response) => {
         const companyObj: Company = Object.assign(new Company(), response.json());
         this.usersService.getUser(companyObj.author_id).subscribe(
@@ -101,7 +95,7 @@ export class CompaniesService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.put(
-      env.backend + this.updateUrl.replace(':id', String(company.id)),
+      env.backend + '/v1/companies/' + company.id,
       'name=' + company.name + '&active_till=' + moment(company.active_till).format('YYYY-MM-DD HH:mm:ss'),
       options)
       .map((response: Response) => {
@@ -125,7 +119,7 @@ export class CompaniesService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.post(
-      env.backend + this.createUrl,
+      env.backend + '/v1/companies',
       'name=' + company.name + '&active_till=' + moment(company.active_till).format('YYYY-MM-DD HH:mm:ss') + '&author_id=' + company.author.id,
       options)
       .map((response: Response) => {
@@ -150,7 +144,7 @@ export class CompaniesService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
-    return this.http.delete(env.backend + this.deleteUrl.replace(':id', String(company.id)), options)
+    return this.http.delete(env.backend + '/v1/companies/' + company.id, options)
       .map((response: Response) => {
         this.msgService.notice(MsgService.SUCCESS, 'Удалена', response.json().message);
         return true;

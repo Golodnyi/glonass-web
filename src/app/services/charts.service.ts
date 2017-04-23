@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http, RequestOptions, Response} from '@angular/http';
-
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -13,17 +12,16 @@ import {MsgService} from './msg';
 
 @Injectable()
 export class ChartsService {
-  private carsSubDivisionsCompanyUrl = '/v1/companies/:car/notfound';
 
   constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
   }
 
-  public getData(car): Observable<Car[]> {
+  public getData(car: Car): Observable<Car[]> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + this.carsSubDivisionsCompanyUrl.replace(':car', String(car)), options)
+    return this.http.get(env.backend + '/v1/companies/' + car.id + '/notfound', options)
       .map((response: Response) => {
         return response.json();
       })
