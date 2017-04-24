@@ -37,7 +37,7 @@ export class SubdivisionUpdateComponent implements OnInit {
         }
       );
     });
-    this.companiesService.getCompanies().subscribe(
+    this.companiesService.getCompanies(false).subscribe(
       companies => {
         this.companies = companies;
       },

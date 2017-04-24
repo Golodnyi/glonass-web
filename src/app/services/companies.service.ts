@@ -50,8 +50,10 @@ export class CompaniesService {
       });
   }
 
-  public getCompanies(): Observable<Company[]> {
-    this.requestCompanies().subscribe();
+  public getCompanies(resync = true): Observable<Company[]> {
+    if (resync) {
+      this.requestCompanies().subscribe();
+    }
     return this.companies.asObservable();
   }
 
