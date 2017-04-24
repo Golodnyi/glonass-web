@@ -43,7 +43,7 @@ import {DropDownPipe} from '../../../pipes/dropdown.pipe';
     DropdownModule,
     AutoCompleteModule
   ],
-  declarations: [NavigationComponent, CompaniesComponent, CompanyUpdateComponent, CompanyCreateComponent, CarComponent, EngineComponent, SubdivisionCreateComponent, SubdivisionUpdateComponent, DropDownPipe],
+  declarations: [NavigationComponent, CompaniesComponent, CompanyUpdateComponent, CompanyCreateComponent, CarComponent, EngineComponent, SubdivisionCreateComponent, SubdivisionUpdateComponent],
   providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService, TreePipe],
 })
 export class CompaniesModule {
