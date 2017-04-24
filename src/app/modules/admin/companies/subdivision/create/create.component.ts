@@ -20,7 +20,10 @@ export class SubdivisionCreateComponent implements OnInit {
   public companies: Company[];
   public matchCompanies: Company[];
 
-  constructor(private authService: AuthService, private msg: MsgService, private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService) {
+  constructor(private authService: AuthService,
+              private msg: MsgService,
+              private companiesService: CompaniesService,
+              private subdivisionsService: SubdivisionsService) {
   }
 
   ngOnInit() {

@@ -14,7 +14,10 @@ import {MsgService} from './msg';
 @Injectable()
 export class CarsService {
 
-  constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
+  constructor(private http: Http,
+              private authService: AuthService,
+              private router: Router,
+              private msgService: MsgService) {
   }
 
   public getCars(company: number, subdivision: number): Observable<Car[]> {

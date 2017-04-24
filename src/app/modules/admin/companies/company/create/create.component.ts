@@ -17,7 +17,10 @@ export class CompanyCreateComponent implements OnInit {
   public company: Company = new Company();
   public ru: any;
   public calendar: Date = new Date();
-  constructor(private authService: AuthService, private msg: MsgService, private companiesService: CompaniesService) {
+
+  constructor(private authService: AuthService,
+              private msg: MsgService,
+              private companiesService: CompaniesService) {
     this.calendar.setMonth(this.calendar.getMonth() + 12);
   }
 

@@ -14,7 +14,10 @@ import {Engine} from '../models/Engine';
 @Injectable()
 export class EnginesService {
 
-  constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
+  constructor(private http: Http,
+              private authService: AuthService,
+              private router: Router,
+              private msgService: MsgService) {
   }
 
   public getEngine(company: number, subdivision: number, car: number): Observable<Engine> {

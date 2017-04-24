@@ -9,14 +9,17 @@ import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
 import {Error} from '../models/Error';
 import {MsgService} from './msg';
-import * as moment from 'moment';
 import {UsersService} from './users.service';
 import {User} from '../models/User';
 
 @Injectable()
 export class CompaniesService {
 
-  constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService, private usersService: UsersService) {
+  constructor(private http: Http,
+              private authService: AuthService,
+              private router: Router,
+              private msgService: MsgService,
+              private usersService: UsersService) {
   }
 
   public getCompanies(): Observable<Company[]> {

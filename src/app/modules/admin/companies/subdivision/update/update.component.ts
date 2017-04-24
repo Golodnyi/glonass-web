@@ -19,7 +19,10 @@ export class SubdivisionUpdateComponent implements OnInit {
   public companies: Company[];
   public matchCompanies: Company[];
 
-  constructor(private msg: MsgService, private subdivisionsService: SubdivisionsService, private route: ActivatedRoute, private companiesService: CompaniesService) {
+  constructor(private msg: MsgService,
+              private subdivisionsService: SubdivisionsService,
+              private route: ActivatedRoute,
+              private companiesService: CompaniesService) {
   }
 
   ngOnInit() {

@@ -18,7 +18,12 @@ import {User} from '../models/User';
 @Injectable()
 export class SubdivisionsService {
 
-  constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService, private usersService: UsersService, private companiesService: CompaniesService) {
+  constructor(private http: Http,
+              private authService: AuthService,
+              private router: Router,
+              private msgService: MsgService,
+              private usersService: UsersService,
+              private companiesService: CompaniesService) {
   }
 
   public getSubdivisions(company: number): Observable<Subdivision[]> {

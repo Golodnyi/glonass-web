@@ -3,7 +3,6 @@ import {ActivatedRoute} from '@angular/router';
 import {Company} from '../../../../../models/Company';
 import {CompaniesService} from '../../../../../services/companies.service';
 import {MsgService} from '../../../../../services/msg';
-import {UsersService} from '../../../../../services/users.service';
 import * as moment from 'moment';
 import {isUndefined} from 'util';
 
@@ -19,7 +18,10 @@ export class CompanyUpdateComponent implements OnInit {
   public company: Company;
   public ru: any;
   public calendar = new Date();
-  constructor(private route: ActivatedRoute, private companiesService: CompaniesService, private msg: MsgService, private usersService: UsersService) {
+
+  constructor(private route: ActivatedRoute,
+              private companiesService: CompaniesService,
+              private msg: MsgService) {
   }
 
   ngOnInit() {

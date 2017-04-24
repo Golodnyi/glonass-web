@@ -13,7 +13,10 @@ import {MsgService} from './msg';
 @Injectable()
 export class ChartsService {
 
-  constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
+  constructor(private http: Http,
+              private authService: AuthService,
+              private router: Router,
+              private msgService: MsgService) {
   }
 
   public getData(car: Car): Observable<Car[]> {

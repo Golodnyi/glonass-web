@@ -16,7 +16,9 @@ export class AuthService {
   private logger: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private admin: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  constructor(private http: Http, private cookieService: CookieService, private router: Router) {
+  constructor(private http: Http,
+              private cookieService: CookieService,
+              private router: Router) {
     this.isLoggedIn();
   }
 

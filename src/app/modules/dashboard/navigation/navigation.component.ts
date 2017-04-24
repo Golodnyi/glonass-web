@@ -16,7 +16,12 @@ export class NavigationComponent implements OnInit {
 
   public companies: Company[];
 
-  constructor(private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService, private carsService: CarsService, private msgService: MsgService, private router: Router, private tree: TreePipe) {
+  constructor(private companiesService: CompaniesService,
+              private subdivisionsService: SubdivisionsService,
+              private carsService: CarsService,
+              private msgService: MsgService,
+              private router: Router,
+              private tree: TreePipe) {
   }
 
   ngOnInit() {
