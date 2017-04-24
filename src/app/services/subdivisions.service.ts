@@ -48,8 +48,8 @@ export class SubdivisionsService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.post(
-      env.backend + '/v1/companies/' + subdivision.company.id + '/subdivisions',
-      'name=' + subdivision.name + '&company_id=' + subdivision.company.id,
+      env.backend + '/v1/companies/' + subdivision.company_id + '/subdivisions',
+      'name=' + subdivision.name + '&company_id=' + subdivision.company_id,
       options)
       .map((response: Response) => {
         const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());

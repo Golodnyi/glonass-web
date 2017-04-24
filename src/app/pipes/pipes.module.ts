@@ -9,5 +9,5 @@ import {TreePipe} from './tree.pipe';
   declarations: [TreePipe],
   exports: [TreePipe],
 })
-export class TreePipeModule {
+export class PipesModule {
 }

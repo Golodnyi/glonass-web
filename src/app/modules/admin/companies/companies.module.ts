@@ -2,13 +2,14 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {
-  AutoCompleteModule,
   ButtonModule,
   CalendarModule,
+  DropdownModule,
   InputTextModule,
   TabMenuModule,
   ToolbarModule,
-  TreeModule
+  TreeModule,
+  AutoCompleteModule
 } from 'primeng/primeng';
 import {CompaniesRoutingModule} from './companies-routing.module';
 import {NavigationComponent} from './navigation/navigation.component';
@@ -23,8 +24,9 @@ import {CompanyUpdateComponent} from './company/update/update.component';
 import {CompanyCreateComponent} from './company/create/create.component';
 import {SubdivisionCreateComponent} from './subdivision/create/create.component';
 import {SubdivisionUpdateComponent} from './subdivision/update/update.component';
-import {TreePipeModule} from '../../../pipes/tree.pipe.module';
+import {PipesModule} from '../../../pipes/pipes.module';
 import {TreePipe} from '../../../pipes/tree.pipe';
+import {DropDownPipe} from '../../../pipes/dropdown.pipe';
 
 @NgModule({
   imports: [
@@ -36,11 +38,12 @@ import {TreePipe} from '../../../pipes/tree.pipe';
     ButtonModule,
     CalendarModule,
     TabMenuModule,
-    AutoCompleteModule,
     ToolbarModule,
-    TreePipeModule
+    PipesModule,
+    DropdownModule,
+    AutoCompleteModule
   ],
-  declarations: [NavigationComponent, CompaniesComponent, CompanyUpdateComponent, CompanyCreateComponent, CarComponent, EngineComponent, SubdivisionCreateComponent, SubdivisionUpdateComponent],
+  declarations: [NavigationComponent, CompaniesComponent, CompanyUpdateComponent, CompanyCreateComponent, CarComponent, EngineComponent, SubdivisionCreateComponent, SubdivisionUpdateComponent, DropDownPipe],
   providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService, TreePipe],
 })
 export class CompaniesModule {

@@ -5,6 +5,7 @@ import {AuthService} from '../../../../../services/auth.service';
 import {CompaniesService} from '../../../../../services/companies.service';
 import {Subdivision} from '../../../../../models/Subdivision';
 import {SubdivisionsService} from '../../../../../services/subdivisions.service';
+import {isUndefined} from 'util';
 
 @Component({
   selector: 'app-subdivision-create',
@@ -39,10 +40,10 @@ export class SubdivisionCreateComponent implements OnInit {
   }
 
   public create() {
-    if (this.subdivision.name === null) {
+    if (isUndefined(this.subdivision.name)) {
       this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Заполните название подразделения');
       return false;
-    } else if (this.subdivision.company === null) {
+    } else if (isUndefined(this.subdivision.company_id)) {
       this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Укажите компанию');
       return false;
     }

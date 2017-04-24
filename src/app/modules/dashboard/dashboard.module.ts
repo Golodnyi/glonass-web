@@ -8,7 +8,7 @@ import {CarsService} from '../../services/cars.service';
 import {NavigationComponent} from './navigation/navigation.component';
 import {TreeModule} from 'primeng/primeng';
 import {ChartsComponent} from './charts/charts.component';
-import {TreePipeModule} from '../../pipes/tree.pipe.module';
+import {PipesModule} from '../../pipes/pipes.module';
 import {TreePipe} from '../../pipes/tree.pipe';
 
 @NgModule({
@@ -16,7 +16,7 @@ import {TreePipe} from '../../pipes/tree.pipe';
     CommonModule,
     DashboardRoutingModule,
     TreeModule,
-    TreePipeModule
+    PipesModule
   ],
   declarations: [DashboardComponent, NavigationComponent, ChartsComponent],
   providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe],
