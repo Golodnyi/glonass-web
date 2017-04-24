@@ -40,6 +40,9 @@ export class SubdivisionCreateComponent implements OnInit {
   }
 
   public create() {
+    /**
+     * TODO: использовать валидаторы форм
+     */
     if (isUndefined(this.subdivision.name)) {
       this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Заполните название подразделения');
       return false;

@@ -38,6 +38,9 @@ export class CompanyCreateComponent implements OnInit {
   }
 
   public create() {
+    /**
+     * TODO: использовать валидаторы форм
+     */
     if (isUndefined(this.company.name)) {
       this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Заполните название компании');
       return false;

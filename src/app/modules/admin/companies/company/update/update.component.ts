@@ -44,6 +44,9 @@ export class CompanyUpdateComponent implements OnInit {
   }
 
   public save() {
+    /**
+     * TODO: использовать валидаторы форм
+     */
     if (isUndefined(this.company.name)) {
       this.msg.msg(MsgService.ERROR, 'Заполинте все поля', 'Заполните название компании');
       return false;

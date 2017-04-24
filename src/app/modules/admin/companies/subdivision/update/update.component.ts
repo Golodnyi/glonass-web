@@ -45,6 +45,9 @@ export class SubdivisionUpdateComponent implements OnInit {
   }
 
   public save() {
+    /**
+     * TODO: использовать валидаторы форм
+     */
     if (this.subdivision.name === null) {
       this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Заполните название подразделения');
       return false;
