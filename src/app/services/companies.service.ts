@@ -11,18 +11,24 @@ import {Error} from '../models/Error';
 import {MsgService} from './msg';
 import {UsersService} from './users.service';
 import {User} from '../models/User';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class CompaniesService {
+  private companies: BehaviorSubject<Company[]> = new BehaviorSubject(null);
 
   constructor(private http: Http,
               private authService: AuthService,
               private router: Router,
-              private msgService: MsgService,
+              private msg: MsgService,
               private usersService: UsersService) {
   }
 
-  public getCompanies(): Observable<Company[]> {
+  /**
+   * TODO: напрсано обновляет дерево, при запросе компаний в dropdown
+   * @returns {Observable<R|T>}
+   */
+  private requestCompanies(): Observable<boolean> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
@@ -35,12 +41,18 @@ export class CompaniesService {
         companies.forEach(function (company: Company) {
           companiesObj.push(Object.assign(new Company(), company));
         });
-        return companiesObj;
+        this.companies.next(companiesObj);
+        return true;
       })
       .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
+        Error.check(error, this.authService, this.router, this.msg);
         return Observable.throw(error.json().message || 'Server error');
       });
+  }
+
+  public getCompanies(): Observable<Company[]> {
+    this.requestCompanies().subscribe();
+    return this.companies.asObservable();
   }
 
   public get(company: number): Observable<Company> {
@@ -59,7 +71,7 @@ export class CompaniesService {
         return companyObj;
       })
       .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
+        Error.check(error, this.authService, this.router, this.msg);
         return Observable.throw(error.json().message || 'Server error');
       });
   }
@@ -80,10 +92,11 @@ export class CompaniesService {
             companyObj.author = Object.assign(new User, user);
           }
         );
+        this.requestCompanies().subscribe();
         return companyObj;
       })
       .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
+        Error.check(error, this.authService, this.router, this.msg);
         return Observable.throw(error.json().message || 'Server error');
       });
   }
@@ -104,10 +117,11 @@ export class CompaniesService {
             companyObj.author = Object.assign(new User, user);
           }
         );
+        this.requestCompanies().subscribe();
         return companyObj;
       })
       .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
+        Error.check(error, this.authService, this.router, this.msg);
         return Observable.throw(error.json().message || 'Server error');
       });
   }
@@ -121,11 +135,12 @@ export class CompaniesService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
     return this.http.delete(env.backend + '/v1/companies/' + company.id, options)
       .map((response: Response) => {
-        this.msgService.notice(MsgService.SUCCESS, 'Удалена', response.json().message);
+        this.requestCompanies().subscribe();
+        this.msg.notice(MsgService.SUCCESS, 'Удалена', response.json().message);
         return true;
       })
       .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
+        Error.check(error, this.authService, this.router, this.msg);
         return Observable.throw(error.json().message || 'Server error');
       });
   }
