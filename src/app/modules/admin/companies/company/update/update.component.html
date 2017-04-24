@@ -2,7 +2,7 @@
     <label for="name">Название:</label><br/>
     <input class="input-sm" id="name" type="text" [(ngModel)]="company.name" pInputText value="{{company.name}}"/><br/>
     <label for="calendar">Дата блокировки аккаунта:</label><br/>
-    <p-calendar id="calendar" [(ngModel)]="calendar" showTime="showTime" hourFormat="24"
+    <p-calendar id="calendar" [(ngModel)]="calendar" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24"
                 [locale]="ru"></p-calendar>
     <br/>
     <label for="author">Владелец:</label><br/>
