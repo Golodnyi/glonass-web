@@ -9,7 +9,6 @@ import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
 import {Error} from '../models/Error';
 import {Car} from '../models/Car';
-import {TreeNode} from 'primeng/primeng';
 import {MsgService} from './msg';
 
 @Injectable()

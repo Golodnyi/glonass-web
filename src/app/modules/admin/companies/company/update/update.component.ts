@@ -4,6 +4,8 @@ import {Company} from '../../../../../models/Company';
 import {CompaniesService} from '../../../../../services/companies.service';
 import {MsgService} from '../../../../../services/msg';
 import {UsersService} from '../../../../../services/users.service';
+import * as moment from 'moment';
+import {isUndefined} from 'util';
 
 @Component({
   selector: 'app-company-update',
@@ -16,7 +18,7 @@ export class CompanyUpdateComponent implements OnInit {
   private id: number;
   public company: Company;
   public ru: any;
-
+  public calendar = new Date();
   constructor(private route: ActivatedRoute, private companiesService: CompaniesService, private msg: MsgService, private usersService: UsersService) {
   }
 
@@ -35,16 +37,18 @@ export class CompanyUpdateComponent implements OnInit {
       this.companiesService.get(this.id).subscribe(
         company => {
           this.company = company;
+          this.calendar = moment(this.company.active_till).toDate();
         }
       );
     });
   }
 
   public save() {
-    if (!this.company.name.length) {
+    if (isUndefined(this.company.name)) {
       this.msg.msg(MsgService.ERROR, 'Заполинте все поля', 'Заполните название компании');
       return false;
     }
+    this.company.active_till = moment(this.calendar).format('YYYY-MM-DD HH:mm:ss');
     this.companiesService.update(this.company).subscribe(
       company => {
         this.company = company;

@@ -6,7 +6,8 @@ export class Car implements ICar, ITree {
   name: string;
   subdivision_id: number;
   is_visible: number;
+
   public getClassName() {
-      return this.constructor.name;
+    return this.constructor.name;
   }
 }

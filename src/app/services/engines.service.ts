@@ -8,7 +8,6 @@ import {env} from '../../env';
 import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
 import {Error} from '../models/Error';
-import {TreeNode} from 'primeng/primeng';
 import {MsgService} from './msg';
 import {Engine} from '../models/Engine';
 

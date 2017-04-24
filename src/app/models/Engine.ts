@@ -5,12 +5,15 @@ export class Engine implements IEngine, ITree {
   name: string;
   model_id: number;
   sensors_config: {};
+
   set esn(param: number) {
     this.name = String(param);
   }
+
   get esn(): number {
     return Number(this.name);
   }
+
   public getClassName() {
     return this.constructor.name;
   }

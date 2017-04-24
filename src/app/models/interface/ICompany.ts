@@ -2,9 +2,9 @@ import {IUser} from './IUser';
 export interface ICompany {
   id: number;
   name: string;
-  created_at: Date;
-  updated_at: Date;
-  active_till: Date;
+  created_at: string;
+  updated_at: string;
+  active_till: string;
   author_id: number;
   author: IUser;
 }

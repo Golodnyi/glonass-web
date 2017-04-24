@@ -5,8 +5,8 @@ export interface ISubdivision {
   name: string;
   company_id: number;
   company: ICompany;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
   author_id: number;
   author: IUser;
 }

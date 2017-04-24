@@ -10,7 +10,6 @@ import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
 import {Error} from '../models/Error';
 import {Subdivision} from '../models/Subdivision';
-import {TreeNode} from 'primeng/primeng';
 import {MsgService} from './msg';
 import {UsersService} from './users.service';
 import {CompaniesService} from './companies.service';

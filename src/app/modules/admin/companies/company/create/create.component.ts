@@ -3,6 +3,8 @@ import {Company} from '../../../../../models/Company';
 import {MsgService} from '../../../../../services/msg';
 import {AuthService} from '../../../../../services/auth.service';
 import {CompaniesService} from '../../../../../services/companies.service';
+import * as moment from 'moment';
+import {isUndefined} from 'util';
 
 @Component({
   selector: 'app-company-create',
@@ -14,10 +16,9 @@ export class CompanyCreateComponent implements OnInit {
 
   public company: Company = new Company();
   public ru: any;
-
+  public calendar: Date = new Date();
   constructor(private authService: AuthService, private msg: MsgService, private companiesService: CompaniesService) {
-    this.company.active_till = new Date();
-    this.company.active_till.setMonth(this.company.active_till.getMonth() + 12);
+    this.calendar.setMonth(this.calendar.getMonth() + 12);
   }
 
   ngOnInit() {
@@ -37,10 +38,12 @@ export class CompanyCreateComponent implements OnInit {
   }
 
   public create() {
-    if (this.company.name === null) {
+    if (isUndefined(this.company.name)) {
       this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Заполните название компании');
       return false;
     }
+    this.company.active_till = moment(this.calendar).format('YYYY-MM-DD HH:mm:ss');
+
     this.companiesService.create(this.company).subscribe(
       company => {
         this.company = company;

@@ -8,7 +8,6 @@ import {Company} from '../models/Company';
 import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
 import {Error} from '../models/Error';
-import {TreeNode} from 'primeng/primeng';
 import {MsgService} from './msg';
 import * as moment from 'moment';
 import {UsersService} from './users.service';
@@ -69,7 +68,7 @@ export class CompaniesService {
 
     return this.http.put(
       env.backend + '/v1/companies/' + company.id,
-      'name=' + company.name + '&active_till=' + moment(company.active_till).format('YYYY-MM-DD HH:mm:ss'),
+      'name=' + company.name + '&active_till=' + company.active_till,
       options)
       .map((response: Response) => {
         const companyObj: Company = Object.assign(new Company(), response.json());
@@ -93,7 +92,7 @@ export class CompaniesService {
 
     return this.http.post(
       env.backend + '/v1/companies',
-      'name=' + company.name + '&active_till=' + moment(company.active_till).format('YYYY-MM-DD HH:mm:ss') + '&author_id=' + company.author.id,
+      'name=' + company.name + '&active_till=' + company.active_till + '&author_id=' + company.author.id,
       options)
       .map((response: Response) => {
         const companyObj: Company = Object.assign(new Company(), response.json());

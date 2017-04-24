@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {TreeNode} from 'primeng/primeng';
 import {CompaniesService} from '../../../../services/companies.service';
 import {SubdivisionsService} from '../../../../services/subdivisions.service';
 import {CarsService} from '../../../../services/cars.service';

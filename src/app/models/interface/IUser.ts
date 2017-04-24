@@ -7,6 +7,6 @@ export interface IUser {
   role_id: number;
   role: IRole;
   active: number;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
 }
