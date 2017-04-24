@@ -5,6 +5,8 @@ import {SubdivisionsService} from '../../../services/subdivisions.service';
 import {CarsService} from '../../../services/cars.service';
 import {MsgService} from '../../../services/msg';
 import {Router} from '@angular/router';
+import {Company} from '../../../models/Company';
+import {TreePipe} from '../../../pipes/tree.pipe';
 
 @Component({
   selector: 'app-navigation',
@@ -13,16 +15,15 @@ import {Router} from '@angular/router';
 })
 export class NavigationComponent implements OnInit {
 
-  public companies: TreeNode[];
-  public node: TreeNode;
+  public companies: Company[];
 
-  constructor(private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService, private carsService: CarsService, private msgService: MsgService, private router: Router) {
+  constructor(private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService, private carsService: CarsService, private msgService: MsgService, private router: Router, private tree: TreePipe) {
   }
 
   ngOnInit() {
-    this.companiesService.getCompaniesAsTree().subscribe(
-      tree => {
-        this.companies = tree;
+    this.companiesService.getCompanies().subscribe(
+      companies => {
+        this.companies = companies;
       },
       error => {
         this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
@@ -32,19 +33,19 @@ export class NavigationComponent implements OnInit {
 
   public onNodeExpand(event: any) {
     if (event.node) {
-      if (event.node.type === 'company') {
-        this.subdivisionsService.getSubdivisionsAsTree(event.node.data).subscribe(
-          tree => {
-            event.node.children = tree;
+      if (event.node.type === 'Company') {
+        this.subdivisionsService.getSubdivisions(event.node.data).subscribe(
+          subdivisions => {
+            event.node.children = this.tree.transform(subdivisions);
           },
           error => {
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
           }
         );
-      } else if (event.node.type === 'subdivision') {
-        this.carsService.getCarsAsTree(event.node.parent.data, event.node.data, true, true).subscribe(
-          tree => {
-            event.node.children = tree;
+      } else if (event.node.type === 'Subdivision') {
+        this.carsService.getCars(event.node.parent.data, event.node.data).subscribe(
+          cars => {
+            event.node.children = this.tree.transform(cars, true, true);
           },
           error => {
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error);

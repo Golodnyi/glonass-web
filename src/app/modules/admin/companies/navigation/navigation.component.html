@@ -1,6 +1,6 @@
-<div class="col-md-3 navigation">
+<div *ngIf="companies" class="col-md-3 navigation">
     <h3>Компании</h3>
-    <p-tree [value]="companies"
+    <p-tree [value]="companies | tree : false : true"
             selectionMode="single"
             [(selection)]="node"
             (onNodeExpand)="onNodeExpand($event)"

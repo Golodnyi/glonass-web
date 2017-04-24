@@ -8,15 +8,18 @@ import {CarsService} from '../../services/cars.service';
 import {NavigationComponent} from './navigation/navigation.component';
 import {TreeModule} from 'primeng/primeng';
 import {ChartsComponent} from './charts/charts.component';
+import {TreePipeModule} from '../../pipes/tree.pipe.module';
+import {TreePipe} from '../../pipes/tree.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    TreeModule
+    TreeModule,
+    TreePipeModule
   ],
   declarations: [DashboardComponent, NavigationComponent, ChartsComponent],
-  providers: [CompaniesService, SubdivisionsService, CarsService],
+  providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe],
 })
 export class DashboardModule {
 }

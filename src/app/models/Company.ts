@@ -1,7 +1,8 @@
 import {IUser} from './interface/IUser';
 import {ICompany} from './interface/ICompany';
 import * as moment from 'moment';
-export class Company implements ICompany {
+import {ITree} from './interface/ITree';
+export class Company implements ICompany, ITree {
   id: number;
   name: string;
   author_id: number;
@@ -32,5 +33,8 @@ export class Company implements ICompany {
 
   get updated_at(): Date {
     return this._updated_at;
+  }
+  public getClassName() {
+    return this.constructor.name;
   }
 }

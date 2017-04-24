@@ -2,7 +2,8 @@ import {ISubdivision} from './interface/ISubdivision';
 import * as moment from 'moment';
 import {ICompany} from './interface/ICompany';
 import {IUser} from './interface/IUser';
-export class Subdivision implements ISubdivision {
+import {ITree} from './interface/ITree';
+export class Subdivision implements ISubdivision, ITree {
   id: number;
   name: string;
   company_id: number;
@@ -26,5 +27,8 @@ export class Subdivision implements ISubdivision {
 
   set updated_at(date) {
     this._updated_at = moment(date).toDate();
+  }
+  public getClassName() {
+    return this.constructor.name;
   }
 }

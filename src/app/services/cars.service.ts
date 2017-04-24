@@ -18,47 +18,20 @@ export class CarsService {
   constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService) {
   }
 
-  public getCars(company, subdivision): Observable<Car[]> {
+  public getCars(company: number, subdivision: number): Observable<Car[]> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + '/v1/companies/' + company.id + '/subdivisions/' + subdivision.id + '/cars', options)
+    return this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars', options)
       .map((response: Response) => {
-        return response.json();
-      })
-      .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
-        return Observable.throw(error.json().message || 'Server error');
-      });
-  }
-
-  public getCarsAsTree(company, subdivision, leaf = false, selectable = false): Observable<TreeNode[]> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
-
-    let cars: Car[];
-    const items = [];
-
-    return this.http.get(env.backend + '/v1/companies/' + company.id + '/subdivisions/' + subdivision.id + '/cars', options)
-      .map((response: Response) => {
-        cars = response.json();
-        cars.forEach(function (item) {
-          items.push(
-            {
-              'label': item.name,
-              'type': 'car',
-              'data': item.id,
-              'expandedIcon': 'fa-folder-open',
-              'collapsedIcon': 'fa-folder',
-              'leaf': leaf,
-              'selectable': selectable
-            }
-          );
+        // TODO: костыль, переписать
+        const cars: Car[] = response.json();
+        const carsObj: Car[] = [];
+        cars.forEach(function (car: Car) {
+          carsObj.push(Object.assign(new Car(), car));
         });
-
-        return items;
+        return carsObj;
       })
       .catch((error: any) => {
         Error.check(error, this.authService, this.router, this.msgService);

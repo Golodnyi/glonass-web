@@ -6,6 +6,8 @@ import {CarsService} from '../../../../services/cars.service';
 import {MsgService} from '../../../../services/msg';
 import {EnginesService} from '../../../../services/engines.service';
 import {Router} from '@angular/router';
+import {TreePipe} from '../../../../pipes/tree.pipe';
+import {Company} from '../../../../models/Company';
 
 @Component({
   selector: 'app-navigation',
@@ -14,21 +16,15 @@ import {Router} from '@angular/router';
 })
 export class NavigationComponent implements OnInit {
 
-  public companies: TreeNode[];
-  public node: TreeNode;
+  public companies: Company[];
 
-  constructor(private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService, private carsService: CarsService, private msgService: MsgService, private enginesService: EnginesService, private router: Router) {
+  constructor(private companiesService: CompaniesService, private subdivisionsService: SubdivisionsService, private carsService: CarsService, private msgService: MsgService, private enginesService: EnginesService, private router: Router, private tree: TreePipe) {
   }
 
-  /**
-   * TODO: разобраться каким образом можно перезагружать компонент
-   * из другого компонента, нужно для актуализации информации
-   * после ее редактированяи в дочерних модулях/компонентах
-   */
   ngOnInit() {
-    this.companiesService.getCompaniesAsTree(false, true).subscribe(
-      tree => {
-        this.companies = tree;
+    this.companiesService.getCompanies().subscribe(
+      companies => {
+        this.companies = companies;
       },
       error => {
         this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
@@ -38,28 +34,28 @@ export class NavigationComponent implements OnInit {
 
   public onNodeExpand(event: any) {
     if (event.node) {
-      if (event.node.type === 'company') {
-        this.subdivisionsService.getSubdivisionsAsTree(event.node.data, false, true).subscribe(
-          tree => {
-            event.node.children = tree;
+      if (event.node.type === 'Company') {
+        this.subdivisionsService.getSubdivisions(event.node.data).subscribe(
+          subdivision => {
+            event.node.children = this.tree.transform(subdivision, false, true);
           },
           error => {
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
           }
         );
-      } else if (event.node.type === 'subdivision') {
-        this.carsService.getCarsAsTree(event.node.parent.data, event.node.data, false, true).subscribe(
-          tree => {
-            event.node.children = tree;
+      } else if (event.node.type === 'Subdivision') {
+        this.carsService.getCars(event.node.parent.data, event.node.data).subscribe(
+          cars => {
+            event.node.children = this.tree.transform(cars, false, true);
           },
           error => {
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
           }
         );
-      } else if (event.node.type === 'car') {
-        this.enginesService.getEngineAsTree(event.node.parent.parent.data, event.node.parent.data, event.node.data, true, true).subscribe(
-          tree => {
-            event.node.children = tree;
+      } else if (event.node.type === 'Car') {
+        this.enginesService.getEngine(event.node.parent.parent.data, event.node.parent.data, event.node.data).subscribe(
+          engine => {
+            event.node.children = this.tree.transform([engine], true, true);
           },
           error => {
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
@@ -71,6 +67,6 @@ export class NavigationComponent implements OnInit {
 
   public onNodeSelect(event: any) {
     const object = event.node;
-    this.router.navigate(['/admin/companies/' + object.type + '/' + object.data]);
+    this.router.navigate(['/admin/companies/' + object.type.toLowerCase() + '/' + object.data]);
   }
 }

@@ -23,6 +23,8 @@ import {CompanyUpdateComponent} from './company/update/update.component';
 import {CompanyCreateComponent} from './company/create/create.component';
 import {SubdivisionCreateComponent} from './subdivision/create/create.component';
 import {SubdivisionUpdateComponent} from './subdivision/update/update.component';
+import {TreePipeModule} from '../../../pipes/tree.pipe.module';
+import {TreePipe} from '../../../pipes/tree.pipe';
 
 @NgModule({
   imports: [
@@ -35,10 +37,11 @@ import {SubdivisionUpdateComponent} from './subdivision/update/update.component'
     CalendarModule,
     TabMenuModule,
     AutoCompleteModule,
-    ToolbarModule
+    ToolbarModule,
+    TreePipeModule
   ],
   declarations: [NavigationComponent, CompaniesComponent, CompanyUpdateComponent, CompanyCreateComponent, CarComponent, EngineComponent, SubdivisionCreateComponent, SubdivisionUpdateComponent],
-  providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService],
+  providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService, TreePipe],
 })
 export class CompaniesModule {
 }

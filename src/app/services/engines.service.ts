@@ -25,38 +25,12 @@ export class EnginesService {
 
     return this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine', options)
       .map((response: Response) => {
-        const engine: Engine = Object.assign(new Object(), response.json());
+        const engine: Engine = Object.assign(new Engine(), response.json());
         return engine;
       })
       .catch((error: any) => {
         Error.check(error, this.authService, this.router, this.msgService);
         return Observable.throw(error.json().message || 'Server error');
-      });
-  }
-
-  public getEngineAsTree(company: number, subdivision: number, car: number, leaf = false, selectable = false): Observable<TreeNode[]> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
-
-    return this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine', options)
-      .map((response: Response) => {
-        let engine: Engine;
-        engine = response.json();
-        if (engine.id) {
-          const item: TreeNode[] = [{
-            'label': String(engine.esn),
-            'type': 'engine',
-            'data': engine.id,
-            'expandedIcon': 'fa-folder-open',
-            'collapsedIcon': 'fa-folder',
-            'leaf': leaf,
-            'selectable': selectable
-          }];
-          return item;
-        }
-
-        return [];
       });
   }
 }

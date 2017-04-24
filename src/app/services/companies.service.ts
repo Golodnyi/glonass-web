@@ -27,40 +27,13 @@ export class CompaniesService {
 
     return this.http.get(env.backend + '/v1/companies', options)
       .map((response: Response) => {
-        return response.json();
-      })
-      .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
-        return Observable.throw(error.json().message || 'Server error');
-      });
-  }
-
-  public getCompaniesAsTree(leaf = false, selectable = false): Observable<TreeNode[]> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
-
-    return this.http.get(env.backend + '/v1/companies', options)
-      .map((response: Response) => {
-        let companies: Company[];
-        const items: TreeNode[] = [];
-
-        companies = response.json();
-        companies.forEach(function (item) {
-          items.push(
-            {
-              'label': item.name,
-              'type': 'company',
-              'data': item.id,
-              'expandedIcon': 'fa-folder-open',
-              'collapsedIcon': 'fa-folder',
-              'leaf': leaf,
-              'selectable': selectable
-            }
-          );
+        // TODO: костыль, переписать
+        const companies: Company[] = response.json();
+        const companiesObj: Company[] = [];
+        companies.forEach(function (company: Company) {
+          companiesObj.push(Object.assign(new Company(), company));
         });
-
-        return items;
+        return companiesObj;
       })
       .catch((error: any) => {
         Error.check(error, this.authService, this.router, this.msgService);

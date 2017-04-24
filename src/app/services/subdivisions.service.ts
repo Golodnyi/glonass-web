@@ -22,48 +22,20 @@ export class SubdivisionsService {
   constructor(private http: Http, private authService: AuthService, private router: Router, private msgService: MsgService, private usersService: UsersService, private companiesService: CompaniesService) {
   }
 
-  public getSubdivisions(company: Company): Observable<Subdivision[]> {
+  public getSubdivisions(company: number): Observable<Subdivision[]> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + '/v1/companies/' + company.id + '/subdivisions', options)
+    return this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions', options)
       .map((response: Response) => {
-        return response.json();
-      })
-      .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
-        return Observable.throw(error.json().message || 'Server error');
-      });
-  }
-
-
-  public getSubdivisionsAsTree(company: number, leaf = false, selectable = false): Observable<TreeNode[]> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
-
-    let subdivisions: Subdivision[];
-    const items = [];
-
-    return this.http.get(env.backend + '/v1/companies/1/subdivisions/' + company, options)
-      .map((response: Response) => {
-        subdivisions = response.json();
-        subdivisions.forEach(function (item) {
-          items.push(
-            {
-              'label': item.name,
-              'type': 'subdivision',
-              'data': item.id,
-              'expandedIcon': 'fa-folder-open',
-              'collapsedIcon': 'fa-folder',
-              'leaf': leaf,
-              'selectable': selectable
-            }
-          );
+        // TODO: костыль, переписать
+        const subdivisions: Subdivision[] = response.json();
+        const subdivisionsObj: Subdivision[] = [];
+        subdivisions.forEach(function (subdivision: Subdivision) {
+          subdivisionsObj.push(Object.assign(new Subdivision(), subdivision));
         });
-
-        return items;
+        return subdivisionsObj;
       })
       .catch((error: any) => {
         Error.check(error, this.authService, this.router, this.msgService);
