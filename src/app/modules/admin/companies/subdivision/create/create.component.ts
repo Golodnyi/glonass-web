@@ -32,7 +32,7 @@ export class SubdivisionCreateComponent implements OnInit {
         this.subdivision.author = user;
       }
     );
-    this.companiesService.getCompanies().subscribe(
+    this.companiesService.getCompanies(false).subscribe(
       companies => {
         this.companies = companies;
       },
@@ -53,10 +53,10 @@ export class SubdivisionCreateComponent implements OnInit {
       this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Укажите компанию');
       return false;
     }
-
     this.subdivisionsService.create(this.subdivision).subscribe(
       subdivision => {
         this.subdivision = subdivision;
+        this.companiesService.resync().subscribe();
         this.msg.notice(MsgService.SUCCESS, 'Создано', 'Подразделение ' + subdivision.name + ' создано');
       },
       error => {

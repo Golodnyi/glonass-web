@@ -37,7 +37,7 @@ export class SubdivisionUpdateComponent implements OnInit {
         }
       );
     });
-    this.companiesService.getCompanies().subscribe(
+    this.companiesService.getCompanies(false).subscribe(
       companies => {
         this.companies = companies;
       },
@@ -58,10 +58,10 @@ export class SubdivisionUpdateComponent implements OnInit {
       this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Укажите компанию');
       return false;
     }
-
     this.subdivisionsService.update(this.subdivision).subscribe(
       subdivision => {
         this.subdivision = subdivision;
+        this.companiesService.resync().subscribe();
         this.msg.notice(MsgService.SUCCESS, 'Сохранено', 'Подразделение успешно изменено');
       },
       error => {

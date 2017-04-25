@@ -1,19 +1,15 @@
-import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptions, Response} from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Headers, Http, RequestOptions, Response } from '@angular/http';
 
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {env} from '../../env';
-import {Company} from '../models/Company';
-import {AuthService} from './auth.service';
-import {Router} from '@angular/router';
-import {Error} from '../models/Error';
-import {Subdivision} from '../models/Subdivision';
-import {MsgService} from './msg';
-import {UsersService} from './users.service';
-import {CompaniesService} from './companies.service';
-import {User} from '../models/User';
+import { env } from '../../env';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
+import { Error } from '../models/Error';
+import { Subdivision } from '../models/Subdivision';
+import { MsgService } from './msg';
 
 @Injectable()
 export class SubdivisionsService {
@@ -21,9 +17,7 @@ export class SubdivisionsService {
   constructor(private http: Http,
               private authService: AuthService,
               private router: Router,
-              private msgService: MsgService,
-              private usersService: UsersService,
-              private companiesService: CompaniesService) {
+              private msgService: MsgService) {
   }
 
   public getSubdivisions(company: number): Observable<Subdivision[]> {
@@ -89,7 +83,7 @@ export class SubdivisionsService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.put(
-      env.backend + '/v1/companies/' + subdivision.company.id + '/subdivisions/' + subdivision.id,
+      env.backend + '/v1/companies/' + subdivision.company_id + '/subdivisions/' + subdivision.id,
       'name=' + subdivision.name,
       options)
       .map((response: Response) => {

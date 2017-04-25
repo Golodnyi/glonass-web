@@ -57,6 +57,7 @@ export class CompanyUpdateComponent implements OnInit {
     this.companiesService.update(this.company).subscribe(
       company => {
         this.company = company;
+        this.companiesService.resync().subscribe();
         this.msg.notice(MsgService.SUCCESS, 'Сохранено', 'Компания успешно изменена.');
       },
       error => {

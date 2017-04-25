@@ -49,10 +49,10 @@ export class CompanyCreateComponent implements OnInit {
       return false;
     }
     this.company.active_till = moment(this.calendar).format('YYYY-MM-DD HH:mm:ss');
-
     this.companiesService.create(this.company).subscribe(
       company => {
         this.company = company;
+        this.companiesService.resync().subscribe();
         this.msg.notice(MsgService.SUCCESS, 'Сохранено', 'Компания ' + this.company.name + ' создана');
       },
       error => {
