@@ -58,22 +58,6 @@ export class SubdivisionsService {
       options)
       .map((response: Response) => {
         const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());
-        this.usersService.getUser(subdivisionObj.author_id).subscribe(
-          user => {
-            subdivisionObj.author = Object.assign(new User(), user);
-          },
-          error => {
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-          }
-        );
-        this.companiesService.get(subdivisionObj.company_id).subscribe(
-          company => {
-            subdivisionObj.company = Object.assign(new Company(), company);
-          },
-          error => {
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-          }
-        );
         return subdivisionObj;
       })
       .catch((error: any) => {
@@ -91,22 +75,6 @@ export class SubdivisionsService {
       env.backend + '/v1/companies/1/subdivisions/' + id, options)
       .map((response: Response) => {
         const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());
-        this.usersService.getUser(subdivisionObj.author_id).subscribe(
-          user => {
-            subdivisionObj.author = Object.assign(new User(), user);
-          },
-          error => {
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-          }
-        );
-        this.companiesService.get(subdivisionObj.company_id).subscribe(
-          company => {
-            subdivisionObj.company = Object.assign(new Company(), company);
-          },
-          error => {
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-          }
-        );
         return subdivisionObj;
       })
       .catch((error: any) => {
@@ -122,26 +90,10 @@ export class SubdivisionsService {
 
     return this.http.put(
       env.backend + '/v1/companies/' + subdivision.company.id + '/subdivisions/' + subdivision.id,
-      'name=' + subdivision.name + '&company_id=' + subdivision.company.id,
+      'name=' + subdivision.name,
       options)
       .map((response: Response) => {
         const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());
-        this.usersService.getUser(subdivisionObj.author_id).subscribe(
-          user => {
-            subdivisionObj.author = Object.assign(new User(), user);
-          },
-          error => {
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-          }
-        );
-        this.companiesService.get(subdivisionObj.company_id).subscribe(
-          company => {
-            subdivisionObj.company = Object.assign(new Company(), company);
-          },
-          error => {
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-          }
-        );
         return subdivisionObj;
       })
       .catch((error: any) => {

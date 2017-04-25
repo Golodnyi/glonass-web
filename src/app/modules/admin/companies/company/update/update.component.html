@@ -5,9 +5,6 @@
     <label for="calendar">Дата блокировки аккаунта:</label><br/>
     <p-calendar id="calendar" [(ngModel)]="calendar" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24"
                 [locale]="ru"></p-calendar>
-    <br/>
-    <label for="author">Владелец:</label><br/>
-    <p-autoComplete id="author" [(ngModel)]="company.author" field="name" disabled="disabled"></p-autoComplete>
     <hr/>
     <button class="ui-button-success" icon="fa-check" pButton type="button" (click)="save()" label="Сохранить"></button>
     <button class="ui-button-danger" icon="fa-trash" pButton type="button" (click)="delete()" label="Удалить"></button>

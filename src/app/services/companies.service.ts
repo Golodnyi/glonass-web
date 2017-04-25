@@ -51,11 +51,6 @@ export class CompaniesService {
     return this.http.get(env.backend + '/v1/companies/' + company, options)
       .map((response: Response) => {
         const companyObj: Company = Object.assign(new Company(), response.json());
-        this.usersService.getUser(companyObj.author_id).subscribe(
-          user => {
-            companyObj.author = Object.assign(new User, user);
-          }
-        );
         return companyObj;
       })
       .catch((error: any) => {
@@ -75,11 +70,6 @@ export class CompaniesService {
       options)
       .map((response: Response) => {
         const companyObj: Company = Object.assign(new Company(), response.json());
-        this.usersService.getUser(companyObj.author_id).subscribe(
-          user => {
-            companyObj.author = Object.assign(new User, user);
-          }
-        );
         return companyObj;
       })
       .catch((error: any) => {
@@ -95,15 +85,10 @@ export class CompaniesService {
 
     return this.http.post(
       env.backend + '/v1/companies',
-      'name=' + company.name + '&active_till=' + company.active_till + '&author_id=' + company.author.id,
+      'name=' + company.name + '&active_till=' + company.active_till,
       options)
       .map((response: Response) => {
         const companyObj: Company = Object.assign(new Company(), response.json());
-        this.usersService.getUser(companyObj.author_id).subscribe(
-          user => {
-            companyObj.author = Object.assign(new User, user);
-          }
-        );
         return companyObj;
       })
       .catch((error: any) => {

@@ -3,10 +3,6 @@
     <label for="name">Название:</label><br/>
     <input class="input-sm" id="name" type="text" pInputText [(ngModel)]="subdivision.name"
            placeholder="Название подразделения"/><br/>
-    <label for="company">Компания:</label><br/>
-    <p-dropdown id="company" [options]="companies | DropDown" [(ngModel)]="subdivision.company_id" [filter]="true" [style]="{'width':'190px'}" disabled="disabled"></p-dropdown><br/><br/>
-    <label for="author">Владелец:</label><br/>
-    <p-autoComplete id="author" [(ngModel)]="subdivision.author" field="name" disabled="disabled"></p-autoComplete>
     <hr/>
     <button class="ui-button-success" icon="fa-check" pButton type="button" (click)="save()" label="Сохранить"></button>
     <button class="ui-button-danger" icon="fa-trash" pButton type="button" (click)="delete()" label="Удалить"></button>
