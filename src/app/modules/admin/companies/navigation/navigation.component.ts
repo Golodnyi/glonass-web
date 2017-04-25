@@ -77,29 +77,30 @@ export class NavigationComponent implements OnInit {
     switch (event.node.type) {
       case 'Company':
         this.router.navigate([
-          '/admin/companies/company/' + object.data
+          '/admin/companies/company/', object.data
         ]);
         break;
       case 'Subdivision':
         this.router.navigate([
-          '/admin/companies/company/' + object.parent.data
-          + '/subdivision/' + object.data
+          '/admin/companies/company/', object.parent.data,
+          'subdivision', object.data
         ]);
         break;
       case 'Car':
         this.router.navigate([
-          '/admin/companies/company/' + object.parent.parent.data
-          + '/subdivision/' + object.parent.data
-          + '/car/' + object.data
+          '/admin/companies/company/', object.parent.parent.data,
+          'subdivision', object.parent.data,
+          'car', object.data
         ]);
         break;
       case 'Engine':
         this.router.navigate([
-          '/admin/companies/company/' + object.parent.parent.parent.data
-          + '/subdivision/' + object.parent.parent.data
-          + '/car/' + object.parent.data
-          + '/engine/' + object.data
+          '/admin/companies/company/', object.parent.parent.parent.data,
+          'subdivision', object.parent.parent.data,
+          'car', object.parent.data,
+          'engine', object.data
         ]);
+
         break;
     }
   }
