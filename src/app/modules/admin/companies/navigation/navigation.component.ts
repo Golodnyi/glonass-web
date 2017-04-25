@@ -60,9 +60,11 @@ export class NavigationComponent implements OnInit {
         );
         break;
       case 'Car':
-        this.enginesService.getEngine(event.node.parent.parent.data, event.node.parent.data, event.node.data).subscribe(
+        this.enginesService.get(event.node.parent.parent.data, event.node.parent.data, event.node.data).subscribe(
           engine => {
-            event.node.children = this.tree.transform([engine], true, true);
+            if (engine.id) {
+              event.node.children = this.tree.transform([engine], true, true);
+            }
           },
           error => {
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error);

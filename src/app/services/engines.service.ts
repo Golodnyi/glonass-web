@@ -1,15 +1,15 @@
-import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptions, Response} from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Headers, Http, RequestOptions, Response } from '@angular/http';
 
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {env} from '../../env';
-import {AuthService} from './auth.service';
-import {Router} from '@angular/router';
-import {Error} from '../models/Error';
-import {MsgService} from './msg';
-import {Engine} from '../models/Engine';
+import { env } from '../../env';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
+import { Error } from '../models/Error';
+import { MsgService } from './msg';
+import { Engine } from '../models/Engine';
 
 @Injectable()
 export class EnginesService {
@@ -20,7 +20,7 @@ export class EnginesService {
               private msgService: MsgService) {
   }
 
-  public getEngine(company: number, subdivision: number, car: number): Observable<Engine> {
+  public get(company: number, subdivision: number, car: number): Observable<Engine> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
