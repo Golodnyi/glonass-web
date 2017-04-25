@@ -97,9 +97,6 @@ export class SubdivisionsService {
   }
 
   public delete(subdivision: Subdivision): Observable<boolean> {
-    if (!confirm('Вы действительно хотите удалить подразделение?')) {
-      return null;
-    }
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});

@@ -105,9 +105,6 @@ export class CompaniesService {
   }
 
   public delete(company: Company): Observable<boolean> {
-    if (!confirm('Вы действительно хотите удалить компанию?')) {
-      return null;
-    }
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});

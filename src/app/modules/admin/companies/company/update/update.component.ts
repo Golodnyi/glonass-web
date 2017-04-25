@@ -66,6 +66,13 @@ export class CompanyUpdateComponent implements OnInit {
   }
 
   public delete() {
-    this.companiesService.delete(this.company).subscribe();
+    if (confirm('Вы действительно хотите удалить компанию?')) {
+      this.companiesService.delete(this.company).subscribe(
+        result => {},
+        error => {
+          this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+        }
+      );
+    }
   }
 }

@@ -80,6 +80,13 @@ export class SubdivisionUpdateComponent implements OnInit {
   }
 
   public delete() {
-    this.subdivisionsService.delete(this.subdivision).subscribe();
+    if (confirm('Вы действительно хотите удалить подразделение?')) {
+      this.subdivisionsService.delete(this.subdivision).subscribe(
+        result => {},
+        error => {
+          this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+        }
+      );
+    }
   }
 }
