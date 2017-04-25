@@ -14,7 +14,6 @@ import {isUndefined} from 'util';
 
 export class CompanyUpdateComponent implements OnInit {
 
-  private id: number;
   public company: Company;
   public ru: any;
   public calendar = new Date();
@@ -35,8 +34,8 @@ export class CompanyUpdateComponent implements OnInit {
     };
 
     this.route.params.subscribe(params => {
-      this.id = +params['id'];
-      this.companiesService.get(this.id).subscribe(
+      const company_id = +params['company'];
+      this.companiesService.get(company_id).subscribe(
         company => {
           this.company = company;
           this.calendar = moment(this.company.active_till).toDate();

@@ -13,11 +13,11 @@ const routes: Routes = [
     path: '', component: CompaniesComponent,
     children: [
       {path: 'company/create', component: CompanyCreateComponent},
-      {path: 'company/:id', component: CompanyUpdateComponent},
+      {path: 'company/:company', component: CompanyUpdateComponent},
       {path: 'subdivision/create', component: SubdivisionCreateComponent},
-      {path: 'subdivision/:id', component: SubdivisionUpdateComponent},
-      {path: 'car/:id', component: CarComponent},
-      {path: 'engine/:id', component: EngineComponent}
+      {path: 'company/:company/subdivision/:subdivision', component: SubdivisionUpdateComponent},
+      {path: 'company/:company/subdivision/:subdivision/car/:car', component: CarComponent},
+      {path: 'company/:company/subdivision/:subdivision/car/:car/engine/:engine', component: EngineComponent}
     ]
   }
 ];

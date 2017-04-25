@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {CompaniesService} from '../../../../services/companies.service';
-import {SubdivisionsService} from '../../../../services/subdivisions.service';
-import {CarsService} from '../../../../services/cars.service';
-import {MsgService} from '../../../../services/msg';
-import {EnginesService} from '../../../../services/engines.service';
-import {Router} from '@angular/router';
-import {TreePipe} from '../../../../pipes/tree.pipe';
-import {Company} from '../../../../models/Company';
+import { Component, OnInit } from '@angular/core';
+import { CompaniesService } from '../../../../services/companies.service';
+import { SubdivisionsService } from '../../../../services/subdivisions.service';
+import { CarsService } from '../../../../services/cars.service';
+import { MsgService } from '../../../../services/msg';
+import { EnginesService } from '../../../../services/engines.service';
+import { Router } from '@angular/router';
+import { TreePipe } from '../../../../pipes/tree.pipe';
+import { Company } from '../../../../models/Company';
 
 @Component({
   selector: 'app-navigation',
@@ -38,8 +38,8 @@ export class NavigationComponent implements OnInit {
   }
 
   public onNodeExpand(event: any) {
-    if (event.node) {
-      if (event.node.type === 'Company') {
+    switch (event.node.type) {
+      case 'Company':
         this.subdivisionsService.getSubdivisions(event.node.data).subscribe(
           subdivision => {
             event.node.children = this.tree.transform(subdivision, false, true);
@@ -48,7 +48,8 @@ export class NavigationComponent implements OnInit {
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
           }
         );
-      } else if (event.node.type === 'Subdivision') {
+        break;
+      case 'Subdivision':
         this.carsService.getCars(event.node.parent.data, event.node.data).subscribe(
           cars => {
             event.node.children = this.tree.transform(cars, false, true);
@@ -57,7 +58,8 @@ export class NavigationComponent implements OnInit {
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
           }
         );
-      } else if (event.node.type === 'Car') {
+        break;
+      case 'Car':
         this.enginesService.getEngine(event.node.parent.parent.data, event.node.parent.data, event.node.data).subscribe(
           engine => {
             event.node.children = this.tree.transform([engine], true, true);
@@ -66,12 +68,39 @@ export class NavigationComponent implements OnInit {
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
           }
         );
-      }
+        break;
     }
   }
 
   public onNodeSelect(event: any) {
     const object = event.node;
-    this.router.navigate(['/admin/companies/' + object.type.toLowerCase() + '/' + object.data]);
+    switch (event.node.type) {
+      case 'Company':
+        this.router.navigate([
+          '/admin/companies/company/' + object.data
+        ]);
+        break;
+      case 'Subdivision':
+        this.router.navigate([
+          '/admin/companies/company/' + object.parent.data
+          + '/subdivision/' + object.data
+        ]);
+        break;
+      case 'Car':
+        this.router.navigate([
+          '/admin/companies/company/' + object.parent.parent.data
+          + '/subdivision/' + object.parent.data
+          + '/car/' + object.data
+        ]);
+        break;
+      case 'Engine':
+        this.router.navigate([
+          '/admin/companies/company/' + object.parent.parent.parent.data
+          + '/subdivision/' + object.parent.parent.data
+          + '/car/' + object.parent.data
+          + '/engine/' + object.data
+        ]);
+        break;
+    }
   }
 }

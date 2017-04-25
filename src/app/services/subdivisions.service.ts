@@ -60,13 +60,13 @@ export class SubdivisionsService {
       });
   }
 
-  public get(id: number): Observable<Subdivision> {
+  public get(company: number, subdivision: number): Observable<Subdivision> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.get(
-      env.backend + '/v1/companies/1/subdivisions/' + id, options)
+      env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision, options)
       .map((response: Response) => {
         const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());
         return subdivisionObj;

@@ -27,8 +27,9 @@ export class SubdivisionUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      const id: number = +params['id'];
-      this.subdivisionsService.get(id).subscribe(
+      const company_id: number = +params['company'];
+      const subdivision_id: number = +params['subdivision'];
+      this.subdivisionsService.get(company_id, subdivision_id).subscribe(
         subdivision => {
           this.subdivision = subdivision;
         },
