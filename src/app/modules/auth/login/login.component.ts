@@ -13,7 +13,7 @@ import {CookieService} from 'angular2-cookie/core';
   styleUrls: ['login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  public disabled = false;
   public auth: Auth;
   public user: User;
 
@@ -29,7 +29,8 @@ export class LoginComponent implements OnInit {
 
   }
 
-  login() {
+  login(event: any) {
+    this.disabled = true;
     this.authService.login(this.auth).subscribe(
       user => {
         this.user = user;
@@ -39,16 +40,19 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('user', JSON.stringify(this.user));
             this.authService.setCurrentUser(this.user);
             this.router.navigate(['/dashboard']);
+            this.disabled = false;
           },
           error => {
             this.cookieService.remove('token');
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+            this.disabled = false;
           }
         );
       },
       error => {
         this.cookieService.remove('token');
         this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+        this.disabled = false;
       }
     );
   }

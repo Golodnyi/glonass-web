@@ -12,6 +12,6 @@
                 <input type="checkbox" value="true" [(ngModel)]="auth.remember"> Запомнить меня
             </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="login()">Войти</button>
+        <button pButton type="button" label="Войти" (click)="login($event)" icon="fa-check" class="ui-button-success" [disabled]="disabled"></button>
     </div>
 </div>
