@@ -9,6 +9,7 @@ import {env} from '../../env';
 import {Auth} from '../models/Auth';
 import {CookieService} from 'angular2-cookie/core';
 import {Router} from '@angular/router';
+import { MsgService } from './msg';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +19,8 @@ export class AuthService {
 
   constructor(private http: Http,
               private cookieService: CookieService,
-              private router: Router) {
+              private router: Router,
+              private msg: MsgService) {
     this.isLoggedIn();
   }
 
@@ -32,7 +34,12 @@ export class AuthService {
       remember = 1;
     }
 
-    return this.http.post(env.backend + '/v1/auth/login', 'email=' + auth.email + '&password=' + auth.password + '&remember=' + remember, options)
+    return this.http.post(
+      env.backend + '/v1/auth/login',
+      'email=' + auth.email
+      + '&password=' + auth.password
+      + '&remember=' + remember, options
+    )
       .map((response: Response) => {
         const user: User = Object.assign(new User, response.json());
         this.logger.next(true);
@@ -63,6 +70,7 @@ export class AuthService {
       this.logger.next(false);
 
       if (state !== false) {
+        this.msg.notice(MsgService.ERROR, 'Ошибка', 'Необходима авторизация');
         this.logout();
       }
     }
