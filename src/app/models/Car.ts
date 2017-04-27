@@ -1,5 +1,5 @@
-import {ICar} from './interface/ICar';
-import {ITree} from './interface/ITree';
+import { ICar } from './interface/ICar';
+import { ITree } from './interface/ITree';
 export class Car implements ICar, ITree {
   id: number;
   model_id: number;

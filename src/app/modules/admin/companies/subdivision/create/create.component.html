@@ -4,7 +4,8 @@
     <input class="input-sm" id="name" type="text" pInputText [(ngModel)]="subdivision.name"
            placeholder="Название подразделения"/><br/>
     <label for="company">Компания:</label><br/>
-    <p-dropdown id="company" [options]="companies | DropDown" [(ngModel)]="subdivision.company_id" [filter]="true" [style]="{'width':'190px'}"></p-dropdown>
+    <p-dropdown id="company" [options]="companies | DropDown" [(ngModel)]="subdivision.company_id" [filter]="true"
+                [style]="{'width':'190px'}"></p-dropdown>
     <hr/>
     <button class="ui-button-success" icon="fa-check" pButton type="button" (click)="create()" label="Создать"></button>
     <button pButton type="button" label="Отмена" routerLink="/admin/companies"></button>

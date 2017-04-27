@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Company} from '../../../../../models/Company';
-import {CompaniesService} from '../../../../../services/companies.service';
-import {MsgService} from '../../../../../services/msg';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Company } from '../../../../../models/Company';
+import { CompaniesService } from '../../../../../services/companies.service';
+import { MsgService } from '../../../../../services/msg';
 import * as moment from 'moment';
-import {isUndefined} from 'util';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-company-update',
@@ -68,7 +68,8 @@ export class CompanyUpdateComponent implements OnInit {
   public delete() {
     if (confirm('Вы действительно хотите удалить компанию?')) {
       this.companiesService.delete(this.company).subscribe(
-        result => {},
+        result => {
+        },
         error => {
           this.msg.notice(MsgService.ERROR, 'Ошибка', error);
         }

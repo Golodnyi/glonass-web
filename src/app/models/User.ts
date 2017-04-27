@@ -1,5 +1,5 @@
-import {IRole} from './interface/IRole';
-import {IUser} from './interface/IUser';
+import { IRole } from './interface/IRole';
+import { IUser } from './interface/IUser';
 export class User implements IUser {
   id: number;
   login: string;

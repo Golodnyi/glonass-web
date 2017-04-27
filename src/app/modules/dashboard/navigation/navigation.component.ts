@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {CompaniesService} from '../../../services/companies.service';
-import {SubdivisionsService} from '../../../services/subdivisions.service';
-import {CarsService} from '../../../services/cars.service';
-import {MsgService} from '../../../services/msg';
-import {Router} from '@angular/router';
-import {Company} from '../../../models/Company';
-import {TreePipe} from '../../../pipes/tree.pipe';
+import { Component, OnInit } from '@angular/core';
+import { CompaniesService } from '../../../services/companies.service';
+import { SubdivisionsService } from '../../../services/subdivisions.service';
+import { CarsService } from '../../../services/cars.service';
+import { MsgService } from '../../../services/msg';
+import { Router } from '@angular/router';
+import { Company } from '../../../models/Company';
+import { TreePipe } from '../../../pipes/tree.pipe';
 
 @Component({
   selector: 'app-navigation',

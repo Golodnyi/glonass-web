@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Company} from '../../../../../models/Company';
-import {MsgService} from '../../../../../services/msg';
-import {AuthService} from '../../../../../services/auth.service';
-import {CompaniesService} from '../../../../../services/companies.service';
+import { Component, OnInit } from '@angular/core';
+import { Company } from '../../../../../models/Company';
+import { MsgService } from '../../../../../services/msg';
+import { AuthService } from '../../../../../services/auth.service';
+import { CompaniesService } from '../../../../../services/companies.service';
 import * as moment from 'moment';
-import {isUndefined} from 'util';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-company-create',

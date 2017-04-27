@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Company} from '../../../../../models/Company';
-import {MsgService} from '../../../../../services/msg';
-import {CompaniesService} from '../../../../../services/companies.service';
-import {Subdivision} from '../../../../../models/Subdivision';
-import {SubdivisionsService} from '../../../../../services/subdivisions.service';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Company } from '../../../../../models/Company';
+import { MsgService } from '../../../../../services/msg';
+import { CompaniesService } from '../../../../../services/companies.service';
+import { Subdivision } from '../../../../../models/Subdivision';
+import { SubdivisionsService } from '../../../../../services/subdivisions.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-subdivision-update',
@@ -82,7 +82,8 @@ export class SubdivisionUpdateComponent implements OnInit {
   public delete() {
     if (confirm('Вы действительно хотите удалить подразделение?')) {
       this.subdivisionsService.delete(this.subdivision).subscribe(
-        result => {},
+        result => {
+        },
         error => {
           this.msg.notice(MsgService.ERROR, 'Ошибка', error);
         }

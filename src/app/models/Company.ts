@@ -1,6 +1,6 @@
-import {IUser} from './interface/IUser';
-import {ICompany} from './interface/ICompany';
-import {ITree} from './interface/ITree';
+import { IUser } from './interface/IUser';
+import { ICompany } from './interface/ICompany';
+import { ITree } from './interface/ITree';
 export class Company implements ICompany, ITree {
   id: number;
   name: string;

@@ -1,16 +1,16 @@
-import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptions, Response} from '@angular/http';
-import {User} from '../models/User';
+import { Injectable } from '@angular/core';
+import { Headers, Http, RequestOptions, Response } from '@angular/http';
+import { User } from '../models/User';
 
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {env} from '../../env';
-import {AuthService} from './auth.service';
-import {Router} from '@angular/router';
-import {Error} from '../models/Error';
-import {Role} from '../models/Role';
-import {MsgService} from './msg';
+import { env } from '../../env';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
+import { Error } from '../models/Error';
+import { Role } from '../models/Role';
+import { MsgService } from './msg';
 
 @Injectable()
 export class UsersService {

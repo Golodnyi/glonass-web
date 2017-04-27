@@ -1,7 +1,7 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import {TreeNode} from 'primeng/primeng';
-import {ITree} from '../models/interface/ITree';
-import {isUndefined} from 'util';
+import { Pipe, PipeTransform } from '@angular/core';
+import { TreeNode } from 'primeng/primeng';
+import { ITree } from '../models/interface/ITree';
+import { isUndefined } from 'util';
 
 @Pipe({name: 'tree'})
 export class TreePipe implements PipeTransform {

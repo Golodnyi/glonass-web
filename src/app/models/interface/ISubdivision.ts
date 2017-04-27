@@ -1,5 +1,5 @@
-import {IUser} from './IUser';
-import {ICompany} from './ICompany';
+import { IUser } from './IUser';
+import { ICompany } from './ICompany';
 export interface ISubdivision {
   id: number;
   name: string;

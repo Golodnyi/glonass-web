@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {MsgService} from './services/msg';
-import {Message} from 'primeng/primeng';
+import { Component, OnInit } from '@angular/core';
+import { MsgService } from './services/msg';
+import { Message } from 'primeng/primeng';
 
 @Component({
   selector: 'app-run',

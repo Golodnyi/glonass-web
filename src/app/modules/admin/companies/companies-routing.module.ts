@@ -1,12 +1,12 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {CarComponent} from './car/car.component';
-import {EngineComponent} from './engine/engine.component';
-import {CompaniesComponent} from './companies/companies.component';
-import {CompanyUpdateComponent} from './company/update/update.component';
-import {CompanyCreateComponent} from './company/create/create.component';
-import {SubdivisionCreateComponent} from './subdivision/create/create.component';
-import {SubdivisionUpdateComponent} from './subdivision/update/update.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { CarComponent } from './car/car.component';
+import { EngineComponent } from './engine/engine.component';
+import { CompaniesComponent } from './companies/companies.component';
+import { CompanyUpdateComponent } from './company/update/update.component';
+import { CompanyCreateComponent } from './company/create/create.component';
+import { SubdivisionCreateComponent } from './subdivision/create/create.component';
+import { SubdivisionUpdateComponent } from './subdivision/update/update.component';
 
 const routes: Routes = [
   {

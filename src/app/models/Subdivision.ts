@@ -1,7 +1,7 @@
-import {ISubdivision} from './interface/ISubdivision';
-import {ICompany} from './interface/ICompany';
-import {IUser} from './interface/IUser';
-import {ITree} from './interface/ITree';
+import { ISubdivision } from './interface/ISubdivision';
+import { ICompany } from './interface/ICompany';
+import { IUser } from './interface/IUser';
+import { ITree } from './interface/ITree';
 export class Subdivision implements ISubdivision, ITree {
   id: number;
   name: string;

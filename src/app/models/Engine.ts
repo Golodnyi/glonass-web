@@ -1,5 +1,5 @@
-import {IEngine} from './interface/IEngine';
-import {ITree} from './interface/ITree';
+import { IEngine } from './interface/IEngine';
+import { ITree } from './interface/ITree';
 export class Engine implements IEngine, ITree {
   id: number;
   name: string;
