@@ -50,7 +50,7 @@ export class AdminComponent implements OnInit {
     this.router.navigate(['/admin/users']);
   }
 
-  public кщдуы() {
+  public roles() {
     this.router.navigate(['/admin/roles']);
   }
 }
