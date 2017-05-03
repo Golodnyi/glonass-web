@@ -1,2 +1,3 @@
-<p-selectButton [options]="pages" (onChange)="onChange($event)"></p-selectButton>
+<p-splitButton label="Компании" icon="fa-check" (onClick)="company()" [model]="companiesActions"></p-splitButton>
+<p-splitButton label="Пользователи" icon="fa-check" (onClick)="users()" [model]="usersActions"></p-splitButton>
 <router-outlet></router-outlet>

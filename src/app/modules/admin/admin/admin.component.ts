@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SelectItem } from 'primeng/primeng';
+import { MenuItem } from 'primeng/primeng';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,11 +8,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  public pages: SelectItem[] = [];
+  companiesActions: MenuItem[] = [];
+  usersActions: MenuItem[] = [];
 
   constructor(private router: Router) {
-    this.pages.push({label: 'Компании', value: 'companies'});
-    this.pages.push({label: 'Пользователи', value: 'users'});
+    this.companiesActions = [
+      {label: 'Создать компанию', command: () => {
+        this.router.navigate(['/admin/companies/company/create']);
+      }},
+      {label: 'Создать подразделение', command: () => {
+        this.router.navigate(['/admin/companies/subdivision/create']);
+      }}
+    ];
+
+    this.usersActions = [
+      {label: 'Создать пользователя', command: () => {
+      }},
+      {label: 'Создать роль', command: () => {
+      }},
+    ];
   }
 
   /**
@@ -23,7 +37,11 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
   }
 
-  public onChange(event: any) {
-    this.router.navigate(['/admin/', event.value]);
+  public company() {
+    this.router.navigate(['/admin/companies']);
+  }
+
+  public users() {
+    this.router.navigate(['/admin/users']);
   }
 }
