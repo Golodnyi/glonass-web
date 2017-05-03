@@ -1,3 +1,7 @@
-<p-splitButton label="Компании" icon="fa-check" (onClick)="company()" [model]="companiesActions"></p-splitButton>
-<p-splitButton label="Пользователи" icon="fa-check" (onClick)="users()" [model]="usersActions"></p-splitButton>
+<p-toolbar>
+    <div class="ui-toolbar-group-left">
+        <p-splitButton label="Компании" icon="fa-check" (onClick)="company()" [model]="companiesActions"></p-splitButton>
+        <p-splitButton label="Пользователи" icon="fa-check" (onClick)="users()" [model]="usersActions"></p-splitButton>
+    </div>
+</p-toolbar>
 <router-outlet></router-outlet>
