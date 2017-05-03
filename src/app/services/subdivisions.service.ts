@@ -20,7 +20,7 @@ export class SubdivisionsService {
               private msgService: MsgService) {
   }
 
-  public getSubdivisions(company: number): Observable<Subdivision[]> {
+  public all(company: number): Observable<Subdivision[]> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});

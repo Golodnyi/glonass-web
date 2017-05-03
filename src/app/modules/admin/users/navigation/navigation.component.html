@@ -1,0 +1,11 @@
+<div *ngIf="users" class="navigation">
+    <h3>Пользователи</h3>
+    <p-tree [value]="users | tree : true : true"
+            selectionMode="single"
+            [(selection)]="node"
+            (onNodeSelect)="onNodeSelect($event)">
+        <ng-template let-node pTemplate="default">
+            <span>{{node.data}}</span>
+        </ng-template>
+    </p-tree>
+</div>

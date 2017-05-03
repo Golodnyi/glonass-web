@@ -27,7 +27,7 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.companiesService.getCompanies().subscribe(
+    this.companiesService.all().subscribe(
       companies => {
         this.companies = companies;
       },
@@ -40,7 +40,7 @@ export class NavigationComponent implements OnInit {
   public onNodeExpand(event: any) {
     switch (event.node.type) {
       case 'Company':
-        this.subdivisionsService.getSubdivisions(event.node.data).subscribe(
+        this.subdivisionsService.all(event.node.data).subscribe(
           subdivision => {
             event.node.children = this.tree.transform(subdivision, false, true);
           },
@@ -50,7 +50,7 @@ export class NavigationComponent implements OnInit {
         );
         break;
       case 'Subdivision':
-        this.carsService.getCars(event.node.parent.data, event.node.data).subscribe(
+        this.carsService.all(event.node.parent.data, event.node.data).subscribe(
           cars => {
             event.node.children = this.tree.transform(cars, false, true);
           },

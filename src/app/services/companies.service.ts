@@ -43,7 +43,7 @@ export class CompaniesService {
       });
   }
 
-  public getCompanies(resync = true): Observable<Company[]> {
+  public all(resync = true): Observable<Company[]> {
     if (resync) {
       this.resync().subscribe();
     }

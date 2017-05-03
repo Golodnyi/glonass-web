@@ -10,4 +10,8 @@ export class User implements IUser {
   active: number;
   created_at: string;
   updated_at: string;
+
+  public getClassName() {
+    return this.constructor.name;
+  }
 }

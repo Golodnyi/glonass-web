@@ -21,14 +21,19 @@ export class UsersService {
               private msgService: MsgService) {
   }
 
-  public getUsers(): Observable<User[]> {
+  public all(): Observable<User[]> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.get(env.backend + '/v1/users', options)
       .map((response: Response) => {
-        return response.json();
+        const users: User[] = response.json();
+        const usersObj: User[] = [];
+        users.forEach(function (user: User) {
+          usersObj.push(Object.assign(new User(), user));
+        });
+        return usersObj;
       })
       .catch((error: any) => {
         Error.check(error, this.authService, this.router, this.msgService);
@@ -36,7 +41,7 @@ export class UsersService {
       });
   }
 
-  public getUser(id: number): Observable<User> {
+  public get(id: number): Observable<User> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
@@ -52,7 +57,7 @@ export class UsersService {
       });
   }
 
-  public getRole(id: Number): Observable<Role> {
+  public role(id: Number): Observable<Role> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});

@@ -1,3 +1,2 @@
-<p-tabMenu [model]="items" [activeItem]="activeItem" (onSelect)="onSelect($event)"></p-tabMenu>
-{{activeItem.label}}
+<p-selectButton [options]="pages" (onChange)="onChange($event)"></p-selectButton>
 <router-outlet></router-outlet>

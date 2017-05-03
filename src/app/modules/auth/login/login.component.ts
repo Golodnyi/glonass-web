@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.auth).subscribe(
       user => {
         this.user = user;
-        this.usersService.getRole(user.role_id).subscribe(
+        this.usersService.role(user.role_id).subscribe(
           role => {
             this.user.role = role;
             localStorage.setItem('user', JSON.stringify(this.user));

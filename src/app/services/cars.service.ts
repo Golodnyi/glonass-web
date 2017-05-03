@@ -20,7 +20,7 @@ export class CarsService {
               private msgService: MsgService) {
   }
 
-  public getCars(company: number, subdivision: number): Observable<Car[]> {
+  public all(company: number, subdivision: number): Observable<Car[]> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});

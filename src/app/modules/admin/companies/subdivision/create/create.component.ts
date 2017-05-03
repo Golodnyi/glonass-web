@@ -32,7 +32,7 @@ export class SubdivisionCreateComponent implements OnInit {
         this.subdivision.author = user;
       }
     );
-    this.companiesService.getCompanies(false).subscribe(
+    this.companiesService.all(false).subscribe(
       companies => {
         this.companies = companies;
       },

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/primeng';
+import { SelectItem } from 'primeng/primeng';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,10 +8,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  public items: MenuItem[];
-  public activeItem: MenuItem;
+  public pages: SelectItem[] = [];
 
   constructor(private router: Router) {
+    this.pages.push({label: 'Компании', value: 'companies'});
+    this.pages.push({label: 'Пользователи', value: 'users'});
   }
 
   /**
@@ -20,15 +21,9 @@ export class AdminComponent implements OnInit {
    * разобраться или заменить другим компонентом с событиями
    */
   ngOnInit() {
-    this.items = [
-      {label: 'Компании'},
-      {label: 'Доступ'},
-      {label: 'Пользователи'},
-    ];
-    this.activeItem = this.items[0];
-    this.router.navigate(['/admin/companies']);
   }
 
-  public onSelect(event: any) {
+  public onChange(event: any) {
+    this.router.navigate(['/admin/', event.value]);
   }
 }
