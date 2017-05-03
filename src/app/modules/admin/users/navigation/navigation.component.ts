@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MsgService } from '../../../../services/msg';
 import { UsersService } from '../../../../services/users.service';
 import { User } from '../../../../models/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -12,7 +13,7 @@ export class NavigationComponent implements OnInit {
 
   public users: User[];
 
-  constructor(private msgService: MsgService, private usersService: UsersService) {
+  constructor(private msgService: MsgService, private usersService: UsersService, private router: Router) {
   }
 
   ngOnInit() {
@@ -27,5 +28,6 @@ export class NavigationComponent implements OnInit {
   }
 
   public onNodeSelect(event: any) {
+    this.router.navigate(['/admin/users/user', event.node.data]);
   }
 }

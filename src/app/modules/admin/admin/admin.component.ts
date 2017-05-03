@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class AdminComponent implements OnInit {
   companiesActions: MenuItem[] = [];
   usersActions: MenuItem[] = [];
+  rolesActions: MenuItem[] = [];
 
   constructor(private router: Router) {
     this.companiesActions = [
@@ -23,9 +24,13 @@ export class AdminComponent implements OnInit {
 
     this.usersActions = [
       {label: 'Создать пользователя', command: () => {
-      }},
+        this.router.navigate(['/admin/users/user/create']);
+      }}
+    ];
+
+    this.rolesActions = [
       {label: 'Создать роль', command: () => {
-      }},
+      }}
     ];
   }
 
@@ -43,5 +48,9 @@ export class AdminComponent implements OnInit {
 
   public users() {
     this.router.navigate(['/admin/users']);
+  }
+
+  public кщдуы() {
+    this.router.navigate(['/admin/roles']);
   }
 }

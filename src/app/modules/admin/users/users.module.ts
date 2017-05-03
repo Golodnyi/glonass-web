@@ -5,6 +5,8 @@ import { UsersRoutingModule } from './users-routing.module';
 import { ButtonModule, ToolbarModule, TreeModule } from 'primeng/primeng';
 import { NavigationComponent } from './navigation/navigation.component';
 import { PipesModule } from '../../../pipes/pipes.module';
+import { UserCreateComponent } from './user/create/create.component';
+import { UserUpdateComponent } from './user/update/update.component';
 
 @NgModule({
   imports: [
@@ -15,7 +17,7 @@ import { PipesModule } from '../../../pipes/pipes.module';
     TreeModule,
     PipesModule
   ],
-  declarations: [UsersComponent, NavigationComponent],
+  declarations: [UsersComponent, NavigationComponent, UserCreateComponent, UserUpdateComponent],
   providers: [],
 })
 export class UsersModule {
