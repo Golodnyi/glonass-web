@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Company } from '../../../../../models/Company';
 import { MsgService } from '../../../../../services/msg';
 import { AuthService } from '../../../../../services/auth.service';
@@ -14,12 +14,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./create.component.css']
 })
 
-export class CompanyCreateComponent implements OnInit {
+export class CompanyCreateComponent {
 
   public company: Company = new Company();
   public ru: any;
   public form: FormGroup;
   public submit: boolean;
+
   constructor(private authService: AuthService,
               private msg: MsgService,
               private companiesService: CompaniesService,
@@ -35,9 +36,7 @@ export class CompanyCreateComponent implements OnInit {
       monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
       monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
     };
-  }
 
-  ngOnInit() {
     this.form.valueChanges
       .map((value) => {
         value.active_till = moment(value.active_till).format('YYYY-MM-DD HH:mm:ss');
