@@ -5,6 +5,6 @@
     <label for="active_till">Дата блокировки аккаунта:</label><br/>
     <p-calendar id="active_till" formControlName="active_till" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24" [locale]="ru"></p-calendar>
     <hr/>
-    <button class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton type="button" (click)="create()" label="Создать"></button>
+    <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton label="Создать"></button>
     <button pButton type="button" label="Отмена" routerLink="/admin/companies"></button>
 </form>

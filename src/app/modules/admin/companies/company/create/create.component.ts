@@ -53,7 +53,7 @@ export class CompanyCreateComponent implements OnInit {
       });
   }
 
-  public create() {
+  public onSubmit() {
     this.submit = true;
     this.companiesService.create(this.company).subscribe(
       company => {
