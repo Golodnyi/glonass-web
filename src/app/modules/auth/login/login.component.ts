@@ -6,6 +6,7 @@ import { UsersService } from '../../../services/users.service';
 import { User } from '../../../models/User';
 import { MsgService } from '../../../services/msg';
 import { CookieService } from 'angular2-cookie/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -13,24 +14,38 @@ import { CookieService } from 'angular2-cookie/core';
   styleUrls: ['login.component.css']
 })
 export class LoginComponent implements OnInit {
-  public disabled = false;
+  public submit = false;
   public auth: Auth;
   public user: User;
+  public form: FormGroup;
 
   constructor(private router: Router,
               private authService: AuthService,
               private usersService: UsersService,
               private msgService: MsgService,
-              private cookieService: CookieService) {
-    this.auth = {email: 'demo@demo.ru', password: 'demo', remember: false};
+              private cookieService: CookieService,
+              private fb: FormBuilder) {
+    this.createForm();
+  }
+
+  createForm() {
+    this.form = this.fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      remember: [''],
+    });
   }
 
   ngOnInit() {
-
+    this.form.valueChanges
+      .filter((data) => this.form.valid)
+      .subscribe((data) => {
+        this.auth = data;
+      });
   }
 
-  login(event: any) {
-    this.disabled = true;
+  onSubmit() {
+    this.submit = true;
     this.authService.login(this.auth).subscribe(
       user => {
         this.user = user;
@@ -40,19 +55,19 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('user', JSON.stringify(this.user));
             this.authService.setCurrentUser(this.user);
             this.router.navigate(['/dashboard']);
-            this.disabled = false;
+            this.submit = false;
           },
           error => {
             this.cookieService.remove('token');
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-            this.disabled = false;
+            this.submit = false;
           }
         );
       },
       error => {
         this.cookieService.remove('token');
         this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-        this.disabled = false;
+        this.submit = false;
       }
     );
   }

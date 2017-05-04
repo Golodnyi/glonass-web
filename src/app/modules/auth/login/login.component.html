@@ -1,18 +1,16 @@
 <div class="container">
-    <div class="form-signin">
+    <form [formGroup]="form" class="form-signin" (ngSubmit)="onSubmit(form)" novalidate>
         <h2 class="form-signin-heading">Авторизация</h2>
-        <label for="inputLogin" class="sr-only">Имя пользователя</label>
-        <input [(ngModel)]="auth.email" type="email" id="inputLogin" class="form-control" placeholder="email" required
-               autofocus>
-        <label for="inputPassword" class="sr-only">Пароль</label>
-        <input [(ngModel)]="auth.password" type="password" id="inputPassword" class="form-control"
-               placeholder="password" required>
+        <label for="email" class="sr-only">Имя пользователя</label>
+        <input formControlName="email" type="email" id="email" class="form-control" placeholder="email" autofocus>
+        <label for="password" class="sr-only">Пароль</label>
+        <input formControlName="password" type="password" id="password" class="form-control"
+               placeholder="пароль">
         <div class="checkbox">
-            <label>
-                <input type="checkbox" value="true" [(ngModel)]="auth.remember"> Запомнить меня
+            <label for="remember">
+                <input type="checkbox" id="remember" value="true" formControlName="remember"> Запомнить меня
             </label>
         </div>
-        <button pButton type="button" label="Войти" (click)="login($event)" icon="fa-check" class="ui-button-success"
-                [disabled]="disabled"></button>
-    </div>
+        <button type="submit" [disabled]="!form.valid || submit" class="btn btn-success">Войти</button>
+    </form>
 </div>
