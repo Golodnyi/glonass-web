@@ -9,5 +9,6 @@ pipelines:
   default:
     - step:
         script: # Modify the commands below to build your repository.
-          - npm install --dev
+          - npm install
+          cat "export const env = {production: true, backend: 'http://api.glonass.io'};" >> ./src/.env.ts
           - ./node_modules/@angular/cli/bin/ng build
