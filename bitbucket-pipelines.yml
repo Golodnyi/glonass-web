@@ -10,4 +10,4 @@ pipelines:
     - step:
         script: # Modify the commands below to build your repository.
           - npm install --dev
-          - ng build
+          - ./node_modules/@angular/cli/bin/ng build
