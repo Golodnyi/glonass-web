@@ -37,11 +37,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form.valueChanges
-      .filter((data) => this.form.valid)
-      .subscribe((data) => {
-        this.auth = data;
-      });
+    this.form.valueChanges.subscribe((data) => {
+      this.auth = data;
+    });
   }
 
   onSubmit() {
