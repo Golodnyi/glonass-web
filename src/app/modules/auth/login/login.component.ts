@@ -7,6 +7,7 @@ import { User } from '../../../models/User';
 import { MsgService } from '../../../services/msg';
 import { CookieService } from 'angular2-cookie/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthForm } from '../../../forms/auth.form';
 
 @Component({
   selector: 'app-login',
@@ -15,30 +16,25 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   public submit = false;
-  public auth: Auth;
+  public auth: Auth = new Auth();
   public user: User;
   public form: FormGroup;
-
   constructor(private router: Router,
               private authService: AuthService,
               private usersService: UsersService,
               private msgService: MsgService,
               private cookieService: CookieService,
-              private fb: FormBuilder) {
+              private authForm: AuthForm) {
     this.createForm();
   }
 
   createForm() {
-    this.form = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      remember: [''],
-    });
+    this.form = this.authForm.create(this.auth);
   }
 
   ngOnInit() {
     this.form.valueChanges.subscribe((data) => {
-      this.auth = Object.assign(new Auth(), data);
+      this.auth = data;
     });
   }
 
