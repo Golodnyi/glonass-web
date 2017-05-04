@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.form.valueChanges.subscribe((data) => {
-      this.auth = data;
+      this.auth = Object.assign(new Auth(), data);
     });
   }
 
