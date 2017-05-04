@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Auth } from '../../../models/Auth';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { AuthForm } from '../../../forms/auth.form';
   templateUrl: 'login.component.html',
   styleUrls: ['login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   public submit = false;
   public auth: Auth = new Auth();
   public user: User;
@@ -26,14 +26,7 @@ export class LoginComponent implements OnInit {
               private msgService: MsgService,
               private cookieService: CookieService,
               private authForm: AuthForm) {
-    this.createForm();
-  }
-
-  createForm() {
     this.form = this.authForm.create(this.auth);
-  }
-
-  ngOnInit() {
     this.form.valueChanges.subscribe((data) => {
       this.auth = data;
     });
