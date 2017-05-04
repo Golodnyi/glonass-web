@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Subdivision } from '../../models/Subdivision';
 
 @Injectable()
-export class UpdateForm {
+export class SubdivisionUpdateForm {
   private form: FormGroup;
 
   constructor(private fb: FormBuilder) {

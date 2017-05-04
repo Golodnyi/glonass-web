@@ -1,9 +1,9 @@
 <h3>Изменение подразделения</h3>
-<fieldset *ngIf="subdivision" class="input-group">
+<form *ngIf="subdivision && form" [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
     <label for="name">Название:</label><br/>
-    <input class="input-sm" id="name" type="text" pInputText [(ngModel)]="subdivision.name"
+    <input class="input-sm" id="name" type="text" pInputText formControlName="name"
            placeholder="Название подразделения"/><br/>
     <hr/>
-    <button class="ui-button-success" icon="fa-check" pButton type="button" (click)="save()" label="Сохранить"></button>
+    <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton label="Сохранить"></button>
     <button class="ui-button-danger" icon="fa-trash" pButton type="button" (click)="delete()" label="Удалить"></button>
-</fieldset>
+</form>

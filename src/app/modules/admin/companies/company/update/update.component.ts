@@ -10,7 +10,8 @@ import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-company-update',
   templateUrl: './update.component.html',
-  styleUrls: ['./update.component.css']
+  styleUrls: ['./update.component.css'],
+  providers: [CompanyForm]
 })
 
 export class CompanyUpdateComponent {
