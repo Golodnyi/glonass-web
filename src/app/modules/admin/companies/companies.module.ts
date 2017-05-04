@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   AutoCompleteModule,
   ButtonModule,
@@ -26,12 +26,14 @@ import { SubdivisionCreateComponent } from './subdivision/create/create.componen
 import { SubdivisionUpdateComponent } from './subdivision/update/update.component';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { TreePipe } from '../../../pipes/tree.pipe';
+import { CompanyForm } from '../../../forms/company.form';
 
 @NgModule({
   imports: [
     CommonModule,
     CompaniesRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     TreeModule,
     InputTextModule,
     ButtonModule,
@@ -46,7 +48,7 @@ import { TreePipe } from '../../../pipes/tree.pipe';
     NavigationComponent, CompaniesComponent, CompanyUpdateComponent, CompanyCreateComponent,
     CarComponent, EngineComponent, SubdivisionCreateComponent, SubdivisionUpdateComponent
   ],
-  providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService, TreePipe],
+  providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService, TreePipe, CompanyForm],
 })
 export class CompaniesModule {
 }

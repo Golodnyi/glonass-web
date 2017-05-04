@@ -4,7 +4,9 @@ import { MsgService } from '../../../../../services/msg';
 import { AuthService } from '../../../../../services/auth.service';
 import { CompaniesService } from '../../../../../services/companies.service';
 import * as moment from 'moment';
-import { isUndefined } from 'util';
+import { CompanyForm } from '../../../../../forms/company.form';
+import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-company-create',
@@ -16,20 +18,15 @@ export class CompanyCreateComponent implements OnInit {
 
   public company: Company = new Company();
   public ru: any;
-  public calendar: Date = new Date();
-
+  public form: FormGroup;
+  public submit: boolean;
   constructor(private authService: AuthService,
               private msg: MsgService,
-              private companiesService: CompaniesService) {
-    this.calendar.setMonth(this.calendar.getMonth() + 12);
-  }
+              private companiesService: CompaniesService,
+              private companyForm: CompanyForm,
+              private router: Router) {
+    this.form = this.companyForm.create(this.company);
 
-  ngOnInit() {
-    this.authService.getCurrentUser().subscribe(
-      user => {
-        this.company.author = user;
-      }
-    );
     this.ru = {
       firstDayOfWeek: 0,
       dayNames: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
@@ -40,22 +37,33 @@ export class CompanyCreateComponent implements OnInit {
     };
   }
 
+  ngOnInit() {
+    this.form.valueChanges
+      .map((value) => {
+        value.active_till = moment(value.active_till).format('YYYY-MM-DD HH:mm:ss');
+        return value;
+      })
+      .subscribe((data) => {
+        this.company = data;
+        this.authService.getCurrentUser().subscribe(
+          user => {
+            this.company.author = user;
+          }
+        );
+      });
+  }
+
   public create() {
-    /**
-     * TODO: использовать валидаторы форм
-     */
-    if (isUndefined(this.company.name)) {
-      this.msg.notice(MsgService.ERROR, 'Заполинте все поля', 'Заполните название компании');
-      return false;
-    }
-    this.company.active_till = moment(this.calendar).format('YYYY-MM-DD HH:mm:ss');
+    this.submit = true;
     this.companiesService.create(this.company).subscribe(
       company => {
         this.company = company;
         this.companiesService.resync().subscribe();
         this.msg.notice(MsgService.SUCCESS, 'Сохранено', 'Компания ' + this.company.name + ' создана');
+        this.router.navigate(['/admin/companies/company', this.company.id]);
       },
       error => {
+        this.submit = false;
         this.msg.notice(MsgService.ERROR, 'Ошибка', error);
       }
     );
