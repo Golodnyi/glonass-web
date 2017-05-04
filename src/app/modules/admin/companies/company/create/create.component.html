@@ -1,5 +1,5 @@
 <h3>Создание компании</h3>
-<form *ngIf="company" [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
+<form [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
     <label for="name">Название:</label><br/>
     <input class="input-sm" id="name" type="text" pInputText formControlName="name" placeholder="Название компании"/><br/>
     <label for="active_till">Дата блокировки аккаунта:</label><br/>

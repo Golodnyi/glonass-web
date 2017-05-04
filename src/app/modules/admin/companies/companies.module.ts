@@ -26,7 +26,6 @@ import { SubdivisionCreateComponent } from './subdivision/create/create.componen
 import { SubdivisionUpdateComponent } from './subdivision/update/update.component';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { TreePipe } from '../../../pipes/tree.pipe';
-import { CompanyForm } from '../../../forms/company.form';
 
 @NgModule({
   imports: [
@@ -48,7 +47,7 @@ import { CompanyForm } from '../../../forms/company.form';
     NavigationComponent, CompaniesComponent, CompanyUpdateComponent, CompanyCreateComponent,
     CarComponent, EngineComponent, SubdivisionCreateComponent, SubdivisionUpdateComponent
   ],
-  providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService, TreePipe, CompanyForm],
+  providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService, TreePipe],
 })
 export class CompaniesModule {
 }

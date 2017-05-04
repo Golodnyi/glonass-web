@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-company-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  styleUrls: ['./create.component.css'],
+  providers: [CompanyForm]
 })
 
 export class CompanyCreateComponent {
