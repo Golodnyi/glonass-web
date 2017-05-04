@@ -6,7 +6,7 @@ import { UsersService } from '../../../services/users.service';
 import { User } from '../../../models/User';
 import { MsgService } from '../../../services/msg';
 import { CookieService } from 'angular2-cookie/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { AuthForm } from '../../../forms/auth.form';
 
 @Component({
@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   public auth: Auth = new Auth();
   public user: User;
   public form: FormGroup;
+
   constructor(private router: Router,
               private authService: AuthService,
               private usersService: UsersService,
