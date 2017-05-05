@@ -13,4 +13,13 @@ pipelines:
           - npm run lint
           - "echo \"export const env = {production: true, backend: 'http://api.glonass.io'};\" >> ./src/env.ts"
           - npm run build
-          - ssh "$server" "mkdir -p $destiny" && scp -r "$src" "$server:$destiny" && ssh "$server" "ln -sf $destiny/dist $symlink"
+          - ssh "$server" "mkdir -p $destiny" && scp -r "$src" "$server:$destiny/$BITBUCKET_COMMIT" && ssh "$server" "ln -sf $destiny/$BITBUCKET_COMMIT $symlink"
+  tags:
+      release-*:
+        - step:
+            script:
+            - npm install
+            - npm run lint
+            - "echo \"export const env = {production: true, backend: 'http://api.glonass.io'};\" >> ./src/env.ts"
+            - npm run build
+            - ssh "$server" "mkdir -p $destiny" && scp -r "$src" "$server:$destiny/$BITBUCKET_TAG" && ssh "$server" "ln -sf $destiny/$BITBUCKET_TAG $symlink"
