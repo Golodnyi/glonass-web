@@ -6,14 +6,6 @@
 image: node:6.9.4
 
 pipelines:
-  default:
-    - step:
-        script: # Modify the commands below to build your repository.
-          - npm install
-          - npm run lint
-          - "echo \"export const env = {production: true, backend: 'http://api.glonass.io'};\" >> ./src/env.ts"
-          - npm run build
-          - ssh "$server" "mkdir -p $destiny" && scp -r "$src" "$server:$destiny/$BITBUCKET_COMMIT" && ssh "$server" "ln -sf $destiny/$BITBUCKET_COMMIT $symlink"
   tags:
       release-*:
         - step:
