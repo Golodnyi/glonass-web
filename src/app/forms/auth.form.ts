@@ -10,7 +10,7 @@ export class AuthForm {
 
   public create(auth: Auth) {
     this.form = this.fb.group({
-      email: [auth.email, Validators.required],
+      email: [auth.email, [Validators.required, Validators.email]],
       password: [auth.password, Validators.required],
       remember: [''],
     });
