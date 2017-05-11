@@ -10,13 +10,16 @@ import { TreeModule } from 'primeng/primeng';
 import { ChartsComponent } from './charts/charts.component';
 import { PipesModule } from '../../pipes/pipes.module';
 import { TreePipe } from '../../pipes/tree.pipe';
+import * as highstock from 'highcharts/highstock';
+import { ChartModule } from 'angular2-highcharts';
 
 @NgModule({
   imports: [
     CommonModule,
     DashboardRoutingModule,
     TreeModule,
-    PipesModule
+    PipesModule,
+    ChartModule.forRoot(highstock)
   ],
   declarations: [DashboardComponent, NavigationComponent, ChartsComponent],
   providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe],
