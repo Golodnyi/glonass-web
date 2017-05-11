@@ -9,8 +9,4 @@ export class Company implements ICompany, ITree {
   active_till: string;
   created_at: string;
   updated_at: string;
-
-  public getClassName() {
-    return this.constructor.name;
-  }
 }

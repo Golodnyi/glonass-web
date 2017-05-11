@@ -7,6 +7,9 @@ import { EnginesService } from '../../../../services/engines.service';
 import { Router } from '@angular/router';
 import { TreePipe } from '../../../../pipes/tree.pipe';
 import { Company } from '../../../../models/Company';
+import { Subdivision } from '../../../../models/Subdivision';
+import { Car } from '../../../../models/Car';
+import { Engine } from '../../../../models/Engine';
 
 @Component({
   selector: 'app-navigation',
@@ -38,72 +41,75 @@ export class NavigationComponent implements OnInit {
   }
 
   public onNodeExpand(event: any) {
-    switch (event.node.type) {
-      case 'Company':
-        this.subdivisionsService.all(event.node.data).subscribe(
-          subdivision => {
-            event.node.children = this.tree.transform(subdivision, false, true);
-          },
-          error => {
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+    const obj = event.node.data;
+    if (obj instanceof Company) {
+      this.subdivisionsService.all(obj.id).subscribe(
+        subdivision => {
+          event.node.children = this.tree.transform(subdivision, false, true);
+        },
+        error => {
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+        }
+      );
+    } else if (obj instanceof Subdivision) {
+      const parentObj = [event.node.parent.data];
+      this.carsService.all(parentObj[0].id, obj.id).subscribe(
+        cars => {
+          event.node.children = this.tree.transform(cars, false, true);
+        },
+        error => {
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+        }
+      );
+    } else if (obj instanceof Car) {
+      const parentObj = [];
+      parentObj.push(event.node.parent.data);
+      parentObj.push(event.node.parent.parent.data);
+      this.enginesService.get(parentObj[1].id, parentObj[0].id, obj.id).subscribe(
+        engine => {
+          if (engine.id) {
+            event.node.children = this.tree.transform([engine], true, true);
           }
-        );
-        break;
-      case 'Subdivision':
-        this.carsService.all(event.node.parent.data, event.node.data).subscribe(
-          cars => {
-            event.node.children = this.tree.transform(cars, false, true);
-          },
-          error => {
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-          }
-        );
-        break;
-      case 'Car':
-        this.enginesService.get(event.node.parent.parent.data, event.node.parent.data, event.node.data).subscribe(
-          engine => {
-            if (engine.id) {
-              event.node.children = this.tree.transform([engine], true, true);
-            }
-          },
-          error => {
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-          }
-        );
-        break;
+        },
+        error => {
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+        }
+      );
     }
   }
 
   public onNodeSelect(event: any) {
-    const object = event.node;
-    switch (event.node.type) {
-      case 'Company':
-        this.router.navigate([
-          '/admin/companies/company/', object.data
-        ]);
-        break;
-      case 'Subdivision':
-        this.router.navigate([
-          '/admin/companies/company/', object.parent.data,
-          'subdivision', object.data
-        ]);
-        break;
-      case 'Car':
-        this.router.navigate([
-          '/admin/companies/company/', object.parent.parent.data,
-          'subdivision', object.parent.data,
-          'car', object.data
-        ]);
-        break;
-      case 'Engine':
-        this.router.navigate([
-          '/admin/companies/company/', object.parent.parent.parent.data,
-          'subdivision', object.parent.parent.data,
-          'car', object.parent.data,
-          'engine', object.data
-        ]);
-
-        break;
+    const obj = event.node.data;
+    if (obj instanceof Company) {
+      this.router.navigate([
+        '/admin/companies/company/', obj.id
+      ]);
+    } else if (obj instanceof Subdivision) {
+      const parentObj = [event.node.parent.data];
+      this.router.navigate([
+        '/admin/companies/company/', parentObj[0].id,
+        'subdivision', obj.id
+      ]);
+    } else if (obj instanceof Car) {
+      const parentObj = [];
+      parentObj.push(event.node.parent.data);
+      parentObj.push(event.node.parent.parent.data);
+      this.router.navigate([
+        '/admin/companies/company/', parentObj[1].id,
+        'subdivision', parentObj[0].id,
+        'car', obj.id
+      ]);
+    } else if (obj instanceof Engine) {
+      const parentObj = [];
+      parentObj.push(event.node.parent.data);
+      parentObj.push(event.node.parent.parent.data);
+      parentObj.push(event.node.parent.parent.parent.data);
+      this.router.navigate([
+        '/admin/companies/company/', parentObj[2].id,
+        'subdivision', parentObj[1].id,
+        'car', parentObj[0].id,
+        'engine', obj.id
+      ]);
     }
   }
 }

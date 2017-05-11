@@ -13,8 +13,4 @@ export class Engine implements IEngine, ITree {
   get esn(): number {
     return Number(this.name);
   }
-
-  public getClassName() {
-    return this.constructor.name;
-  }
 }

@@ -6,6 +6,7 @@ import { MsgService } from '../../../services/msg';
 import { Router } from '@angular/router';
 import { Company } from '../../../models/Company';
 import { TreePipe } from '../../../pipes/tree.pipe';
+import { Subdivision } from '../../../models/Subdivision';
 
 @Component({
   selector: 'app-navigation',
@@ -36,30 +37,31 @@ export class NavigationComponent implements OnInit {
   }
 
   public onNodeExpand(event: any) {
-    if (event.node) {
-      if (event.node.type === 'Company') {
-        this.subdivisionsService.all(event.node.data).subscribe(
-          subdivisions => {
-            event.node.children = this.tree.transform(subdivisions);
-          },
-          error => {
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-          }
-        );
-      } else if (event.node.type === 'Subdivision') {
-        this.carsService.all(event.node.parent.data, event.node.data).subscribe(
-          cars => {
-            event.node.children = this.tree.transform(cars, true, true);
-          },
-          error => {
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-          }
-        );
-      }
+    const obj = event.node.data;
+    if (obj instanceof Company) {
+      this.subdivisionsService.all(obj.id).subscribe(
+        subdivisions => {
+          event.node.children = this.tree.transform(subdivisions);
+        },
+        error => {
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+        }
+      );
+    } else if (obj instanceof Subdivision) {
+      const parentObj = [event.node.parent.data];
+      this.carsService.all(parentObj[0].id, obj.id).subscribe(
+        cars => {
+          event.node.children = this.tree.transform(cars, true, true);
+        },
+        error => {
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+        }
+      );
     }
   }
 
   public onNodeSelect(event: any) {
-    this.router.navigate(['dashboard/charts/' + event.node.data]);
+    const obj = event.node.data;
+    this.router.navigate(['dashboard/charts/' + obj.id]);
   }
 }

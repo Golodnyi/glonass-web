@@ -11,8 +11,4 @@ export class Subdivision implements ISubdivision, ITree {
   author: IUser;
   created_at: string;
   updated_at: string;
-
-  public getClassName() {
-    return this.constructor.name;
-  }
 }

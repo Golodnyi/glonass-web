@@ -5,7 +5,7 @@
             [(selection)]="node"
             (onNodeSelect)="onNodeSelect($event)">
         <ng-template let-node pTemplate="default">
-            <span>{{node.data}}</span>
+            <span>{{node.data.name}}</span>
         </ng-template>
     </p-tree>
 </div>

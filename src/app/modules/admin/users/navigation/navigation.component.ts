@@ -28,6 +28,7 @@ export class NavigationComponent implements OnInit {
   }
 
   public onNodeSelect(event: any) {
-    this.router.navigate(['/admin/users/user', event.node.data]);
+    const obj = event.node.data;
+    this.router.navigate(['/admin/users/user', obj.id]);
   }
 }

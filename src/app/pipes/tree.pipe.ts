@@ -14,9 +14,7 @@ export class TreePipe implements PipeTransform {
     data.forEach(function (item) {
       items.push(
         {
-          'label': item.name,
-          'type': item.getClassName(),
-          'data': item.id,
+          'data': item,
           'expandedIcon': 'fa-folder-open',
           'collapsedIcon': 'fa-folder',
           'leaf': leaf || false,
