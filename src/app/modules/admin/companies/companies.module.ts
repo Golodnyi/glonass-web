@@ -24,8 +24,8 @@ import { CompanyUpdateComponent } from './company/update/update.component';
 import { CompanyCreateComponent } from './company/create/create.component';
 import { SubdivisionCreateComponent } from './subdivision/create/create.component';
 import { SubdivisionUpdateComponent } from './subdivision/update/update.component';
-import { PipesModule } from '../../../pipes/pipes.module';
 import { TreePipe } from '../../../pipes/tree.pipe';
+import { SharedModule } from '../../shared.module';
 
 @NgModule({
   imports: [
@@ -39,7 +39,7 @@ import { TreePipe } from '../../../pipes/tree.pipe';
     CalendarModule,
     TabMenuModule,
     ToolbarModule,
-    PipesModule,
+    SharedModule,
     DropdownModule,
     AutoCompleteModule
   ],

@@ -8,21 +8,18 @@ import { CarsService } from '../../services/cars.service';
 import { NavigationComponent } from './navigation/navigation.component';
 import { TreeModule } from 'primeng/primeng';
 import { ChartsComponent } from './charts/charts.component';
-import { PipesModule } from '../../pipes/pipes.module';
 import { TreePipe } from '../../pipes/tree.pipe';
-import * as highstock from 'highcharts/highstock';
-import { ChartModule } from 'angular2-highcharts';
+import { SharedModule } from '../shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     DashboardRoutingModule,
     TreeModule,
-    PipesModule,
-    ChartModule.forRoot(highstock)
+    SharedModule
   ],
   declarations: [DashboardComponent, NavigationComponent, ChartsComponent],
-  providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe],
+  providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe]
 })
 export class DashboardModule {
 }
