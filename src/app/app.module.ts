@@ -8,7 +8,7 @@ import { NavigationComponent } from './navigation.component';
 import { UsersService } from './services/users.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
-import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { CookieOptions, CookieService } from 'angular2-cookie/core';
 import { GuestGuard } from './guards/guest.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { ChartsService } from './services/charts.service';
@@ -31,7 +31,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MessagesModule,
     BrowserAnimationsModule
   ],
-  providers: [MsgService, UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ChartsService, EnginesService],
+  providers: [
+    {provide: CookieOptions, useValue: {}},
+    MsgService, UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ChartsService, EnginesService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -13,7 +13,6 @@
       ],
       "index": "index.html",
       "main": "main.ts",
-      "test": "test.ts",
       "tsconfig": "tsconfig.json",
       "prefix": "app",
       "mobile": false,
@@ -29,16 +28,6 @@
       ]
     }
   ],
-  "e2e": {
-    "protractor": {
-      "config": "./protractor.conf.js"
-    }
-  },
-  "test": {
-    "karma": {
-      "config": "./karma.conf.js"
-    }
-  },
   "lint": [
     {
       "files": "src/**/*.ts",
