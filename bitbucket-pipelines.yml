@@ -20,5 +20,6 @@ pipelines:
             - npm install
             - npm run lint
             - "echo \"export const env = {production: true, backend: 'http://api.glonass.io'};\" >> ./src/env.ts"
+            - npm prune --production
             - npm run build-prod
             - ssh "$server" "mkdir -p $destiny" && scp -r "$src" "$server:$destiny/$BITBUCKET_TAG" && ssh "$server" "rm -rf $symlink && ln -sf $destiny/$BITBUCKET_TAG $symlink"
