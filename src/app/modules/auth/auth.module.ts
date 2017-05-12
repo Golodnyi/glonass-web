@@ -16,7 +16,6 @@ import { AuthForm } from '../../forms/auth.form';
     ReactiveFormsModule,
   ],
   declarations: [LoginComponent],
-  bootstrap: [LoginComponent],
   providers: [AuthForm]
 })
 export class AuthModule {

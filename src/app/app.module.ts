@@ -15,10 +15,14 @@ import { GrowlModule, MessagesModule } from 'primeng/primeng';
 import { MsgService } from './services/msg';
 import { EnginesService } from './services/engines.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavigationComponent } from './navigation.component';
+import { HomeComponent } from './home.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavigationComponent,
+    HomeComponent
   ],
   imports: [
     RouterModule,
