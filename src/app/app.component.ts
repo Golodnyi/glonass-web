@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MsgService } from './services/msg';
 import { Message } from 'primeng/primeng';
+import { User } from './models/User';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-run',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   public growl: Message[] = [];
   public msg: Message[] = [];
+  public user: User;
 
-  constructor(private msgService: MsgService) {
-  }
+  constructor(private msgService: MsgService, private authService: AuthService) {
+    this.authService.getCurrentUser().subscribe(user => {
+      this.user = user;
+    });
 
-  ngOnInit() {
     this.msgService.getNotice().subscribe(
       notice => {
         this.growl.push(notice);
@@ -26,5 +30,9 @@ export class AppComponent implements OnInit {
         this.msg.push(msg);
       }
     );
+  }
+
+  public logout() {
+    this.authService.logout();
   }
 }
