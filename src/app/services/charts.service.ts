@@ -9,14 +9,25 @@ import { Router } from '@angular/router';
 import { Error } from '../models/Error';
 import { Car } from '../models/Car';
 import { MsgService } from './msg';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class ChartsService {
+  private me: BehaviorSubject<MouseEvent> = new BehaviorSubject(null);
 
   constructor(private http: Http,
               private authService: AuthService,
               private router: Router,
               private msgService: MsgService) {
+  }
+
+
+  public setMouseEvent(e: MouseEvent): void {
+    this.me.next(e);
+  }
+
+  public getMouseEvent(): Observable<any> {
+    return this.me.asObservable();
   }
 
   public getData(car: Car): Observable<Car[]> {

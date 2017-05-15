@@ -1,2 +1,3 @@
 <h3>Графики {{car}}</h3>
-<div [appChart]="options">Some cool chart</div>
+<div *ngIf="options" appChart [options]="options"></div>
+<div *ngIf="options2" appChart [options]="options2"></div>

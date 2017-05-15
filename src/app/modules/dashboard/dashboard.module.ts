@@ -10,6 +10,7 @@ import { TreeModule } from 'primeng/primeng';
 import { ChartsComponent } from './charts/charts.component';
 import { TreePipe } from '../../pipes/tree.pipe';
 import { SharedModule } from '../shared.module';
+import { ChartsService } from '../../services/charts.service';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { SharedModule } from '../shared.module';
     SharedModule
   ],
   declarations: [DashboardComponent, NavigationComponent, ChartsComponent],
-  providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe]
+  providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService]
 })
 export class DashboardModule {
 }
