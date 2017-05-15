@@ -69,7 +69,7 @@ export class ChartsComponent implements OnInit {
           align: 'left',
           margin: 0,
           x: 30
-        }
+        };
         this.options.series = [{
           data: [29.9, 71.5, 106.4, 129.2, 146, 100, 80, 120, 29.9, 71.5, 106.4, 129.2, 146, 100, 80, 120],
         }];
@@ -80,7 +80,7 @@ export class ChartsComponent implements OnInit {
           align: 'left',
           margin: 0,
           x: 30
-        }
+        };
         this.options2.series = [{
           data: [12, 17, 25, 74, 29.9, 71.5, 106.4, 129.2, 146, 100, 80, 120, 25, 12, 22, 78],
         }];
