@@ -1,9 +1,9 @@
 <h3 *ngIf="car">Графики {{car.name}}</h3>
-<div [ngSwitch]="!options">
+<div [ngSwitch]="options.length">
+    <ng-container *ngSwitchCase=0>
+        <div class="loader"></div>
+    </ng-container>
     <ng-container ng-switch-default>
         <div *ngFor="let option of options;" appChart [options]="option"></div>
-    </ng-container>
-    <ng-container *ngSwitchCase="false">
-        <div class="loader"></div>
     </ng-container>
 </div>
