@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ChartsService } from '../../../services/charts.service';
+import { MsgService } from '../../../services/msg';
+import { CarsService } from '../../../services/cars.service';
+import { Car } from '../../../models/Car';
 
 @Component({
   selector: 'app-charts',
@@ -8,14 +12,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ChartsComponent implements OnInit {
 
-  public car: number;
+  public car: Car;
   public settings = {
     chart: {
-      marginLeft: 40, // Keep all charts left aligned
+      marginLeft: 40,
       spacingTop: 20,
       spacingBottom: 20
     },
-    title: {},
     credits: {
       enabled: false
     },
@@ -26,14 +29,6 @@ export class ChartsComponent implements OnInit {
       crosshair: true,
       events: {
         setExtremes: null
-      },
-      labels: {
-        format: '{value}'
-      }
-    },
-    yAxis: {
-      title: {
-        text: null
       }
     },
     tooltip: {
@@ -50,41 +45,56 @@ export class ChartsComponent implements OnInit {
       shadow: false,
       style: {
         fontSize: '18px'
-      },
-      valueDecimals: null
+      }
     },
   };
-  public options: any;
-  public options2: any;
+  public options = [];
+  public data: any;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private chartsService: ChartsService,
+              private msgService: MsgService,
+              private carsService: CarsService) {
   }
 
   ngOnInit() {
+    /**
+     * TODO: нужен рефакторинг
+     */
+    const template = Object.assign(this.settings);
+    const charts = [];
     this.route.params.subscribe(params => {
-        this.car = +params['car'];
-        this.options = Object.assign({}, this.settings);
-        this.options.title = {
-          text: 'first chart',
-          align: 'left',
-          margin: 0,
-          x: 30
-        };
-        this.options.series = [{
-          data: [29.9, 71.5, 106.4, 129.2, 146, 100, 80, 120, 29.9, 71.5, 106.4, 129.2, 146, 100, 80, 120],
-        }];
-
-        this.options2 = Object.assign({}, this.settings);
-        this.options2.title = {
-          text: 'second chart',
-          align: 'left',
-          margin: 0,
-          x: 30
-        };
-        this.options2.series = [{
-          data: [12, 17, 25, 74, 29.9, 71.5, 106.4, 129.2, 146, 100, 80, 120, 25, 12, 22, 78],
-        }];
-
+        const car_id = +params['car'];
+        this.carsService.get(car_id).subscribe(
+          car => {
+            this.car = car;
+          }
+        );
+        this.chartsService.get(car_id).subscribe(
+          data => {
+            data.forEach(function (item: any) {
+              template.title = {
+                text: item.name,
+                align: 'left',
+                margin: 0,
+                x: 30
+              };
+              template.series = [{
+                data: item.data,
+                name: item.name,
+                type: item.type,
+                tooltip: {
+                  valueSuffix: ' ' + item.unit
+                }
+              }];
+              charts.push(Object.assign({}, template));
+            });
+            this.options = charts;
+          },
+          error => {
+            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+          }
+        );
       }
     );
   }

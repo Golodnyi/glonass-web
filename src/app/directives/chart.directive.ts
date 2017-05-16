@@ -20,7 +20,7 @@ export class ChartDirective implements OnDestroy {
 
   @HostListener('mousemove', ['$event'])
   public onMousemove(e) {
-    this.chartsService.setMouseEvent(e);
+    // this.chartsService.setMouseEvent(e);
   }
 
   public syncExtremes(e) {

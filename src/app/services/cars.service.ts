@@ -52,4 +52,20 @@ export class CarsService {
         return Observable.throw(error.json().message || 'Server error');
       });
   }
+
+  public get(car: number): Observable<Car> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+
+    return this.http.get(env.backend + '/v1/cars/' + car, options)
+      .map((response: Response) => {
+        const carObj: Car = Object.assign(new Car(), response.json());
+        return carObj;
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
 }

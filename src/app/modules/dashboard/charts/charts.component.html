@@ -1,3 +1,2 @@
-<h3>Графики {{car}}</h3>
-<div *ngIf="options" appChart [options]="options"></div>
-<div *ngIf="options2" appChart [options]="options2"></div>
+<h3 *ngIf="car">Графики {{car.name}}</h3>
+<div *ngFor="let option of options;" appChart [options]="option"></div>

@@ -30,12 +30,12 @@ export class ChartsService {
     return this.me.asObservable();
   }
 
-  public getData(car: Car): Observable<Car[]> {
+  public get(car: number): Observable<Car[]> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + '/v1/companies/' + car.id + '/notfound', options)
+    return this.http.get(env.backend + '/v1/cars/' + car + '/report', options)
       .map((response: Response) => {
         return response.json();
       })
