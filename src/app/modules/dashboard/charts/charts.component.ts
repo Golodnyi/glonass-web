@@ -66,7 +66,6 @@ export class ChartsComponent implements OnInit {
         );
         this.chartsService.get(car_id).subscribe(
           data => {
-            console.log(data);
             data.forEach(function (item: any) {
               template.title = {
                 text: item.name,

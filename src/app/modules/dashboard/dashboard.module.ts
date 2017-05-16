@@ -11,6 +11,8 @@ import { ChartsComponent } from './charts/charts.component';
 import { TreePipe } from '../../pipes/tree.pipe';
 import { SharedModule } from '../shared.module';
 import { ChartsService } from '../../services/charts.service';
+import { StateComponent } from './state/state.component';
+import { FilterComponent } from './filter/filter.component';
 
 @NgModule({
   imports: [
@@ -19,7 +21,7 @@ import { ChartsService } from '../../services/charts.service';
     TreeModule,
     SharedModule
   ],
-  declarations: [DashboardComponent, NavigationComponent, ChartsComponent],
+  declarations: [DashboardComponent, NavigationComponent, ChartsComponent, StateComponent, FilterComponent],
   providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService]
 })
 export class DashboardModule {
