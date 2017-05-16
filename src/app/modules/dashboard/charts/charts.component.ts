@@ -25,12 +25,6 @@ export class ChartsComponent implements OnInit {
     legend: {
       enabled: false
     },
-    xAxis: {
-      crosshair: true,
-      events: {
-        setExtremes: null
-      }
-    },
     tooltip: {
       positioner: function () {
         return {
@@ -72,6 +66,7 @@ export class ChartsComponent implements OnInit {
         );
         this.chartsService.get(car_id).subscribe(
           data => {
+            console.log(data);
             data.forEach(function (item: any) {
               template.title = {
                 text: item.name,
@@ -87,6 +82,14 @@ export class ChartsComponent implements OnInit {
                   valueSuffix: ' ' + item.unit
                 }
               }];
+              template.yAxis = {
+                crosshair: true,
+                  events: {
+                  setExtremes: null
+                },
+                plotBands: item.plotBands,
+                plotLines: item.plotLines
+              };
               charts.push(Object.assign({}, template));
             });
             this.options = charts;
