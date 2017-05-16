@@ -61,9 +61,9 @@ export class ChartsComponent implements OnInit {
     /**
      * TODO: нужен рефакторинг
      */
-    const template = Object.assign(this.settings);
-    const charts = [];
     this.route.params.subscribe(params => {
+        const template = Object.assign(this.settings);
+        const charts = [];
         const car_id = +params['car'];
         this.carsService.get(car_id).subscribe(
           car => {
