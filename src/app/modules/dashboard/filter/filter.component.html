@@ -1,10 +1,14 @@
-<h3>Фильтр</h3>
-<form *ngIf="data && form" [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
-    <label for="before">С:</label>
-    <p-calendar id="before" formControlName="before" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
-    <label for="after">ПО:</label>
-    <p-calendar id="after" formControlName="after" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
-    <label for="charts">Датчики:</label>
-    <p-multiSelect id="charts" [options]="data" formControlName="charts"></p-multiSelect>
-    <button type="submit" [disabled]="!form.valid || submit" class="btn btn-success">Применить</button>
-</form>
+<p-accordion *ngIf="data && form">
+    <p-accordionTab header="Фильтр">
+        <form [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
+            <label for="before">С:</label>
+            <p-calendar id="before" formControlName="before" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
+            <label for="after">ПО:</label>
+            <p-calendar id="after" formControlName="after" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
+            <hr/>
+            <p-multiSelect defaultLabel="Датчики" id="charts" [options]="data" formControlName="charts"></p-multiSelect>
+            <hr/>
+            <button type="submit" [disabled]="!form.valid || submit" class="btn btn-success">Применить</button>
+        </form>
+    </p-accordionTab>
+</p-accordion>

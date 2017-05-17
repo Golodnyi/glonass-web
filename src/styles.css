@@ -43,3 +43,6 @@
 .ui-button .ui-button-text {
     line-height:inherit !important;
 }
+.ui-multiselect {
+    padding: 0!important;
+}
