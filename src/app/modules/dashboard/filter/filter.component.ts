@@ -4,7 +4,6 @@ import { Filter } from '../../../models/Filter';
 import { FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { Calendar } from '../../../models/Calendar';
-import { MsgService } from '../../../services/msg';
 import { ChartsService } from '../../../services/charts.service';
 import { Car } from '../../../models/Car';
 
@@ -21,10 +20,8 @@ export class FilterComponent {
   public ru = new Calendar();
   public form: FormGroup;
 
-  constructor(
-    private filterForm: FilterForm,
-    private chartsService: ChartsService
-  ) {
+  constructor(private filterForm: FilterForm,
+              private chartsService: ChartsService) {
     this.form = this.filterForm.create(this.filter);
     this.form.valueChanges
       .map((value) => {
@@ -44,7 +41,11 @@ export class FilterComponent {
   public onSubmit() {
     if (this.filter.enabled) {
       this.chartsService.filter(this.car.id, this.filter);
-    } else {
+    }
+  }
+
+  public reset() {
+    if (!this.filter.enabled) {
       this.chartsService.resync(this.car.id).subscribe();
     }
   }

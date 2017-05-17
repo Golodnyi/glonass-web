@@ -24,9 +24,6 @@ export class ChartDirective implements OnDestroy {
   }
 
   constructor(private el: ElementRef, private chartsService: ChartsService) {
-    /**
-     * TODO: нужен рефакторинг
-     */
     this.chartsService.getMouseEvent().subscribe(
       e => {
         if (e) {
@@ -36,15 +33,17 @@ export class ChartDirective implements OnDestroy {
           highstock.Pointer.prototype.reset = function () {
             return undefined;
           };
-          for (let i = 0; i < highstock.charts.length; i = i + 1) {
-            const chart = highstock.charts[i];
+          highstock.charts.forEach(function (chart) {
+            if (chart === undefined) {
+              return false;
+            }
             const event = chart.pointer.normalize(e.originalEvent);
             const point = chart.series[0].searchPoint(event, true);
 
             if (point) {
               point.highlight(e);
             }
-          }
+          });
         }
       }
     );

@@ -47,12 +47,12 @@ export class ChartsComponent implements OnInit {
             if (data === null) {
               return false;
             }
+            const $this = this;
             const template = Object.assign(this.settings);
-            const charts = [];
-            const filterData = [];
-            const currentChart = this.chart;
+            $this.options = [];
+            $this.filterData = [];
             data.forEach(function (item: any) {
-              filterData.push({label: item.name, value: item.id});
+              $this.filterData.push({label: item.name, value: item.id});
               template.title = {
                 text: item.name,
                 align: 'left',
@@ -73,7 +73,7 @@ export class ChartsComponent implements OnInit {
                   setExtremes: function (e) {
                     if (e.trigger !== 'syncExtremes') {
                       highstock.charts.forEach(function (chart) {
-                        if (chart === undefined || chart === currentChart) {
+                        if (chart === undefined || chart === $this.chart) {
                           return false;
                         }
                         chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {trigger: 'syncExtremes'});
@@ -87,10 +87,8 @@ export class ChartsComponent implements OnInit {
                 plotLines: item.plotLines
               };
               template.tooltip.valueDecimals = item.decimals;
-              charts.push(Object.assign({}, template));
+              $this.options.push(Object.assign({}, template));
             });
-            this.options = charts;
-            this.filterData = filterData;
           },
           error => {
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
