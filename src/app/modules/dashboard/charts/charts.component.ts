@@ -4,6 +4,7 @@ import { ChartsService } from '../../../services/charts.service';
 import { MsgService } from '../../../services/msg';
 import { CarsService } from '../../../services/cars.service';
 import { Car } from '../../../models/Car';
+import { Chart } from '../../../models/Chart';
 
 @Component({
   selector: 'app-charts',
@@ -13,43 +14,7 @@ import { Car } from '../../../models/Car';
 export class ChartsComponent implements OnInit {
 
   public car: Car;
-  public settings = {
-    chart: {
-      marginLeft: 0,
-      spacingTop: 20,
-      spacingBottom: 0
-    },
-    plotOptions: {
-      pie: {
-        size: '100%',
-        dataLabels: {
-          enabled: false
-        }
-      }
-    },
-    credits: {
-      enabled: false
-    },
-    legend: {
-      enabled: false
-    },
-    tooltip: {
-      positioner: function () {
-        return {
-          x: this.chart.chartWidth - this.label.width,
-          y: -1
-        };
-      },
-      borderWidth: 0,
-      backgroundColor: 'none',
-      pointFormat: '{point.y}',
-      headerFormat: '',
-      shadow: false,
-      style: {
-        fontSize: '18px'
-      }
-    },
-  };
+  public settings = new Chart();
   public options = [];
   public data: any;
 
