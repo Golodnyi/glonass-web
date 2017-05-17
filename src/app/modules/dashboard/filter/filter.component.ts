@@ -37,6 +37,7 @@ export class FilterComponent {
         this.filter.before = data.before;
         this.filter.after = data.after;
         this.filter.enabled = data.enabled;
+        this.onSubmit();
       });
   }
 
