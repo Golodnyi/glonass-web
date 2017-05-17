@@ -1,3 +1,10 @@
-<p>
-  filter works!
-</p>
+<h3>Фильтр</h3>
+<form *ngIf="data && form" [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
+    <label for="before">С:</label>
+    <p-calendar id="before" formControlName="before" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
+    <label for="after">ПО:</label>
+    <p-calendar id="after" formControlName="after" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
+    <label for="charts">Датчики:</label>
+    <p-multiSelect id="charts" [options]="data" formControlName="charts"></p-multiSelect>
+    <button type="submit" [disabled]="!form.valid || submit" class="btn btn-success">Применить</button>
+</form>

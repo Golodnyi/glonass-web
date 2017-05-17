@@ -16,7 +16,7 @@ export class ChartsComponent implements OnInit {
   public car: Car;
   public settings = new Chart();
   public options = [];
-  public data: any;
+  public filterData = [];
 
   constructor(private route: ActivatedRoute,
               private chartsService: ChartsService,
@@ -32,6 +32,7 @@ export class ChartsComponent implements OnInit {
         const template = Object.assign(this.settings);
         const charts = [];
         const car_id = +params['car'];
+        const filterData = [];
         this.carsService.get(car_id).subscribe(
           car => {
             this.car = car;
@@ -40,6 +41,7 @@ export class ChartsComponent implements OnInit {
         this.chartsService.get(car_id).subscribe(
           data => {
             data.forEach(function (item: any) {
+              filterData.push({label: item.name, value: item.id});
               template.title = {
                 text: item.name,
                 align: 'left',
@@ -56,7 +58,7 @@ export class ChartsComponent implements OnInit {
               }];
               template.yAxis = {
                 crosshair: true,
-                  events: {
+                events: {
                   setExtremes: null
                 },
                 plotBands: item.plotBands,
@@ -65,6 +67,7 @@ export class ChartsComponent implements OnInit {
               charts.push(Object.assign({}, template));
             });
             this.options = charts;
+            this.filterData = filterData;
           },
           error => {
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error);

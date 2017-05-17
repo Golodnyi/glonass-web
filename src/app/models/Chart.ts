@@ -1,5 +1,5 @@
 export class Chart {
-  public chart: {
+  public chart = {
     marginLeft: 0,
     spacingTop: 20,
     spacingBottom: 0

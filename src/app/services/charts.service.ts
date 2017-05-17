@@ -30,7 +30,7 @@ export class ChartsService {
     return this.me.asObservable();
   }
 
-  public get(car: number): Observable<Car[]> {
+  public get(car: number): Observable<any> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});

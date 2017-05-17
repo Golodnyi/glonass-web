@@ -6,6 +6,7 @@ import { MsgService } from '../../../../../services/msg';
 import * as moment from 'moment';
 import { CompanyForm } from '../../../../../forms/company.form';
 import { FormGroup } from '@angular/forms';
+import { Calendar } from '../../../../../models/Calendar';
 
 @Component({
   selector: 'app-company-update',
@@ -17,7 +18,7 @@ import { FormGroup } from '@angular/forms';
 export class CompanyUpdateComponent {
 
   public company: Company = new Company();
-  public ru: any;
+  public ru = new Calendar();
   public form: FormGroup;
   public submit: boolean;
 
@@ -25,14 +26,6 @@ export class CompanyUpdateComponent {
               private companiesService: CompaniesService,
               private msg: MsgService,
               private companyForm: CompanyForm) {
-    this.ru = {
-      firstDayOfWeek: 0,
-      dayNames: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
-      dayNamesShort: ['Вск', 'Пнд', 'Втр', 'Срд', 'Чтв', 'Птн', 'Сбт'],
-      dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-      monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-      monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
-    };
     this.route.params.subscribe(params => {
       const company_id = +params['company'];
       this.companiesService.get(company_id).subscribe(

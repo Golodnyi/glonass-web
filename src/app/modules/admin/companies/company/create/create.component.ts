@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { CompanyForm } from '../../../../../forms/company.form';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Calendar } from '../../../../../models/Calendar';
 
 @Component({
   selector: 'app-company-create',
@@ -18,7 +19,7 @@ import { Router } from '@angular/router';
 export class CompanyCreateComponent {
 
   public company: Company = new Company();
-  public ru: any;
+  public ru = new Calendar();
   public form: FormGroup;
   public submit: boolean;
 
@@ -28,16 +29,6 @@ export class CompanyCreateComponent {
               private companyForm: CompanyForm,
               private router: Router) {
     this.form = this.companyForm.create(this.company);
-
-    this.ru = {
-      firstDayOfWeek: 0,
-      dayNames: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
-      dayNamesShort: ['Вск', 'Пнд', 'Втр', 'Срд', 'Чтв', 'Птн', 'Сбт'],
-      dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-      monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-      monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
-    };
-
     this.form.valueChanges
       .map((value) => {
         value.active_till = moment(value.active_till).format('YYYY-MM-DD HH:mm:ss');

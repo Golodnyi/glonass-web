@@ -1,6 +1,6 @@
 {
   "name": "glonass-web",
-  "version": "0.2.1",
+  "version": "0.2.5",
   "license": "UNLICENSED",
   "angular-cli": {},
   "scripts": {
