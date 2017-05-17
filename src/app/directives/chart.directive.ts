@@ -24,20 +24,27 @@ export class ChartDirective implements OnDestroy {
   }
 
   constructor(private el: ElementRef, private chartsService: ChartsService) {
+    /**
+     * TODO: нужен рефакторинг
+     */
     this.chartsService.getMouseEvent().subscribe(
       e => {
         if (e) {
-          /**
-           highstock.Pointer.prototype.reset = function () {
+          highstock.Point.prototype.highlight = function (event) {
+            this.onMouseOver();
+          };
+          highstock.Pointer.prototype.reset = function () {
             return undefined;
           };
-           const event = this.chart.pointer.normalize(e.originalEvent);
-           const point = this.chart.series[0].searchPoint(event, true);
-           if (point) {
-            this.chart.tooltip.refresh(this);
-            this.chart.xAxis[0].drawCrosshair(event, this);
+          for (let i = 0; i < highstock.charts.length; i = i + 1) {
+            const chart = highstock.charts[i];
+            const event = chart.pointer.normalize(e.originalEvent);
+            const point = chart.series[0].searchPoint(event, true);
+
+            if (point) {
+              point.highlight(e);
+            }
           }
-           **/
         }
       }
     );
