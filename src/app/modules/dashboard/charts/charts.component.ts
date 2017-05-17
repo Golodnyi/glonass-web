@@ -5,6 +5,7 @@ import { MsgService } from '../../../services/msg';
 import { CarsService } from '../../../services/cars.service';
 import { Car } from '../../../models/Car';
 import { Chart } from '../../../models/Chart';
+import * as highstock from 'highcharts/highstock';
 
 @Component({
   selector: 'app-charts',
@@ -17,6 +18,7 @@ export class ChartsComponent implements OnInit {
   public settings = new Chart();
   public options = [];
   public filterData = [];
+  private chart: any;
 
   constructor(private route: ActivatedRoute,
               private chartsService: ChartsService,
@@ -28,6 +30,11 @@ export class ChartsComponent implements OnInit {
     /**
      * TODO: нужен рефакторинг
      */
+    this.chartsService.getChart().subscribe(
+      chart => {
+        this.chart = chart;
+      }
+    );
     this.route.params.subscribe(params => {
         const car_id = +params['car'];
         this.carsService.get(car_id).subscribe(
@@ -43,6 +50,7 @@ export class ChartsComponent implements OnInit {
             const template = Object.assign(this.settings);
             const charts = [];
             const filterData = [];
+            const currentChart = this.chart;
             data.forEach(function (item: any) {
               filterData.push({label: item.name, value: item.id});
               template.title = {
@@ -59,14 +67,26 @@ export class ChartsComponent implements OnInit {
                   valueSuffix: ' ' + item.unit
                 }
               }];
-              template.yAxis = {
+              template.xAxis = {
                 crosshair: true,
                 events: {
-                  setExtremes: null
-                },
+                  setExtremes: function (e) {
+                    if (e.trigger !== 'syncExtremes') {
+                      highstock.charts.forEach(function (chart) {
+                        if (chart === undefined || chart === currentChart) {
+                          return false;
+                        }
+                        chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {trigger: 'syncExtremes'});
+                      });
+                    }
+                  }
+                }
+              };
+              template.yAxis = {
                 plotBands: item.plotBands,
                 plotLines: item.plotLines
               };
+              template.tooltip.valueDecimals = item.decimals;
               charts.push(Object.assign({}, template));
             });
             this.options = charts;

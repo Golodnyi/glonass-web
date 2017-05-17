@@ -14,6 +14,7 @@ import { Filter } from '../models/Filter';
 @Injectable()
 export class ChartsService {
   private me: BehaviorSubject<MouseEvent> = new BehaviorSubject(null);
+  private chart: BehaviorSubject<any> = new BehaviorSubject(null);
   private data: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private http: Http,
@@ -23,12 +24,17 @@ export class ChartsService {
   }
 
 
-  public setMouseEvent(e: MouseEvent): void {
+  public setMouseEvent(chart: any, e: MouseEvent): void {
+    this.chart.next(chart);
     this.me.next(e);
   }
 
   public getMouseEvent(): Observable<any> {
     return this.me.asObservable();
+  }
+
+  public getChart(): Observable<any> {
+    return this.chart.asObservable();
   }
 
   public resync(car: number, filter: Filter = null): Observable<any> {

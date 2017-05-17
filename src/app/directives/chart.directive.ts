@@ -20,30 +20,24 @@ export class ChartDirective implements OnDestroy {
 
   @HostListener('mousemove', ['$event'])
   public onMousemove(e) {
-    // this.chartsService.setMouseEvent(e);
-  }
-
-  public syncExtremes(e) {
-    if (e.trigger !== 'syncExtremes') {
-      if (this.chart.xAxis[0].setExtremes) {
-        this.chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {trigger: 'syncExtremes'});
-      }
-    }
+    this.chartsService.setMouseEvent(this.chart, e);
   }
 
   constructor(private el: ElementRef, private chartsService: ChartsService) {
     this.chartsService.getMouseEvent().subscribe(
       e => {
         if (e) {
-          highstock.Pointer.prototype.reset = function () {
+          /**
+           highstock.Pointer.prototype.reset = function () {
             return undefined;
           };
-          const event = this.chart.pointer.normalize(e.originalEvent);
-          const point = this.chart.series[0].searchPoint(event, true);
-          if (point) {
-            // this.chart.tooltip.refresh(this); //
-            // this.chart.xAxis[0].drawCrosshair(event, this);
+           const event = this.chart.pointer.normalize(e.originalEvent);
+           const point = this.chart.series[0].searchPoint(event, true);
+           if (point) {
+            this.chart.tooltip.refresh(this);
+            this.chart.xAxis[0].drawCrosshair(event, this);
           }
+           **/
         }
       }
     );
