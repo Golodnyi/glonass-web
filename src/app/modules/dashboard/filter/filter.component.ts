@@ -4,6 +4,9 @@ import { Filter } from '../../../models/Filter';
 import { FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { Calendar } from '../../../models/Calendar';
+import { MsgService } from '../../../services/msg';
+import { ChartsService } from '../../../services/charts.service';
+import { Car } from '../../../models/Car';
 
 @Component({
   selector: 'app-filter',
@@ -13,27 +16,35 @@ import { Calendar } from '../../../models/Calendar';
 })
 export class FilterComponent {
   @Input() data: any = false;
+  @Input() car: Car;
   public filter: Filter = new Filter();
   public ru = new Calendar();
   public form: FormGroup;
-  public submit: boolean;
 
-  constructor(private filterForm: FilterForm) {
+  constructor(
+    private filterForm: FilterForm,
+    private chartsService: ChartsService
+  ) {
     this.form = this.filterForm.create(this.filter);
     this.form.valueChanges
       .map((value) => {
-        value.before = moment(value.before).format('YYYY-MM-DD HH:mm:ss');
-        value.after = moment(value.after).format('YYYY-MM-DD HH:mm:ss');
+        value.before = moment(value.before).format('YYYY-MM-DD');
+        value.after = moment(value.after).format('YYYY-MM-DD');
         return value;
       })
       .subscribe((data) => {
         this.filter.charts = data.charts;
         this.filter.before = data.before;
         this.filter.after = data.after;
+        this.filter.enabled = data.enabled;
       });
   }
 
   public onSubmit() {
-    console.log(this.filter);
+    if (this.filter.enabled) {
+      this.chartsService.filter(this.car.id, this.filter);
+    } else {
+      this.chartsService.resync(this.car.id).subscribe();
+    }
   }
 }

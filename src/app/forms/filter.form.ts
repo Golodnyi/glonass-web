@@ -15,6 +15,7 @@ export class FilterForm {
       charts: [filter.charts, Validators.required],
       before: [moment(filter.before).toDate(), Validators.required],
       after: [moment(filter.after).toDate(), Validators.required],
+      enabled: [filter.enabled],
     });
 
     return this.form;

@@ -29,10 +29,7 @@ export class ChartsComponent implements OnInit {
      * TODO: нужен рефакторинг
      */
     this.route.params.subscribe(params => {
-        const template = Object.assign(this.settings);
-        const charts = [];
         const car_id = +params['car'];
-        const filterData = [];
         this.carsService.get(car_id).subscribe(
           car => {
             this.car = car;
@@ -40,6 +37,12 @@ export class ChartsComponent implements OnInit {
         );
         this.chartsService.get(car_id).subscribe(
           data => {
+            if (data === null) {
+              return false;
+            }
+            const template = Object.assign(this.settings);
+            const charts = [];
+            const filterData = [];
             data.forEach(function (item: any) {
               filterData.push({label: item.name, value: item.id});
               template.title = {
