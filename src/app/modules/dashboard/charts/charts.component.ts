@@ -15,9 +15,17 @@ export class ChartsComponent implements OnInit {
   public car: Car;
   public settings = {
     chart: {
-      marginLeft: 40,
+      marginLeft: 0,
       spacingTop: 20,
-      spacingBottom: 20
+      spacingBottom: 0
+    },
+    plotOptions: {
+      pie: {
+        size: '100%',
+        dataLabels: {
+          enabled: false
+        }
+      }
     },
     credits: {
       enabled: false
@@ -70,8 +78,8 @@ export class ChartsComponent implements OnInit {
               template.title = {
                 text: item.name,
                 align: 'left',
-                margin: 0,
-                x: 30
+                marginBottom: 10,
+                x: -10
               };
               template.series = [{
                 data: item.data,

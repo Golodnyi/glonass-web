@@ -6,19 +6,10 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <app-state></app-state>
+            <app-state *ngIf="options"></app-state>
         </div>
     </div>
 </div>
 <div class="col-md-9">
-    <div class="row">
-        <div class="col-md-12">
-            <app-filter></app-filter>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <router-outlet></router-outlet>
-        </div>
-    </div>
+    <router-outlet></router-outlet>
 </div>
