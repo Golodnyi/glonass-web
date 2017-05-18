@@ -29,6 +29,26 @@ export class ChartsComponent implements OnDestroy {
             this.car = car;
           }
         );
+      this.chartsService.getAutoRefresh().subscribe(
+        autoRefresh => {
+          if (autoRefresh === null) {
+            return false;
+          }
+          this.aRefresh = autoRefresh.enabled;
+
+          if (this.subscription) {
+            this.subscription.unsubscribe();
+          }
+
+          if (this.aRefresh) {
+            this.subscription = this.timer.subscribe(
+              () => {
+                this.chartsService.resync(this.car.id);
+              }
+            );
+          }
+        }
+      );
         this.chartsService.resync(car_id);
         this.chartsService.get().subscribe(
           data => {
@@ -65,18 +85,6 @@ export class ChartsComponent implements OnDestroy {
 
   public autoRefresh(event) {
     this.chartsService.setAutoRefresh({enabled: event.checked, afterTime: this.lastTime()});
-
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-
-    if (event.checked) {
-      this.subscription = this.timer.subscribe(
-        () => {
-          this.chartsService.resync(this.car.id);
-        }
-      );
-    }
   }
 
   private lastTime(): number {

@@ -13,7 +13,6 @@ export class ChartComponent implements OnChanges, OnDestroy {
   @Input() data: any;
   private i = 1000;
   ngOnChanges(changes: any) {
-    console.log(changes);
     const options = changes.options;
     const data = changes.data;
     if (data) {
