@@ -59,7 +59,7 @@ export class ChartsService {
         this.data.next(response.json());
         return response.json();
       }, error => {
-        this.msgService.notice(MsgService.ERROR, 'Ошибка', error)
+        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
       });
   }
 
