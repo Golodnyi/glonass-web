@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
-import { ChartDirective } from '../directives/chart.directive';
 import { CommonModule } from '@angular/common';
 import { DropDownPipe } from '../pipes/dropdown.pipe';
 import { TreePipe } from 'app/pipes/tree.pipe';
+import { ChartComponent } from '../components/chart/chart.component';
 
 @NgModule({
   imports: [
     CommonModule,
   ],
   declarations: [
-    ChartDirective, TreePipe, DropDownPipe
+    TreePipe, DropDownPipe, ChartComponent
   ],
   exports: [
-    ChartDirective, TreePipe, DropDownPipe
+    TreePipe, DropDownPipe, ChartComponent
   ]
 })
 export class SharedModule {

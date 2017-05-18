@@ -15,10 +15,7 @@ import * as highstock from 'highcharts/highstock';
 export class ChartsComponent implements OnInit {
 
   public car: Car;
-  public settings = new Chart();
-  public options = [];
-  public filterData = [];
-  private chart: any;
+  public options: any;
 
   constructor(private route: ActivatedRoute,
               private chartsService: ChartsService,
@@ -27,14 +24,6 @@ export class ChartsComponent implements OnInit {
   }
 
   ngOnInit() {
-    /**
-     * TODO: нужен рефакторинг
-     */
-    this.chartsService.getChart().subscribe(
-      chart => {
-        this.chart = chart;
-      }
-    );
     this.route.params.subscribe(params => {
         const car_id = +params['car'];
         this.carsService.get(car_id).subscribe(
@@ -44,51 +33,7 @@ export class ChartsComponent implements OnInit {
         );
         this.chartsService.get(car_id).subscribe(
           data => {
-            if (data === null) {
-              return false;
-            }
-            const $this = this;
-            const template = Object.assign(this.settings);
-            $this.options = [];
-            $this.filterData = [];
-            data.forEach(function (item: any) {
-              $this.filterData.push({label: item.name, value: item.id});
-              template.title = {
-                text: item.name,
-                align: 'left',
-                marginBottom: 10,
-                x: -10
-              };
-              template.series = [{
-                data: item.data,
-                name: item.name,
-                type: item.type,
-                tooltip: {
-                  valueSuffix: ' ' + item.unit
-                }
-              }];
-              template.xAxis = {
-                crosshair: true,
-                events: {
-                  setExtremes: function (e) {
-                    if (e.trigger !== 'syncExtremes') {
-                      highstock.charts.forEach(function (chart) {
-                        if (chart === undefined || chart === $this.chart) {
-                          return false;
-                        }
-                        chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {trigger: 'syncExtremes'});
-                      });
-                    }
-                  }
-                }
-              };
-              template.yAxis = {
-                plotBands: item.plotBands,
-                plotLines: item.plotLines
-              };
-              template.tooltip.valueDecimals = item.decimals;
-              $this.options.push(Object.assign({}, template));
-            });
+            this.options = data;
           },
           error => {
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error);

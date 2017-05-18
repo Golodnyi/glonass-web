@@ -1,18 +1,24 @@
-<h3 *ngIf="car">{{car.name}}</h3>
 <div class="row">
-    <div class="col-md-12">
-        <app-filter *ngIf="filterData" [data]="filterData" [car]="car"></app-filter>
+    <div class="col-md-6">
+        <div *ngIf="car">Данные по {{car.name}}</div>
+    </div>
+    <div class="col-md-6">
+        Автообновление данных:&nbsp;<p-inputSwitch [(ngModel)]="autorefresh" onLabel="да"
+                                                   offLabel="нет"></p-inputSwitch>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        <div [ngSwitch]="options.length">
-            <ng-container *ngSwitchCase=0>
-                <div class="loader"></div>
-            </ng-container>
-            <ng-container ng-switch-default>
-                <div *ngFor="let option of options;" appChart [options]="option"></div>
-            </ng-container>
+        <app-filter *ngIf="options" [data]="options|DropDown" [car]="car"></app-filter>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div *ngIf="options">
+            <app-chart *ngFor="let option of options;" [options]="option"></app-chart>
+        </div>
+        <div *ngIf="!options">
+            <div class="loader"></div>
         </div>
     </div>
 </div>
