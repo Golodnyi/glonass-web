@@ -1,6 +1,5 @@
-import { Component, ElementRef, HostListener, Input, OnDestroy } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnChanges, OnDestroy } from '@angular/core';
 import * as highstock from 'highcharts/highstock';
-import { ChartsService } from '../../services/charts.service';
 import { Chart } from '../../models/Chart';
 
 @Component({
@@ -8,34 +7,43 @@ import { Chart } from '../../models/Chart';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css']
 })
-export class ChartComponent implements OnDestroy {
+export class ChartComponent implements OnChanges, OnDestroy {
   private chart: any;
-  @Input() set options(options: any) {
-    if (this.chart) {
-      this.chart.destroy();
+  @Input() options: any;
+  @Input() data: any;
+  private i = 1000;
+  ngOnChanges(changes: any) {
+    console.log(changes);
+    const options = changes.options;
+    const data = changes.data;
+    if (data) {
+      if (!data.firstChange) {
+        data.currentValue.forEach(point => {
+          point[0] += this.i;
+          this.chart.series[0].addPoint(point, true);
+        });
+        this.i += 1000;
+      }
     }
-
     if (options) {
-      const currentChart = this.chart;
-      const config = new Chart(options, this.el.nativeElement.parentElement.offsetWidth);
-      config.xAxis.events = {
-        setExtremes: function (e) {
-          if (e.trigger !== 'syncExtremes') {
-            highstock.charts.forEach(function (chart) {
-              if (chart === undefined || chart === currentChart) {
-                return false;
-              }
-              chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {trigger: 'syncExtremes'});
-            });
+      if (options.firstChange) {
+        const config = new Chart(this.options, this.el.nativeElement.parentElement.offsetWidth);
+        config.xAxis.events = {
+          setExtremes: function (e) {
+            if (e.trigger !== 'syncExtremes') {
+              highstock.charts.forEach(function (chart) {
+                if (chart === undefined || chart === this.chart) {
+                  return false;
+                }
+                chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {trigger: 'syncExtremes'});
+              });
+            }
           }
-        }
-      };
-      this.chart = highstock.stockChart(this.el.nativeElement, config).innerHtml;
-      /** if (this.autorefresh) {
-        const lastPoint = $this.options[0].series[template.series.length - 1]
-          .data[template.series[template.series.length - 1]
-          .data.length - 1][0];
-      } **/
+        };
+        this.chart = highstock.stockChart(this.el.nativeElement, config);
+      } else {
+        this.options = options.currentValue;
+      }
     }
   }
 
@@ -56,7 +64,7 @@ export class ChartComponent implements OnDestroy {
     });
   }
 
-  constructor(private el: ElementRef, private chartsService: ChartsService) {
+  constructor(private el: ElementRef) {
     highstock.Point.prototype.highlight = function () {
       this.onMouseOver();
     };

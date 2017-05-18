@@ -8,8 +8,7 @@ export class DropDownPipe implements PipeTransform {
     if (isUndefined(data)) {
       return items;
     }
-
-    data.forEach(function (item) {
+    data.forEach(item => {
       items.push(
         {
           'label': item.name,

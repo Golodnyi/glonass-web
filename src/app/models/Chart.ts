@@ -7,7 +7,8 @@ export class Chart {
     marginLeft: 0,
     spacingTop: 20,
     spacingBottom: 0,
-    width: 600
+    width: 600,
+    height: 400
   };
   public plotOptions = {
     pie: {

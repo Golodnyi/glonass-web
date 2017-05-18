@@ -1,29 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChartsService } from '../../../services/charts.service';
-import { MsgService } from '../../../services/msg';
 import { CarsService } from '../../../services/cars.service';
 import { Car } from '../../../models/Car';
-import { Chart } from '../../../models/Chart';
-import * as highstock from 'highcharts/highstock';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-charts',
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.css']
 })
-export class ChartsComponent implements OnInit {
+export class ChartsComponent implements OnDestroy {
 
   public car: Car;
-  public options: any;
+  public options: any = [];
+  private subscription: Subscription;
+  private timer = Observable.timer(0, 5000);
+  public aRefresh: boolean;
 
   constructor(private route: ActivatedRoute,
               private chartsService: ChartsService,
-              private msgService: MsgService,
               private carsService: CarsService) {
-  }
-
-  ngOnInit() {
     this.route.params.subscribe(params => {
         const car_id = +params['car'];
         this.carsService.get(car_id).subscribe(
@@ -31,15 +29,71 @@ export class ChartsComponent implements OnInit {
             this.car = car;
           }
         );
-        this.chartsService.get(car_id).subscribe(
+        this.chartsService.resync(car_id);
+        this.chartsService.get().subscribe(
           data => {
-            this.options = data;
-          },
-          error => {
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+            if (data === null) {
+              return false;
+            }
+            if (this.options.length === data.length) {
+              this.options.forEach(option => {
+                data.forEach(item => {
+                  if (option.id === item.id) {
+                    option.data = item.data;
+                  }
+                });
+              });
+            } else {
+              this.options = [];
+              data.forEach(item => {
+                this.options.push(Object.assign({}, item));
+              });
+            }
+          }
+        );
+        this.chartsService.getFilter().subscribe(
+          (filter) => {
+            if (filter === null) {
+              return false;
+            }
+            this.chartsService.resync(car_id);
           }
         );
       }
     );
+  }
+
+  public autoRefresh(event) {
+    this.chartsService.setAutoRefresh({enabled: event.checked, afterTime: this.lastTime()});
+
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    if (event.checked) {
+      this.subscription = this.timer.subscribe(
+        () => {
+          this.chartsService.resync(this.car.id);
+        }
+      );
+    }
+  }
+
+  private lastTime(): number {
+    const series = this.options[this.options.length - 1];
+    if (series) {
+      const data = series.data[series.data.length - 1];
+      if (data) {
+        return data[0];
+      }
+    }
+
+    return Date.now() - 1000;
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

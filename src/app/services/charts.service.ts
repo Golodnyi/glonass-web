@@ -6,7 +6,6 @@ import 'rxjs/add/operator/catch';
 import { env } from '../../env';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
-import { Error } from '../models/Error';
 import { MsgService } from './msg';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Filter } from '../models/Filter';
@@ -14,6 +13,8 @@ import { Filter } from '../models/Filter';
 @Injectable()
 export class ChartsService {
   private data: BehaviorSubject<any> = new BehaviorSubject(null);
+  private filter: BehaviorSubject<Filter> = new BehaviorSubject(null);
+  private autoRefresh: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private http: Http,
               private authService: AuthService,
@@ -21,7 +22,25 @@ export class ChartsService {
               private msgService: MsgService) {
   }
 
-  public resync(car: number, filter: Filter = null): Observable<any> {
+  public setFilter(filter: Filter) {
+    this.filter.next(filter);
+  }
+
+  public getFilter() {
+    return this.filter.asObservable();
+  }
+
+  public setAutoRefresh(autoRefresh: any) {
+    this.autoRefresh.next(autoRefresh);
+  }
+
+  public getAutoRefresh() {
+    return this.autoRefresh.asObservable();
+  }
+
+  public resync(car: number): void {
+    const filter = this.filter.getValue();
+    const autoRefresh = this.autoRefresh.getValue();
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
@@ -29,29 +48,23 @@ export class ChartsService {
     if (filter && filter.enabled) {
       params += 'dateFrom=' + filter.before + '&dateTo=' + filter.after;
       filter.charts.forEach(function (sensor) {
-        params += '&sensors[]=' + sensor;
+        params += '&sensors[]=' + sensor + '&';
       });
     }
-
-    return this.http.get(env.backend + '/v1/cars/' + car + '/report' + params, options)
-      .map((response: Response) => {
+    if (autoRefresh && autoRefresh.enabled) {
+      params += 'afterTime=' + autoRefresh.afterTime;
+    }
+    this.http.get(env.backend + '/v1/cars/' + car + '/report' + params, options)
+      .subscribe((response: Response) => {
         this.data.next(response.json());
         return response.json();
-      })
-      .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
-        return Observable.throw(error.json().message || 'Server error');
+      }, error => {
+        this.msgService.notice(MsgService.ERROR, 'Ошибка', error)
       });
   }
 
-  public get(car: number, resync = true): Observable<any> {
-    if (resync) {
-      this.resync(car).subscribe();
-    }
+  public get(): Observable<any> {
     return this.data.asObservable();
   }
-
-  public filter(car: number, filter: Filter): void {
-    this.resync(car, filter).subscribe();
-  }
 }
+

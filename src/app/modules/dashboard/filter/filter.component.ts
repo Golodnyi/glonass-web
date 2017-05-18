@@ -34,19 +34,7 @@ export class FilterComponent {
         this.filter.before = data.before;
         this.filter.after = data.after;
         this.filter.enabled = data.enabled;
-        this.onSubmit();
+        this.chartsService.setFilter(this.filter);
       });
-  }
-
-  public onSubmit() {
-    if (this.filter.enabled) {
-      this.chartsService.filter(this.car.id, this.filter);
-    }
-  }
-
-  public reset() {
-    if (!this.filter.enabled) {
-      this.chartsService.resync(this.car.id).subscribe();
-    }
   }
 }
