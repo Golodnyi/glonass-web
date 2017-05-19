@@ -18,7 +18,7 @@ export class FilterComponent {
   @Input() car: Car;
   public filter: Filter = new Filter();
   public ru = new Calendar();
-  public form: FormGroup;
+  public form: FormGroup = null;
 
   constructor(private filterForm: FilterForm,
               private chartsService: ChartsService) {
@@ -27,14 +27,19 @@ export class FilterComponent {
       .map((value) => {
         value.before = moment(value.before).format('YYYY-MM-DD');
         value.after = moment(value.after).format('YYYY-MM-DD');
+        value.enabled = value.enabled ? true : false;
         return value;
       })
       .subscribe((data) => {
         this.filter.charts = data.charts;
+        this.filter.last = data.last;
         this.filter.before = data.before;
         this.filter.after = data.after;
         this.filter.enabled = data.enabled;
-        this.chartsService.setFilter(this.filter);
+
+        if (this.filter.enabled) {
+          this.chartsService.setFilter(this.filter);
+        }
       });
   }
 }

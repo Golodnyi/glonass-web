@@ -46,18 +46,20 @@ export class ChartsService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
     let params = '?';
     if (filter && filter.enabled) {
-      params += 'dateFrom=' + filter.before + '&dateTo=' + filter.after;
       filter.charts.forEach(function (sensor) {
         params += '&sensors[]=' + sensor + '&';
       });
+
+      if (!filter.last) {
+        params += 'dateFrom=' + filter.before + '&dateTo=' + filter.after + '&';
+      }
     }
-    if (autoRefresh && autoRefresh.enabled) {
+    if (autoRefresh && autoRefresh.enabled && (filter.last || !filter.enabled)) {
       params += 'afterTime=' + autoRefresh.afterTime;
     }
     this.http.get(env.backend + '/v1/cars/' + car + '/report' + params, options)
       .subscribe((response: Response) => {
         this.data.next(response.json());
-        return response.json();
       }, error => {
         this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
       });

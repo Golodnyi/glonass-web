@@ -3,21 +3,21 @@
         <div *ngIf="car">Данные по {{car.name}}</div>
     </div>
     <div class="col-md-6">
-        Автообновление данных:&nbsp;<p-inputSwitch [(ngModel)]="aRefresh" (onChange)="autoRefresh($event)" onLabel="да"
+        Автообновление данных:&nbsp;<p-inputSwitch [disabled]="filter && filter.enabled && !filter.last" [(ngModel)]="aRefresh" (onChange)="autoRefresh($event)" onLabel="да"
                                                    offLabel="нет"></p-inputSwitch>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        <app-filter *ngIf="options" [data]="options|DropDown" [car]="car"></app-filter>
+        <app-filter *ngIf="options.length" [data]="options|DropDown" [car]="car"></app-filter>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        <div *ngIf="options">
-            <app-chart *ngFor="let option of options;" [options]="option" [data]="option.data"></app-chart>
+        <div *ngIf="options.length">
+            <app-chart *ngFor="let option of options;" [options]="option ? option : {}" [data]="option ? option.data : []"></app-chart>
         </div>
-        <div *ngIf="!options">
+        <div *ngIf="!options.length">
             <div class="loader"></div>
         </div>
     </div>

@@ -1,14 +1,20 @@
 <p-accordion *ngIf="data && form">
     <p-accordionTab header="Фильтр">
         <form [formGroup]="form" class="input-group" novalidate>
-            <label for="before">С:</label>
-            <p-calendar id="before" formControlName="before" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
-            <label for="after">ПО:</label>
-            <p-calendar id="after" formControlName="after" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
+            <p-checkbox formControlName="last" binary="true" label="Последние данные"></p-checkbox>
+            <div [hidden]="form.get('last').value">
+                <hr/>
+                <label for="before">С:</label>
+                <p-calendar id="before" formControlName="before" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
+                <label for="after">ПО:</label>
+                <p-calendar id="after" formControlName="after" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
+            </div>
             <hr/>
             <p-multiSelect defaultLabel="Датчики" id="charts" [options]="data" formControlName="charts"></p-multiSelect>
-            <hr/>
-            <p-inputSwitch [hidden]="!form.valid" formControlName="enabled" onLabel="Вкл" offLabel="Выкл"></p-inputSwitch>
+            <div [hidden]="!form.valid">
+                <hr/>
+                <p-inputSwitch formControlName="enabled" onLabel="Вкл" offLabel="Выкл"></p-inputSwitch>
+            </div>
         </form>
     </p-accordionTab>
 </p-accordion>

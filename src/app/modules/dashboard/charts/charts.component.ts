@@ -5,6 +5,7 @@ import { CarsService } from '../../../services/cars.service';
 import { Car } from '../../../models/Car';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { MsgService } from '../../../services/msg';
 
 @Component({
   selector: 'app-charts',
@@ -18,10 +19,12 @@ export class ChartsComponent implements OnDestroy {
   private subscription: Subscription;
   private timer = Observable.timer(0, 5000);
   public aRefresh: boolean;
+  public filter;
 
   constructor(private route: ActivatedRoute,
               private chartsService: ChartsService,
-              private carsService: CarsService) {
+              private carsService: CarsService,
+              private msgService: MsgService) {
     this.route.params.subscribe(params => {
         const car_id = +params['car'];
         this.carsService.get(car_id).subscribe(
@@ -29,53 +32,73 @@ export class ChartsComponent implements OnDestroy {
             this.car = car;
           }
         );
-      this.chartsService.getAutoRefresh().subscribe(
-        autoRefresh => {
-          if (autoRefresh === null) {
-            return false;
-          }
-          this.aRefresh = autoRefresh.enabled;
+        this.chartsService.getAutoRefresh().subscribe(
+          autoRefresh => {
+            if (autoRefresh === null) {
+              return false;
+            }
+            this.aRefresh = autoRefresh.enabled;
 
-          if (this.subscription) {
-            this.subscription.unsubscribe();
-          }
+            if (this.subscription) {
+              this.subscription.unsubscribe();
+            }
 
-          if (this.aRefresh) {
-            this.subscription = this.timer.subscribe(
-              () => {
-                this.chartsService.resync(this.car.id);
-              }
-            );
+            if (this.aRefresh) {
+              this.subscription = this.timer.subscribe(
+                () => {
+                  this.chartsService.resync(this.car.id);
+                }
+              );
+            }
           }
-        }
-      );
+        );
         this.chartsService.resync(car_id);
+        /**
+         * TODO: костыль, переписать.
+         */
         this.chartsService.get().subscribe(
           data => {
             if (data === null) {
               return false;
             }
-            if (this.options.length === data.length) {
-              this.options.forEach(option => {
-                data.forEach(item => {
-                  if (option.id === item.id) {
-                    option.data = item.data;
-                  }
-                });
+            data.forEach(item => {
+              let exist = false;
+              this.options.forEach(options => {
+                if (options.id === item.id) {
+                  options.data = item.data;
+                  exist = true;
+                }
               });
-            } else {
-              this.options = [];
+              if (!exist) {
+                this.options.push(item);
+              }
+            });
+            this.options.forEach((option, index) => {
+              let exist = false;
               data.forEach(item => {
-                this.options.push(Object.assign({}, item));
+                if (option.id === item.id) {
+                  exist = true;
+                }
               });
-            }
+              if (!exist) {
+                delete this.options[index];
+              }
+            });
           }
         );
+        // end
         this.chartsService.getFilter().subscribe(
           (filter) => {
             if (filter === null) {
               return false;
             }
+
+            this.filter = filter;
+
+            if (filter.enabled && !filter.last) {
+              this.chartsService.setAutoRefresh({enabled: false, afterTime: this.lastTime()});
+            }
+
             this.chartsService.resync(car_id);
           }
         );

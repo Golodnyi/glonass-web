@@ -13,8 +13,9 @@ export class FilterForm {
   public create(filter: Filter) {
     this.form = this.fb.group({
       charts: [filter.charts, Validators.required],
-      before: [moment(filter.before).toDate(), Validators.required],
-      after: [moment(filter.after).toDate(), Validators.required],
+      last: [filter.last],
+      before: [moment(filter.before).toDate()],
+      after: [moment(filter.after).toDate()],
       enabled: [filter.enabled],
     });
 

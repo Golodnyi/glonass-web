@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnDestroy, Output } from '@angular/core';
 import * as highstock from 'highcharts/highstock';
 import { Chart } from '../../models/Chart';
 
@@ -10,13 +10,12 @@ import { Chart } from '../../models/Chart';
 export class ChartComponent implements OnChanges, OnDestroy {
   public chart: any;
   @Input() data: any;
-
   @Input() set options(options: any) {
+    console.log('set', options);
     if (this.chart) {
       this.chart.destroy();
     }
-
-    if (options) {
+    if (Object.keys(options).length) {
       const currentChart = this.chart;
       const config = new Chart(options, this.el.nativeElement.parentElement.offsetWidth);
       config.xAxis.events = {
@@ -34,14 +33,18 @@ export class ChartComponent implements OnChanges, OnDestroy {
       this.chart = highstock.stockChart(this.el.nativeElement, config);
     }
   }
-
   ngOnChanges(changes: any) {
-    const data = changes.data;
-    if (data) {
-      if (!data.firstChange) {
-        data.currentValue.forEach(point => {
-          this.chart.series[0].addPoint(point, true);
-        });
+    console.log(highstock.charts);
+    console.log('update', changes);
+    if (changes.data) {
+      const data = changes.data;
+      if (data) {
+        if (!data.firstChange) {
+          data.currentValue.forEach(point => {
+            this.chart.series[0].addPoint(point, false, true, false);
+          });
+          this.chart.redraw(true);
+        }
       }
     }
   }

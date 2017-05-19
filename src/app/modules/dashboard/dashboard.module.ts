@@ -6,7 +6,14 @@ import { CompaniesService } from '../../services/companies.service';
 import { SubdivisionsService } from '../../services/subdivisions.service';
 import { CarsService } from '../../services/cars.service';
 import { NavigationComponent } from './navigation/navigation.component';
-import { AccordionModule, CalendarModule, InputSwitchModule, MultiSelectModule, TreeModule } from 'primeng/primeng';
+import {
+  AccordionModule,
+  CalendarModule,
+  CheckboxModule,
+  InputSwitchModule,
+  MultiSelectModule,
+  TreeModule
+} from 'primeng/primeng';
 import { ChartsComponent } from './charts/charts.component';
 import { TreePipe } from '../../pipes/tree.pipe';
 import { SharedModule } from '../shared.module';
@@ -26,7 +33,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     AccordionModule,
-    InputSwitchModule
+    InputSwitchModule,
+    CheckboxModule
   ],
   declarations: [DashboardComponent, NavigationComponent, ChartsComponent, StateComponent, FilterComponent],
   providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService]
