@@ -93,9 +93,10 @@ export class ChartsComponent implements OnDestroy {
               return false;
             }
 
+
             this.filter = filter;
 
-            if (filter.enabled && !filter.last) {
+            if (filter && filter.enabled && !filter.last) {
               this.chartsService.setAutoRefresh({enabled: false, afterTime: this.lastTime()});
             }
 

@@ -54,7 +54,7 @@ export class ChartsService {
         params += 'dateFrom=' + filter.before + '&dateTo=' + filter.after + '&';
       }
     }
-    if (autoRefresh && autoRefresh.enabled && (filter.last || !filter.enabled)) {
+    if (autoRefresh && autoRefresh.enabled && ((filter && !filter.last && filter.enabled) || !filter)) {
       params += 'afterTime=' + autoRefresh.afterTime;
     }
     this.http.get(env.backend + '/v1/cars/' + car + '/report' + params, options)

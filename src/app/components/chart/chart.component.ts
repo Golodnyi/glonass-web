@@ -11,7 +11,6 @@ export class ChartComponent implements OnChanges, OnDestroy {
   public chart: any;
   @Input() data: any;
   @Input() set options(options: any) {
-    console.log('set', options);
     if (this.chart) {
       this.chart.destroy();
     }
@@ -34,8 +33,6 @@ export class ChartComponent implements OnChanges, OnDestroy {
     }
   }
   ngOnChanges(changes: any) {
-    console.log(highstock.charts);
-    console.log('update', changes);
     if (changes.data) {
       const data = changes.data;
       if (data) {
