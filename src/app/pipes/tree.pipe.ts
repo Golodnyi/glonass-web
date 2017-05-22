@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { TreeNode } from 'primeng/primeng';
-import { ITree } from '../models/interface/ITree';
+import { ITree } from '../models/Tree';
 import { isUndefined } from 'util';
 
 @Pipe({name: 'tree'})
