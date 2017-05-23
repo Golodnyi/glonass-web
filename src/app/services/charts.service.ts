@@ -47,7 +47,7 @@ export class ChartsService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
     let params = '?';
-    if (filter && filter.enabled) {
+    if (filter.enabled) {
       filter.charts.forEach(function (sensor) {
         params += '&sensors[]=' + sensor + '&';
       });
@@ -56,7 +56,7 @@ export class ChartsService {
         params += 'dateFrom=' + filter.before + '&dateTo=' + filter.after + '&';
       }
     }
-    if (autoRefresh && autoRefresh.enabled && ((filter && !filter.last && filter.enabled) || !filter)) {
+    if (autoRefresh.enabled && ((!filter.last && filter.enabled) || !filter.enabled)) {
       params += 'afterTime=' + autoRefresh.afterTime;
     }
     this.http.get(env.backend + '/v1/cars/' + car + '/report' + params, options)

@@ -27,6 +27,7 @@ export class ChartsComponent implements OnDestroy {
               private carsService: CarsService,
               private msgService: MsgService) {
     this.route.params.subscribe(params => {
+        this.options = [];
         const car_id = +params['car'];
         this.carsService.get(car_id).subscribe(
           car => {
