@@ -34,9 +34,6 @@ export class ChartsComponent implements OnDestroy {
         );
         this.chartsService.getAutoRefresh().subscribe(
           autoRefresh => {
-            if (autoRefresh === null) {
-              return false;
-            }
             this.aRefresh = autoRefresh.enabled;
 
             if (this.subscription) {
@@ -58,9 +55,6 @@ export class ChartsComponent implements OnDestroy {
          */
         this.chartsService.get().subscribe(
           data => {
-            if (data === null) {
-              return false;
-            }
             data.forEach(item => {
               let exist = false;
               this.options.forEach(options => {
@@ -89,11 +83,6 @@ export class ChartsComponent implements OnDestroy {
         // end
         this.chartsService.getFilter().subscribe(
           (filter) => {
-            if (filter === null) {
-              return false;
-            }
-
-
             this.filter = filter;
 
             if (filter && filter.enabled && !filter.last) {

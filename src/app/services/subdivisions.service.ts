@@ -14,8 +14,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class SubdivisionsService {
-  private subdivisions: BehaviorSubject<Subdivision[]> = new BehaviorSubject(null);
-  private subdivision: BehaviorSubject<Subdivision> = new BehaviorSubject(null);
+  private subdivisions: BehaviorSubject<Subdivision[]> = new BehaviorSubject([]);
+  private subdivision: BehaviorSubject<Subdivision> = new BehaviorSubject(new Subdivision());
 
   constructor(private http: Http,
               private authService: AuthService,
@@ -24,7 +24,7 @@ export class SubdivisionsService {
   }
 
   public all(company: number, resync = false): Observable<Subdivision[]> {
-    if (resync || this.subdivisions.getValue() === null) {
+    if (resync) {
       const headers = new Headers();
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       const options = new RequestOptions({headers: headers, withCredentials: true});
@@ -73,7 +73,7 @@ export class SubdivisionsService {
   }
 
   public get(company: number, subdivision: number, resync = false): Observable<Subdivision> {
-    if (resync || this.subdivision.getValue() === null) {
+    if (resync) {
       const headers = new Headers();
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       const options = new RequestOptions({headers: headers, withCredentials: true});

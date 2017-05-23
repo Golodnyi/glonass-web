@@ -41,9 +41,6 @@ export class SubdivisionCreateComponent {
 
     this.companiesService.all(false).subscribe(
       companies => {
-        if (companies === null) {
-          return;
-        }
         this.companies = companies;
       },
       error => {

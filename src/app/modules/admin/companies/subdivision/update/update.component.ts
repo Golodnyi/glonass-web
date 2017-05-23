@@ -32,9 +32,6 @@ export class SubdivisionUpdateComponent {
       const subdivision_id: number = +params['subdivision'];
       this.subdivisionsService.get(company_id, subdivision_id, true).subscribe(
         subdivision => {
-          if (subdivision === null) {
-            return;
-          }
           this.subdivision = subdivision;
           this.form = this.subdivisionUpdateForm.create(this.subdivision);
           this.form.valueChanges.subscribe((data) => {
@@ -48,9 +45,6 @@ export class SubdivisionUpdateComponent {
     });
     this.companiesService.all(false).subscribe(
       companies => {
-        if (companies === null) {
-          return;
-        }
         this.companies = companies;
       },
       error => {

@@ -9,12 +9,13 @@ import { Router } from '@angular/router';
 import { MsgService } from './msg';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Filter } from '../models/Filter';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class ChartsService {
-  private data: BehaviorSubject<any> = new BehaviorSubject(null);
-  private filter: BehaviorSubject<Filter> = new BehaviorSubject(null);
-  private autoRefresh: BehaviorSubject<any> = new BehaviorSubject(null);
+  private data: Subject<any> = new Subject();
+  private filter: BehaviorSubject<Filter> = new BehaviorSubject(new Filter());
+  private autoRefresh: BehaviorSubject<any> = new BehaviorSubject({enabled: false, afterTime: Date.now() - 1000});
 
   constructor(private http: Http,
               private authService: AuthService,

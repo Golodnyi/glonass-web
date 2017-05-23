@@ -13,8 +13,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class CompaniesService {
-  private companies: BehaviorSubject<Company[]> = new BehaviorSubject(null);
-  private company: BehaviorSubject<Company> = new BehaviorSubject(null);
+  private companies: BehaviorSubject<Company[]> = new BehaviorSubject([]);
+  private company: BehaviorSubject<Company> = new BehaviorSubject(new Company());
 
   constructor(private http: Http,
               private authService: AuthService,
@@ -23,7 +23,7 @@ export class CompaniesService {
   }
 
   public all(resync = false): Observable<Company[]> {
-    if (resync || this.companies.getValue() === null) {
+    if (resync) {
       const headers = new Headers();
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       const options = new RequestOptions({headers: headers, withCredentials: true});
@@ -48,7 +48,7 @@ export class CompaniesService {
   }
 
   public get(company: number, resync = false): Observable<Company> {
-    if (resync || this.company.getValue() === null) {
+    if (resync) {
       const headers = new Headers();
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       const options = new RequestOptions({headers: headers, withCredentials: true});

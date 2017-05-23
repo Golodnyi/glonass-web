@@ -31,9 +31,6 @@ export class CompanyUpdateComponent {
       const company_id = +params['company'];
       this.companiesService.get(company_id, true).subscribe(
         company => {
-          if (company === null) {
-            return;
-          }
           this.company = company;
           this.form = this.companyForm.create(this.company);
           this.form.valueChanges
