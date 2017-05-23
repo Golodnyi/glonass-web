@@ -30,8 +30,11 @@ export class SubdivisionUpdateComponent {
     this.route.params.subscribe(params => {
       const company_id: number = +params['company'];
       const subdivision_id: number = +params['subdivision'];
-      this.subdivisionsService.get(company_id, subdivision_id).subscribe(
+      this.subdivisionsService.get(company_id, subdivision_id, true).subscribe(
         subdivision => {
+          if (subdivision === null) {
+            return;
+          }
           this.subdivision = subdivision;
           this.form = this.subdivisionUpdateForm.create(this.subdivision);
           this.form.valueChanges.subscribe((data) => {
@@ -45,6 +48,9 @@ export class SubdivisionUpdateComponent {
     });
     this.companiesService.all(false).subscribe(
       companies => {
+        if (companies === null) {
+          return;
+        }
         this.companies = companies;
       },
       error => {

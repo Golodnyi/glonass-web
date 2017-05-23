@@ -27,11 +27,11 @@ export class NavigationComponent implements OnInit {
               private enginesService: EnginesService,
               private router: Router,
               private tree: TreePipe) {
-  }
-
-  ngOnInit() {
     this.companiesService.all(true).subscribe(
       companies => {
+        if (companies === null) {
+          return;
+        }
         this.companies = companies;
       },
       error => {
@@ -40,11 +40,17 @@ export class NavigationComponent implements OnInit {
     );
   }
 
+  ngOnInit() {
+  }
+
   public onNodeExpand(event: any) {
     const obj = event.node.data;
     if (obj instanceof Company) {
-      this.subdivisionsService.all(obj.id).subscribe(
+      this.subdivisionsService.all(obj.id, true).subscribe(
         subdivision => {
+          if (subdivision === null) {
+            return;
+          }
           event.node.children = this.tree.transform(subdivision, false, true);
         },
         error => {

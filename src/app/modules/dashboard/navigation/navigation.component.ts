@@ -31,6 +31,9 @@ export class NavigationComponent implements OnInit {
   ngOnInit() {
     this.companiesService.all(true).subscribe(
       companies => {
+        if (companies === null) {
+          return;
+        }
         this.companies = companies;
       },
       error => {
@@ -42,8 +45,11 @@ export class NavigationComponent implements OnInit {
   public onNodeExpand(event: any) {
     const obj = event.node.data;
     if (obj instanceof Company) {
-      this.subdivisionsService.all(obj.id).subscribe(
+      this.subdivisionsService.all(obj.id, true).subscribe(
         subdivisions => {
+          if (subdivisions === null) {
+            return;
+          }
           event.node.children = this.tree.transform(subdivisions);
         },
         error => {

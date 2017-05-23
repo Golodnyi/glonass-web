@@ -20,7 +20,6 @@ export class SubdivisionCreateComponent {
 
   public subdivision: Subdivision = new Subdivision();
   public companies: Company[];
-  public matchCompanies: Company[];
   public form: FormGroup;
   public submit: boolean;
 
@@ -42,6 +41,9 @@ export class SubdivisionCreateComponent {
 
     this.companiesService.all(false).subscribe(
       companies => {
+        if (companies === null) {
+          return;
+        }
         this.companies = companies;
       },
       error => {
@@ -70,9 +72,5 @@ export class SubdivisionCreateComponent {
         this.msg.notice(MsgService.ERROR, 'Ошибка', error);
       }
     );
-  }
-
-  public onSelect(company: Company) {
-    this.subdivision.company = company;
   }
 }
