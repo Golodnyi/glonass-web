@@ -10,12 +10,13 @@ import { MsgService } from './msg';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Filter } from '../models/Filter';
 import { Subject } from 'rxjs/Subject';
+import { AutoRefresh } from '../models/AutoRefresh';
 
 @Injectable()
 export class ChartsService {
   private data: Subject<any> = new Subject();
   private filter: BehaviorSubject<Filter> = new BehaviorSubject(new Filter());
-  private autoRefresh: BehaviorSubject<any> = new BehaviorSubject({enabled: false, afterTime: Date.now() - 1000});
+  private autoRefresh: BehaviorSubject<any> = new BehaviorSubject(new AutoRefresh());
 
   constructor(private http: Http,
               private authService: AuthService,

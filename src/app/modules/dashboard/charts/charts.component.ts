@@ -6,6 +6,7 @@ import { Car } from '../../../models/Car';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { MsgService } from '../../../services/msg';
+import { AutoRefresh } from '../../../models/AutoRefresh';
 
 @Component({
   selector: 'app-charts',
@@ -86,7 +87,7 @@ export class ChartsComponent implements OnDestroy {
             this.filter = filter;
 
             if (filter && filter.enabled && !filter.last) {
-              this.chartsService.setAutoRefresh({enabled: false, afterTime: this.lastTime()});
+              this.chartsService.setAutoRefresh(new AutoRefresh());
             }
 
             this.chartsService.resync(car_id);
@@ -97,7 +98,10 @@ export class ChartsComponent implements OnDestroy {
   }
 
   public autoRefresh(event) {
-    this.chartsService.setAutoRefresh({enabled: event.checked, afterTime: this.lastTime()});
+    const autoRefresh = new AutoRefresh();
+    autoRefresh.enabled = event.checked;
+    autoRefresh.afterTime = this.lastTime();
+    this.chartsService.setAutoRefresh(autoRefresh);
   }
 
   private lastTime(): number {
