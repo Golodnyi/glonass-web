@@ -29,7 +29,7 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.companiesService.all().subscribe(
+    this.companiesService.all(true).subscribe(
       companies => {
         this.companies = companies;
       },

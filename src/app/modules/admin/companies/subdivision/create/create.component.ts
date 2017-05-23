@@ -55,7 +55,6 @@ export class SubdivisionCreateComponent {
     this.subdivisionsService.create(this.subdivision).subscribe(
       subdivision => {
         this.subdivision = subdivision;
-        this.companiesService.resync().subscribe();
         this.submit = false;
         this.msg.notice(MsgService.SUCCESS, 'Создано', 'Подразделение ' + subdivision.name + ' создано');
         this.router.navigate(
@@ -71,10 +70,6 @@ export class SubdivisionCreateComponent {
         this.msg.notice(MsgService.ERROR, 'Ошибка', error);
       }
     );
-  }
-
-  public search(event: any) {
-    this.matchCompanies = this.companiesService.findByName(event.query, this.companies);
   }
 
   public onSelect(company: Company) {

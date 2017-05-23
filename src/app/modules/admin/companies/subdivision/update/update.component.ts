@@ -57,7 +57,6 @@ export class SubdivisionUpdateComponent {
     this.subdivisionsService.update(this.subdivision).subscribe(
       subdivision => {
         this.subdivision = subdivision;
-        this.companiesService.resync().subscribe();
         this.submit = false;
         this.msg.notice(MsgService.SUCCESS, 'Сохранено', 'Подразделение успешно изменено');
       },
@@ -72,7 +71,6 @@ export class SubdivisionUpdateComponent {
     if (confirm('Вы действительно хотите удалить подразделение?')) {
       this.subdivisionsService.delete(this.subdivision).subscribe(
         () => {
-          this.companiesService.resync().subscribe();
         },
         error => {
           this.msg.notice(MsgService.ERROR, 'Ошибка', error);

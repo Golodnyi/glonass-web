@@ -49,7 +49,6 @@ export class CompanyCreateComponent {
     this.companiesService.create(this.company).subscribe(
       company => {
         this.company = company;
-        this.companiesService.resync().subscribe();
         this.msg.notice(MsgService.SUCCESS, 'Сохранено', 'Компания ' + this.company.name + ' создана');
         this.router.navigate(['/admin/companies/company', this.company.id]);
       },

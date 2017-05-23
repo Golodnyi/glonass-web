@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from '../../../../../models/Company';
 import { CompaniesService } from '../../../../../services/companies.service';
 import { MsgService } from '../../../../../services/msg';
@@ -25,11 +25,15 @@ export class CompanyUpdateComponent {
   constructor(private route: ActivatedRoute,
               private companiesService: CompaniesService,
               private msg: MsgService,
-              private companyForm: CompanyForm) {
+              private companyForm: CompanyForm,
+              private router: Router) {
     this.route.params.subscribe(params => {
       const company_id = +params['company'];
-      this.companiesService.get(company_id).subscribe(
+      this.companiesService.get(company_id, true).subscribe(
         company => {
+          if (company === null) {
+            return;
+          }
           this.company = company;
           this.form = this.companyForm.create(this.company);
           this.form.valueChanges
@@ -51,7 +55,6 @@ export class CompanyUpdateComponent {
     this.companiesService.update(this.company).subscribe(
       company => {
         this.company = company;
-        this.companiesService.resync().subscribe();
         this.submit = false;
         this.msg.notice(MsgService.SUCCESS, 'Сохранено', 'Компания успешно изменена.');
       },
@@ -66,7 +69,7 @@ export class CompanyUpdateComponent {
     if (confirm('Вы действительно хотите удалить компанию?')) {
       this.companiesService.delete(this.company).subscribe(
         () => {
-          this.companiesService.resync().subscribe();
+          this.router.navigate(['/admin/companies']);
         },
         error => {
           this.msg.notice(MsgService.ERROR, 'Ошибка', error);
