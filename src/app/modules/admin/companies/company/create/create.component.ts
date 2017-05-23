@@ -46,7 +46,7 @@ export class CompanyCreateComponent {
 
   public onSubmit() {
     this.submit = true;
-    this.companiesService.create(this.company).subscribe(
+    this.companiesService.create(this.company).take(1).subscribe(
       company => {
         this.company = company;
         this.msg.notice(MsgService.SUCCESS, 'Сохранено', 'Компания ' + this.company.name + ' создана');

@@ -60,7 +60,7 @@ export class SubdivisionUpdateComponent {
   }
 
   public onSubmit() {
-    this.subdivisionsService.update(this.subdivision).subscribe(
+    this.subdivisionsService.update(this.subdivision).take(1).subscribe(
       subdivision => {
         this.subdivision = subdivision;
         this.submit = false;
@@ -75,7 +75,7 @@ export class SubdivisionUpdateComponent {
 
   public delete() {
     if (confirm('Вы действительно хотите удалить подразделение?')) {
-      this.subdivisionsService.delete(this.subdivision).subscribe(
+      this.subdivisionsService.delete(this.subdivision).take(1).subscribe(
         () => {
         },
         error => {

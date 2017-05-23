@@ -52,7 +52,7 @@ export class CompanyUpdateComponent {
 
   public onSubmit() {
     this.submit = true;
-    this.companiesService.update(this.company).subscribe(
+    this.companiesService.update(this.company).take(1).subscribe(
       company => {
         this.company = company;
         this.submit = false;
@@ -67,7 +67,7 @@ export class CompanyUpdateComponent {
 
   public delete() {
     if (confirm('Вы действительно хотите удалить компанию?')) {
-      this.companiesService.delete(this.company).subscribe(
+      this.companiesService.delete(this.company).take(1).subscribe(
         () => {
           this.router.navigate(['/admin/companies']);
         },

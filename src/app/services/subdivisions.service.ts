@@ -30,6 +30,7 @@ export class SubdivisionsService {
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
       this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions', options)
+        .take(1)
         .subscribe((response: Response) => {
           const subdivisions: Subdivision[] = response.json();
           const subdivisionsObj: Subdivision[] = [];
@@ -79,6 +80,7 @@ export class SubdivisionsService {
 
       this.http.get(
         env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision, options)
+        .take(1)
         .subscribe((response: Response) => {
           const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());
           this.subdivision.next(subdivisionObj);

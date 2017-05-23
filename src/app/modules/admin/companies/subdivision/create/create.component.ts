@@ -54,7 +54,7 @@ export class SubdivisionCreateComponent {
 
   public onSubmit() {
     this.submit = true;
-    this.subdivisionsService.create(this.subdivision).subscribe(
+    this.subdivisionsService.create(this.subdivision).take(1).subscribe(
       subdivision => {
         this.subdivision = subdivision;
         this.submit = false;
