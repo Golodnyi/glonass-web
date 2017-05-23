@@ -10,9 +10,11 @@ import { Router } from '@angular/router';
 import { Error } from '../models/Error';
 import { MsgService } from './msg';
 import { Engine } from '../models/Engine';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class EnginesService {
+  private engine: BehaviorSubject<Engine> = new BehaviorSubject(new Engine());
 
   constructor(private http: Http,
               private authService: AuthService,
@@ -20,19 +22,23 @@ export class EnginesService {
               private msgService: MsgService) {
   }
 
-  public get(company: number, subdivision: number, car: number): Observable<Engine> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
+  public get(company: number, subdivision: number, car: number, resync = false): Observable<Engine> {
+    if (resync) {
+      const headers = new Headers();
+      headers.append('Content-Type', 'application/x-www-form-urlencoded');
+      const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine', options)
-      .map((response: Response) => {
-        const engine: Engine = Object.assign(new Engine(), response.json());
-        return engine;
-      })
-      .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
-        return Observable.throw(error.json().message || 'Server error');
-      });
+      this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine', options)
+        .take(1)
+        .subscribe((response: Response) => {
+          const engineObj: Engine = Object.assign(new Engine(), response.json());
+          this.engine.next(engineObj);
+          return this.engine.asObservable();
+        }, error => {
+          Error.check(error, this.authService, this.router, this.msgService);
+          return Observable.throw(error.json().message || 'Server error');
+        });
+    }
+    return this.engine.asObservable();
   }
 }

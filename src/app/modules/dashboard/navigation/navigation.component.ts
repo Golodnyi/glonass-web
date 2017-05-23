@@ -52,7 +52,7 @@ export class NavigationComponent implements OnInit {
       );
     } else if (obj instanceof Subdivision) {
       const parentObj = [event.node.parent.data];
-      this.carsService.all(parentObj[0].id, obj.id, true).subscribe(
+      this.carsService.all(parentObj[0].id, obj.id, true, true).subscribe(
         cars => {
           event.node.children = this.tree.transform(cars, true, true);
         },

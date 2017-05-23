@@ -30,7 +30,7 @@ export class ChartsComponent implements OnDestroy {
         this.options = [];
         this.chartsService.setAutoRefresh(new AutoRefresh());
         const car_id = +params['car'];
-        this.carsService.get(car_id).subscribe(
+        this.carsService.get(car_id, true).subscribe(
           car => {
             this.car = car;
           }
