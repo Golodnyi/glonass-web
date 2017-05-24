@@ -30,7 +30,6 @@ export class SubdivisionsService {
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
       this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions', options)
-        .take(1)
         .subscribe((response: Response) => {
           const subdivisions: Subdivision[] = response.json();
           const subdivisionsObj: Subdivision[] = [];
@@ -41,7 +40,7 @@ export class SubdivisionsService {
           return this.subdivisions.asObservable();
         }, error => {
           Error.check(error, this.authService, this.router, this.msgService);
-          return Observable.throw(error.json().message || 'Server error');
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
         });
     }
     return this.subdivisions.asObservable();
@@ -86,7 +85,7 @@ export class SubdivisionsService {
           return this.subdivision.asObservable();
         }, error => {
           Error.check(error, this.authService, this.router, this.msgService);
-          return Observable.throw(error.json().message || 'Server error');
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
         });
     }
     return this.subdivision.asObservable();

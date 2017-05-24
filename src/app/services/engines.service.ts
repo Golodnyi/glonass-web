@@ -35,7 +35,7 @@ export class EnginesService {
           return this.engine.asObservable();
         }, error => {
           Error.check(error, this.authService, this.router, this.msgService);
-          return Observable.throw(error.json().message || 'Server error');
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
         });
     }
     return this.engine.asObservable();

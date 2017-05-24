@@ -33,7 +33,6 @@ export class CarsService {
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
       this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars', options)
-        .take(1)
         .subscribe((response: Response) => {
           // TODO: костыль, переписать
           const carsObj: Car[] = [];
@@ -56,7 +55,7 @@ export class CarsService {
           return carsObj;
         }, error => {
           Error.check(error, this.authService, this.router, this.msgService);
-          return Observable.throw(error.json().message || 'Server error');
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
         });
     }
     return this.cars.asObservable();
@@ -75,7 +74,7 @@ export class CarsService {
           return this.car.asObservable();
         }, error => {
           Error.check(error, this.authService, this.router, this.msgService);
-          return Observable.throw(error.json().message || 'Server error');
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
         });
     }
     return this.car.asObservable();

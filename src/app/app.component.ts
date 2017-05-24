@@ -21,6 +21,7 @@ export class AppComponent {
 
     this.msgService.getNotice().subscribe(
       notice => {
+        this.growl = [];
         this.growl.push(notice);
       }
     );

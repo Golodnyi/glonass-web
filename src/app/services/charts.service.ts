@@ -11,6 +11,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Filter } from '../models/Filter';
 import { Subject } from 'rxjs/Subject';
 import { AutoRefresh } from '../models/AutoRefresh';
+import { Error } from '../models/Error';
 
 @Injectable()
 export class ChartsService {
@@ -63,6 +64,7 @@ export class ChartsService {
       .subscribe((response: Response) => {
         this.data.next(response.json());
       }, error => {
+        Error.check(error, this.authService, this.router, this.msgService);
         this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
       });
   }

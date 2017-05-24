@@ -19,7 +19,7 @@ export class CompaniesService {
   constructor(private http: Http,
               private authService: AuthService,
               private router: Router,
-              private msg: MsgService) {
+              private msgService: MsgService) {
   }
 
   public all(resync = false): Observable<Company[]> {
@@ -39,8 +39,8 @@ export class CompaniesService {
             return this.companies.asObservable();
           },
           error => {
-            Error.check(error, this.authService, this.router, this.msg);
-            return Observable.throw(error.json().message || 'Server error');
+            Error.check(error, this.authService, this.router, this.msgService);
+            this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
           });
     }
     return this.companies.asObservable();
@@ -58,8 +58,8 @@ export class CompaniesService {
           this.company.next(companyObj);
           return this.company.asObservable();
         }, error => {
-          Error.check(error, this.authService, this.router, this.msg);
-          return Observable.throw(error.json().message || 'Server error');
+          Error.check(error, this.authService, this.router, this.msgService);
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
         });
     }
     return this.company.asObservable();
@@ -87,7 +87,7 @@ export class CompaniesService {
         return companyObj;
       })
       .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msg);
+        Error.check(error, this.authService, this.router, this.msgService);
         return Observable.throw(error.json().message || 'Server error');
       });
   }
@@ -112,7 +112,7 @@ export class CompaniesService {
         return companyObj;
       })
       .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msg);
+        Error.check(error, this.authService, this.router, this.msgService);
         return Observable.throw(error.json().message || 'Server error');
       });
   }
@@ -123,7 +123,7 @@ export class CompaniesService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
     return this.http.delete(env.backend + '/v1/companies/' + company.id, options)
       .map((response: Response) => {
-        this.msg.notice(MsgService.SUCCESS, 'Удалена', response.json().message);
+        this.msgService.notice(MsgService.SUCCESS, 'Удалена', response.json().message);
         const list = [];
         this.companies.getValue().forEach(c => {
           if (company.id !== c.id) {
@@ -134,7 +134,7 @@ export class CompaniesService {
         return true;
       })
       .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msg);
+        Error.check(error, this.authService, this.router, this.msgService);
         return Observable.throw(error.json().message || 'Server error');
       });
   }
