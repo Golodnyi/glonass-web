@@ -5,7 +5,6 @@ import { CarsService } from '../../../services/cars.service';
 import { Car } from '../../../models/Car';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { MsgService } from '../../../services/msg';
 import { AutoRefresh } from '../../../models/AutoRefresh';
 
 @Component({
@@ -17,83 +16,94 @@ export class ChartsComponent implements OnDestroy {
 
   public car: Car;
   public options: any = [];
-  private subscription: Subscription;
+  private subscription: Subscription = new Subscription();
+  private subscriptionTimer: Subscription[] = [];
   private timer = Observable.timer(0, 5000);
   public aRefresh: boolean;
   public filter;
 
   constructor(private route: ActivatedRoute,
               private chartsService: ChartsService,
-              private carsService: CarsService,
-              private msgService: MsgService) {
+              private carsService: CarsService) {
     this.route.params.subscribe(params => {
         this.options = [];
         this.chartsService.setAutoRefresh(new AutoRefresh());
         const car_id = +params['car'];
-        this.carsService.get(car_id, true).subscribe(
-          car => {
-            this.car = car;
-          }
+        this.subscription.add(
+          this.carsService.get(car_id, true).subscribe(
+            car => {
+              this.car = car;
+            }
+          )
         );
-        this.chartsService.getAutoRefresh().subscribe(
-          autoRefresh => {
-            this.aRefresh = autoRefresh.enabled;
+        this.subscription.add(
+          this.chartsService.getAutoRefresh().subscribe(
+            autoRefresh => {
+              this.aRefresh = autoRefresh.enabled;
 
-            if (this.subscription) {
-              this.subscription.unsubscribe();
-            }
+              this.subscriptionTimer.forEach(s => {
+                s.unsubscribe();
+              });
 
-            if (this.aRefresh) {
-              this.subscription = this.timer.subscribe(
-                () => {
-                  this.chartsService.resync(this.car.id);
-                }
-              );
+              if (this.aRefresh) {
+                this.subscriptionTimer.push(
+                  this.timer.subscribe(
+                    () => {
+                      this.chartsService.resync(this.car.id);
+                    }
+                  )
+                );
+                console.log(this.subscriptionTimer);
+              }
             }
-          }
+          )
         );
         this.chartsService.resync(car_id);
         /**
          * TODO: костыль, переписать.
          */
-        this.chartsService.get().subscribe(
-          data => {
-            data.forEach(item => {
-              let exist = false;
-              this.options.forEach(options => {
-                if (options.id === item.id) {
-                  options.data = item.data;
-                  exist = true;
-                }
-              });
-              if (!exist) {
-                this.options.push(item);
-              }
-            });
-            this.options.forEach((option, index) => {
-              let exist = false;
+        this.subscription.add(
+          this.chartsService.get().subscribe(
+            data => {
               data.forEach(item => {
-                if (option.id === item.id) {
-                  exist = true;
+                let exist = false;
+                this.options.forEach(options => {
+                  if (options.id === item.id) {
+                    options.data = item.data;
+                    exist = true;
+                  }
+                });
+                if (!exist) {
+                  this.options.push(item);
                 }
               });
-              if (!exist) {
-                delete this.options[index];
-              }
-            });
-          }
+              this.options.forEach((option, index) => {
+                let exist = false;
+                data.forEach(item => {
+                  if (option.id === item.id) {
+                    exist = true;
+                  }
+                });
+                if (!exist) {
+                  delete this.options[index];
+                }
+              });
+            }
+          )
         );
         // end
-        this.chartsService.getFilter().subscribe(
-          (filter) => {
-            this.filter = filter;
+        this.subscription.add(
+          this.chartsService.getFilter().subscribe(
+            (filter) => {
+              this.filter = filter;
 
-            if (filter && filter.enabled && !filter.last) {
-              this.chartsService.setAutoRefresh(new AutoRefresh());
+              if (filter && filter.enabled && !filter.last) {
+                this.chartsService.setAutoRefresh(new AutoRefresh());
+              }
+
+              this.chartsService.resync(car_id);
             }
-
-            this.chartsService.resync(car_id);
-          }
+          )
         );
       }
     );
@@ -119,8 +129,9 @@ export class ChartsComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.subscription.unsubscribe();
+    this.subscriptionTimer.forEach(s => {
+      s.unsubscribe();
+    });
   }
 }
