@@ -29,7 +29,6 @@ export class EnginesService {
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
       this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine', options)
-        .take(1)
         .subscribe((response: Response) => {
           const engineObj: Engine = Object.assign(new Engine(), response.json());
           this.engine.next(engineObj);

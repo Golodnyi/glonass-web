@@ -22,7 +22,6 @@ export class NavigationComponent implements OnInit {
   constructor(private companiesService: CompaniesService,
               private subdivisionsService: SubdivisionsService,
               private carsService: CarsService,
-              private enginesService: EnginesService,
               private msgService: MsgService,
               private router: Router,
               private tree: TreePipe) {

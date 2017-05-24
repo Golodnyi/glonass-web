@@ -5,7 +5,7 @@ import { isUndefined } from 'util';
 
 @Pipe({name: 'tree'})
 export class TreePipe implements PipeTransform {
-  transform(data: ITree[], leaf?: boolean, selectable?: boolean): TreeNode[] {
+  transform(data: ITree[], leaf = false, selectable = false, expanded = false): TreeNode[] {
     const items: TreeNode[] = [];
     if (isUndefined(data)) {
       return items;
@@ -14,11 +14,12 @@ export class TreePipe implements PipeTransform {
     data.forEach(function (item) {
       items.push(
         {
-          'data': item,
-          'expandedIcon': 'fa-folder-open',
-          'collapsedIcon': 'fa-folder',
-          'leaf': leaf || false,
-          'selectable': selectable || false,
+          data: item,
+          expandedIcon: 'fa-folder-open',
+          expanded: expanded,
+          collapsedIcon: 'fa-folder',
+          leaf: leaf || false,
+          selectable: selectable || false,
         }
       );
     });

@@ -69,7 +69,6 @@ export class CarsService {
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
       this.http.get(env.backend + '/v1/cars/' + car, options)
-        .take(1)
         .subscribe((response: Response) => {
           const carObj: Car = Object.assign(new Car(), response.json());
           this.car.next(carObj);

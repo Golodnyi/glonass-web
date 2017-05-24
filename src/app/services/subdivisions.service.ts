@@ -80,7 +80,6 @@ export class SubdivisionsService {
 
       this.http.get(
         env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision, options)
-        .take(1)
         .subscribe((response: Response) => {
           const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());
           this.subdivision.next(subdivisionObj);

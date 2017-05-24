@@ -29,7 +29,6 @@ export class CompaniesService {
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
       this.http.get(env.backend + '/v1/companies', options)
-        .take(1)
         .subscribe((response: Response) => {
             const companies: Company[] = response.json();
             const companiesObj: Company[] = [];
@@ -54,7 +53,6 @@ export class CompaniesService {
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
       this.http.get(env.backend + '/v1/companies/' + company, options)
-        .take(1)
         .subscribe((response: Response) => {
           const companyObj: Company = Object.assign(new Company(), response.json());
           this.company.next(companyObj);
