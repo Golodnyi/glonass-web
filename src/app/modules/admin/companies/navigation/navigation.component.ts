@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CompaniesService } from '../../../../services/companies.service';
 import { SubdivisionsService } from '../../../../services/subdivisions.service';
 import { CarsService } from '../../../../services/cars.service';
@@ -10,15 +10,20 @@ import { Company } from '../../../../models/Company';
 import { Subdivision } from '../../../../models/Subdivision';
 import { Car } from '../../../../models/Car';
 import { Engine } from '../../../../models/Engine';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent implements OnDestroy {
 
   public companies: Company[];
+  private cs: Subscription;
+  private ss: Subscription;
+  private cas: Subscription;
+  private es: Subscription;
 
   constructor(private companiesService: CompaniesService,
               private subdivisionsService: SubdivisionsService,
@@ -27,7 +32,7 @@ export class NavigationComponent implements OnInit {
               private enginesService: EnginesService,
               private router: Router,
               private tree: TreePipe) {
-    this.companiesService.all(true).subscribe(
+    this.cs = this.companiesService.all(true).subscribe(
       companies => {
         this.companies = companies;
       },
@@ -37,13 +42,28 @@ export class NavigationComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
+  ngOnDestroy() {
+    if (this.cs) {
+      this.cs.unsubscribe();
+    }
+    if (this.ss) {
+      this.ss.unsubscribe();
+    }
+    if (this.cas) {
+      this.cas.unsubscribe();
+    }
+    if (this.es) {
+      this.es.unsubscribe();
+    }
   }
 
   public onNodeExpand(event: any) {
     const obj = event.node.data;
     if (obj instanceof Company) {
-      this.subdivisionsService.all(obj.id, true).subscribe(
+      if (this.ss) {
+        this.ss.unsubscribe();
+      }
+      this.ss = this.subdivisionsService.all(obj.id, true).subscribe(
         subdivision => {
           event.node.children = this.tree.transform(subdivision, false, true);
         },
@@ -53,7 +73,10 @@ export class NavigationComponent implements OnInit {
       );
     } else if (obj instanceof Subdivision) {
       const parentObj = [event.node.parent.data];
-      this.carsService.all(parentObj[0].id, obj.id, false, true).subscribe(
+      if (this.cas) {
+        this.cas.unsubscribe();
+      }
+      this.cas = this.carsService.all(parentObj[0].id, obj.id, false, true).subscribe(
         cars => {
           event.node.children = this.tree.transform(cars, false, true);
         },
@@ -65,7 +88,10 @@ export class NavigationComponent implements OnInit {
       const parentObj = [];
       parentObj.push(event.node.parent.data);
       parentObj.push(event.node.parent.parent.data);
-      this.enginesService.get(parentObj[1].id, parentObj[0].id, obj.id, true).subscribe(
+      if (this.es) {
+        this.es.unsubscribe();
+      }
+      this.es = this.enginesService.get(parentObj[1].id, parentObj[0].id, obj.id, true).subscribe(
         engine => {
           if (engine.id) {
             event.node.children = this.tree.transform([engine], true, true);
