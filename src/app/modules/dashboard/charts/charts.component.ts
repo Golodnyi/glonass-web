@@ -17,7 +17,7 @@ export class ChartsComponent implements OnDestroy {
   public car: Car;
   public options: any = [];
   private subscription: Subscription = new Subscription();
-  private subscriptionTimer: Subscription[] = [];
+  private subscriptionTimer: Subscription;
   private timer = Observable.timer(0, 5000);
   public aRefresh: boolean;
   public filter;
@@ -41,18 +41,17 @@ export class ChartsComponent implements OnDestroy {
             autoRefresh => {
               this.aRefresh = autoRefresh.enabled;
 
-              this.subscriptionTimer.forEach(s => {
-                s.unsubscribe();
-              });
+              if (this.subscriptionTimer) {
+                this.subscriptionTimer.unsubscribe();
+              }
 
               if (this.aRefresh) {
-                this.subscriptionTimer.push(
+                this.subscriptionTimer =
                   this.timer.subscribe(
                     () => {
                       this.chartsService.resync(this.car.id);
                     }
-                  )
-                );
+                  );
                 console.log(this.subscriptionTimer);
               }
             }
@@ -130,8 +129,8 @@ export class ChartsComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-    this.subscriptionTimer.forEach(s => {
-      s.unsubscribe();
-    });
+    if (this.subscriptionTimer) {
+      this.subscriptionTimer.unsubscribe();
+    }
   }
 }
