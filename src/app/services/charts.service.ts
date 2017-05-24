@@ -49,14 +49,14 @@ export class ChartsService {
     let params = '?';
     if (filter.enabled) {
       filter.charts.forEach(function (sensor) {
-        params += '&sensors[]=' + sensor + '&';
+        params += 'sensors[]=' + sensor + '&';
       });
 
       if (!filter.last) {
         params += 'dateFrom=' + filter.before + '&dateTo=' + filter.after + '&';
       }
     }
-    if (autoRefresh.enabled && ((!filter.last && filter.enabled) || !filter.enabled)) {
+    if (autoRefresh.enabled && ((filter.last && filter.enabled) || !filter.enabled)) {
       params += 'afterTime=' + autoRefresh.afterTime;
     }
     this.http.get(env.backend + '/v1/cars/' + car + '/report' + params, options)

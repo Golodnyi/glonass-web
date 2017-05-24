@@ -52,7 +52,6 @@ export class ChartsComponent implements OnDestroy {
                       this.chartsService.resync(this.car.id);
                     }
                   );
-                console.log(this.subscriptionTimer);
               }
             }
           )
