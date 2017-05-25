@@ -3,7 +3,7 @@
         <div *ngIf="car">Данные по {{car.name}}</div>
     </div>
     <div class="col-md-6">
-        Автообновление данных:&nbsp;<p-inputSwitch [disabled]="filter && filter.enabled && !filter.last" [(ngModel)]="autoRefresh.enabled" (onChange)="autoRefreshChange($event)" onLabel="да"
+        Автообновление данных:&nbsp;<p-inputSwitch [disabled]="filter.enabled && !filter.last" [(ngModel)]="autoRefresh.enabled" (onChange)="autoRefreshChange($event)" onLabel="да"
                                                    offLabel="нет"></p-inputSwitch>
     </div>
 </div>

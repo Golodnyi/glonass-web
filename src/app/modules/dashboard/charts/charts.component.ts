@@ -6,6 +6,7 @@ import { Car } from '../../../models/Car';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { AutoRefresh } from '../../../models/AutoRefresh';
+import { Filter } from '../../../models/Filter';
 
 @Component({
   selector: 'app-charts',
@@ -18,16 +19,17 @@ export class ChartsComponent implements OnDestroy {
   public options: any = [];
   private subscription: Subscription = new Subscription();
   private subscriptionTimer: Subscription;
+  private subscriptionFilter: Subscription;
+  private subscriptionAutoRefresh: Subscription;
   private timer = Observable.timer(0, 5000);
   public autoRefresh = new AutoRefresh();
-  public filter;
+  public filter = new Filter();
 
   constructor(private route: ActivatedRoute,
               private chartsService: ChartsService,
               private carsService: CarsService) {
     this.route.params.subscribe(params => {
-        this.options = [];
-        this.chartsService.setAutoRefresh(this.autoRefresh);
+        this.options = []; // уничтожаем графики
         const car_id = +params['car'];
         this.subscription.add(
           this.carsService.get(car_id, true).subscribe(
@@ -37,10 +39,10 @@ export class ChartsComponent implements OnDestroy {
           )
         );
 
-        this.chartsService.resync(car_id);
+        this.chartsService.resync(car_id); // запрос первых данных
 
         /**
-         * TODO: костыль, переписать.
+         * подписка на изменение данных
          */
         this.subscription.add(
           this.chartsService.get().subscribe(
@@ -49,26 +51,12 @@ export class ChartsComponent implements OnDestroy {
                 let exist = false;
                 this.options.forEach(options => {
                   if (options.id === item.id) {
-                    options.data = item.data.concat(options.data);
-                    options.data.sort((a, b) => {
-                      return a[0] < b[0] ? 1 : -1;
-                    });
+                    options.data = item.data;
                     exist = true;
                   }
                 });
                 if (!exist) {
                   this.options.push(item);
-                }
-              });
-              this.options.forEach((option, index) => {
-                let exist = false;
-                data.forEach(item => {
-                  if (option.id === item.id) {
-                    exist = true;
-                  }
-                });
-                if (!exist) {
-                  delete this.options[index];
                 }
               });
               this.autoRefresh.afterTime = this.lastTime();
@@ -77,22 +65,36 @@ export class ChartsComponent implements OnDestroy {
           )
         );
         // end
-        this.subscription.add(
-          this.chartsService.getFilter().subscribe(
-            (filter) => {
-              if (!filter.enabled) {
-                return false;
-              }
-              this.filter = filter;
 
-              if (filter && filter.enabled && !filter.last) {
-                this.autoRefresh.enabled = false;
-                this.chartsService.setAutoRefresh(this.autoRefresh);
-              }
-
-              this.chartsService.resync(car_id);
+        /**
+         * Подписка на фильтр
+         */
+        if (this.subscriptionFilter) {
+          this.subscriptionFilter.unsubscribe();
+        }
+        this.subscriptionFilter = this.chartsService.getFilter().subscribe(
+          (filter) => {
+            if (!filter.enabled) {
+              return false;
             }
-          )
+            this.filter = filter;
+
+            this.autoRefresh.enabled = false;
+            this.chartsService.setAutoRefresh(this.autoRefresh);
+            this.options = [];
+            this.chartsService.resync(car_id);
+          }
+        );
+
+        if (this.subscriptionAutoRefresh) {
+          this.subscriptionAutoRefresh.unsubscribe();
+        }
+        this.subscriptionAutoRefresh = this.chartsService.getAutoRefresh().subscribe(
+          autoRefresh => {
+            if (!autoRefresh.enabled && this.subscriptionTimer) {
+              this.subscriptionTimer.unsubscribe();
+            }
+          }
         );
       }
     );
@@ -124,13 +126,19 @@ export class ChartsComponent implements OnDestroy {
       }
     }
 
-    return Date.now() - 1000;
+    return this.autoRefresh.afterTime;
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
     if (this.subscriptionTimer) {
       this.subscriptionTimer.unsubscribe();
+    }
+    if (this.subscriptionFilter) {
+      this.subscriptionFilter.unsubscribe();
+    }
+    if (this.subscriptionAutoRefresh) {
+      this.subscriptionAutoRefresh.unsubscribe();
     }
   }
 }
