@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChartsService } from '../../../services/charts.service';
 import { CarsService } from '../../../services/cars.service';
 import { Car } from '../../../models/Car';
@@ -23,11 +23,12 @@ export class ChartsComponent implements OnDestroy {
   private subscriptionAutoRefresh: Subscription;
   private timer = Observable.timer(0, 5000);
   public autoRefresh = new AutoRefresh();
-  public filter = new Filter();
+  public filter: Filter;
 
   constructor(private route: ActivatedRoute,
               private chartsService: ChartsService,
-              private carsService: CarsService) {
+              private carsService: CarsService,
+              private router: Router) {
     this.route.params.subscribe(params => {
         this.options = []; // уничтожаем графики
         const car_id = +params['car'];
@@ -38,7 +39,15 @@ export class ChartsComponent implements OnDestroy {
             }
           )
         );
-
+        this.route.queryParams.subscribe(filter => {
+          console.log(Object.keys(filter).length);
+          if (Object.keys(filter).length) {
+            this.filter = new Filter(filter);
+            this.chartsService.setFilter(this.filter);
+          } else {
+            this.filter = new Filter();
+          }
+        });
         this.chartsService.resync(car_id); // запрос первых данных
 
         /**
@@ -83,6 +92,7 @@ export class ChartsComponent implements OnDestroy {
             this.chartsService.setAutoRefresh(this.autoRefresh);
             this.options = [];
             this.chartsService.resync(car_id);
+            this.router.navigate([], {queryParams: filter});
           }
         );
 

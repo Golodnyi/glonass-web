@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FilterForm } from '../../../forms/filter.form';
-import { Filter } from '../../../models/Filter';
 import { FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { Calendar } from '../../../models/Calendar';
@@ -13,15 +12,19 @@ import { Car } from '../../../models/Car';
   styleUrls: ['./filter.component.css'],
   providers: [FilterForm]
 })
-export class FilterComponent {
+export class FilterComponent implements OnInit {
   @Input() data: any = false;
   @Input() car: Car;
-  public filter: Filter = new Filter();
+  @Input() filter: any;
   public ru = new Calendar();
   public form: FormGroup = null;
 
   constructor(private filterForm: FilterForm,
               private chartsService: ChartsService) {
+
+  }
+
+  ngOnInit() {
     this.form = this.filterForm.create(this.filter);
     this.form.valueChanges
       .map((value) => {
