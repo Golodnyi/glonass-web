@@ -40,7 +40,6 @@ export class ChartsComponent implements OnDestroy {
           )
         );
         this.route.queryParams.subscribe(filter => {
-          console.log(Object.keys(filter).length);
           if (Object.keys(filter).length) {
             this.filter = new Filter(filter);
             this.chartsService.setFilter(this.filter);
@@ -83,16 +82,22 @@ export class ChartsComponent implements OnDestroy {
         }
         this.subscriptionFilter = this.chartsService.getFilter().subscribe(
           (filter) => {
-            if (!filter.enabled) {
-              return false;
-            }
             this.filter = filter;
+            let qparams;
+            if (filter.enabled) {
+              if (filter.charts && !Array.isArray(filter.charts)) {
+                filter.charts = [filter.charts];
+              }
+              qparams = filter;
+            } else {
+              qparams = {};
+            }
 
+            this.options = [];
             this.autoRefresh.enabled = false;
             this.chartsService.setAutoRefresh(this.autoRefresh);
-            this.options = [];
             this.chartsService.resync(car_id);
-            this.router.navigate([], {queryParams: filter});
+            this.router.navigate([], {queryParams: qparams});
           }
         );
 

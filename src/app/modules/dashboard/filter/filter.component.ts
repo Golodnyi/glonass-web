@@ -18,6 +18,7 @@ export class FilterComponent implements OnInit {
   @Input() filter: any;
   public ru = new Calendar();
   public form: FormGroup = null;
+  public submit: boolean;
 
   constructor(private filterForm: FilterForm,
               private chartsService: ChartsService) {
@@ -25,12 +26,12 @@ export class FilterComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.data);
     this.form = this.filterForm.create(this.filter);
     this.form.valueChanges
       .map((value) => {
         value.before = moment(value.before).format('YYYY-MM-DD');
         value.after = moment(value.after).format('YYYY-MM-DD');
-        value.enabled = value.enabled ? true : false;
         return value;
       })
       .subscribe((data) => {
@@ -38,11 +39,20 @@ export class FilterComponent implements OnInit {
         this.filter.last = data.last;
         this.filter.before = data.before;
         this.filter.after = data.after;
-        this.filter.enabled = data.enabled;
-
-        if (this.filter.enabled) {
-          this.chartsService.setFilter(this.filter);
-        }
+        this.submit = false;
       });
+  }
+
+  public onSubmit() {
+    this.filter.enabled = true;
+    this.submit = true;
+    this.chartsService.setFilter(this.filter);
+  }
+
+  public onDisabled() {
+    this.filter.enabled = false;
+    this.submit = true;
+    this.chartsService.setFilter(this.filter);
+    return false;
   }
 }

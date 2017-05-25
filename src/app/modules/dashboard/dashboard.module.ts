@@ -21,6 +21,7 @@ import { ChartsService } from '../../services/charts.service';
 import { StateComponent } from './state/state.component';
 import { FilterComponent } from './filter/filter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SensorsService } from '../../services/sensors.service';
 
 @NgModule({
   imports: [
@@ -37,7 +38,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CheckboxModule
   ],
   declarations: [DashboardComponent, NavigationComponent, ChartsComponent, StateComponent, FilterComponent],
-  providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService]
+  providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService]
 })
 export class DashboardModule {
 }
