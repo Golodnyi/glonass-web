@@ -19,7 +19,7 @@ export class ChartsComponent implements OnDestroy {
   private subscription: Subscription = new Subscription();
   private subscriptionTimer: Subscription;
   private timer = Observable.timer(0, 5000);
-  public aRefresh: boolean;
+  public autoRefresh = new AutoRefresh();
   public filter;
 
   constructor(private route: ActivatedRoute,
@@ -27,7 +27,7 @@ export class ChartsComponent implements OnDestroy {
               private carsService: CarsService) {
     this.route.params.subscribe(params => {
         this.options = [];
-        this.chartsService.setAutoRefresh(new AutoRefresh());
+        this.chartsService.setAutoRefresh(this.autoRefresh);
         const car_id = +params['car'];
         this.subscription.add(
           this.carsService.get(car_id, true).subscribe(
@@ -39,13 +39,11 @@ export class ChartsComponent implements OnDestroy {
         this.subscription.add(
           this.chartsService.getAutoRefresh().subscribe(
             autoRefresh => {
-              this.aRefresh = autoRefresh.enabled;
-
               if (this.subscriptionTimer) {
                 this.subscriptionTimer.unsubscribe();
               }
 
-              if (this.aRefresh) {
+              if (autoRefresh.enabled) {
                 this.subscriptionTimer =
                   this.timer.subscribe(
                     () => {
@@ -56,7 +54,10 @@ export class ChartsComponent implements OnDestroy {
             }
           )
         );
-        this.chartsService.resync(car_id);
+
+        if (!this.autoRefresh.enabled) {
+          this.chartsService.resync(car_id);
+        }
         /**
          * TODO: костыль, переписать.
          */
@@ -86,6 +87,8 @@ export class ChartsComponent implements OnDestroy {
                   delete this.options[index];
                 }
               });
+              this.autoRefresh.afterTime = this.lastTime();
+              this.chartsService.setAutoRefresh(this.autoRefresh);
             }
           )
         );
@@ -96,7 +99,8 @@ export class ChartsComponent implements OnDestroy {
               this.filter = filter;
 
               if (filter && filter.enabled && !filter.last) {
-                this.chartsService.setAutoRefresh(new AutoRefresh());
+                this.autoRefresh.enabled = false;
+                this.chartsService.setAutoRefresh(this.autoRefresh);
               }
 
               this.chartsService.resync(car_id);
@@ -107,11 +111,10 @@ export class ChartsComponent implements OnDestroy {
     );
   }
 
-  public autoRefresh(event) {
-    const autoRefresh = new AutoRefresh();
-    autoRefresh.enabled = event.checked;
-    autoRefresh.afterTime = this.lastTime();
-    this.chartsService.setAutoRefresh(autoRefresh);
+  public autoRefreshChange(event) {
+    this.autoRefresh.enabled = event.checked;
+    this.autoRefresh.afterTime = this.lastTime();
+    this.chartsService.setAutoRefresh(this.autoRefresh);
   }
 
   private lastTime(): number {

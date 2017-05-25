@@ -17,7 +17,7 @@ import { Error } from '../models/Error';
 export class ChartsService {
   private data: Subject<any> = new Subject();
   private filter: BehaviorSubject<Filter> = new BehaviorSubject(new Filter());
-  private autoRefresh: BehaviorSubject<any> = new BehaviorSubject(new AutoRefresh());
+  private autoRefresh: BehaviorSubject<AutoRefresh> = new BehaviorSubject(new AutoRefresh());
 
   constructor(private http: Http,
               private authService: AuthService,
