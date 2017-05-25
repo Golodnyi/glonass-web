@@ -36,28 +36,9 @@ export class ChartsComponent implements OnDestroy {
             }
           )
         );
-        this.subscription.add(
-          this.chartsService.getAutoRefresh().subscribe(
-            autoRefresh => {
-              if (this.subscriptionTimer) {
-                this.subscriptionTimer.unsubscribe();
-              }
 
-              if (autoRefresh.enabled) {
-                this.subscriptionTimer =
-                  this.timer.subscribe(
-                    () => {
-                      this.chartsService.resync(this.car.id);
-                    }
-                  );
-              }
-            }
-          )
-        );
+        this.chartsService.resync(car_id);
 
-        if (!this.autoRefresh.enabled) {
-          this.chartsService.resync(car_id);
-        }
         /**
          * TODO: костыль, переписать.
          */
@@ -68,7 +49,10 @@ export class ChartsComponent implements OnDestroy {
                 let exist = false;
                 this.options.forEach(options => {
                   if (options.id === item.id) {
-                    options.data = item.data;
+                    options.data = item.data.concat(options.data);
+                    options.data.sort((a, b) => {
+                      return a[0] < b[0] ? 1 : -1;
+                    });
                     exist = true;
                   }
                 });
@@ -96,6 +80,9 @@ export class ChartsComponent implements OnDestroy {
         this.subscription.add(
           this.chartsService.getFilter().subscribe(
             (filter) => {
+              if (!filter.enabled) {
+                return false;
+              }
               this.filter = filter;
 
               if (filter && filter.enabled && !filter.last) {
@@ -114,6 +101,17 @@ export class ChartsComponent implements OnDestroy {
   public autoRefreshChange(event) {
     this.autoRefresh.enabled = event.checked;
     this.autoRefresh.afterTime = this.lastTime();
+    if (this.subscriptionTimer) {
+      this.subscriptionTimer.unsubscribe();
+    }
+    if (this.autoRefresh.enabled) {
+      this.subscriptionTimer =
+        this.timer.subscribe(
+          () => {
+            this.chartsService.resync(this.car.id);
+          }
+        );
+    }
     this.chartsService.setAutoRefresh(this.autoRefresh);
   }
 

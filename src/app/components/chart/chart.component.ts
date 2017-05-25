@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnDestroy, Output } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnChanges, OnDestroy } from '@angular/core';
 import * as highstock from 'highcharts/highstock';
 import { Chart } from '../../models/Chart';
 
@@ -10,6 +10,7 @@ import { Chart } from '../../models/Chart';
 export class ChartComponent implements OnChanges, OnDestroy {
   public chart: any;
   @Input() data: any;
+
   @Input() set options(options: any) {
     if (this.chart) {
       this.chart.destroy();
@@ -32,15 +33,13 @@ export class ChartComponent implements OnChanges, OnDestroy {
       this.chart = highstock.stockChart(this.el.nativeElement, config);
     }
   }
+
   ngOnChanges(changes: any) {
     if (changes.data) {
       const data = changes.data;
       if (data) {
         if (!data.firstChange) {
-          data.currentValue.forEach(point => {
-            this.chart.series[0].addPoint(point, false, true, false);
-          });
-          this.chart.redraw(true);
+          this.chart.series[0].setData(data.currentValue, true);
         }
       }
     }
