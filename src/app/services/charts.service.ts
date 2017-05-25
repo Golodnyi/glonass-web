@@ -49,10 +49,13 @@ export class ChartsService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
     let params = '?';
     if (filter.enabled) {
-      filter.charts.forEach(function (sensor) {
-        params += 'sensors[]=' + sensor + '&';
-      });
-
+      if (Array.isArray(filter.charts)) {
+        filter.charts.forEach(function (sensor) {
+          params += 'sensors[]=' + sensor + '&';
+        });
+      } else {
+        params += 'sensors[]=' + filter.charts + '&';
+      }
       if (!filter.last) {
         params += 'dateFrom=' + filter.before + '&dateTo=' + filter.after + '&';
       }
