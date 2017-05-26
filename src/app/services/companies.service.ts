@@ -32,6 +32,11 @@ export class CompaniesService {
         .subscribe((response: Response) => {
             const companies: Company[] = response.json();
             const companiesObj: Company[] = [];
+
+            if (!companies.length) {
+              this.companies.next([]);
+            }
+
             companies.forEach(function (company: Company) {
               companiesObj.push(Object.assign(new Company(), company));
             });
@@ -56,6 +61,7 @@ export class CompaniesService {
           const companyObj: Company = Object.assign(new Company(), response.json());
           this.company.next(companyObj);
         }, error => {
+          this.company.next(null);
           Error.check(error, this.authService, this.router, this.msgService);
           this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
         });

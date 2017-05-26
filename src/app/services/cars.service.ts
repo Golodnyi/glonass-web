@@ -13,12 +13,13 @@ import { Car } from '../models/Car';
 import { Engine } from '../models/Engine';
 import { MsgService } from './msg';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class CarsService {
   private cars: BehaviorSubject<Car[]> = new BehaviorSubject([]);
   private car: BehaviorSubject<Car> = new BehaviorSubject(new Car());
-
+  private subscriptionEngine: Subscription;
   constructor(private http: Http,
               private authService: AuthService,
               private enginesService: EnginesService,
@@ -36,15 +37,19 @@ export class CarsService {
         .subscribe((response: Response) => {
           // TODO: костыль, переписать
           const carsObj: Car[] = [];
+          if (!response.json().length) {
+            this.cars.next([]);
+          }
           response.json().forEach(car => {
             car = Object.assign(new Car(), car);
             if (withEngine) {
-              this.enginesService.get(company, subdivision, car.id, true).take(1).subscribe(
+              if (this.subscriptionEngine) {
+                this.subscriptionEngine.unsubscribe();
+              }
+              this.subscriptionEngine = this.enginesService.get(company, subdivision, car.id, true).subscribe(
                 engine => {
-                  if (engine.id) {
-                    const engineObj = Object.assign(new Engine(), engine);
-                    car.engine = engineObj;
-                  }
+                  const engineObj = Object.assign(new Engine(), engine);
+                  car.engine = engineObj;
                 }
               );
             }
@@ -71,6 +76,7 @@ export class CarsService {
           const carObj: Car = Object.assign(new Car(), response.json());
           this.car.next(carObj);
         }, error => {
+          this.car.next(null);
           Error.check(error, this.authService, this.router, this.msgService);
           this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
         });

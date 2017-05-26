@@ -11,10 +11,11 @@ import { Error } from '../models/Error';
 import { MsgService } from './msg';
 import { Engine } from '../models/Engine';
 import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class EnginesService {
-  private engine: Subject<Engine> = new Subject();
+  private engine: BehaviorSubject<Engine> = new BehaviorSubject(null);
 
   constructor(private http: Http,
               private authService: AuthService,
@@ -33,6 +34,7 @@ export class EnginesService {
           const engineObj: Engine = Object.assign(new Engine(), response.json());
           this.engine.next(engineObj);
         }, error => {
+          this.engine.next(null);
           Error.check(error, this.authService, this.router, this.msgService);
           this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
         });

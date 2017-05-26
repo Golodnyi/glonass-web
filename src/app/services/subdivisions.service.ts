@@ -33,6 +33,9 @@ export class SubdivisionsService {
         .subscribe((response: Response) => {
           const subdivisions: Subdivision[] = response.json();
           const subdivisionsObj: Subdivision[] = [];
+          if (!subdivisions.length) {
+            this.subdivisions.next([]);
+          }
           subdivisions.forEach(function (subdivision: Subdivision) {
             subdivisionsObj.push(Object.assign(new Subdivision(), subdivision));
           });

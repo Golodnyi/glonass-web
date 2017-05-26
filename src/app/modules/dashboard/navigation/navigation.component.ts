@@ -9,6 +9,7 @@ import { TreePipe } from '../../../pipes/tree.pipe';
 import { Subdivision } from '../../../models/Subdivision';
 import { Car } from '../../../models/Car';
 import { Subscription } from 'rxjs/Subscription';
+import { Engine, IEngine } from '../../../models/Engine';
 
 @Component({
   selector: 'app-navigation',
@@ -87,5 +88,12 @@ export class NavigationComponent implements OnDestroy {
 
   public isCar(car: Car) {
     return car instanceof Car;
+  }
+
+  public isEngineEmpty(engine: Engine) {
+    if (engine === undefined) {
+      return true;
+    }
+    return !Object.keys(engine).length;
   }
 }
