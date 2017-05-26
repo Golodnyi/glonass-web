@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ChartsService } from '../../../services/charts.service';
 import { CarsService } from '../../../services/cars.service';
 import { Car } from '../../../models/Car';
@@ -27,13 +27,23 @@ export class ChartsComponent implements OnDestroy {
   public autoRefresh = new AutoRefresh();
   public filter: Filter;
   public engine: Engine;
+  public loading = true;
 
   constructor(private route: ActivatedRoute,
               private chartsService: ChartsService,
               private carsService: CarsService,
-              private router: Router,
               private enginesService: EnginesService) {
-    this.route.params.subscribe(params => {
+    this.subscription.add(this.route.queryParams.subscribe(filter => {
+        if (Object.keys(filter).length) {
+          this.filter = new Filter(filter);
+          this.chartsService.setFilter(this.filter);
+        } else {
+          this.filter = new Filter();
+          this.chartsService.setFilter(this.filter);
+        }
+      })
+    );
+    this.subscription.add(this.route.params.subscribe(params => {
         this.options = []; // уничтожаем графики
         const car_id = +params['car'];
         this.subscription.add(
@@ -43,15 +53,6 @@ export class ChartsComponent implements OnDestroy {
             }
           )
         );
-        this.route.queryParams.subscribe(filter => {
-          if (Object.keys(filter).length) {
-            this.filter = new Filter(filter);
-            this.chartsService.setFilter(this.filter);
-          } else {
-            this.filter = new Filter();
-            this.chartsService.setFilter(this.filter);
-          }
-        });
         this.subscription.add(
           this.enginesService.get(1, 1, car_id, true).subscribe(
             engine => {
@@ -65,6 +66,9 @@ export class ChartsComponent implements OnDestroy {
         this.subscription.add(
           this.chartsService.get().subscribe(
             data => {
+              if (!data.length) {
+                this.options = [];
+              }
               data.forEach(item => {
                 let exist = false;
                 this.options.forEach(options => {
@@ -79,6 +83,7 @@ export class ChartsComponent implements OnDestroy {
               });
               this.autoRefresh.afterTime = this.lastTime();
               this.chartsService.setAutoRefresh(this.autoRefresh);
+              this.loading = false;
             }
           )
         );
@@ -93,21 +98,10 @@ export class ChartsComponent implements OnDestroy {
         this.subscriptionFilter = this.chartsService.getFilter().subscribe(
           (filter) => {
             this.filter = filter;
-            let qparams;
-            if (filter.enabled) {
-              if (filter.charts && !Array.isArray(filter.charts)) {
-                filter.charts = [filter.charts];
-              }
-              qparams = filter;
-            } else {
-              qparams = {};
-            }
-
             this.options = [];
             this.autoRefresh.enabled = false;
             this.chartsService.setAutoRefresh(this.autoRefresh);
             this.chartsService.resync(car_id);
-            this.router.navigate([], {queryParams: qparams});
           }
         );
 
@@ -122,6 +116,7 @@ export class ChartsComponent implements OnDestroy {
           }
         );
       }
+      )
     );
   }
 

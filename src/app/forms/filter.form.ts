@@ -12,7 +12,7 @@ export class FilterForm {
 
   public create(filter: Filter) {
     this.form = this.fb.group({
-      charts: [filter.charts, Validators.required],
+      charts: [filter.charts],
       before: [moment(filter.before).toDate()],
       after: [moment(filter.after).toDate()],
       enabled: [filter.enabled],

@@ -51,7 +51,7 @@ export class ChartsService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
     let params = '?';
     if (filter.enabled) {
-      if (!Array.isArray(filter.charts)) {
+      if (!Array.isArray(filter.charts) && filter.charts !== undefined) {
         params += 'sensors[]=' + filter.charts + '&';
       } else if (Array.isArray(filter.charts)) {
         filter.charts.forEach(function (sensor) {

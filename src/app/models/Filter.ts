@@ -11,7 +11,7 @@ export class Filter {
   constructor(filter: Params = null) {
     if (filter !== null) {
       this.charts = filter.charts;
-      this.last = filter.last;
+      this.last = filter.last === 'true' ? true : false;
       this.before = filter.before;
       this.after = filter.after;
       this.enabled = filter.enabled === 'true' ? true : false;

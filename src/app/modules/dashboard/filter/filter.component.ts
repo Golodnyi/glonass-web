@@ -7,6 +7,7 @@ import { ChartsService } from '../../../services/charts.service';
 import { Car } from '../../../models/Car';
 import { Sensor } from '../../../models/Sensor';
 import { Subscription } from 'rxjs/Subscription';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-filter',
@@ -24,7 +25,8 @@ export class FilterComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   constructor(private filterForm: FilterForm,
-              private chartsService: ChartsService) {
+              private chartsService: ChartsService,
+              private router: Router) {
   }
 
   ngOnDestroy() {
@@ -35,22 +37,20 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.subscription.add(this.chartsService.getSensors().subscribe(
       sensors => {
         this.sensors = sensors;
-        if (this.sensors.length) {
-          this.form = this.filterForm.create(this.filter);
-          this.form.valueChanges
-            .map((value) => {
-              value.before = moment(value.before).format('YYYY-MM-DD');
-              value.after = moment(value.after).format('YYYY-MM-DD');
-              return value;
-            })
-            .subscribe((data) => {
-              this.filter.charts = data.charts;
-              this.filter.last = data.last;
-              this.filter.before = data.before;
-              this.filter.after = data.after;
-              this.submit = false;
-            });
-        }
+        this.form = this.filterForm.create(this.filter);
+        this.form.valueChanges
+          .map((value) => {
+            value.before = moment(value.before).format('YYYY-MM-DD');
+            value.after = moment(value.after).format('YYYY-MM-DD');
+            return value;
+          })
+          .subscribe((data) => {
+            this.filter.charts = data.charts;
+            this.filter.last = data.last;
+            this.filter.before = data.before;
+            this.filter.after = data.after;
+            this.submit = false;
+          });
       }
       )
     );
@@ -59,13 +59,18 @@ export class FilterComponent implements OnInit, OnDestroy {
   public onSubmit() {
     this.filter.enabled = true;
     this.submit = true;
-    this.chartsService.setFilter(this.filter);
+    let qparams;
+    if (this.filter.charts && !Array.isArray(this.filter.charts)) {
+      this.filter.charts = [this.filter.charts];
+    }
+    qparams = this.filter;
+    this.router.navigate([], {queryParams: qparams});
   }
 
   public onDisabled() {
     this.filter.enabled = false;
     this.submit = false;
-    this.chartsService.setFilter(this.filter);
+    this.router.navigate([], {queryParams: {}});
     return false;
   }
 }

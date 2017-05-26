@@ -8,7 +8,9 @@
         </div>
     </div>
     <div class="col-md-6">
-        Автообновление данных:&nbsp;<p-inputSwitch [disabled]="filter.enabled && !filter.last" [(ngModel)]="autoRefresh.enabled" (onChange)="autoRefreshChange($event)" onLabel="да"
+        Автообновление данных:&nbsp;<p-inputSwitch [disabled]="filter.enabled && !filter.last"
+                                                   [(ngModel)]="autoRefresh.enabled"
+                                                   (onChange)="autoRefreshChange($event)" onLabel="да"
                                                    offLabel="нет"></p-inputSwitch>
     </div>
 </div>
@@ -20,10 +22,15 @@
 <div class="row">
     <div class="col-md-12">
         <div *ngIf="options.length">
-            <app-chart *ngFor="let option of options;" [options]="option ? option : {}" [data]="option ? option.data : []"></app-chart>
+            <app-chart *ngFor="let option of options;" [options]="option ? option : {}"
+                       [data]="option ? option.data : []"></app-chart>
         </div>
         <div *ngIf="!options.length">
-            <div class="loader"></div>
+            <div class="loader" *ngIf="loading"></div>
+            <div *ngIf="!loading">
+                <h3 class="alert alert-danger">За выбранный период данные отсутствуют, измените параметры фильтра.</h3>
+            </div>
+
         </div>
     </div>
 </div>
