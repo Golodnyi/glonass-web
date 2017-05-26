@@ -49,6 +49,7 @@ export class ChartsComponent implements OnDestroy {
             this.chartsService.setFilter(this.filter);
           } else {
             this.filter = new Filter();
+            this.chartsService.setFilter(this.filter);
           }
         });
         this.subscription.add(
@@ -58,7 +59,6 @@ export class ChartsComponent implements OnDestroy {
             }
           )
         );
-        ;
         /**
          * подписка на изменение данных
          */

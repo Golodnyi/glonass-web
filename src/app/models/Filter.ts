@@ -6,7 +6,7 @@ export class Filter {
   public last = true;
   public before: string = moment(new Date(new Date().getFullYear(), new Date().getMonth() - 1)).format('YYYY-MM-DD HH:mm:ss');
   public after: string = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-  public enabled: boolean;
+  public enabled = false;
 
   constructor(filter: Params = null) {
     if (filter !== null) {
