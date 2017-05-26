@@ -25,12 +25,6 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   constructor(private filterForm: FilterForm,
               private chartsService: ChartsService) {
-    this.subscription.add(this.chartsService.getSensors().subscribe(
-      sensors => {
-        this.sensors = sensors;
-      }
-      )
-    );
   }
 
   ngOnDestroy() {
@@ -38,20 +32,28 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.form = this.filterForm.create(this.filter);
-    this.form.valueChanges
-      .map((value) => {
-        value.before = moment(value.before).format('YYYY-MM-DD');
-        value.after = moment(value.after).format('YYYY-MM-DD');
-        return value;
-      })
-      .subscribe((data) => {
-        this.filter.charts = data.charts;
-        this.filter.last = data.last;
-        this.filter.before = data.before;
-        this.filter.after = data.after;
-        this.submit = false;
-      });
+    this.subscription.add(this.chartsService.getSensors().subscribe(
+      sensors => {
+        this.sensors = sensors;
+        if (this.sensors.length) {
+          this.form = this.filterForm.create(this.filter);
+          this.form.valueChanges
+            .map((value) => {
+              value.before = moment(value.before).format('YYYY-MM-DD');
+              value.after = moment(value.after).format('YYYY-MM-DD');
+              return value;
+            })
+            .subscribe((data) => {
+              this.filter.charts = data.charts;
+              this.filter.last = data.last;
+              this.filter.before = data.before;
+              this.filter.after = data.after;
+              this.submit = false;
+            });
+        }
+      }
+      )
+    );
   }
 
   public onSubmit() {
