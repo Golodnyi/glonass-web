@@ -26,7 +26,6 @@ export class FilterComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data);
     this.form = this.filterForm.create(this.filter);
     this.form.valueChanges
       .map((value) => {

@@ -10,11 +10,11 @@ import { Router } from '@angular/router';
 import { Error } from '../models/Error';
 import { MsgService } from './msg';
 import { Engine } from '../models/Engine';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class EnginesService {
-  private engine: BehaviorSubject<Engine> = new BehaviorSubject(new Engine());
+  private engine: Subject<Engine> = new Subject();
 
   constructor(private http: Http,
               private authService: AuthService,

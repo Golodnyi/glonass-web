@@ -39,9 +39,9 @@ export class CarsService {
           response.json().forEach(car => {
             car = Object.assign(new Car(), car);
             if (withEngine) {
-              this.enginesService.get(company, subdivision, car.id, true).subscribe(
+              this.enginesService.get(company, subdivision, car.id, true).take(1).subscribe(
                 engine => {
-                  if (engine.esn) {
+                  if (engine.id) {
                     const engineObj = Object.assign(new Engine(), engine);
                     car.engine = engineObj;
                   }

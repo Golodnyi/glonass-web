@@ -47,7 +47,6 @@ export class ChartsComponent implements OnDestroy {
             this.filter = new Filter();
           }
         });
-        this.chartsService.resync(car_id); // запрос первых данных
 
         /**
          * подписка на изменение данных

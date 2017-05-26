@@ -8,7 +8,7 @@
         <ng-template let-node pTemplate="default">
             <span>{{node.data.name}}</span>
             <span *ngIf="isCar(node.data) && node.data.engine" class="label label-success">
-                {{engine.name}}
+                {{node.data.engine.name}}
             </span>
             <span *ngIf="isCar(node.data) && !node.data.engine" class="label label-danger">
                 без двигателя
