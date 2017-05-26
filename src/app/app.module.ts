@@ -4,19 +4,19 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app.routing.module';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { UsersService } from './services/users.service';
-import { AuthService } from './services/auth.service';
-import { AuthGuard } from './guards/auth.guard';
+import { UsersService } from './shared/services/users.service';
+import { AuthService } from './shared/services/auth.service';
+import { AuthGuard } from './shared/guards/auth.guard';
 import { CookieOptions, CookieService } from 'angular2-cookie/core';
-import { GuestGuard } from './guards/guest.guard';
-import { AdminGuard } from './guards/admin.guard';
-import { ChartsService } from './services/charts.service';
+import { GuestGuard } from './shared/guards/guest.guard';
+import { AdminGuard } from './shared/guards/admin.guard';
+import { ChartsService } from './shared/services/charts.service';
 import { GrowlModule, MessagesModule } from 'primeng/primeng';
-import { MsgService } from './services/msg';
-import { EnginesService } from './services/engines.service';
+import { MsgService } from './shared/services/msg';
+import { EnginesService } from './shared/services/engines.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavigationComponent } from './navigation.component';
-import { HomeComponent } from './home.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [

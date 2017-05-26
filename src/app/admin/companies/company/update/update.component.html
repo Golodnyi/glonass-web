@@ -1,0 +1,12 @@
+<h3>Изменение компании</h3>
+<form *ngIf="company && form" [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
+    <label for="name">Название:</label><br/>
+    <input class="input-sm" id="name" type="text" formControlName="name" pInputText/><br/>
+    <label for="active_till">Дата блокировки аккаунта:</label><br/>
+    <p-calendar id="active_till" formControlName="active_till" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24"
+                [locale]="ru"></p-calendar>
+    <hr/>
+    <button class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton type="submit"
+            label="Сохранить"></button>
+    <button class="ui-button-danger" icon="fa-trash" pButton type="button" (click)="delete()" label="Удалить"></button>
+</form>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
@@ -8,15 +8,15 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: './modules/auth/auth.module#AuthModule'
+    loadChildren: './auth/auth.module#AuthModule'
   },
   {
     path: 'dashboard',
-    loadChildren: './modules/dashboard/dashboard.module#DashboardModule'
+    loadChildren: './dashboard/dashboard.module#DashboardModule'
   },
   {
     path: 'admin',
-    loadChildren: './modules/admin/admin.module#AdminModule'
+    loadChildren: './admin/admin.module#AdminModule'
   }
 ];
 

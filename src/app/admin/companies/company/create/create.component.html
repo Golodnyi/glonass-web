@@ -1,0 +1,13 @@
+<h3>Создание компании</h3>
+<form [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
+    <label for="name">Название:</label><br/>
+    <input class="input-sm" id="name" type="text" pInputText formControlName="name"
+           placeholder="Название компании"/><br/>
+    <label for="active_till">Дата блокировки аккаунта:</label><br/>
+    <p-calendar id="active_till" formControlName="active_till" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24"
+                [locale]="ru"></p-calendar>
+    <hr/>
+    <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton
+            label="Создать"></button>
+    <button pButton type="button" label="Отмена" routerLink="/admin/companies"></button>
+</form>
