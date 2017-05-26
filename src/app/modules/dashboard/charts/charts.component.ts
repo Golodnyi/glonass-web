@@ -7,6 +7,8 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { AutoRefresh } from '../../../models/AutoRefresh';
 import { Filter } from '../../../models/Filter';
+import { EnginesService } from '../../../services/engines.service';
+import { Engine } from '../../../models/Engine';
 
 @Component({
   selector: 'app-charts',
@@ -24,11 +26,13 @@ export class ChartsComponent implements OnDestroy {
   private timer = Observable.timer(0, 5000);
   public autoRefresh = new AutoRefresh();
   public filter: Filter;
+  public engine: Engine;
 
   constructor(private route: ActivatedRoute,
               private chartsService: ChartsService,
               private carsService: CarsService,
-              private router: Router) {
+              private router: Router,
+              private enginesService: EnginesService) {
     this.route.params.subscribe(params => {
         this.options = []; // уничтожаем графики
         const car_id = +params['car'];
@@ -47,7 +51,14 @@ export class ChartsComponent implements OnDestroy {
             this.filter = new Filter();
           }
         });
-
+        this.subscription.add(
+          this.enginesService.get(1, 1, car_id, true).subscribe(
+            engine => {
+              this.engine = engine;
+            }
+          )
+        );
+        ;
         /**
          * подписка на изменение данных
          */

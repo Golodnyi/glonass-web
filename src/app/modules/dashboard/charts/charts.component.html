@@ -1,6 +1,11 @@
 <div class="row">
     <div class="col-md-6">
-        <div *ngIf="car">Данные по {{car.name}}</div>
+        <div *ngIf="car">
+            Данные по {{car.name}}<br/>
+            Двигатель:
+            <span *ngIf="engine.id">{{engine.name}}</span>
+            <span *ngIf="!engine.id">отсутствует</span>
+        </div>
     </div>
     <div class="col-md-6">
         Автообновление данных:&nbsp;<p-inputSwitch [disabled]="filter.enabled && !filter.last" [(ngModel)]="autoRefresh.enabled" (onChange)="autoRefreshChange($event)" onLabel="да"

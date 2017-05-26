@@ -76,7 +76,7 @@ export class NavigationComponent implements OnDestroy {
       if (this.cas) {
         this.cas.unsubscribe();
       }
-      this.cas = this.carsService.all(parentObj[0].id, obj.id, false, true).subscribe(
+      this.cas = this.carsService.all(parentObj[0].id, obj.id, true).subscribe(
         cars => {
           event.node.children = this.tree.transform(cars, false, true);
         },

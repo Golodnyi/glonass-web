@@ -10,12 +10,11 @@ import { Router } from '@angular/router';
 import { Error } from '../models/Error';
 import { MsgService } from './msg';
 import { Engine } from '../models/Engine';
-import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class EnginesService {
-  private engine: BehaviorSubject<Engine> = new BehaviorSubject(null);
+  private engine: BehaviorSubject<Engine> = new BehaviorSubject(new Engine());
 
   constructor(private http: Http,
               private authService: AuthService,
@@ -31,10 +30,9 @@ export class EnginesService {
 
       this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine', options)
         .subscribe((response: Response) => {
-          const engineObj: Engine = Object.assign(new Engine(), response.json());
-          this.engine.next(engineObj);
+          this.engine.next(Object.assign(new Engine(), response.json()));
         }, error => {
-          this.engine.next(null);
+          this.engine.next(new Engine());
           Error.check(error, this.authService, this.router, this.msgService);
           this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
         });

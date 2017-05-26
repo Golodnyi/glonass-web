@@ -70,7 +70,7 @@ export class NavigationComponent implements OnDestroy {
       if (this.cas) {
         this.cas.unsubscribe();
       }
-      this.cas = this.carsService.all(parentObj[0].id, obj.id, true, true).subscribe(
+      this.cas = this.carsService.all(parentObj[0].id, obj.id, true).subscribe(
         cars => {
           event.node.children = this.tree.transform(cars, true, true);
         },
@@ -88,12 +88,5 @@ export class NavigationComponent implements OnDestroy {
 
   public isCar(car: Car) {
     return car instanceof Car;
-  }
-
-  public isEngineEmpty(engine: Engine) {
-    if (engine === undefined) {
-      return true;
-    }
-    return !Object.keys(engine).length;
   }
 }

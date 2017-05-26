@@ -31,16 +31,13 @@ export class SubdivisionsService {
 
       this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions', options)
         .subscribe((response: Response) => {
-          const subdivisions: Subdivision[] = response.json();
-          const subdivisionsObj: Subdivision[] = [];
-          if (!subdivisions.length) {
-            this.subdivisions.next([]);
-          }
-          subdivisions.forEach(function (subdivision: Subdivision) {
-            subdivisionsObj.push(Object.assign(new Subdivision(), subdivision));
+          const subdivisions = [];
+          response.json().forEach(item => {
+            subdivisions.push(Object.assign(new Subdivision(), item));
           });
-          this.subdivisions.next(subdivisionsObj);
+          this.subdivisions.next(subdivisions);
         }, error => {
+          this.subdivisions.next([]);
           Error.check(error, this.authService, this.router, this.msgService);
           this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
         });
@@ -82,9 +79,9 @@ export class SubdivisionsService {
       this.http.get(
         env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision, options)
         .subscribe((response: Response) => {
-          const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());
-          this.subdivision.next(subdivisionObj);
+          this.subdivision.next(Object.assign(new Subdivision(), response.json()));
         }, error => {
+          this.subdivision.next(new Subdivision());
           Error.check(error, this.authService, this.router, this.msgService);
           this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
         });

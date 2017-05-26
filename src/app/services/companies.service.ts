@@ -30,19 +30,14 @@ export class CompaniesService {
 
       this.http.get(env.backend + '/v1/companies', options)
         .subscribe((response: Response) => {
-            const companies: Company[] = response.json();
-            const companiesObj: Company[] = [];
-
-            if (!companies.length) {
-              this.companies.next([]);
-            }
-
-            companies.forEach(function (company: Company) {
-              companiesObj.push(Object.assign(new Company(), company));
+            const companies = [];
+            response.json().forEach(item => {
+              companies.push(Object.assign(new Company(), item));
             });
-            this.companies.next(companiesObj);
+            this.companies.next(companies);
           },
           error => {
+            this.companies.next([]);
             Error.check(error, this.authService, this.router, this.msgService);
             this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
           });
@@ -58,10 +53,9 @@ export class CompaniesService {
 
       this.http.get(env.backend + '/v1/companies/' + company, options)
         .subscribe((response: Response) => {
-          const companyObj: Company = Object.assign(new Company(), response.json());
-          this.company.next(companyObj);
+          this.company.next(Object.assign(new Company(), response.json()));
         }, error => {
-          this.company.next(null);
+          this.company.next(new Company());
           Error.check(error, this.authService, this.router, this.msgService);
           this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
         });

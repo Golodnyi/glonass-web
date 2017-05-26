@@ -10,7 +10,6 @@ import { EnginesService } from './engines.service';
 import { Router } from '@angular/router';
 import { Error } from '../models/Error';
 import { Car } from '../models/Car';
-import { Engine } from '../models/Engine';
 import { MsgService } from './msg';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
@@ -20,6 +19,7 @@ export class CarsService {
   private cars: BehaviorSubject<Car[]> = new BehaviorSubject([]);
   private car: BehaviorSubject<Car> = new BehaviorSubject(new Car());
   private subscriptionEngine: Subscription;
+
   constructor(private http: Http,
               private authService: AuthService,
               private enginesService: EnginesService,
@@ -27,7 +27,7 @@ export class CarsService {
               private msgService: MsgService) {
   }
 
-  public all(company: number, subdivision: number, withEngine = false, resync = false): Observable<Car[]> {
+  public all(company: number, subdivision: number, resync = false): Observable<Car[]> {
     if (resync) {
       const headers = new Headers();
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -35,29 +35,13 @@ export class CarsService {
 
       this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars', options)
         .subscribe((response: Response) => {
-          // TODO: костыль, переписать
-          const carsObj: Car[] = [];
-          if (!response.json().length) {
-            this.cars.next([]);
-          }
-          response.json().forEach(car => {
-            car = Object.assign(new Car(), car);
-            if (withEngine) {
-              if (this.subscriptionEngine) {
-                this.subscriptionEngine.unsubscribe();
-              }
-              this.subscriptionEngine = this.enginesService.get(company, subdivision, car.id, true).subscribe(
-                engine => {
-                  const engineObj = Object.assign(new Engine(), engine);
-                  car.engine = engineObj;
-                }
-              );
-            }
-            carsObj.push(car);
-            this.cars.next(carsObj);
+          const cars = [];
+          response.json().forEach(item => {
+            cars.push(Object.assign(new Car(), item));
           });
-          return carsObj;
+          this.cars.next(cars);
         }, error => {
+          this.cars.next([]);
           Error.check(error, this.authService, this.router, this.msgService);
           this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
         });
@@ -73,10 +57,9 @@ export class CarsService {
 
       this.http.get(env.backend + '/v1/cars/' + car, options)
         .subscribe((response: Response) => {
-          const carObj: Car = Object.assign(new Car(), response.json());
-          this.car.next(carObj);
+          this.car.next(Object.assign(new Car(), response.json()));
         }, error => {
-          this.car.next(null);
+          this.car.next(new Car());
           Error.check(error, this.authService, this.router, this.msgService);
           this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
         });
