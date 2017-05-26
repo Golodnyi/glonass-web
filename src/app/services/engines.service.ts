@@ -32,7 +32,6 @@ export class EnginesService {
         .subscribe((response: Response) => {
           const engineObj: Engine = Object.assign(new Engine(), response.json());
           this.engine.next(engineObj);
-          return this.engine.asObservable();
         }, error => {
           Error.check(error, this.authService, this.router, this.msgService);
           this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');

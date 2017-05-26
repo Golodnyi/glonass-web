@@ -37,7 +37,6 @@ export class SubdivisionsService {
             subdivisionsObj.push(Object.assign(new Subdivision(), subdivision));
           });
           this.subdivisions.next(subdivisionsObj);
-          return this.subdivisions.asObservable();
         }, error => {
           Error.check(error, this.authService, this.router, this.msgService);
           this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
@@ -82,7 +81,6 @@ export class SubdivisionsService {
         .subscribe((response: Response) => {
           const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());
           this.subdivision.next(subdivisionObj);
-          return this.subdivision.asObservable();
         }, error => {
           Error.check(error, this.authService, this.router, this.msgService);
           this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');

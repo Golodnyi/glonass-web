@@ -36,7 +36,6 @@ export class CompaniesService {
               companiesObj.push(Object.assign(new Company(), company));
             });
             this.companies.next(companiesObj);
-            return this.companies.asObservable();
           },
           error => {
             Error.check(error, this.authService, this.router, this.msgService);
@@ -56,7 +55,6 @@ export class CompaniesService {
         .subscribe((response: Response) => {
           const companyObj: Company = Object.assign(new Company(), response.json());
           this.company.next(companyObj);
-          return this.company.asObservable();
         }, error => {
           Error.check(error, this.authService, this.router, this.msgService);
           this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');

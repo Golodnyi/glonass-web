@@ -50,7 +50,6 @@ export class CarsService {
             }
             carsObj.push(car);
             this.cars.next(carsObj);
-            return this.cars.asObservable;
           });
           return carsObj;
         }, error => {
@@ -71,7 +70,6 @@ export class CarsService {
         .subscribe((response: Response) => {
           const carObj: Car = Object.assign(new Car(), response.json());
           this.car.next(carObj);
-          return this.car.asObservable();
         }, error => {
           Error.check(error, this.authService, this.router, this.msgService);
           this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
