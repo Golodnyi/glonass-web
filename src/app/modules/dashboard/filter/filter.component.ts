@@ -1,10 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FilterForm } from '../../../forms/filter.form';
 import { FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { Calendar } from '../../../models/Calendar';
 import { ChartsService } from '../../../services/charts.service';
 import { Car } from '../../../models/Car';
+import { Sensor } from '../../../models/Sensor';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-filter',
@@ -12,17 +14,27 @@ import { Car } from '../../../models/Car';
   styleUrls: ['./filter.component.css'],
   providers: [FilterForm]
 })
-export class FilterComponent implements OnInit {
-  @Input() data: any = false;
+export class FilterComponent implements OnInit, OnDestroy {
   @Input() car: Car;
   @Input() filter: any;
   public ru = new Calendar();
   public form: FormGroup = null;
   public submit: boolean;
+  private sensors: Sensor[];
+  private subscription: Subscription = new Subscription();
 
   constructor(private filterForm: FilterForm,
               private chartsService: ChartsService) {
+    this.subscription.add(this.chartsService.getSensors().subscribe(
+      sensors => {
+        this.sensors = sensors;
+      }
+      )
+    );
+  }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   ngOnInit() {
@@ -50,7 +62,7 @@ export class FilterComponent implements OnInit {
 
   public onDisabled() {
     this.filter.enabled = false;
-    this.submit = true;
+    this.submit = false;
     this.chartsService.setFilter(this.filter);
     return false;
   }

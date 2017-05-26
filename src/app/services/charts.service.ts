@@ -12,11 +12,13 @@ import { Filter } from '../models/Filter';
 import { Subject } from 'rxjs/Subject';
 import { AutoRefresh } from '../models/AutoRefresh';
 import { Error } from '../models/Error';
+import { Sensor } from '../models/Sensor';
 
 @Injectable()
 export class ChartsService {
   private data: Subject<any> = new Subject();
   private filter: BehaviorSubject<Filter> = new BehaviorSubject(new Filter());
+  private sensors: BehaviorSubject<Sensor[]> = new BehaviorSubject([]);
   private autoRefresh: BehaviorSubject<AutoRefresh> = new BehaviorSubject(new AutoRefresh());
 
   constructor(private http: Http,
@@ -65,7 +67,8 @@ export class ChartsService {
     }
     this.http.get(env.backend + '/v1/cars/' + car + '/report' + params, options)
       .subscribe((response: Response) => {
-        this.data.next(response.json());
+        this.data.next(response.json().data);
+        this.sensors.next(response.json().allowedSensors);
       }, error => {
         Error.check(error, this.authService, this.router, this.msgService);
         this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
@@ -74,6 +77,10 @@ export class ChartsService {
 
   public get(): Observable<any> {
     return this.data.asObservable();
+  }
+
+  public getSensors(): Observable<any> {
+    return this.sensors.asObservable();
   }
 }
 
