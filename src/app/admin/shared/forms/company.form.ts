@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
-import { Company } from '../models/company.model';
+import { Company } from '../../../shared/models/company.model';
 import * as moment from 'moment';
 
 @Injectable()

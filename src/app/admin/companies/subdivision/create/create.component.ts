@@ -6,7 +6,7 @@ import { CompaniesService } from '../../../../shared/services/companies.service'
 import { Subdivision } from '../../../../shared/models/subdivision.model';
 import { SubdivisionsService } from '../../../../shared/services/subdivisions.service';
 import { FormGroup } from '@angular/forms';
-import { SubdivisionCreateForm } from '../../../../shared/forms/subdivision/create.form';
+import { SubdivisionCreateForm } from '../../../shared/forms/subdivision/create.form';
 import { Router } from '@angular/router';
 
 @Component({

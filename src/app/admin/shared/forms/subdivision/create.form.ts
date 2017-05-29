@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
-import { Subdivision } from '../../models/subdivision.model';
+import { Subdivision } from '../../../../shared/models/subdivision.model';
 
 @Injectable()
 export class SubdivisionCreateForm {

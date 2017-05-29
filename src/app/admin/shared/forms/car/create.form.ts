@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
-import { Car } from '../../models/car.model';
+import { Car } from '../../../../shared/models/car.model';
 
 @Injectable()
 export class CarCreateForm {

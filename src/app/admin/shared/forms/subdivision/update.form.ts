@@ -1,17 +1,17 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
-import { CarModel } from '../../models/car-model.model';
+import { Subdivision } from '../../../../shared/models/subdivision.model';
 
 @Injectable()
-export class CarModelForm {
+export class SubdivisionUpdateForm {
   private form: FormGroup;
 
   constructor(private fb: FormBuilder) {
   }
 
-  public create(carModel: CarModel) {
+  public create(subdivision: Subdivision) {
     this.form = this.fb.group({
-      name: [carModel.name, Validators.required],
+      name: [subdivision.name, Validators.required],
     });
 
     return this.form;
