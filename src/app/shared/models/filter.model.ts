@@ -10,7 +10,11 @@ export class Filter {
 
   constructor(filter: Params = null) {
     if (filter !== null) {
-      this.charts = filter.charts;
+      if (Array.isArray(filter.charts)) {
+        this.charts = filter.charts;
+      } else if (filter.charts && filter.charts !== undefined) {
+        this.charts = [filter.charts];
+      }
       this.last = filter.last === 'true' ? true : false;
       this.before = filter.before;
       this.after = filter.after;
