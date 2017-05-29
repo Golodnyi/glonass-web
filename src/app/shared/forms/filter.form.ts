@@ -11,10 +11,6 @@ export class FilterForm {
   }
 
   public create(filter: Filter) {
-    /**
-     * TODO: где то тут есть ошибка
-     * ориентировочно в том, что charts не всегда массив
-     */
     this.form = this.fb.group({
       charts: [filter.charts],
       before: [moment(filter.before).toDate()],

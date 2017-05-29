@@ -72,16 +72,4 @@ export class UsersService {
         return Observable.throw(error.json().message || 'Server error');
       });
   }
-
-  public findByName(name: string, users: User[] = null): User[] {
-    if (users === null) {
-      users = [];
-      // TODO: отправка запроса на бэкенд
-    }
-    const user = users.filter(function (obj) {
-      return obj.name.toLowerCase().startsWith(name.toLowerCase());
-    });
-
-    return user;
-  }
 }
