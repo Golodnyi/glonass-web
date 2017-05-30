@@ -21,19 +21,23 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <div *ngIf="options.length">
-            <app-chart *ngFor="let option of options;" [options]="option ? option : {}"
-                       [data]="option ? option.data : []"></app-chart>
-        </div>
-        <div *ngIf="!options.length">
-            <div class="loader" *ngIf="loading"></div>
-            <div *ngIf="!loading">
-                <h3 class="alert alert-danger">За выбранный период данные отсутствуют, измените параметры фильтра.</h3>
-            </div>
-
-        </div>
+        <p-accordion>
+            <p-accordionTab header="Графики" [selected]="true">
+                <div *ngIf="options.length">
+                    <app-chart *ngFor="let option of options;" [options]="option ? option : {}"
+                               [data]="option ? option.data : []"></app-chart>
+                </div>
+                <div *ngIf="!options.length">
+                    <div class="loader" *ngIf="loading"></div>
+                    <div *ngIf="!loading">
+                        <h3 class="alert alert-danger">За выбранный период данные отсутствуют, измените параметры
+                            фильтра.</h3>
+                    </div>
+                </div>
+            </p-accordionTab>
+            <p-accordionTab header="Карта">
+                <app-ymaps [car]="car"></app-ymaps>
+            </p-accordionTab>
+        </p-accordion>
     </div>
-</div>
-<div class="row">
-    <app-ymaps [car]="car"></app-ymaps>
 </div>
