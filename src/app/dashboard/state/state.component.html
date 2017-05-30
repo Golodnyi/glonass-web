@@ -1,3 +1,43 @@
-<p>
-    state works!
-</p>
+<div>
+    <h3>Текущее состояние</h3>
+    <div>
+        ПОСЛЕДНЕЕ СОБЫТИЕ ЗА ПЕРИОД<br/>
+        {{state.last_date}}
+    </div>
+    <div>
+        Двигатель:
+        <span *ngIf="state.engine" class="badge badge-success">работает</span>
+        <span *ngIf="!state.engine" class="badge alert-danger">заглушен</span>
+    </div>
+    <div>
+        GSM:
+        <span *ngIf="state.gsm" class="badge alert-success">вкл</span>
+        <span *ngIf="!state.gsm" class="badge alert-danger">выкл</span>
+    </div>
+    <div>
+        Время:
+        <span *ngIf="state.time" class="badge alert-success">синхронизовано</span>
+        <span *ngIf="!state.time" class="badge alert-danger">не синхронизовано</span>
+    </div>
+    <div>
+        Сеть:
+        <span *ngIf="state.network" class="badge alert-success">вкл</span>
+        <span *ngIf="!state.network" class="badge alert-danger">выкл</span>
+    </div>
+    <div>
+        Сигнал: {{state.network_signal}}%
+    </div>
+    <div>
+        Роуминг:
+        <span *ngIf="state.roaming" class="badge alert-danger">да</span>
+        <span *ngIf="!state.roaming" class="badge alert-success">нет</span>
+    </div>
+    <div>
+        Питание:
+        <span *ngIf="state.power" class="badge alert-success">да</span>
+        <span *ngIf="!state.power" class="badge alert-danger">нет</span>
+    </div>
+    <div>
+        Моточасы: {{state.motochas}}
+    </div>
+</div>

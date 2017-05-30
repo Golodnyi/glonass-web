@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IState, State } from './shared/state.model';
 
 @Component({
   selector: 'app-state',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StateComponent implements OnInit {
 
+  public state: IState = new State();
   constructor() {
   }
 
