@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-/// <reference path="./shared/ymaps.d.ts" />
+/// <reference path="./typing/ymaps.d.ts" />
 @Component({
   selector: 'app-ymaps',
   templateUrl: './ymaps.component.html',
