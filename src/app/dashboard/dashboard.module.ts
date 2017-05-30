@@ -13,6 +13,7 @@ import {
   InputSwitchModule,
   MultiSelectModule,
   PanelModule,
+  TabViewModule,
   TreeModule
 } from 'primeng/primeng';
 import { ChartsComponent } from './charts/charts.component';
@@ -24,6 +25,7 @@ import { FilterComponent } from './filter/filter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SensorsService } from '../shared/services/sensors.service';
 import { YmapsComponent } from './ymaps/ymaps.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -37,7 +39,8 @@ import { YmapsComponent } from './ymaps/ymaps.component';
     AccordionModule,
     InputSwitchModule,
     CheckboxModule,
-    PanelModule
+    PanelModule,
+    TabViewModule
   ],
   declarations: [DashboardComponent, NavigationComponent, ChartsComponent, StateComponent, FilterComponent, YmapsComponent],
   providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService]

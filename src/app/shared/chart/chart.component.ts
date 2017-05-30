@@ -17,7 +17,7 @@ export class ChartComponent implements OnChanges, OnDestroy {
     }
     if (Object.keys(options).length) {
       const currentChart = this.chart;
-      const config = new Chart(options, this.el.nativeElement.parentElement.offsetWidth);
+      const config = new Chart(options, this.el.nativeElement.parentElement.offsetWidth - 45);
       config.xAxis.events = {
         setExtremes: function (e) {
           if (e.trigger !== 'syncExtremes') {

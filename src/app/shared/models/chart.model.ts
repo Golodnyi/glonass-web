@@ -8,7 +8,7 @@ export class Chart {
     spacingTop: 20,
     spacingBottom: 0,
     width: 600,
-    height: 400
+    height: 360
   };
   public plotOptions = {
     pie: {
@@ -45,12 +45,6 @@ export class Chart {
   constructor(options: any, width: number) {
     this.chart.width = width;
 
-    this.title = {
-      text: options.name,
-      align: 'left',
-      marginBottom: 10,
-      x: -10
-    };
     this.series = [{
       data: options.data,
       name: options.name,

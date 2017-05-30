@@ -1,43 +1,55 @@
 <div class="row">
-    <div class="col-md-6">
-        <div *ngIf="car">
-            Данные по {{car.name}}<br/>
-            Двигатель:
-            <span *ngIf="engine.id">{{engine.name}}</span>
-            <span *ngIf="!engine.id">отсутствует</span>
-        </div>
-    </div>
-    <div class="col-md-6">
-        Автообновление данных:&nbsp;<p-inputSwitch [disabled]="filter.enabled && !filter.last"
-                                                   [(ngModel)]="autoRefresh.enabled"
-                                                   (onChange)="autoRefreshChange($event)" onLabel="да"
-                                                   offLabel="нет"></p-inputSwitch>
-    </div>
-</div>
-<div class="row">
     <div class="col-md-12">
-        <app-filter *ngIf="filter" [filter]="filter" [car]="car"></app-filter>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <p-accordion>
-            <p-accordionTab header="Графики" [selected]="true">
-                <div *ngIf="options.length">
-                    <app-chart *ngFor="let option of options;" [options]="option ? option : {}"
-                               [data]="option ? option.data : []"></app-chart>
-                </div>
-                <div *ngIf="!options.length">
-                    <div class="loader" *ngIf="loading"></div>
-                    <div *ngIf="!loading">
-                        <h3 class="alert alert-danger">За выбранный период данные отсутствуют, измените параметры
-                            фильтра.</h3>
+        <p-tabView *ngIf="car">
+            <p-tabPanel header="Информация" class="panel">
+                <div class="row">
+                    <div class="col-md-6">
+                        Данные по {{car.name}}<br/>
+                        Двигатель:
+                        <span *ngIf="engine.id">{{engine.name}}</span>
+                        <span *ngIf="!engine.id">отсутствует</span>
+                    </div>
+                    <div class="col-md-6">
+                        Автообновление данных:&nbsp;
+                        <p-inputSwitch [disabled]="filter.enabled && !filter.last"
+                                       [(ngModel)]="autoRefresh.enabled"
+                                       (onChange)="autoRefreshChange($event)" onLabel="да"
+                                       offLabel="нет"></p-inputSwitch>
                     </div>
                 </div>
-            </p-accordionTab>
-            <p-accordionTab header="Карта">
-                <app-ymaps [car]="car"></app-ymaps>
-            </p-accordionTab>
-        </p-accordion>
+            </p-tabPanel>
+            <p-tabPanel header="Фильтр">
+                <div class="row">
+                    <div class="col-md-12">
+                        <app-filter *ngIf="filter" [filter]="filter" [car]="car"></app-filter>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="Карта">
+                <div class="row">
+                    <div class="col-md-12">
+                        <app-ymaps [car]="car"></app-ymaps>
+                    </div>
+                </div>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-12">
+        <div *ngIf="options.length">
+            <p-panel *ngFor="let option of options;" header="{{option.name}}" [toggleable]="true">
+                <app-chart [options]="option ? option : {}"
+                           [data]="option ? option.data : []"></app-chart>
+            </p-panel>
+        </div>
+        <p-panel *ngIf="!options.length" header="Загрузка..." [toggleable]="true">
+            <div class="loader" *ngIf="loading"></div>
+            <div *ngIf="!loading">
+                <h3 class="alert alert-danger">За выбранный период данные отсутствуют, измените параметры
+                    фильтра.</h3>
+            </div>
+        </p-panel>
     </div>
 </div>

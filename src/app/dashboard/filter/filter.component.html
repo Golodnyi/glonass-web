@@ -1,26 +1,20 @@
-<p-accordion *ngIf="form">
-    <p-accordionTab header="Фильтр">
-        <div class="right">
-        </div>
-        <form [formGroup]="form" class="input-group" novalidate (ngSubmit)="onSubmit()">
-            <p-checkbox formControlName="last" binary="true" label="Последние данные"></p-checkbox>
-            <div [hidden]="form.get('last').value">
-                <hr/>
-                <label for="before">С:</label>
-                <p-calendar id="before" formControlName="before" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
-                <label for="after">ПО:</label>
-                <p-calendar id="after" formControlName="after" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
-            </div>
-            <hr/>
-            <div *ngIf="sensors.length">
-                <p-multiSelect defaultLabel="Датчики" id="charts" [options]="sensors|DropDown"
-                               formControlName="charts"></p-multiSelect>
-                <hr/>
-            </div>
-            <button class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton type="submit"
-                    label="Применить"></button>
-            <button class="ui-button-danger" [disabled]="filter.enabled !== true" pButton label="Отключить"
-                    (click)="onDisabled()"></button>
-        </form>
-    </p-accordionTab>
-</p-accordion>
+<form [formGroup]="form" class="input-group" novalidate (ngSubmit)="onSubmit()">
+    <p-checkbox formControlName="last" binary="true" label="Последние данные"></p-checkbox>
+    <div [hidden]="form.get('last').value">
+        <hr/>
+        <label for="before">С:</label>
+        <p-calendar id="before" formControlName="before" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
+        <label for="after">ПО:</label>
+        <p-calendar id="after" formControlName="after" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
+    </div>
+    <hr/>
+    <div *ngIf="sensors.length">
+        <p-multiSelect defaultLabel="Датчики" id="charts" [options]="sensors|DropDown"
+                       formControlName="charts"></p-multiSelect>
+        <hr/>
+    </div>
+    <button class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton type="submit"
+            label="Применить"></button>
+    <button class="ui-button-danger" [disabled]="filter.enabled !== true" pButton label="Отключить"
+            (click)="onDisabled()"></button>
+</form>
