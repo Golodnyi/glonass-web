@@ -17,6 +17,9 @@ export class YmapsComponent implements OnInit, OnDestroy {
   constructor(private chartsService: ChartsService) {
     ymaps.ready().then(() => {
       this.subscription.add(this.chartsService.getMap().subscribe(data => {
+          if (this.map) {
+            this.map.destroy();
+          }
           if (data.length) {
             this.center = [data[data.length - 1][1], data[data.length - 1][2]];
             this.map = new ymaps.Map('ymap', {
@@ -58,6 +61,7 @@ export class YmapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.map.destroy();
     this.subscription.unsubscribe();
   }
 }
