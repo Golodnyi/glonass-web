@@ -1,9 +1,4 @@
-<div>
-    <h3>Текущее состояние</h3>
-    <div>
-        ПОСЛЕДНЕЕ СОБЫТИЕ ЗА ПЕРИОД<br/>
-        {{state.last_date}}
-    </div>
+<p-panel header="Текущее состояние" [toggleable]="true">
     <div>
         Двигатель:
         <span *ngIf="state.engine" class="badge badge-success">работает</span>
@@ -40,4 +35,7 @@
     <div>
         Моточасы: {{state.motochas}}
     </div>
-</div>
+    <div class="label label-default">
+        Информация за {{state.last_date}}
+    </div>
+</p-panel>

@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 export interface IState {
   last_date: string;
   engine: boolean;
@@ -10,7 +12,7 @@ export interface IState {
   motochas: number;
 }
 export class State {
-  public last_date: string;
+  public last_date: string = moment().format('YY.MM.DD HH.mm.ss');
   public engine: boolean;
   public gsm: boolean;
   public time: boolean;

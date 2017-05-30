@@ -1,5 +1,4 @@
-<div *ngIf="companies" class="navigation">
-    <h3>Компании</h3>
+<p-panel *ngIf="companies" header="Компании" [toggleable]="true">
     <p-tree [value]="companies | tree"
             selectionMode="single"
             [(selection)]="node"
@@ -9,4 +8,4 @@
             <span>{{node.data.name}}</span>
         </ng-template>
     </p-tree>
-</div>
+</p-panel>
