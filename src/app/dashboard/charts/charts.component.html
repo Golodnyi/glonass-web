@@ -10,11 +10,20 @@
                         <span *ngIf="!engine.id">отсутствует</span>
                     </div>
                     <div class="col-md-6">
-                        Автообновление данных:&nbsp;
-                        <p-inputSwitch [disabled]="filter.enabled && !filter.last"
-                                       [(ngModel)]="autoRefresh.enabled"
-                                       (onChange)="autoRefreshChange($event)" onLabel="да"
-                                       offLabel="нет"></p-inputSwitch>
+                        <div class="row">
+                            Автообновление данных:&nbsp;
+                            <p-inputSwitch [disabled]="filter.enabled && !filter.last"
+                                           [(ngModel)]="autoRefresh.enabled"
+                                           (onChange)="autoRefreshChange($event)" onLabel="да"
+                                           offLabel="нет"></p-inputSwitch>
+                        </div>
+                        <div class="row">
+                            Режим отображения:
+                            <p-toggleButton onLabel="Сеткой" offLabel="Списокм"
+                                            onIcon="fa-th-large" offIcon="fa-align-justify"
+                                            [(ngModel)]="viewMode">
+                            </p-toggleButton>
+                        </div>
                     </div>
                 </div>
             </p-tabPanel>
@@ -39,17 +48,20 @@
 <div class="row">
     <div class="col-md-12">
         <div *ngIf="options.length">
-            <p-panel *ngFor="let option of options;" header="{{option.name}}" [toggleable]="true">
+            <p-panel [class.col-md-6]="viewMode"
+                     *ngFor="let option of options;"
+                     header="{{option.name}}"
+                     [toggleable]="true">
                 <app-chart [options]="option ? option : {}"
                            [data]="option ? option.data : []"></app-chart>
             </p-panel>
         </div>
-        <p-panel *ngIf="!options.length" header="Загрузка..." [toggleable]="true">
+        <div *ngIf="!options.length">
             <div class="loader" *ngIf="loading"></div>
             <div *ngIf="!loading">
                 <h3 class="alert alert-danger">За выбранный период данные отсутствуют, измените параметры
                     фильтра.</h3>
             </div>
-        </p-panel>
+        </div>
     </div>
 </div>

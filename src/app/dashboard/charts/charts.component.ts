@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChartsService } from '../../shared/services/charts.service';
 import { CarsService } from '../../shared/services/cars.service';
@@ -28,6 +28,7 @@ export class ChartsComponent implements OnDestroy {
   public filter: Filter;
   public engine: Engine;
   public loading = true;
+  public viewMode = true;
 
   constructor(private route: ActivatedRoute,
               private chartsService: ChartsService,

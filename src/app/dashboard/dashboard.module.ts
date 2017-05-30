@@ -14,6 +14,7 @@ import {
   MultiSelectModule,
   PanelModule,
   TabViewModule,
+  ToggleButtonModule,
   TreeModule
 } from 'primeng/primeng';
 import { ChartsComponent } from './charts/charts.component';
@@ -25,7 +26,8 @@ import { FilterComponent } from './filter/filter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SensorsService } from '../shared/services/sensors.service';
 import { YmapsComponent } from './ymaps/ymaps.component';
-
+import { ResizableModule } from 'angular2-resizable';
+import { AfterViewCheckedDirective } from '../shared/after-view-checked.directive';
 @NgModule({
   imports: [
     CommonModule,
@@ -40,7 +42,9 @@ import { YmapsComponent } from './ymaps/ymaps.component';
     InputSwitchModule,
     CheckboxModule,
     PanelModule,
-    TabViewModule
+    TabViewModule,
+    ToggleButtonModule,
+    ResizableModule
   ],
   declarations: [DashboardComponent, NavigationComponent, ChartsComponent, StateComponent, FilterComponent, YmapsComponent],
   providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService]

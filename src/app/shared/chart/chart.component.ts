@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnChanges, OnDestroy } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, HostListener, Input, OnChanges, OnDestroy } from '@angular/core';
 import * as highstock from 'highcharts/highstock';
 import { Chart } from '../models/chart.model';
 
@@ -7,17 +7,16 @@ import { Chart } from '../models/chart.model';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css']
 })
-export class ChartComponent implements OnChanges, OnDestroy {
+export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
   public chart: any;
   @Input() data: any;
-
   @Input() set options(options: any) {
     if (this.chart) {
       this.chart.destroy();
     }
     if (Object.keys(options).length) {
       const currentChart = this.chart;
-      const config = new Chart(options, this.el.nativeElement.parentElement.offsetWidth - 45);
+      const config = new Chart(options);
       config.xAxis.events = {
         setExtremes: function (e) {
           if (e.trigger !== 'syncExtremes') {
@@ -50,14 +49,19 @@ export class ChartComponent implements OnChanges, OnDestroy {
 
   @HostListener('mousemove', ['$event'])
   public onMousemove(e) {
-    highstock.charts.forEach(function (chart) {
-      if (chart === undefined) {
+    const currentPoint = this.chart.series[0].searchPoint(e, true);
+    if (currentPoint === undefined) {
+      return false;
+    }
+    highstock.charts.forEach(chart => {
+      if (chart === undefined || chart === this.chart) {
         return false;
       }
-      const event = chart.pointer.normalize(e.originalEvent);
       if (chart.series[0]) {
-        const point = chart.series[0].searchPoint(event, true);
-
+        const point = chart.series[0].searchPoint({
+          chartX: currentPoint.plotX + chart.plotLeft,
+          chartY: currentPoint.plotY + chart.plotTop
+        }, true);
         if (point) {
           point.highlight(e);
         }
@@ -77,6 +81,13 @@ export class ChartComponent implements OnChanges, OnDestroy {
   ngOnDestroy() {
     if (this.chart) {
       this.chart.destroy();
+    }
+  }
+
+  ngAfterViewChecked() {
+    const width = this.el.nativeElement.parentElement.offsetWidth - 35;
+    if (this.el && this.chart && this.chart.chartWidth !== width) {
+      this.chart.setSize(width, 360);
     }
   }
 }

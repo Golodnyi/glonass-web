@@ -1,5 +1,4 @@
 export class Chart {
-  public title;
   public series;
   public xAxis;
   public yAxis;
@@ -42,9 +41,7 @@ export class Chart {
     },
   };
 
-  constructor(options: any, width: number) {
-    this.chart.width = width;
-
+  constructor(options: any) {
     this.series = [{
       data: options.data,
       name: options.name,
