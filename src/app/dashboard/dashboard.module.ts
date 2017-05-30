@@ -26,8 +26,6 @@ import { FilterComponent } from './filter/filter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SensorsService } from '../shared/services/sensors.service';
 import { YmapsComponent } from './ymaps/ymaps.component';
-import { ResizableModule } from 'angular2-resizable';
-import { AfterViewCheckedDirective } from '../shared/after-view-checked.directive';
 @NgModule({
   imports: [
     CommonModule,
@@ -43,8 +41,7 @@ import { AfterViewCheckedDirective } from '../shared/after-view-checked.directiv
     CheckboxModule,
     PanelModule,
     TabViewModule,
-    ToggleButtonModule,
-    ResizableModule
+    ToggleButtonModule
   ],
   declarations: [DashboardComponent, NavigationComponent, ChartsComponent, StateComponent, FilterComponent, YmapsComponent],
   providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService]

@@ -85,8 +85,12 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
+    /**
+     * TODO: Ресайз графка. Эта херня крайне негативно может сказываться на производительности
+     * на слабых пк, переписать сразу, как только появится новое решение
+     */
     const width = this.el.nativeElement.parentElement.offsetWidth - 35;
-    if (this.el && this.chart && this.chart.chartWidth !== width) {
+    if (this.chart && this.chart.chartWidth !== width) {
       this.chart.setSize(width, 360);
     }
   }
