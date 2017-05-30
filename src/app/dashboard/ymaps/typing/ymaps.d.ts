@@ -14,4 +14,8 @@ declare namespace ymaps {
     controls: string[];
     zoom: number;
   }
+
+  export class Placemark {
+    constructor([], {}, {});
+  }
 }

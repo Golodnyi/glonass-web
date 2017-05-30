@@ -19,6 +19,7 @@ export class ChartsService {
   private data: Subject<any> = new Subject();
   private filter: BehaviorSubject<Filter> = new BehaviorSubject(new Filter());
   private sensors: BehaviorSubject<Sensor[]> = new BehaviorSubject([]);
+  private map: BehaviorSubject<any[]> = new BehaviorSubject([]);
   private autoRefresh: BehaviorSubject<AutoRefresh> = new BehaviorSubject(new AutoRefresh());
 
   constructor(private http: Http,
@@ -33,6 +34,14 @@ export class ChartsService {
 
   public getFilter() {
     return this.filter.asObservable();
+  }
+
+  public setMap(map) {
+    this.map.next(map);
+  }
+
+  public getMap() {
+    return this.map.asObservable();
   }
 
   public setAutoRefresh(autoRefresh: any) {
@@ -69,6 +78,7 @@ export class ChartsService {
       .subscribe((response: Response) => {
         this.data.next(response.json().data);
         this.sensors.next(response.json().allowedSensors);
+        this.map.next(response.json().map);
       }, error => {
         Error.check(error, this.authService, this.router, this.msgService);
         this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
