@@ -10,6 +10,7 @@ import {
   AccordionModule,
   CalendarModule,
   CheckboxModule,
+  GMapModule,
   InputSwitchModule,
   MultiSelectModule,
   TreeModule
@@ -22,6 +23,7 @@ import { StateComponent } from './state/state.component';
 import { FilterComponent } from './filter/filter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SensorsService } from '../shared/services/sensors.service';
+import { YmapsComponent } from './ymaps/ymaps.component';
 
 @NgModule({
   imports: [
@@ -35,9 +37,10 @@ import { SensorsService } from '../shared/services/sensors.service';
     ReactiveFormsModule,
     AccordionModule,
     InputSwitchModule,
-    CheckboxModule
+    CheckboxModule,
+    GMapModule
   ],
-  declarations: [DashboardComponent, NavigationComponent, ChartsComponent, StateComponent, FilterComponent],
+  declarations: [DashboardComponent, NavigationComponent, ChartsComponent, StateComponent, FilterComponent, YmapsComponent],
   providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService]
 })
 export class DashboardModule {
