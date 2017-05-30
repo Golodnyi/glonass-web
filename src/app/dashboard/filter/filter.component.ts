@@ -21,7 +21,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   public ru = new Calendar();
   public form: FormGroup = null;
   public submit: boolean;
-  private sensors: Sensor[];
+  public sensors: Sensor[];
   private subscription: Subscription = new Subscription();
 
   constructor(private filterForm: FilterForm,
