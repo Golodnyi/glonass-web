@@ -57,7 +57,10 @@
             </p-panel>
         </div>
         <div *ngIf="!options.length">
-            <div class="loader" *ngIf="loading"></div>
+            <div class="load" *ngIf="loading">
+                Загрузка...
+                <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+            </div>
             <div *ngIf="!loading">
                 <h3 class="alert alert-danger">За выбранный период данные отсутствуют, измените параметры
                     фильтра.</h3>
