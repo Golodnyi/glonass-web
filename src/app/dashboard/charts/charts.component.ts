@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChartsService } from '../../shared/services/charts.service';
 import { CarsService } from '../../shared/services/cars.service';
@@ -47,6 +47,7 @@ export class ChartsComponent implements OnDestroy {
     this.subscription.add(this.route.params.subscribe(params => {
         this.options = []; // уничтожаем графики
         const car_id = +params['car'];
+        this.chartsService.setCar(car_id);
         this.subscription.add(
           this.carsService.get(car_id, true).subscribe(
             car => {
@@ -151,6 +152,7 @@ export class ChartsComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
+    this.chartsService.setCar(null);
     this.subscription.unsubscribe();
     if (this.subscriptionTimer) {
       this.subscriptionTimer.unsubscribe();

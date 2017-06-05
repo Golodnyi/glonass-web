@@ -1,23 +1,29 @@
 import * as moment from 'moment';
 
 export interface IState {
-  last_date: string;
+  time: string;
   engine: boolean;
+  watch: boolean;
   gsm: boolean;
-  time: boolean;
   network: boolean;
-  network_signal: number;
+  networkSignal: number;
   roaming: boolean;
   power: boolean;
   motochas: number;
 }
 export class State {
-  public last_date: string = moment().format('YY.MM.DD HH.mm.ss');
+  public last_time: string = moment().format('DD.MM.YYYY HH:mm:ss');
+  set time(t) {
+    this.last_time = moment(t).format('DD.MM.YYYY HH:mm:ss');
+  }
+  get time() {
+    return this.last_time;
+  }
   public engine: boolean;
+  public watch: boolean;
   public gsm: boolean;
-  public time: boolean;
   public network: boolean;
-  public network_signal = 0;
+  public networkSignal: number;
   public roaming: boolean;
   public power: boolean;
   public motochas = 0;

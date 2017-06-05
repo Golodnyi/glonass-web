@@ -61,7 +61,9 @@ export class YmapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.map.destroy();
+    if (this.map) {
+      this.map.destroy();
+    }
     this.subscription.unsubscribe();
   }
 }

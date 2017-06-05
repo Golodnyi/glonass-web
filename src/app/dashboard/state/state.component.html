@@ -1,4 +1,4 @@
-<p-panel header="Текущее состояние" [toggleable]="true">
+<p-panel *ngIf="state" header="Текущее состояние" [toggleable]="true">
     <div>
         Двигатель:
         <span *ngIf="state.engine" class="badge badge-success">работает</span>
@@ -11,8 +11,8 @@
     </div>
     <div>
         Время:
-        <span *ngIf="state.time" class="badge alert-success">синхронизовано</span>
-        <span *ngIf="!state.time" class="badge alert-danger">не синхронизовано</span>
+        <span *ngIf="state.watch" class="badge alert-success">синхронизовано</span>
+        <span *ngIf="!state.watch" class="badge alert-danger">не синхронизовано</span>
     </div>
     <div>
         Сеть:
@@ -20,7 +20,7 @@
         <span *ngIf="!state.network" class="badge alert-danger">выкл</span>
     </div>
     <div>
-        Сигнал: {{state.network_signal}}%
+        Сигнал: {{state.networkSignal}}%
     </div>
     <div>
         Роуминг:
@@ -33,9 +33,9 @@
         <span *ngIf="!state.power" class="badge alert-danger">нет</span>
     </div>
     <div>
-        Моточасы: {{state.motochas}}
+        Моточасы: {{state.motochas}} ч.
     </div>
     <div class="label label-default">
-        Информация за {{state.last_date}}
+        Информация за {{state.time}}
     </div>
 </p-panel>
