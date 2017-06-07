@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   AutoCompleteModule,
   ButtonModule,
-  CalendarModule,
+  CalendarModule, CheckboxModule,
   DropdownModule,
   InputTextModule,
   TabMenuModule,
@@ -26,6 +26,8 @@ import { SubdivisionCreateComponent } from './subdivision/create/create.componen
 import { SubdivisionUpdateComponent } from './subdivision/update/update.component';
 import { TreePipe } from '../../shared/pipes/tree.pipe';
 import { SharedModule } from '../../shared/shared.module';
+import { CarCreateComponent } from './car/create/create.component';
+import { CarModelsService } from '../../shared/services/car.models.service';
 
 @NgModule({
   imports: [
@@ -41,13 +43,14 @@ import { SharedModule } from '../../shared/shared.module';
     ToolbarModule,
     SharedModule,
     DropdownModule,
+    CheckboxModule,
     AutoCompleteModule
   ],
   declarations: [
     NavigationComponent, CompaniesComponent, CompanyUpdateComponent, CompanyCreateComponent,
-    CarComponent, EngineComponent, SubdivisionCreateComponent, SubdivisionUpdateComponent
+    CarComponent, EngineComponent, SubdivisionCreateComponent, SubdivisionUpdateComponent, CarCreateComponent
   ],
-  providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService, TreePipe],
+  providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService, TreePipe, CarModelsService],
 })
 export class CompaniesModule {
 }

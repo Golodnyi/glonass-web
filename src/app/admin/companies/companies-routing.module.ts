@@ -7,6 +7,7 @@ import { CompanyUpdateComponent } from './company/update/update.component';
 import { CompanyCreateComponent } from './company/create/create.component';
 import { SubdivisionCreateComponent } from './subdivision/create/create.component';
 import { SubdivisionUpdateComponent } from './subdivision/update/update.component';
+import { CarCreateComponent } from './car/create/create.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       {path: 'company/create', component: CompanyCreateComponent},
       {path: 'company/:company', component: CompanyUpdateComponent},
       {path: 'subdivision/create', component: SubdivisionCreateComponent},
+      {path: 'car/create', component: CarCreateComponent},
       {path: 'company/:company/subdivision/:subdivision', component: SubdivisionUpdateComponent},
       {path: 'company/:company/subdivision/:subdivision/car/:car', component: CarComponent},
       {path: 'company/:company/subdivision/:subdivision/car/:car/engine/:engine', component: EngineComponent}

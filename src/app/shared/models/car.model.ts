@@ -16,4 +16,5 @@ export class Car implements ICar, ITree {
   public subdivision_id: number;
   public is_visible: number;
   public engine: IEngine;
+  public company_id: number;
 }

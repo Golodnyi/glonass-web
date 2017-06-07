@@ -1,0 +1,28 @@
+<h3>Создание компании</h3>
+<form [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
+    <label for="name">Название:</label><br/>
+    <input class="input-sm" id="name" type="text" pInputText formControlName="name"
+           placeholder="Название компании"/><br/>
+    <label for="company">Компания:</label><br/>
+    <div *ngIf="companies.length">
+        <p-dropdown (onChange)="onCompany($event)" id="company" [options]="companies | DropDown"
+                    formControlName="company_id" [filter]="true"
+                    [style]="{'width':'190px'}"></p-dropdown>
+    </div>
+    <div *ngIf="subdivisions.length">
+        <label for="subdivision">Подразделение:</label><br/>
+        <p-dropdown id="subdivision" [options]="subdivisions | DropDown" formControlName="subdivision_id"
+                    [filter]="true"
+                    [style]="{'width':'190px'}"></p-dropdown>
+    </div>
+    <div *ngIf="models.length">
+        <label for="model">Модель:</label><br/>
+        <p-dropdown id="model" [options]="models | DropDown" formControlName="model_id"
+                    [filter]="true"
+                    [style]="{'width':'190px'}"></p-dropdown>
+    </div>
+    <hr/>
+    <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton
+            label="Создать"></button>
+    <button pButton type="button" label="Отмена" routerLink="/admin/companies"></button>
+</form>

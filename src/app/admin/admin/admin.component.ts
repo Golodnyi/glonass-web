@@ -23,6 +23,11 @@ export class AdminComponent implements OnInit {
         label: 'Создать подразделение', command: () => {
         this.router.navigate(['/admin/companies/subdivision/create']);
       }
+      },
+      {
+        label: 'Создать машину', command: () => {
+        this.router.navigate(['/admin/companies/car/create']);
+      }
       }
     ];
 

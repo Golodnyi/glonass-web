@@ -12,17 +12,14 @@ import { Error } from '../models/error.model';
 import { Car } from '../models/car.model';
 import { MsgService } from './msg';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class CarsService {
   private cars: BehaviorSubject<Car[]> = new BehaviorSubject([]);
   private car: BehaviorSubject<Car> = new BehaviorSubject(new Car());
-  private subscriptionEngine: Subscription;
 
   constructor(private http: Http,
               private authService: AuthService,
-              private enginesService: EnginesService,
               private router: Router,
               private msgService: MsgService) {
   }
@@ -65,5 +62,37 @@ export class CarsService {
         });
     }
     return this.car.asObservable();
+  }
+
+  /**
+   * name:test
+   model_id:1
+   subdivision_id:1
+   is_visible:true
+   * @param car
+   * @returns {Observable<R|T>}
+   */
+  public create(car: Car): Observable<Car> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+    return this.http.post(
+      env.backend + '/v1/cars',
+      'name=' + car.name + '&model_id=' + car.model_id + '&subdivision_id=' + car.subdivision_id,
+      options)
+      .map((response: Response) => {
+        const carObj: Car = Object.assign(new Car(), response.json());
+        const list = [];
+        this.cars.getValue().forEach(c => {
+          list.push(Object.assign(new Car(), c));
+        });
+        list.push(Object.assign(new Car(), carObj));
+        this.cars.next(list);
+        return carObj;
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
   }
 }

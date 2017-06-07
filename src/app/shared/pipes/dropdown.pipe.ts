@@ -4,7 +4,7 @@ import { isUndefined } from 'util';
 @Pipe({name: 'DropDown'})
 export class DropDownPipe implements PipeTransform {
   transform(data: any[]): any[] {
-    const items = [];
+    const items = [{label: 'Не выбрано', value: null}];
     if (isUndefined(data)) {
       return items;
     }

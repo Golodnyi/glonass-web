@@ -13,8 +13,8 @@ export class CarCreateForm {
     this.form = this.fb.group({
       model_id: [car.model_id, Validators.required],
       name: [car.name, Validators.required],
+      company_id: [car.company_id, Validators.required],
       subdivision_id: [car.subdivision_id, Validators.required],
-      is_visible: [car.is_visible, Validators.required],
     });
 
     return this.form;
