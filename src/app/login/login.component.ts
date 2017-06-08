@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../shared/services/auth.service';
-import { Auth } from '../shared/models/auth.model';
+import { AuthService } from '../shared/services/auth.service';
+import { Auth } from './shared/models/auth.model';
 import { Router } from '@angular/router';
-import { UsersService } from '../../shared/services/users.service';
-import { User } from '../../shared/models/user.model';
-import { MsgService } from '../../shared/services/msg';
+import { UsersService } from '../shared/services/users.service';
+import { User } from '../shared/models/user.model';
+import { MsgService } from '../shared/services/msg';
 import { CookieService } from 'angular2-cookie/core';
 import { FormGroup } from '@angular/forms';
-import { AuthForm } from '../shared/forms/auth.form';
+import { AuthForm } from './shared/forms/auth.form';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [AuthForm]
 })
 export class LoginComponent {
   public submit = false;

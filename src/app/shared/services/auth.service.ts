@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { env } from '../../../env';
-import { Auth } from '../../auth/shared/models/auth.model';
+import { Auth } from '../../login/shared/models/auth.model';
 import { CookieService } from 'angular2-cookie/core';
 import { Router } from '@angular/router';
 import { MsgService } from './msg';

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { GuestGuard } from './login/shared/guards/guest.guard';
 
 const routes: Routes = [
   {
@@ -8,7 +10,8 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: './auth/auth.module#AuthModule'
+    component: LoginComponent,
+    canActivate: [GuestGuard]
   },
   {
     path: 'dashboard',
