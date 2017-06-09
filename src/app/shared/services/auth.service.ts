@@ -56,7 +56,7 @@ export class AuthService {
 
   public logout() {
     localStorage.removeItem('user');
-    console.log(this.cookieService);
+    this.cookieService.remove('token');
     this.setCurrentUser(null);
     this.logger.next(false);
     this.admin.next(false);
