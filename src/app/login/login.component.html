@@ -1,16 +1,14 @@
-<div class="row">
-    <form [formGroup]="form" class="form-signin" (ngSubmit)="onSubmit()" novalidate>
-        <h2 class="form-signin-heading">Авторизация</h2>
-        <label for="email" class="sr-only">Имя пользователя</label>
-        <input formControlName="email" type="email" id="email" class="form-control" placeholder="email" autofocus>
-        <label for="password" class="sr-only">Пароль</label>
-        <input formControlName="password" type="password" id="password" class="form-control"
-               placeholder="пароль">
-        <div class="checkbox">
-            <label for="remember">
-                <input type="checkbox" id="remember" value="true" formControlName="remember"> Запомнить меня
-            </label>
-        </div>
-        <button type="submit" [disabled]="!form.valid || submit" class="btn btn-success">Войти</button>
-    </form>
-</div>
+<form [formGroup]="form" class="form-signin" (ngSubmit)="onSubmit()" novalidate>
+    <h2 class="form-signin-heading">Авторизация</h2>
+    <label for="email" class="sr-only">Имя пользователя</label>
+    <input formControlName="email" type="email" id="email" class="form-control" placeholder="email" autofocus>
+    <label for="password" class="sr-only">Пароль</label>
+    <input formControlName="password" type="password" id="password" class="form-control"
+           placeholder="пароль">
+    <div class="checkbox">
+        <label for="remember">
+            <input type="checkbox" id="remember" value="true" formControlName="remember"> Запомнить меня
+        </label>
+    </div>
+    <button type="submit" [disabled]="!form.valid || submit" class="btn btn-success">Войти</button>
+</form>
