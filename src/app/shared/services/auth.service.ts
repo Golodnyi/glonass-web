@@ -46,6 +46,9 @@ export class AuthService {
         return user;
       })
       .catch((error: any) => {
+        if (error.status === 409) {
+          this.cookieService.remove('token');
+        }
         this.logger.next(false);
         return Observable.throw(error.json().message || 'Server error');
       });
