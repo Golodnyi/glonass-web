@@ -45,7 +45,6 @@ export class LoginComponent {
             this.authService.setCurrentUser(this.user);
             this.router.navigate(['/dashboard']);
             this.submit = false;
-            console.log('login', this.cookieService.getAll());
           },
           error => {
             this.cookieService.remove('token');

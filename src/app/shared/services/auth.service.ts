@@ -55,13 +55,11 @@ export class AuthService {
   }
 
   public logout() {
-    console.log('logout start', this.cookieService.getAll());
     localStorage.removeItem('user');
-    this.cookieService.remove('token');
+    console.log(this.cookieService);
     this.setCurrentUser(null);
     this.logger.next(false);
     this.admin.next(false);
-    console.log('logout end', this.cookieService.getAll());
     this.router.navigate(['/login']);
   }
 
