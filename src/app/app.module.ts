@@ -40,7 +40,7 @@ import { CookieModule, CookieService } from 'ngx-cookie';
     CookieModule.forRoot()
   ],
   providers: [
-    MsgService, UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ChartsService, EnginesService
+    MsgService, UsersService, AuthService, AuthGuard, GuestGuard, AdminGuard, ChartsService, EnginesService
   ],
   bootstrap: [AppComponent]
 })
