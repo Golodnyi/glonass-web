@@ -9,7 +9,7 @@
     </div>
     <hr/>
     <div *ngIf="sensors.length">
-        <p-multiSelect defaultLabel="Датчики" id="charts" [options]="sensors|DropDown"
+        <p-multiSelect defaultLabel="Датчики" id="charts" [options]="sensors|DropDown:false"
                        formControlName="charts"></p-multiSelect>
         <hr/>
     </div>
