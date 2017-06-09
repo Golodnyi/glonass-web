@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { UsersService } from './shared/services/users.service';
 import { AuthService } from './shared/services/auth.service';
 import { AuthGuard } from './shared/guards/auth.guard';
-import { CookieOptions, CookieService } from 'angular2-cookie/core';
 import { GuestGuard } from './login/shared/guards/guest.guard';
 import { AdminGuard } from './admin/shared/guards/admin.guard';
 import { ChartsService } from './shared/services/charts.service';
@@ -19,6 +18,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CookieModule, CookieService } from 'ngx-cookie';
 
 @NgModule({
   declarations: [
@@ -36,10 +36,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MessagesModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CookieModule.forRoot()
   ],
   providers: [
-    {provide: CookieOptions, useValue: {}},
     MsgService, UsersService, AuthService, AuthGuard, CookieService, GuestGuard, AdminGuard, ChartsService, EnginesService
   ],
   bootstrap: [AppComponent]

@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import { UsersService } from '../shared/services/users.service';
 import { User } from '../shared/models/user.model';
 import { MsgService } from '../shared/services/msg';
-import { CookieService } from 'angular2-cookie/core';
 import { FormGroup } from '@angular/forms';
 import { AuthForm } from './shared/forms/auth.form';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-login',
