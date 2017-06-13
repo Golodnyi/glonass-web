@@ -10,8 +10,7 @@ import { MsgService } from '../services/msg';
 export class Error {
   static check(error: any, authService: AuthService, router: Router, msgService: MsgService) {
     if (error.status === 401) {
-      authService.logout();
-      router.navigate(['/login']);
+      authService.localLogout();
     } else if (error.status === 500) {
       msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText);
     }

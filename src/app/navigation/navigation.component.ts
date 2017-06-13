@@ -15,8 +15,4 @@ export class NavigationComponent {
       this.user = user;
     });
   }
-
-  public logout() {
-    this.authService.logout();
-  }
 }

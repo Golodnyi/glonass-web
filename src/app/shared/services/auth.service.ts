@@ -54,13 +54,32 @@ export class AuthService {
       });
   }
 
-  public logout() {
+  public localLogout() {
     localStorage.removeItem('user');
     this.cookieService.remove('token');
     this.setCurrentUser(null);
     this.logger.next(false);
     this.admin.next(false);
     this.router.navigate(['/login']);
+  }
+
+  public logout(): Observable<boolean> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+
+    return this.http.post(
+      env.backend + '/v1/auth/logout', null, options
+    )
+      .map(() => {
+        this.logger.next(false);
+        this.setCurrentUser(null);
+        this.admin.next(false);
+        return true;
+      })
+      .catch((error: any) => {
+        return Observable.throw(error.json().message || 'Server error');
+      });
   }
 
   private setStateAuth(): void {

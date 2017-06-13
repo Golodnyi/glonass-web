@@ -1,6 +1,6 @@
 {
   "name": "glonass-web",
-  "version": "0.8.17",
+  "version": "0.8.18",
   "license": "UNLICENSED",
   "angular-cli": {},
   "scripts": {
@@ -40,6 +40,15 @@
   "devDependencies": {
     "codelyzer": "~2.0.0-beta.1",
     "ts-node": "1.2.1",
-    "tslint": "^4.3.0"
+    "tslint": "^4.3.0",
+    "@types/jasmine": "2.5.38",
+    "jasmine-core": "~2.5.2",
+    "jasmine-spec-reporter": "~3.2.0",
+    "karma": "~1.4.1",
+    "karma-chrome-launcher": "~2.0.0",
+    "karma-cli": "~1.0.1",
+    "karma-jasmine": "~1.1.0",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-coverage-istanbul-reporter": "^0.2.0"
   }
 }
