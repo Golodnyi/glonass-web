@@ -1,7 +1,7 @@
 <p-panel *ngIf="state" header="Текущее состояние" [toggleable]="true">
     <div>
         Двигатель:
-        <span *ngIf="state.engine" class="badge badge-success">работает</span>
+        <span *ngIf="state.engine" class="badge alert-success">работает</span>
         <span *ngIf="!state.engine" class="badge alert-danger">заглушен</span>
     </div>
     <div>
