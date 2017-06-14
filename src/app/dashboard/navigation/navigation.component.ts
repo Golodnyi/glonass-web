@@ -82,7 +82,11 @@ export class NavigationComponent implements OnDestroy {
 
   public onNodeSelect(event: any) {
     const obj = event.node.data;
-    this.router.navigate(['dashboard/charts/' + obj.id]);
+    if (obj instanceof Company) {
+      this.router.navigate(['dashboard/company/' + obj.id]);
+    } else if (obj instanceof Car) {
+      this.router.navigate(['dashboard/charts/' + obj.id]);
+    }
   }
 
   public isCar(car: Car) {

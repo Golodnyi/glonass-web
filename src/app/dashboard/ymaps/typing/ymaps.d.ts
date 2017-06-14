@@ -18,4 +18,8 @@ declare namespace ymaps {
   export class Placemark {
     constructor([], {}, {});
   }
+
+  export class Polyline {
+    constructor([], {}, {});
+  }
 }

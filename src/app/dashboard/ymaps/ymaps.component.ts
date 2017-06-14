@@ -14,6 +14,7 @@ export class YmapsComponent implements OnInit, OnDestroy {
   private center = [55.75370903771494, 37.61981338262558];
   private subscription: Subscription = new Subscription();
   @Input() car: Car;
+
   constructor(private chartsService: ChartsService) {
     ymaps.ready().then(() => {
       this.subscription.add(this.chartsService.getMap().subscribe(data => {
@@ -27,19 +28,23 @@ export class YmapsComponent implements OnInit, OnDestroy {
               zoom: 12,
               controls: ['smallMapDefaultSet']
             });
-            data.forEach((point, index) => {
-              if ((data.length - 1) === index) {
-                return;
-              }
-              this.map.geoObjects.add(new ymaps.Placemark([point[1], point[2]], {
-                hintContent: this.car.name,
-                balloonContent: moment(point[0]).format('DD.MM.YY h:mm:ss')
-              }, {
-                iconLayout: 'default#image',
-                iconImageHref: '/assets/car_history.png',
-                iconImageSize: [32, 32],
-              }));
+
+            const lines = [];
+            data.forEach(point => {
+              lines.push([point[1], point[2]]);
             });
+
+            this.map.geoObjects.add(
+              new ymaps.Polyline(lines,
+                {
+                  hintContent: 'Маршрут'
+                },
+                {
+                  strokeColor: '#000000',
+                  strokeWidth: 2
+                })
+            );
+
             this.map.geoObjects.add(new ymaps.Placemark(this.center, {
               hintContent: this.car.name,
               balloonContent: moment(data[data.length - 1][0]).format('DD.MM.YY h:mm:ss')

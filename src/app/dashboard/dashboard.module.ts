@@ -26,6 +26,7 @@ import { FilterComponent } from './filter/filter.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SensorsService } from '../shared/services/sensors.service';
 import { YmapsComponent } from './ymaps/ymaps.component';
+import { CompanyComponent } from './company/company.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -43,7 +44,7 @@ import { YmapsComponent } from './ymaps/ymaps.component';
     TabViewModule,
     ToggleButtonModule
   ],
-  declarations: [DashboardComponent, NavigationComponent, ChartsComponent, StateComponent, FilterComponent, YmapsComponent],
+  declarations: [DashboardComponent, NavigationComponent, ChartsComponent, StateComponent, FilterComponent, YmapsComponent, CompanyComponent],
   providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService]
 })
 export class DashboardModule {
