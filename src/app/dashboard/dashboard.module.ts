@@ -44,7 +44,10 @@ import { CompanyComponent } from './company/company.component';
     TabViewModule,
     ToggleButtonModule
   ],
-  declarations: [DashboardComponent, NavigationComponent, ChartsComponent, StateComponent, FilterComponent, YmapsComponent, CompanyComponent],
+  declarations: [
+    DashboardComponent, NavigationComponent, ChartsComponent, StateComponent,
+    FilterComponent, YmapsComponent, CompanyComponent
+  ],
   providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService]
 })
 export class DashboardModule {
