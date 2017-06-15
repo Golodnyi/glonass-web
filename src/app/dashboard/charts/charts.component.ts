@@ -29,7 +29,7 @@ export class ChartsComponent implements OnDestroy {
   public engine: Engine;
   public loading = true;
   public viewMode = true;
-
+  public mapData: any;
   constructor(private route: ActivatedRoute,
               private chartsService: ChartsService,
               private carsService: CarsService,
@@ -44,13 +44,18 @@ export class ChartsComponent implements OnDestroy {
         }
       })
     );
+
+    this.subscription.add(this.chartsService.getMap().subscribe(data => {
+      this.mapData = data;
+    }));
+
     this.subscription.add(this.route.params.subscribe(params => {
         this.options = []; // уничтожаем графики
         const car_id = +params['car'];
-        this.chartsService.setCar(car_id);
         this.subscription.add(
           this.carsService.get(car_id, true).subscribe(
             car => {
+              this.chartsService.setCar(car);
               this.car = car;
             }
           )

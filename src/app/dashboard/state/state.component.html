@@ -1,4 +1,4 @@
-<p-panel *ngIf="state" header="Текущее состояние" [toggleable]="true">
+<p-panel *ngIf="state" header="{{title}}" [toggleable]="true">
     <div>
         Двигатель:
         <span *ngIf="state.engine" class="badge alert-success">работает</span>

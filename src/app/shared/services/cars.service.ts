@@ -6,17 +6,18 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { env } from '../../../env';
 import { AuthService } from './auth.service';
-import { EnginesService } from './engines.service';
 import { Router } from '@angular/router';
 import { Error } from '../models/error.model';
 import { Car } from '../models/car.model';
 import { MsgService } from './msg';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { State } from '../../dashboard/state/shared/state.model';
 
 @Injectable()
 export class CarsService {
   private cars: BehaviorSubject<Car[]> = new BehaviorSubject([]);
   private car: BehaviorSubject<Car> = new BehaviorSubject(new Car());
+  private state: BehaviorSubject<State> = new BehaviorSubject(new State());
 
   constructor(private http: Http,
               private authService: AuthService,
@@ -31,6 +32,28 @@ export class CarsService {
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
       this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars', options)
+        .subscribe((response: Response) => {
+          const cars = [];
+          response.json().forEach(item => {
+            cars.push(Object.assign(new Car(), item));
+          });
+          this.cars.next(cars);
+        }, error => {
+          this.cars.next([]);
+          Error.check(error, this.authService, this.router, this.msgService);
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
+        });
+    }
+    return this.cars.asObservable();
+  }
+
+  public byCompany(company: number, resync = false): Observable<Car[]> {
+    if (resync) {
+      const headers = new Headers();
+      headers.append('Content-Type', 'application/x-www-form-urlencoded');
+      const options = new RequestOptions({headers: headers, withCredentials: true});
+
+      this.http.get(env.backend + '/v1/cars/company/' + company, options)
         .subscribe((response: Response) => {
           const cars = [];
           response.json().forEach(item => {
@@ -89,6 +112,21 @@ export class CarsService {
         list.push(Object.assign(new Car(), carObj));
         this.cars.next(list);
         return carObj;
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
+
+  public getState(car: number): Observable<State> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+
+    return this.http.get(env.backend + '/v1/cars/' + car + '/last-state', options)
+      .map((response: Response) => {
+        return Object.assign(new State(), response.json());
       })
       .catch((error: any) => {
         Error.check(error, this.authService, this.router, this.msgService);

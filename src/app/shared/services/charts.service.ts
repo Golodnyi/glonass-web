@@ -13,13 +13,12 @@ import { Subject } from 'rxjs/Subject';
 import { AutoRefresh } from '../models/auto-refresh.model';
 import { Error } from '../models/error.model';
 import { Sensor } from '../models/sensor.model';
-import { State } from '../../dashboard/state/shared/state.model';
+import { Car } from '../models/car.model';
 
 @Injectable()
 export class ChartsService {
   private data: Subject<any> = new Subject();
-  private car: Subject<number> = new Subject();
-  private state: BehaviorSubject<State> = new BehaviorSubject(new State());
+  private car: Subject<Car> = new Subject();
   private filter: BehaviorSubject<Filter> = new BehaviorSubject(new Filter());
   private sensors: BehaviorSubject<Sensor[]> = new BehaviorSubject([]);
   private map: BehaviorSubject<any[]> = new BehaviorSubject([]);
@@ -39,11 +38,11 @@ export class ChartsService {
     return this.filter.asObservable();
   }
 
-  public setCar(car: number) {
+  public setCar(car: Car) {
     this.car.next(car);
   }
 
-  public getCar() {
+  public getCar(): Observable<Car> {
     return this.car.asObservable();
   }
 
@@ -102,24 +101,5 @@ export class ChartsService {
 
   public getSensors(): Observable<any> {
     return this.sensors.asObservable();
-  }
-
-  public getState(car: number, resync = false): Observable<State> {
-    if (resync) {
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      const options = new RequestOptions({headers: headers, withCredentials: true});
-
-      this.http.get(env.backend + '/v1/cars/' + car + '/last-state', options)
-        .subscribe((response: Response) => {
-            this.state.next(Object.assign(new State(), response.json()));
-          },
-          error => {
-            this.state.next(new State());
-            Error.check(error, this.authService, this.router, this.msgService);
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
-          });
-    }
-    return this.state.asObservable();
   }
 }

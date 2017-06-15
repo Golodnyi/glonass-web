@@ -1,5 +1,6 @@
 import { ITree } from './tree.model';
 import { IEngine } from './engine.model';
+import { State } from '../../dashboard/state/shared/state.model';
 
 export interface ICar {
   id: number;
@@ -17,4 +18,5 @@ export class Car implements ICar, ITree {
   public is_visible: number;
   public engine: IEngine;
   public company_id: number;
+  public state: State;
 }
