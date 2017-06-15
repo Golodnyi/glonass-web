@@ -1,38 +1,43 @@
-<p-panel *ngIf="state" header="{{title}}" [toggleable]="true">
+<p-panel *ngIf="state" header="{{title}}" [toggleable]="toggleable">
+    <div>
+        Статус:
+        <span *ngIf="online()" class="badge alert-success">в сети</span>
+        <span *ngIf="!online()" class="badge alert-danger">не в сети</span>
+    </div>
     <div>
         Двигатель:
         <span *ngIf="state.engine" class="badge alert-success">работает</span>
         <span *ngIf="!state.engine" class="badge alert-danger">заглушен</span>
     </div>
-    <div>
+    <div *ngIf="!compact">
         GSM:
         <span *ngIf="state.gsm" class="badge alert-success">вкл</span>
         <span *ngIf="!state.gsm" class="badge alert-danger">выкл</span>
     </div>
-    <div>
+    <div *ngIf="!compact">
         Время:
         <span *ngIf="state.watch" class="badge alert-success">синхронизовано</span>
         <span *ngIf="!state.watch" class="badge alert-danger">не синхронизовано</span>
     </div>
-    <div>
+    <div *ngIf="!compact">
         Сеть:
         <span *ngIf="state.network" class="badge alert-success">вкл</span>
         <span *ngIf="!state.network" class="badge alert-danger">выкл</span>
     </div>
-    <div>
+    <div *ngIf="!compact">
         Сигнал: {{state.networkSignal}}%
     </div>
-    <div>
+    <div *ngIf="!compact">
         Роуминг:
         <span *ngIf="state.roaming" class="badge alert-danger">да</span>
         <span *ngIf="!state.roaming" class="badge alert-success">нет</span>
     </div>
-    <div>
+    <div *ngIf="!compact">
         Питание:
         <span *ngIf="state.power" class="badge alert-success">да</span>
         <span *ngIf="!state.power" class="badge alert-danger">нет</span>
     </div>
-    <div>
+    <div *ngIf="!compact">
         Моточасы: {{state.motochas}} ч.
     </div>
     <div class="label label-default">

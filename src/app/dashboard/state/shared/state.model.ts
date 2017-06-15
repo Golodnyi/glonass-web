@@ -14,11 +14,13 @@ export interface IState {
 export class State {
   public last_time: string = moment().format('DD.MM.YYYY HH:mm:ss');
   set time(t) {
+    this.timestamp = t;
     this.last_time = moment(t).format('DD.MM.YYYY HH:mm:ss');
   }
   get time() {
     return this.last_time;
   }
+  timestamp: string;
   public engine: boolean;
   public watch: boolean;
   public gsm: boolean;

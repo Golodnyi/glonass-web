@@ -2,12 +2,9 @@
     <div class="col-md-12">
         <p-tabView>
             <p-tabPanel header="Состояние" *ngIf="cars">
-                <div class="col-md-4" *ngFor="let car of cars;">
-                    <app-state [state]="car.state" [title]="car.name"></app-state>
+                <div class="col-md-4" style="cursor: pointer;" routerLink="/dashboard/charts/{{car.id}}" *ngFor="let car of cars;">
+                    <app-state [compact]="true" [toggleable]="false" [state]="car.state" [title]="car.name"></app-state>
                 </div>
-            </p-tabPanel>
-            <p-tabPanel header="Карта">
-                Content 2
             </p-tabPanel>
         </p-tabView>
     </div>

@@ -17,7 +17,7 @@ export class DashboardComponent implements OnDestroy {
   constructor(private carsService: CarsService, private chartsService: ChartsService) {
     this.subscription.add(
       this.chartsService.getCar().subscribe(car => {
-        if (car === null) {
+        if (car === null || !Object.keys(car).length) {
           this.state = null;
           return;
         }
