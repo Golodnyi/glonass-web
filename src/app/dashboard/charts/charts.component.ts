@@ -9,6 +9,8 @@ import { AutoRefresh } from '../../shared/models/auto-refresh.model';
 import { Filter } from '../../shared/models/filter.model';
 import { EnginesService } from '../../shared/services/engines.service';
 import { Engine } from '../../shared/models/engine.model';
+import { MapCar } from '../ymaps/shared/map-car.model';
+import { MapPolyLines } from '../ymaps/shared/map-polylines.model';
 
 @Component({
   selector: 'app-charts',
@@ -29,7 +31,9 @@ export class ChartsComponent implements OnDestroy {
   public engine: Engine;
   public loading = true;
   public viewMode = true;
-  public mapData: any;
+  public mapCars: MapCar[];
+  public mapPolyLines: MapPolyLines[];
+
   constructor(private route: ActivatedRoute,
               private chartsService: ChartsService,
               private carsService: CarsService,
@@ -45,9 +49,25 @@ export class ChartsComponent implements OnDestroy {
       })
     );
 
-    this.subscription.add(this.chartsService.getMap().subscribe(data => {
-      this.mapData = data;
-    }));
+    this.subscription.add(
+      this.chartsService.getMap().subscribe(data => {
+        this.mapCars = [];
+        this.mapPolyLines = [];
+
+        if (data.length) {
+          const car = new MapCar();
+          car.name = this.car.name;
+          car.point = [data[data.length - 1][1], data[data.length - 1][2]];
+          this.mapCars.push(car);
+          const polyLines = new MapPolyLines();
+          polyLines.name = 'Маршрут';
+          polyLines.color = '#000000';
+          data.forEach(d => {
+            polyLines.points.push([d[1], d[2]]);
+          });
+          this.mapPolyLines.push(polyLines);
+        }
+      }));
 
     this.subscription.add(this.route.params.subscribe(params => {
         this.options = []; // уничтожаем графики

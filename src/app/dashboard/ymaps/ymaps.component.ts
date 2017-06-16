@@ -1,8 +1,7 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { ChartsService } from '../../shared/services/charts.service';
 import { Subscription } from 'rxjs/Subscription';
-import { Car } from '../../shared/models/car.model';
-import * as moment from 'moment';
+import { MapCar } from './shared/map-car.model';
+import { MapPolyLines } from './shared/map-polylines.model';
 /// <reference path="./typing/ymaps.d.ts" />
 @Component({
   selector: 'app-ymaps',
@@ -10,51 +9,54 @@ import * as moment from 'moment';
   styleUrls: ['./ymaps.component.css']
 })
 export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
+  mapPolyLines: any;
+  mapCars: any;
   public map: any;
   private center = [55.75370903771494, 37.61981338262558];
   private subscription: Subscription = new Subscription();
-  @Input() car: Car;
-  @Input() data: any;
-  private build () {
+  @Input() cars: MapCar[];
+  @Input() polyLines: MapPolyLines[];
+
+  private build() {
     ymaps.ready().then(() => {
       if (this.map) {
         this.map.destroy();
       }
-      if (this.data.length) {
-        this.center = [this.data[this.data.length - 1][1], this.data[this.data.length - 1][2]];
-        this.map = new ymaps.Map('ymap', {
-          center: this.center,
-          zoom: 12,
-          controls: ['smallMapDefaultSet']
-        });
 
-        const lines = [];
-        this.data.forEach(point => {
-          lines.push([point[1], point[2]]);
-        });
-
-        this.map.geoObjects.add(
-          new ymaps.Polyline(lines,
-            {
-              hintContent: 'Маршрут'
-            },
-            {
-              strokeColor: '#000000',
-              strokeWidth: 2
-            })
-        );
-
-        this.map.geoObjects.add(new ymaps.Placemark(this.center, {
-          hintContent: this.car.name,
-          balloonContent: moment(this.data[this.data.length - 1][0]).format('DD.MM.YY h:mm:ss')
+      if (this.cars.length) {
+        const lastCar = this.cars[this.cars.length - 1];
+        this.center = lastCar.point;
+      }
+      this.map = new ymaps.Map('ymap', {
+        center: this.center,
+        zoom: 12,
+        controls: ['smallMapDefaultSet']
+      });
+      this.cars.forEach(car => {
+        this.map.geoObjects.add(new ymaps.Placemark(car.point, {
+          hintContent: car.name
         }, {
           iconLayout: 'default#image',
           iconImageHref: '/assets/car.png',
           iconImageSize: [32, 32],
         }));
-      }
+      });
+
+      this.polyLines.forEach(polyLine => {
+        this.map.geoObjects.add(
+        new ymaps.Polyline(polyLine.points,
+            {
+              hintContent: polyLine.name
+            },
+            {
+              strokeColor: polyLine.color,
+              strokeWidth: 2
+            })
+        );
+      });
     });
   }
+
   constructor() {
     this.build();
   }
@@ -66,8 +68,12 @@ export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes) {
-    if (changes.data && !changes.data.firstChange) {
-      this.data = changes.data.currentValue;
+    if (changes.cars && !changes.cars.firstChange) {
+      this.cars = changes.cars.currentValue;
+      this.build();
+    }
+    if (changes.polyLines && !changes.polyLines.firstChange) {
+      this.polyLines = changes.polyLines.currentValue;
       this.build();
     }
   }
