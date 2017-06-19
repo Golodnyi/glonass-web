@@ -23,6 +23,9 @@ export class CompanyComponent implements OnDestroy {
               private carsService: CarsService,
               private route: ActivatedRoute,
               private chartsService: ChartsService) {
+    /**
+     * TODO: нужен рефакторинг
+     */
     this.subscription.add(this.route.params.subscribe(params => {
         this.mapCars = [];
         this.mapPolyLines = [];
