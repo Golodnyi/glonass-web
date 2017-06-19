@@ -6,7 +6,7 @@
                     <p-accordionTab *ngFor="let subdivision of subdivisions" header="{{subdivision.name}}"
                                     [selected]="true">
                         <div class="row">
-                            <div *ngIf="!subdivision.cars" class="col-md-pull-12">
+                            <div *ngIf="!subdivision.cars || !subdivision.cars.length" class="col-md-pull-12">
                                 Машины отсутствуют
                             </div>
                             <div class="col-md-4" *ngFor="let car of subdivision.cars"
