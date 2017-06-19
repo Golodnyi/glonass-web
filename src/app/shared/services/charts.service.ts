@@ -62,6 +62,20 @@ export class ChartsService {
     return this.autoRefresh.asObservable();
   }
 
+  public mapData(car: number): Observable<any> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+
+    return this.http.get(env.backend + '/v1/cars/' + car + '/report', options)
+      .map((response: Response) => {
+        return response.json().map;
+      }).catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
+
   public resync(car: number): void {
     const filter = this.filter.getValue();
     const autoRefresh = this.autoRefresh.getValue();

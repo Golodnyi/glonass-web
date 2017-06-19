@@ -1,23 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CarsService } from '../../shared/services/cars.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute } from '@angular/router';
 import { SubdivisionsService } from '../../shared/services/subdivisions.service';
 import { Subdivision } from '../../shared/models/subdivision.model';
+import { ChartsService } from '../../shared/services/charts.service';
+import { MapCar } from '../ymaps/shared/map-car.model';
+import { MapPolyLines } from '../ymaps/shared/map-polylines.model';
 
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
   styleUrls: ['./company.component.css']
 })
-export class CompanyComponent implements OnInit {
+export class CompanyComponent implements OnDestroy {
   private subscription: Subscription = new Subscription();
   public subdivisions: Subdivision[];
+  public mapCars: MapCar[];
+  public mapPolyLines: MapPolyLines[];
 
   constructor(private subdivisionsService: SubdivisionsService,
               private carsService: CarsService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private chartsService: ChartsService) {
     this.subscription.add(this.route.params.subscribe(params => {
+        this.mapCars = [];
+        this.mapPolyLines = [];
         const company_id = +params['company'];
         this.subscription.add(
           this.subdivisionsService.all(company_id, true).subscribe(
@@ -29,10 +37,28 @@ export class CompanyComponent implements OnInit {
                     cars => {
                       subdiv.cars = cars;
                       subdiv.cars.forEach(car => {
-                        this.carsService.getState(car.id).subscribe(
-                          state => {
-                            car.state = state;
-                          }
+                        this.subscription.add(
+                          this.chartsService.mapData(car.id).subscribe(data => {
+                            if (data && data.length) {
+                              const mCar = new MapCar();
+                              mCar.name = car.name;
+                              mCar.point = [data[data.length - 1][1], data[data.length - 1][2]];
+                              this.mapCars.push(mCar);
+                              const polyLines = new MapPolyLines();
+                              polyLines.name = 'Маршрут';
+                              polyLines.color = '#000000';
+                              data.forEach(d => {
+                                polyLines.points.push([d[1], d[2]]);
+                              });
+                              this.mapPolyLines.push(polyLines);
+                            }
+                          }));
+                        this.subscription.add(
+                          this.carsService.getState(car.id).subscribe(
+                            state => {
+                              car.state = state;
+                            }
+                          )
                         );
                       });
                     }
@@ -46,7 +72,7 @@ export class CompanyComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
-
 }

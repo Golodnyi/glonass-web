@@ -1,12 +1,28 @@
 <div class="row">
     <div class="col-md-12">
-        <p-fieldset *ngFor="let subdivision of subdivisions" legend="{{subdivision.name}}" [toggleable]="true">
-            <div class="col-md-4" *ngFor="let car of subdivision.cars" routerLink="/dashboard/charts/{{car.id}}"
-                 style="cursor: pointer;">
-                <app-state [compact]="true" [toggleable]="false"
-                           [state]="car.state" [title]="car.name">
-                </app-state>
-            </div>
-        </p-fieldset>
+        <p-tabView>
+            <p-tabPanel *ngIf="subdivisions" header="Состояние">
+                <p-accordion [multiple]="true">
+                    <p-accordionTab *ngFor="let subdivision of subdivisions" header="{{subdivision.name}}"
+                                    [selected]="true">
+                        <div class="row">
+                            <div *ngIf="!subdivision.cars" class="col-md-pull-12">
+                                Машины отсутствуют
+                            </div>
+                            <div class="col-md-4" *ngFor="let car of subdivision.cars"
+                                 routerLink="/dashboard/charts/{{car.id}}"
+                                 style="cursor: pointer;">
+                                <app-state [compact]="true" [toggleable]="false"
+                                           [state]="car.state" [title]="car.name">
+                                </app-state>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+            </p-tabPanel>
+            <p-tabPanel *ngIf="mapCars" header="Карта">
+                <app-ymaps [cars]="mapCars" [polyLines]="mapPolyLines"></app-ymaps>
+            </p-tabPanel>
+        </p-tabView>
     </div>
 </div>
