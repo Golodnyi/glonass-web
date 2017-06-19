@@ -12,10 +12,11 @@ export class StateComponent {
   @Input() title: string;
   @Input() toggleable = true;
   @Input() compact = false;
+
   constructor() {
   }
 
   public online() {
-    return (Number(moment().format('X')) - Number(this.state.timestamp)) < 3600;
+    return (Number(moment().format('X')) - Number(this.state.timestamp) / 1000) < 3600;
   }
 }
