@@ -1,6 +1,7 @@
 import { IUser } from './user.model';
 import { ITree } from './tree.model';
 import { ICompany } from './company.model';
+import { Car } from './car.model';
 
 export interface ISubdivision {
   id: number;
@@ -21,4 +22,5 @@ export class Subdivision implements ISubdivision, ITree {
   public author: IUser;
   public created_at: string;
   public updated_at: string;
+  public cars: Car[];
 }

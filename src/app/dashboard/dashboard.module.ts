@@ -9,7 +9,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import {
   AccordionModule,
   CalendarModule,
-  CheckboxModule,
+  CheckboxModule, FieldsetModule,
   InputSwitchModule,
   MultiSelectModule,
   PanelModule,
@@ -42,7 +42,8 @@ import { CompanyComponent } from './company/company.component';
     CheckboxModule,
     PanelModule,
     TabViewModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    FieldsetModule
   ],
   declarations: [
     DashboardComponent, NavigationComponent, ChartsComponent, StateComponent,

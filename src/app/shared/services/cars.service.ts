@@ -47,26 +47,18 @@ export class CarsService {
     return this.cars.asObservable();
   }
 
-  public byCompany(company: number, resync = false): Observable<Car[]> {
-    if (resync) {
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      const options = new RequestOptions({headers: headers, withCredentials: true});
+  public all_sync(company: number, subdivision: number): Observable<Car[]> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
 
-      this.http.get(env.backend + '/v1/cars/company/' + company, options)
-        .subscribe((response: Response) => {
-          const cars = [];
-          response.json().forEach(item => {
-            cars.push(Object.assign(new Car(), item));
-          });
-          this.cars.next(cars);
-        }, error => {
-          this.cars.next([]);
-          Error.check(error, this.authService, this.router, this.msgService);
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
-        });
-    }
-    return this.cars.asObservable();
+    return this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars', options)
+      .map((response: Response) => {
+        return response.json();
+      }).catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
   }
 
   public get(car: number, resync = false): Observable<Car> {
