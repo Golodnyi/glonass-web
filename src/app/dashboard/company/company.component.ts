@@ -49,7 +49,7 @@ export class CompanyComponent implements OnDestroy {
                               this.mapCars.push(mCar);
                               const polyLines = new MapPolyLines();
                               polyLines.name = 'Маршрут';
-                              polyLines.color = '#' + ((1 << 24) * Math.random() | 0).toString(16);
+                              polyLines.color = '#' + Math.random().toString(16).substr(-6);
                               data.forEach(d => {
                                 polyLines.points.push([d[1], d[2]]);
                               });

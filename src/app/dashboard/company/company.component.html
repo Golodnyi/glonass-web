@@ -21,7 +21,7 @@
                 </p-accordion>
             </p-tabPanel>
             <p-tabPanel *ngIf="mapCars" header="Карта">
-                <app-ymaps [cars]="mapCars" [polyLines]="mapPolyLines"></app-ymaps>
+                <app-ymaps [cars]="mapCars" [polyLines]="mapPolyLines" [zoom]="4"></app-ymaps>
             </p-tabPanel>
         </p-tabView>
     </div>

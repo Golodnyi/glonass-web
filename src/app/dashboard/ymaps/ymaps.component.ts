@@ -16,6 +16,7 @@ export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
   private subscription: Subscription = new Subscription();
   @Input() cars: MapCar[];
   @Input() polyLines: MapPolyLines[];
+  @Input() zoom = 0;
 
   private build() {
     ymaps.ready().then(() => {
@@ -29,7 +30,7 @@ export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
       }
       this.map = new ymaps.Map('ymap', {
         center: this.center,
-        zoom: 12,
+        zoom: (!this.zoom ? 12 : this.zoom),
         controls: ['smallMapDefaultSet']
       });
       this.cars.forEach(car => {
