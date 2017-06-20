@@ -7,6 +7,7 @@ import { Subdivision } from '../../shared/models/subdivision.model';
 import { ChartsService } from '../../shared/services/charts.service';
 import { MapCar } from '../ymaps/shared/map-car.model';
 import { MapPolyLines } from '../ymaps/shared/map-polylines.model';
+import { Car } from '../../shared/models/car.model';
 
 @Component({
   selector: 'app-company',
@@ -15,9 +16,12 @@ import { MapPolyLines } from '../ymaps/shared/map-polylines.model';
 })
 export class CompanyComponent implements OnDestroy {
   private subscription: Subscription = new Subscription();
-  public subdivisions: Subdivision[];
-  public mapCars: MapCar[];
-  public mapPolyLines: MapPolyLines[];
+  private mpl: MapPolyLines[];
+  private mc: MapCar[];
+
+  public subdivisions: Subdivision[] = [];
+  public mapCars: MapCar[] = [];
+  public mapPolyLines: MapPolyLines[] = [];
 
   constructor(private subdivisionsService: SubdivisionsService,
               private carsService: CarsService,
@@ -26,56 +30,63 @@ export class CompanyComponent implements OnDestroy {
     /**
      * TODO: нужен рефакторинг
      */
-    this.subscription.add(this.route.params.subscribe(params => {
-        this.mapCars = [];
-        this.mapPolyLines = [];
+    this.subscription.add(
+      this.route.params.subscribe(params => {
+        this.mc = [];
+        this.mpl = [];
         const company_id = +params['company'];
-        this.subscription.add(
-          this.subdivisionsService.all(company_id, true).subscribe(
-            subdivisions => {
-              this.subdivisions = subdivisions;
-              this.subdivisions.forEach(subdiv => {
-                this.subscription.add(
-                  this.carsService.all_sync(company_id, subdiv.id).subscribe(
-                    cars => {
-                      subdiv.cars = cars;
-                      subdiv.cars.forEach(car => {
-                        this.subscription.add(
-                          this.chartsService.mapData(car.id).subscribe(data => {
-                            if (data && data.length) {
-                              const mCar = new MapCar();
-                              mCar.name = car.name;
-                              mCar.point = [data[data.length - 1][1], data[data.length - 1][2]];
-                              this.mapCars.push(mCar);
-                              const polyLines = new MapPolyLines();
-                              polyLines.name = 'Маршрут';
-                              polyLines.color = '#' + Math.random().toString(16).substr(-6);
-                              data.forEach(d => {
-                                polyLines.points.push([d[1], d[2]]);
-                              });
-                              this.mapPolyLines.push(polyLines);
-                            }
-                          }));
-                        this.subscription.add(
-                          this.carsService.getState(car.id).subscribe(
-                            state => {
-                              car.state = state;
-                            }
-                          )
-                        );
-                      });
-                    }
-                  )
-                );
-              });
-            }
-          )
+        this.subdivisionsService.all_resync(company_id).subscribe(
+          subdivisions => {
+            this.subdivisions = subdivisions;
+            this.subdivisions.forEach(subdiv => {
+              this.carsService.all_sync(company_id, subdiv.id).subscribe(
+                cars => {
+                  subdiv.cars = cars;
+                  subdiv.cars.forEach(car => {
+                    this.chartsService.mapData(car.id).subscribe(data => {
+                      if (data && data.length) {
+                        const mCar = new MapCar();
+                        mCar.name = car.name;
+                        mCar.point = [data[data.length - 1][1], data[data.length - 1][2]];
+
+                        const polyLines = new MapPolyLines();
+                        polyLines.name = 'Маршрут';
+                        polyLines.color = '#' + Math.random().toString(16).substr(-6);
+                        data.forEach(d => {
+                          polyLines.points.push([d[1], d[2]]);
+                        });
+
+                        this.mc.push(mCar);
+                        this.mpl.push(polyLines);
+                      }
+                    });
+                    this.buildState(car);
+                  });
+                }
+              );
+            });
+          }
         );
+        this.mapCars = this.mc;
+        this.mapPolyLines = this.mpl;
       })
     );
   }
 
+  private buildState(car: Car) {
+    this.carsService.getState(car.id).subscribe(
+      state => {
+        car.state = state;
+      }
+    );
+  }
+
+  private buildMap(car: Car) {
+
+  }
+
   ngOnDestroy() {
+    console.log('destroy');
     this.subscription.unsubscribe();
   }
 }

@@ -9,8 +9,6 @@ import { MapPolyLines } from './shared/map-polylines.model';
   styleUrls: ['./ymaps.component.css']
 })
 export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
-  mapPolyLines: any;
-  mapCars: any;
   public map: any;
   private center = [55.75370903771494, 37.61981338262558];
   private subscription: Subscription = new Subscription();
@@ -45,7 +43,7 @@ export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
 
       this.polyLines.forEach(polyLine => {
         this.map.geoObjects.add(
-        new ymaps.Polyline(polyLine.points,
+          new ymaps.Polyline(polyLine.points,
             {
               hintContent: polyLine.name
             },

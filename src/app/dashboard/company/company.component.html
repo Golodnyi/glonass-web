@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-md-12">
         <p-tabView>
-            <p-tabPanel *ngIf="subdivisions" header="Состояние">
-                <p-accordion [multiple]="true">
+            <p-tabPanel header="Состояние">
+                <p-accordion *ngIf="subdivisions.length" [multiple]="true">
                     <p-accordionTab *ngFor="let subdivision of subdivisions" header="{{subdivision.name}}"
                                     [selected]="true">
                         <div class="row">
@@ -19,9 +19,15 @@
                         </div>
                     </p-accordionTab>
                 </p-accordion>
+                <div *ngIf="!subdivisions.length" class="alert alert-danger">
+                    Нет данных о состоянии
+                </div>
             </p-tabPanel>
-            <p-tabPanel *ngIf="mapCars" header="Карта">
-                <app-ymaps [cars]="mapCars" [polyLines]="mapPolyLines" [zoom]="4"></app-ymaps>
+            <p-tabPanel header="Карта">
+                <app-ymaps *ngIf="mapCars.length" [cars]="mapCars" [polyLines]="mapPolyLines" [zoom]="4"></app-ymaps>
+                <div *ngIf="!mapCars.length" class="alert alert-danger">
+                    Нет данных для карты
+                </div>
             </p-tabPanel>
         </p-tabView>
     </div>

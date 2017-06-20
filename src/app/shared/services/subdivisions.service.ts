@@ -45,6 +45,24 @@ export class SubdivisionsService {
     return this.subdivisions.asObservable();
   }
 
+  public all_resync(company: number): Observable<Subdivision[]> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+
+    return this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions', options)
+      .map((response: Response) => {
+        const subdivisions = [];
+        response.json().forEach(item => {
+          subdivisions.push(Object.assign(new Subdivision(), item));
+        });
+        return subdivisions;
+      }).catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
+
   public create(subdivision: Subdivision): Observable<Subdivision> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
