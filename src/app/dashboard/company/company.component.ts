@@ -81,12 +81,7 @@ export class CompanyComponent implements OnDestroy {
     );
   }
 
-  private buildMap(car: Car) {
-
-  }
-
   ngOnDestroy() {
-    console.log('destroy');
     this.subscription.unsubscribe();
   }
 }
