@@ -8,6 +8,7 @@ import { ChartsService } from '../../shared/services/charts.service';
 import { MapCar } from '../ymaps/shared/map-car.model';
 import { MapPolyLines } from '../ymaps/shared/map-polylines.model';
 import { Car } from '../../shared/models/car.model';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-company',
@@ -16,12 +17,14 @@ import { Car } from '../../shared/models/car.model';
 })
 export class CompanyComponent implements OnDestroy {
   private subscription: Subscription = new Subscription();
+  private subscriptionTimer: Subscription[] = [];
   private mpl: MapPolyLines[];
   private mc: MapCar[];
 
   public subdivisions: Subdivision[] = [];
   public mapCars: MapCar[] = [];
   public mapPolyLines: MapPolyLines[] = [];
+  private timer = Observable.timer(0, 5000);
 
   constructor(private subdivisionsService: SubdivisionsService,
               private carsService: CarsService,
@@ -35,6 +38,11 @@ export class CompanyComponent implements OnDestroy {
         this.mc = [];
         this.mpl = [];
         const company_id = +params['company'];
+        if (this.subscriptionTimer.length) {
+          this.subscriptionTimer.forEach(s => {
+            s.unsubscribe();
+          });
+        }
         this.subdivisionsService.all_resync(company_id).subscribe(
           subdivisions => {
             this.subdivisions = subdivisions;
@@ -74,14 +82,21 @@ export class CompanyComponent implements OnDestroy {
   }
 
   private buildState(car: Car) {
-    this.carsService.getState(car.id).subscribe(
-      state => {
-        car.state = state;
-      }
+    this.subscriptionTimer.push(
+      this.timer.subscribe(t => {
+        this.carsService.getState(car.id).subscribe(
+          state => {
+            car.state = state;
+          }
+        );
+      })
     );
   }
 
   ngOnDestroy() {
+    this.subscriptionTimer.forEach(s => {
+      s.unsubscribe();
+    });
     this.subscription.unsubscribe();
   }
 }

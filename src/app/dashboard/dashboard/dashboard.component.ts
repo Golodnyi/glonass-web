@@ -3,6 +3,7 @@ import { CarsService } from '../../shared/services/cars.service';
 import { ChartsService } from '../../shared/services/charts.service';
 import { IState } from '../state/shared/state.model';
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +14,8 @@ export class DashboardComponent implements OnDestroy {
   public state: IState;
   public stateTitle: string;
   private subscription: Subscription = new Subscription();
+  private subscriptionTimer: Subscription;
+  private timer = Observable.timer(0, 5000);
 
   constructor(private carsService: CarsService, private chartsService: ChartsService) {
     this.subscription.add(
@@ -21,19 +24,24 @@ export class DashboardComponent implements OnDestroy {
           this.state = null;
           return;
         }
+        if (this.subscriptionTimer) {
+          this.subscriptionTimer.unsubscribe();
+        }
         this.stateTitle = 'Состояние ' + car.name;
-        this.subscription.add(
-          this.carsService.getState(car.id).subscribe(
-            state => {
-              this.state = state;
-            }
-          )
-        );
+        this.subscriptionTimer =
+          this.timer.subscribe(() => {
+            this.carsService.getState(car.id).subscribe(
+              state => {
+                this.state = state;
+              }
+            );
+          });
       })
     );
   }
 
   ngOnDestroy() {
+    this.subscriptionTimer.unsubscribe();
     this.subscription.unsubscribe();
   }
 }
