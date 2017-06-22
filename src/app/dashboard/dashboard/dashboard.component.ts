@@ -29,9 +29,10 @@ export class DashboardComponent implements OnDestroy {
         }
         this.stateTitle = 'Состояние ' + car.name;
         this.subscriptionTimer =
-          this.timer.subscribe(() => {
+          this.timer.subscribe((t) => {
             this.carsService.getState(car.id).subscribe(
               state => {
+                state.networkSignal = t;
                 this.state = state;
               }
             );

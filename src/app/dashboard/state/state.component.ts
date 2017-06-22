@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { State } from './shared/state.model';
 import * as moment from 'moment';
 
@@ -7,13 +7,22 @@ import * as moment from 'moment';
   templateUrl: './state.component.html',
   styleUrls: ['./state.component.css']
 })
-export class StateComponent {
+export class StateComponent implements OnChanges {
   @Input() state: State;
   @Input() title: string;
   @Input() toggleable = true;
   @Input() compact = false;
-
+  private audio = new Audio();
+  private alert = false;
   constructor() {
+    this.audio.src = '/assets/signal.mp3';
+    this.audio.load();
+  }
+
+  ngOnChanges(changes) {
+    if (this.alert) {
+      this.audio.play();
+    }
   }
 
   public online() {
