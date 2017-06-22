@@ -7,7 +7,6 @@
     "ng": "./node_modules/@angular/cli/bin/ng",
     "start": "./node_modules/@angular/cli/bin/ng serve",
     "lint": "./node_modules/@angular/cli/bin/ng lint",
-    "lint_win": ".\\node_modules\\@angular\\cli\\bin\\ng lint",
     "build": "./node_modules/@angular/cli/bin/ng build",
     "build-prod": "./node_modules/@angular/cli/bin/ng build -prod -aot"
   },
