@@ -11,18 +11,26 @@
                     </div>
                     <div class="col-md-6">
                         <div class="row">
-                            Автообновление данных:&nbsp;
-                            <p-inputSwitch [disabled]="filter.enabled && !filter.last"
-                                           [(ngModel)]="autoRefresh.enabled"
-                                           (onChange)="autoRefreshChange($event)" onLabel="да"
-                                           offLabel="нет"></p-inputSwitch>
+                            <div class="col-md-6">
+                                Автообновление данных:
+                            </div>
+                            <div class="col-md-6">
+                                <p-inputSwitch [disabled]="filter.enabled && !filter.last"
+                                               [(ngModel)]="autoRefresh.enabled"
+                                               (onChange)="autoRefreshChange($event)" onLabel="да"
+                                               offLabel="нет"></p-inputSwitch>
+                            </div>
                         </div>
                         <div class="row">
-                            Режим отображения:
-                            <p-toggleButton onLabel="Сеткой" offLabel="Списком"
-                                            onIcon="fa-th-large" offIcon="fa-align-justify"
-                                            [(ngModel)]="viewMode">
-                            </p-toggleButton>
+                            <div class="col-md-6">
+                                Режим отображения:
+                            </div>
+                            <div class="col-md-6">
+                                <p-toggleButton onLabel="Сеткой" offLabel="Списком"
+                                                onIcon="fa-th-large" offIcon="fa-align-justify"
+                                                [(ngModel)]="viewMode">
+                                </p-toggleButton>
+                            </div>
                         </div>
                     </div>
                 </div>
