@@ -3,7 +3,6 @@ import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { env } from '../../../env';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { MsgService } from './msg';
@@ -14,6 +13,7 @@ import { AutoRefresh } from '../models/auto-refresh.model';
 import { Error } from '../models/error.model';
 import { Sensor } from '../models/sensor.model';
 import { Car } from '../models/car.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class ChartsService {
@@ -23,6 +23,7 @@ export class ChartsService {
   private sensors: BehaviorSubject<Sensor[]> = new BehaviorSubject([]);
   private map: BehaviorSubject<any[]> = new BehaviorSubject([]);
   private autoRefresh: BehaviorSubject<AutoRefresh> = new BehaviorSubject(new AutoRefresh());
+  private host: string = environment.host;
 
   constructor(private http: Http,
               private authService: AuthService,
@@ -67,7 +68,7 @@ export class ChartsService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + '/v1/cars/' + car + '/report', options)
+    return this.http.get(this.host + '/v1/cars/' + car + '/report', options)
       .map((response: Response) => {
         return response.json().map;
       }).catch((error: any) => {
@@ -98,7 +99,7 @@ export class ChartsService {
     if (autoRefresh.enabled && ((filter.last && filter.enabled) || !filter.enabled)) {
       params += 'afterTime=' + autoRefresh.afterTime;
     }
-    this.http.get(env.backend + '/v1/cars/' + car + '/report' + params, options)
+    this.http.get(this.host + '/v1/cars/' + car + '/report' + params, options)
       .subscribe((response: Response) => {
         this.data.next(response.json().data);
         this.sensors.next(response.json().allowedSensors);

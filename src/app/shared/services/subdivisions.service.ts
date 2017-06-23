@@ -4,18 +4,19 @@ import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { env } from '../../../env';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { Error } from '../models/error.model';
 import { Subdivision } from '../models/subdivision.model';
 import { MsgService } from './msg';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class SubdivisionsService {
   private subdivisions: BehaviorSubject<Subdivision[]> = new BehaviorSubject([]);
   private subdivision: BehaviorSubject<Subdivision> = new BehaviorSubject(new Subdivision());
+  private host: string = environment.host;
 
   constructor(private http: Http,
               private authService: AuthService,
@@ -29,7 +30,7 @@ export class SubdivisionsService {
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
-      this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions', options)
+      this.http.get(this.host + '/v1/companies/' + company + '/subdivisions', options)
         .subscribe((response: Response) => {
           const subdivisions = [];
           response.json().forEach(item => {
@@ -50,7 +51,7 @@ export class SubdivisionsService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions', options)
+    return this.http.get(this.host + '/v1/companies/' + company + '/subdivisions', options)
       .map((response: Response) => {
         const subdivisions = [];
         response.json().forEach(item => {
@@ -69,7 +70,7 @@ export class SubdivisionsService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.post(
-      env.backend + '/v1/companies/' + subdivision.company_id + '/subdivisions',
+      this.host + '/v1/companies/' + subdivision.company_id + '/subdivisions',
       'name=' + subdivision.name + '&company_id=' + subdivision.company_id,
       options)
       .map((response: Response) => {
@@ -95,7 +96,7 @@ export class SubdivisionsService {
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
       this.http.get(
-        env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision, options)
+        this.host + '/v1/companies/' + company + '/subdivisions/' + subdivision, options)
         .subscribe((response: Response) => {
           this.subdivision.next(Object.assign(new Subdivision(), response.json()));
         }, error => {
@@ -113,7 +114,7 @@ export class SubdivisionsService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.put(
-      env.backend + '/v1/companies/' + subdivision.company_id + '/subdivisions/' + subdivision.id,
+      this.host + '/v1/companies/' + subdivision.company_id + '/subdivisions/' + subdivision.id,
       'name=' + subdivision.name,
       options)
       .map((response: Response) => {
@@ -138,7 +139,7 @@ export class SubdivisionsService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
-    return this.http.delete(env.backend + '/v1/companies/1/subdivisions/' + subdivision.id, options)
+    return this.http.delete(this.host + '/v1/companies/1/subdivisions/' + subdivision.id, options)
       .map((response: Response) => {
         this.msgService.notice(MsgService.SUCCESS, 'Удалена', response.json().message);
         const list = [];

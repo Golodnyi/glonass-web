@@ -5,14 +5,15 @@ import { User } from '../models/user.model';
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { env } from '../../../env';
 import { Auth } from '../../login/shared/models/auth.model';
 import { Router } from '@angular/router';
 import { MsgService } from './msg';
 import { CookieService } from 'ngx-cookie';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class AuthService {
+  private host: string = environment.host;
   private user: BehaviorSubject<User> = new BehaviorSubject(null);
   private logger: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private admin: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -35,7 +36,7 @@ export class AuthService {
     }
 
     return this.http.post(
-      env.backend + '/v1/auth/login',
+      this.host + '/v1/auth/login',
       'email=' + auth.email
       + '&password=' + auth.password
       + '&remember=' + remember, options
@@ -69,7 +70,7 @@ export class AuthService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.post(
-      env.backend + '/v1/auth/logout', null, options
+      this.host + '/v1/auth/logout', null, options
     )
       .map(() => {
         this.logger.next(false);

@@ -3,18 +3,19 @@ import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { env } from '../../../env';
 import { Company } from '../models/company.model';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { Error } from '../models/error.model';
 import { MsgService } from './msg';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class CompaniesService {
   private companies: BehaviorSubject<Company[]> = new BehaviorSubject([]);
   private company: BehaviorSubject<Company> = new BehaviorSubject(new Company());
+  private host: string = environment.host;
 
   constructor(private http: Http,
               private authService: AuthService,
@@ -28,7 +29,7 @@ export class CompaniesService {
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
-      this.http.get(env.backend + '/v1/companies', options)
+      this.http.get(this.host + '/v1/companies', options)
         .subscribe((response: Response) => {
             const companies = [];
             response.json().forEach(item => {
@@ -51,7 +52,7 @@ export class CompaniesService {
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
-      this.http.get(env.backend + '/v1/companies/' + company, options)
+      this.http.get(this.host + '/v1/companies/' + company, options)
         .subscribe((response: Response) => {
           this.company.next(Object.assign(new Company(), response.json()));
         }, error => {
@@ -69,7 +70,7 @@ export class CompaniesService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.put(
-      env.backend + '/v1/companies/' + company.id,
+      this.host + '/v1/companies/' + company.id,
       'name=' + company.name + '&active_till=' + company.active_till,
       options)
       .map((response: Response) => {
@@ -96,7 +97,7 @@ export class CompaniesService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
     return this.http.post(
-      env.backend + '/v1/companies',
+      this.host + '/v1/companies',
       'name=' + company.name + '&active_till=' + company.active_till,
       options)
       .map((response: Response) => {
@@ -119,7 +120,7 @@ export class CompaniesService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
-    return this.http.delete(env.backend + '/v1/companies/' + company.id, options)
+    return this.http.delete(this.host + '/v1/companies/' + company.id, options)
       .map((response: Response) => {
         this.msgService.notice(MsgService.SUCCESS, 'Удалена', response.json().message);
         const list = [];

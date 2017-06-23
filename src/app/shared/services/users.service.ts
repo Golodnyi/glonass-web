@@ -5,15 +5,16 @@ import { User } from '../models/user.model';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { env } from '../../../env';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { Error } from '../models/error.model';
 import { Role } from '../models/role.model';
 import { MsgService } from './msg';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class UsersService {
+  private host: string = environment.host;
 
   constructor(private http: Http,
               private authService: AuthService,
@@ -26,7 +27,7 @@ export class UsersService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + '/v1/users', options)
+    return this.http.get(this.host + '/v1/users', options)
       .map((response: Response) => {
         const users: User[] = response.json();
         const usersObj: User[] = [];
@@ -46,10 +47,9 @@ export class UsersService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + '/v1/users/' + id, options)
+    return this.http.get(this.host + '/v1/users/' + id, options)
       .map((response: Response) => {
-        const user: User = Object.assign(new User(), response.json());
-        return user;
+        return Object.assign(new User(), response.json());
       })
       .catch((error: any) => {
         Error.check(error, this.authService, this.router, this.msgService);
@@ -62,10 +62,9 @@ export class UsersService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + '/v1/roles/' + id, options)
+    return this.http.get(this.host + '/v1/roles/' + id, options)
       .map((response: Response) => {
-        const role: Role = Object.assign(new Role(), response.json());
-        return role;
+        return Object.assign(new Role(), response.json());
       })
       .catch((error: any) => {
         Error.check(error, this.authService, this.router, this.msgService);

@@ -4,16 +4,17 @@ import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { env } from '../../../env';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { Error } from '../models/error.model';
 import { MsgService } from './msg';
 import { Subject } from 'rxjs/Subject';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class SensorsService {
   private sensors: Subject<any[]> = new Subject();
+  private host: string = environment.host;
 
   constructor(private http: Http,
               private authService: AuthService,
@@ -27,7 +28,7 @@ export class SensorsService {
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
-      this.http.get(env.backend + '/v1/cars/' + car + '/sensors', options)
+      this.http.get(this.host + '/v1/cars/' + car + '/sensors', options)
         .subscribe((response: Response) => {
           this.sensors.next(response.json());
         }, error => {

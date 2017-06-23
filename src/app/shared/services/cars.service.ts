@@ -4,7 +4,6 @@ import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { env } from '../../../env';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { Error } from '../models/error.model';
@@ -12,12 +11,14 @@ import { Car } from '../models/car.model';
 import { MsgService } from './msg';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { State } from '../../dashboard/state/shared/state.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class CarsService {
   private cars: BehaviorSubject<Car[]> = new BehaviorSubject([]);
   private car: BehaviorSubject<Car> = new BehaviorSubject(new Car());
   private state: BehaviorSubject<State> = new BehaviorSubject(new State());
+  private host: string = environment.host;
 
   constructor(private http: Http,
               private authService: AuthService,
@@ -31,7 +32,7 @@ export class CarsService {
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
-      this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars', options)
+      this.http.get(this.host + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars', options)
         .subscribe((response: Response) => {
           const cars = [];
           response.json().forEach(item => {
@@ -52,7 +53,7 @@ export class CarsService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars', options)
+    return this.http.get(this.host + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars', options)
       .map((response: Response) => {
         return response.json();
       }).catch((error: any) => {
@@ -67,7 +68,7 @@ export class CarsService {
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
-      this.http.get(env.backend + '/v1/cars/' + car, options)
+      this.http.get(this.host + '/v1/cars/' + car, options)
         .subscribe((response: Response) => {
           this.car.next(Object.assign(new Car(), response.json()));
         }, error => {
@@ -92,7 +93,7 @@ export class CarsService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
     return this.http.post(
-      env.backend + '/v1/cars',
+      this.host + '/v1/cars',
       'name=' + car.name + '&model_id=' + car.model_id + '&subdivision_id=' + car.subdivision_id,
       options)
       .map((response: Response) => {
@@ -116,7 +117,7 @@ export class CarsService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(env.backend + '/v1/cars/' + car + '/last-state', options)
+    return this.http.get(this.host + '/v1/cars/' + car + '/last-state', options)
       .map((response: Response) => {
         return Object.assign(new State(), response.json());
       })

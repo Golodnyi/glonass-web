@@ -4,7 +4,6 @@ import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { env } from '../../../env';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { Error } from '../models/error.model';
@@ -12,10 +11,12 @@ import { Car } from '../models/car.model';
 import { MsgService } from './msg';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CarModel } from '../models/car-model.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class CarModelsService {
   private models: BehaviorSubject<CarModel[]> = new BehaviorSubject([]);
+  private host: string = environment.host;
 
   constructor(private http: Http,
               private authService: AuthService,
@@ -29,7 +30,7 @@ export class CarModelsService {
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
-      this.http.get(env.backend + '/v1/car-models', options)
+      this.http.get(this.host + '/v1/car-models', options)
         .subscribe((response: Response) => {
           const models = [];
           response.json().forEach(item => {

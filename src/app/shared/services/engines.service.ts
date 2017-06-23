@@ -4,17 +4,18 @@ import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { env } from '../../../env';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { Error } from '../models/error.model';
 import { MsgService } from './msg';
 import { Engine } from '../models/engine.model';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class EnginesService {
   private engine: BehaviorSubject<Engine> = new BehaviorSubject(new Engine());
+  private host: string = environment.host;
 
   constructor(private http: Http,
               private authService: AuthService,
@@ -28,7 +29,7 @@ export class EnginesService {
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       const options = new RequestOptions({headers: headers, withCredentials: true});
 
-      this.http.get(env.backend + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine', options)
+      this.http.get(this.host + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine', options)
         .subscribe((response: Response) => {
           this.engine.next(Object.assign(new Engine(), response.json()));
         }, error => {
