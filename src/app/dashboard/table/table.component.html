@@ -1,0 +1,20 @@
+<table *ngIf="head.length" class="table table-striped">
+    <thead>
+    <tr>
+        <th class="text-center">Дата</th>
+        <th *ngFor="let h of head" class="text-center">
+            {{h.name}}
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let key of body | keys">
+        <th>
+            {{key | date: 'dd.MM.yyyy H:mm:ss'}}
+        </th>
+        <td *ngFor="let h of head">
+            {{body[key][h.id]}} {{h.unit}}
+        </td>
+    </tr>
+    </tbody>
+</table>

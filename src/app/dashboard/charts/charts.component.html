@@ -49,6 +49,13 @@
                     </div>
                 </div>
             </p-tabPanel>
+            <p-tabPanel header="Таблица">
+                <div class="row">
+                    <div class="col-md-12">
+                        <app-table *ngIf="options.length" [options]="options"></app-table>
+                    </div>
+                </div>
+            </p-tabPanel>
         </p-tabView>
     </div>
 </div>
