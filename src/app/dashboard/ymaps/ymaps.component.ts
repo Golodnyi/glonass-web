@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
 import { MapCar } from './shared/map-car.model';
 import { MapPolyLines } from './shared/map-polylines.model';
 /// <reference path="./typing/ymaps.d.ts" />
@@ -11,7 +10,6 @@ import { MapPolyLines } from './shared/map-polylines.model';
 export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
   public map: any;
   private center = [55.75370903771494, 37.61981338262558];
-  private subscription: Subscription = new Subscription();
   @Input() cars: MapCar[];
   @Input() polyLines: MapPolyLines[];
   @Input() zoom = 0;
@@ -19,18 +17,22 @@ export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
   private build() {
     ymaps.ready().then(() => {
       if (this.map) {
-        this.map.destroy();
+        this.map.geoObjects.each(item => {
+          item.remove();
+        });
+        // this.map.destroy();
+      } else {
+        if (this.cars.length) {
+          const lastCar = this.cars[this.cars.length - 1];
+          this.center = lastCar.point;
+        }
+        this.map = new ymaps.Map('ymap', {
+          center: this.center,
+          zoom: (!this.zoom ? 12 : this.zoom),
+          controls: ['smallMapDefaultSet']
+        });
       }
 
-      if (this.cars.length) {
-        const lastCar = this.cars[this.cars.length - 1];
-        this.center = lastCar.point;
-      }
-      this.map = new ymaps.Map('ymap', {
-        center: this.center,
-        zoom: (!this.zoom ? 12 : this.zoom),
-        controls: ['smallMapDefaultSet']
-      });
       this.cars.forEach(car => {
         this.map.geoObjects.add(new ymaps.Placemark(car.point, {
           hintContent: car.name
@@ -81,6 +83,5 @@ export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
     if (this.map) {
       this.map.destroy();
     }
-    this.subscription.unsubscribe();
   }
 }
