@@ -24,7 +24,7 @@ export class CarModelsService {
               private msgService: MsgService) {
   }
 
-  public all(resync = false): Observable<Car[]> {
+  public all(resync = false): Observable<CarModel[]> {
     if (resync) {
       const headers = new Headers();
       headers.append('Content-Type', 'application/x-www-form-urlencoded');

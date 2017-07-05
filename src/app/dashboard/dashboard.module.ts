@@ -27,6 +27,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SensorsService } from '../shared/services/sensors.service';
 import { YmapsComponent } from './ymaps/ymaps.component';
 import { CompanyComponent } from './company/company.component';
+import { TableComponent } from './table/table.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -47,7 +48,7 @@ import { CompanyComponent } from './company/company.component';
   ],
   declarations: [
     DashboardComponent, NavigationComponent, ChartsComponent, StateComponent,
-    FilterComponent, YmapsComponent, CompanyComponent
+    FilterComponent, YmapsComponent, CompanyComponent, TableComponent
   ],
   providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService]
 })
