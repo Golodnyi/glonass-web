@@ -13,7 +13,7 @@
             {{key | date: 'dd.MM.yyyy H:mm:ss'}}
         </th>
         <td *ngFor="let h of head">
-            {{body[key][h.id]}} {{h.unit}}
+            <div [style.background]="h.plotBands | color: body[key][h.id]">{{body[key][h.id]}} {{h.unit}}</div>
         </td>
     </tr>
     </tbody>
