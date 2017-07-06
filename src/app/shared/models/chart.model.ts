@@ -27,17 +27,17 @@ export class Chart {
     positioner: function () {
       return {
         x: this.chart.chartWidth - this.label.width,
-        y: -1
+        y: -10
       };
     },
     borderWidth: 0,
     valueDecimals: 0,
     backgroundColor: 'none',
-    pointFormat: '{point.y}',
+    pointFormat: '{point.x:%d.%m %H:%M:%S}: {point.y}',
     headerFormat: '',
     shadow: false,
     style: {
-      fontSize: '18px'
+      fontSize: '14px'
     },
   };
 
