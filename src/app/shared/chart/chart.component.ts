@@ -3,7 +3,6 @@ import * as highstock from 'highcharts/highstock';
 import { Chart } from '../models/chart.model';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'app-chart',
@@ -13,7 +12,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
   public chart: any;
   private mouseMoveEvent: Subject<MouseEvent> = new Subject<MouseEvent>();
-  private afterView: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private subscription: Subscription = new Subscription();
   @Input() data: any;
 
@@ -68,7 +66,7 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
     };
 
     this.subscription.add(
-      this.mouseMoveEvent.debounceTime(300).subscribe(e => {
+      this.mouseMoveEvent.debounceTime(250).subscribe(e => {
         const currentPoint = this.chart.series[0].searchPoint(e, true);
         if (currentPoint === undefined) {
           return false;
@@ -89,16 +87,6 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
         });
       })
     );
-    this.subscription.add(
-      this.afterView.debounceTime(200).subscribe(() => {
-        const width = this.el.nativeElement.parentElement.offsetWidth - 35;
-        highstock.charts.forEach(chart => {
-          if (chart && chart.chartWidth !== width) {
-            chart.setSize(width, 360);
-          }
-        });
-      })
-    );
   }
 
   ngOnDestroy() {
@@ -109,6 +97,11 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    this.afterView.next(!this.afterView.value);
+    const width = this.el.nativeElement.parentElement.offsetWidth - 35;
+    highstock.charts.forEach(chart => {
+      if (chart && chart.chartWidth !== width) {
+        chart.setSize(width, 360);
+      }
+    });
   }
 }
