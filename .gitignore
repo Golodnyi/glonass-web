@@ -29,7 +29,6 @@
 /libpeerconnection.log
 npm-debug.log
 testem.log
-/typings
 
 # e2e
 /e2e/*.js
@@ -40,3 +39,4 @@ testem.log
 Thumbs.db
 env.ts
 *.js
+!/karma.conf.js
