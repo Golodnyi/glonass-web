@@ -1,6 +1,9 @@
 import { AfterViewChecked, Component, ElementRef, HostListener, Input, OnChanges, OnDestroy } from '@angular/core';
 import * as highstock from 'highcharts/highstock';
 import { Chart } from '../models/chart.model';
+import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'app-chart',
@@ -9,7 +12,11 @@ import { Chart } from '../models/chart.model';
 })
 export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
   public chart: any;
+  private mouseMoveEvent: Subject<MouseEvent> = new Subject<MouseEvent>();
+  private afterView: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private subscription: Subscription = new Subscription();
   @Input() data: any;
+
   @Input() set options(options: any) {
     if (this.chart) {
       this.chart.destroy();
@@ -49,24 +56,7 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
 
   @HostListener('mousemove', ['$event'])
   public onMousemove(e) {
-    const currentPoint = this.chart.series[0].searchPoint(e, true);
-    if (currentPoint === undefined) {
-      return false;
-    }
-    highstock.charts.forEach(chart => {
-      if (chart === undefined || chart === this.chart) {
-        return false;
-      }
-      if (chart.series[0]) {
-        const point = chart.series[0].searchPoint({
-          chartX: currentPoint.plotX + chart.plotLeft,
-          chartY: currentPoint.plotY + chart.plotTop
-        }, true);
-        if (point) {
-          point.highlight(e);
-        }
-      }
-    });
+    this.mouseMoveEvent.next(e);
   }
 
   constructor(private el: ElementRef) {
@@ -76,22 +66,49 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
     highstock.Pointer.prototype.reset = function () {
       return undefined;
     };
+
+    this.subscription.add(
+      this.mouseMoveEvent.debounceTime(300).subscribe(e => {
+        const currentPoint = this.chart.series[0].searchPoint(e, true);
+        if (currentPoint === undefined) {
+          return false;
+        }
+        highstock.charts.forEach(chart => {
+          if (chart === undefined || chart === this.chart) {
+            return false;
+          }
+          if (chart.series[0]) {
+            const point = chart.series[0].searchPoint({
+              chartX: currentPoint.plotX + chart.plotLeft,
+              chartY: currentPoint.plotY + chart.plotTop
+            }, true);
+            if (point) {
+              point.highlight(e);
+            }
+          }
+        });
+      })
+    );
+    this.subscription.add(
+      this.afterView.debounceTime(200).subscribe(() => {
+        const width = this.el.nativeElement.parentElement.offsetWidth - 35;
+        highstock.charts.forEach(chart => {
+          if (chart && chart.chartWidth !== width) {
+            chart.setSize(width, 360);
+          }
+        });
+      })
+    );
   }
 
   ngOnDestroy() {
     if (this.chart) {
       this.chart.destroy();
     }
+    this.subscription.unsubscribe();
   }
 
   ngAfterViewChecked() {
-    /**
-     * TODO: Ресайз графка. Эта херня крайне негативно может сказываться на производительности
-     * на слабых пк, переписать сразу, как только появится новое решение
-     */
-    const width = this.el.nativeElement.parentElement.offsetWidth - 35;
-    if (this.chart && this.chart.chartWidth !== width) {
-      this.chart.setSize(width, 360);
-    }
+    this.afterView.next(!this.afterView.value);
   }
 }
