@@ -16,22 +16,28 @@ export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
 
   private build() {
     ymaps.ready().then(() => {
+      if (this.cars.length) {
+        const lastCar = this.cars[this.cars.length - 1];
+        this.center = lastCar.point;
+      }
       if (this.map) {
         this.map.geoObjects.each(item => {
           item.remove();
         });
         // this.map.destroy();
       } else {
-        if (this.cars.length) {
-          const lastCar = this.cars[this.cars.length - 1];
-          this.center = lastCar.point;
-        }
         this.map = new ymaps.Map('ymap', {
           center: this.center,
           zoom: (!this.zoom ? 12 : this.zoom),
           controls: ['smallMapDefaultSet']
         });
       }
+
+      this.map.panTo(
+        [this.center], {
+          flying: false
+        }
+      );
 
       this.cars.forEach(car => {
         this.map.geoObjects.add(new ymaps.Placemark(car.point, {
