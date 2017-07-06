@@ -66,7 +66,7 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
     };
 
     this.subscription.add(
-      this.mouseMoveEvent.debounceTime(250).subscribe(e => {
+      this.mouseMoveEvent.debounceTime(200).subscribe(e => {
         const currentPoint = this.chart.series[0].searchPoint(e, true);
         if (currentPoint === undefined) {
           return false;

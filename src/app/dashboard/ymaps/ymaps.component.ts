@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { MapCar } from './shared/map-car.model';
 import { MapPolyLines } from './shared/map-polylines.model';
-/// <reference path="./typing/ymaps.d.ts" />
+/// <reference path="./typings/ymaps.d.ts" />
 @Component({
   selector: 'app-ymaps',
   templateUrl: './ymaps.component.html',
