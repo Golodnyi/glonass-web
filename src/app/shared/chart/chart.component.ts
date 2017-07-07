@@ -1,8 +1,6 @@
 import { AfterViewChecked, Component, ElementRef, HostListener, Input, OnChanges, OnDestroy } from '@angular/core';
 import * as highstock from 'highcharts/highstock';
 import { Chart } from '../models/chart.model';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-chart',
@@ -11,8 +9,6 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
   public chart: any;
-  private mouseMoveEvent: Subject<MouseEvent> = new Subject<MouseEvent>();
-  private subscription: Subscription = new Subscription();
   @Input() data: any;
 
   @Input() set options(options: any) {
@@ -54,7 +50,24 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
 
   @HostListener('mousemove', ['$event'])
   public onMousemove(e) {
-    this.mouseMoveEvent.next(e);
+    const currentPoint = this.chart.series[0].searchPoint(e, true);
+    if (currentPoint === undefined) {
+      return false;
+    }
+    highstock.charts.forEach(chart => {
+      if (chart === undefined || chart === this.chart) {
+        return false;
+      }
+      if (chart.series[0]) {
+        const point = chart.series[0].searchPoint({
+          chartX: currentPoint.plotX + chart.plotLeft,
+          chartY: currentPoint.plotY + chart.plotTop
+        }, true);
+        if (point) {
+          point.highlight(e);
+        }
+      }
+    });
   }
 
   constructor(private el: ElementRef) {
@@ -64,36 +77,12 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
     highstock.Pointer.prototype.reset = function () {
       return undefined;
     };
-
-    this.subscription.add(
-      this.mouseMoveEvent.debounceTime(200).subscribe(e => {
-        const currentPoint = this.chart.series[0].searchPoint(e, true);
-        if (currentPoint === undefined) {
-          return false;
-        }
-        highstock.charts.forEach(chart => {
-          if (chart === undefined || chart === this.chart) {
-            return false;
-          }
-          if (chart.series[0]) {
-            const point = chart.series[0].searchPoint({
-              chartX: currentPoint.plotX + chart.plotLeft,
-              chartY: currentPoint.plotY + chart.plotTop
-            }, true);
-            if (point) {
-              point.highlight(e);
-            }
-          }
-        });
-      })
-    );
   }
 
   ngOnDestroy() {
     if (this.chart) {
       this.chart.destroy();
     }
-    this.subscription.unsubscribe();
   }
 
   ngAfterViewChecked() {
