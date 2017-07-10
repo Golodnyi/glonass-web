@@ -31,6 +31,7 @@ export class TableComponent implements OnChanges {
     if (car === undefined) {
       return;
     }
+
     this.loading = true;
     this.chartsService.getTable(car, page).subscribe(
       table => {

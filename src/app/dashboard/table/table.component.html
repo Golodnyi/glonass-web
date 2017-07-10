@@ -1,34 +1,28 @@
-<div *ngIf="table">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th class="text-center">Дата</th>
-            <th *ngFor="let key of keys">
-                {{table.headers[key].name}} ({{table.headers[key].unit}})
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let row of table.rows" [hidden]="move && row['speed'] == 0">
-            <th>
-                {{row['time'] | date: 'dd.MM.yyyy H:mm:ss'}}
-            </th>
-            <td *ngFor="let key of keys" [hidden]="key === 'criticals'">
-                {{row[key]}}
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <p-paginator rows="100" totalRecords="{{table.pagination.total*100}}" (onPageChange)="paginate($event)"></p-paginator>
+<div class="load" *ngIf="loading">
+    Загрузка...
+    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
 </div>
-<div *ngIf="!table">
-    <div class="load" *ngIf="loading">
-        Загрузка...
-        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-    </div>
-    <div *ngIf="!loading">
-        <h3 class="alert alert-danger">За выбранный период данные отсутствуют, измените параметры
-            фильтра.</h3>
-    </div>
-</div>
+<table *ngIf="table && !loading" class="table table-striped">
+    <thead>
+    <tr>
+        <th class="text-center">Дата</th>
+        <th *ngFor="let key of keys">
+            {{table.headers[key].name}} ({{table.headers[key].unit}})
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of table.rows" [hidden]="move && row['speed'] == 0">
+        <th>
+            {{row['time'] | date: 'dd.MM.yyyy H:mm:ss'}}
+        </th>
+        <td *ngFor="let key of keys" [hidden]="key === 'criticals'">
+            {{row[key]}}
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p-paginator *ngIf="table.pagination.total" rows="100" totalRecords="{{table.pagination.total*100}}"
+             (onPageChange)="paginate($event)"></p-paginator>
+
 
