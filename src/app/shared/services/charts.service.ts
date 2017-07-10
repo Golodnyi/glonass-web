@@ -118,13 +118,13 @@ export class ChartsService {
     return this.sensors.asObservable();
   }
 
-  public getTable(car: number): Observable<any> {
+  public getTable(car: number, page: number): Observable<any> {
     const filter = this.filter.getValue();
     const autoRefresh = this.autoRefresh.getValue();
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
-    let params = '?';
+    let params = '?page=' + (page + 1) + '&';
     if (filter.enabled) {
       if (!Array.isArray(filter.charts) && filter.charts !== undefined) {
         params += 'sensors[]=' + filter.charts + '&';
