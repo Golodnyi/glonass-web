@@ -11,11 +11,27 @@
                     </div>
                     <div class="col-md-6">
                         <div class="row">
+                            <div class="col-md-3" style="padding-top: 6px;">
+                                <strong>Отображение:</strong>
+                            </div>
+                            <div class="col-md-9">
+                                <p-toggleButton onLabel="Графики" offLabel="Таблица"
+                                                onIcon="fa-area-chart" offIcon="fa-table"
+                                                [(ngModel)]="viewMode">
+                                </p-toggleButton>
+                                <p-toggleButton [disabled]="!viewMode" onLabel="Сеткой" offLabel="Списком"
+                                                onIcon="fa-th-large" offIcon="fa-align-justify"
+                                                [(ngModel)]="viewChartMode">
+                                </p-toggleButton>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
                             <div class="col-md-6">
-                                Автообновление данных:
+                                <strong>Автообновление данных:</strong>
                             </div>
                             <div class="col-md-6">
-                                <p-inputSwitch [disabled]="filter.enabled && !filter.last"
+                                <p-inputSwitch [disabled]="(filter.enabled && !filter.last) || !viewMode"
                                                [(ngModel)]="autoRefresh.enabled"
                                                (onChange)="autoRefreshChange($event)" onLabel="да"
                                                offLabel="нет"></p-inputSwitch>
@@ -23,22 +39,15 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                Режим отображения:
+                                <strong>В движении:</strong>
                             </div>
                             <div class="col-md-6">
-                                <p-toggleButton onLabel="Сеткой" offLabel="Списком"
-                                                onIcon="fa-th-large" offIcon="fa-align-justify"
-                                                [(ngModel)]="viewMode">
-                                </p-toggleButton>
+                                <p-inputSwitch [disabled]="viewMode" [(ngModel)]="move"
+                                               onLabel="да"
+                                               offLabel="нет">
+                                </p-inputSwitch>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </p-tabPanel>
-            <p-tabPanel header="Фильтр">
-                <div class="row">
-                    <div class="col-md-12">
-                        <app-filter *ngIf="filter" [filter]="filter" [car]="car"></app-filter>
                     </div>
                 </div>
             </p-tabPanel>
@@ -49,37 +58,41 @@
                     </div>
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="Таблица">
+            <p-tabPanel header="Фильтр">
                 <div class="row">
                     <div class="col-md-12">
-                        <app-table *ngIf="options.length" [options]="options"></app-table>
+                        <app-filter *ngIf="filter" [filter]="filter" [car]="car"></app-filter>
                     </div>
                 </div>
             </p-tabPanel>
         </p-tabView>
+        <hr/>
+        <div class="row">
+            <div class="col-md-12" *ngIf="viewMode">
+                <div *ngIf="options.length">
+                    <p-panel [class.col-md-6]="viewChartMode"
+                             *ngFor="let option of options;"
+                             header="{{option.name}}"
+                             [toggleable]="true">
+                        <app-chart [options]="option ? option : {}"
+                                   [data]="option ? option.data : []"></app-chart>
+                    </p-panel>
+                </div>
+                <div *ngIf="!options.length">
+                    <div class="load" *ngIf="loading">
+                        Загрузка...
+                        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                    </div>
+                    <div *ngIf="!loading">
+                        <h3 class="alert alert-danger">За выбранный период данные отсутствуют, измените параметры
+                            фильтра.</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" *ngIf="!viewMode">
+                <app-table [car]="car.id" [move]="move"></app-table>
+            </div>
+            </div>
     </div>
 </div>
 <br/>
-<div class="row">
-    <div class="col-md-12">
-        <div *ngIf="options.length">
-            <p-panel [class.col-md-6]="viewMode"
-                     *ngFor="let option of options;"
-                     header="{{option.name}}"
-                     [toggleable]="true">
-                <app-chart [options]="option ? option : {}"
-                           [data]="option ? option.data : []"></app-chart>
-            </p-panel>
-        </div>
-        <div *ngIf="!options.length">
-            <div class="load" *ngIf="loading">
-                Загрузка...
-                <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-            </div>
-            <div *ngIf="!loading">
-                <h3 class="alert alert-danger">За выбранный период данные отсутствуют, измените параметры
-                    фильтра.</h3>
-            </div>
-        </div>
-    </div>
-</div>

@@ -117,4 +117,36 @@ export class ChartsService {
   public getSensors(): Observable<any> {
     return this.sensors.asObservable();
   }
+
+  public getTable(car: number): Observable<any> {
+    const filter = this.filter.getValue();
+    const autoRefresh = this.autoRefresh.getValue();
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+    let params = '?';
+    if (filter.enabled) {
+      if (!Array.isArray(filter.charts) && filter.charts !== undefined) {
+        params += 'sensors[]=' + filter.charts + '&';
+      } else if (Array.isArray(filter.charts)) {
+        filter.charts.forEach(function (sensor) {
+          params += 'sensors[]=' + sensor + '&';
+        });
+      }
+      if (!filter.last) {
+        params += 'dateFrom=' + filter.before + '&dateTo=' + filter.after + '&';
+      }
+    }
+    if (autoRefresh.enabled && ((filter.last && filter.enabled) || !filter.enabled)) {
+      params += 'afterTime=' + autoRefresh.afterTime;
+    }
+
+    return this.http.get(this.host + '/v1/cars/' + car + '/report/table' + params, options)
+      .map((response: Response) => {
+        return response.json();
+      }).catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
 }

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  host: 'https://api.getcheck.pro'
+  host: 'http://127.0.0.1:8081'
 };

@@ -1,26 +1,40 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { TablePipe } from '../../shared/pipes/table.pipe';
+import { ChartsService } from '../../shared/services/charts.service';
+import { KeysPipe } from '../../shared/pipes/keys.pipe';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
-  providers: [TablePipe]
+  providers: [KeysPipe]
 })
 export class TableComponent implements OnChanges {
-  public head = [];
-  public body = [];
-  @Input() set options(options: any) {
-    this.head = options;
-    this.body = this.table.transform(options);
-  }
-
-  constructor(private table: TablePipe) {
+  @Input() car;
+  @Input() move = false;
+  public table: any;
+  public keys = [];
+  constructor(private chartsService: ChartsService, private keysPipe: KeysPipe) {
+    if (this.car) {
+      this.loadData(this.car);
+    }
   }
 
   ngOnChanges(changes: any) {
-    if (changes.options) {
-      this.options = changes.options.currentValue;
+    if (changes.car) {
+      this.loadData(changes.car.currentValue);
     }
+  }
+
+  private loadData(car) {
+    if (car === undefined) {
+      return;
+    }
+
+    this.chartsService.getTable(car).subscribe(
+      table => {
+        this.keys = this.keysPipe.transform(table.headers);
+        this.table = table;
+      }
+    );
   }
 }
