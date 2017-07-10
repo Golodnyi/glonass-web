@@ -29,7 +29,7 @@ export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
         this.map = new ymaps.Map('ymap', {
           center: this.center,
           zoom: (!this.zoom ? 12 : this.zoom),
-          controls: ['smallMapDefaultSet']
+          controls: ['smallMapDefaultSet', 'rulerControl']
         });
       }
 
