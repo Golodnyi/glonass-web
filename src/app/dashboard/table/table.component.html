@@ -16,7 +16,9 @@
         <th>
             {{row['time'] | date: 'dd.MM.yyyy H:mm:ss'}}
         </th>
-        <td *ngFor="let key of keys" [hidden]="key === 'criticals'">
+        <td *ngFor="let key of keys" [hidden]="key === 'criticals'"
+            [class.warning]="row['criticals'].warning.indexOf(key) !== -1"
+            [class.danger]="row['criticals'].danger.indexOf(key) !== -1">
             {{row[key]}}
         </td>
     </tr>
