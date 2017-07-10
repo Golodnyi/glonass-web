@@ -28,6 +28,7 @@ import { SensorsService } from '../shared/services/sensors.service';
 import { YmapsComponent } from './ymaps/ymaps.component';
 import { CompanyComponent } from './company/company.component';
 import { TableComponent } from './table/table.component';
+import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 @NgModule({
   imports: [
     CommonModule,
@@ -44,7 +45,8 @@ import { TableComponent } from './table/table.component';
     PanelModule,
     TabViewModule,
     ToggleButtonModule,
-    FieldsetModule
+    FieldsetModule,
+    InfiniteScrollModule
   ],
   declarations: [
     DashboardComponent, NavigationComponent, ChartsComponent, StateComponent,
