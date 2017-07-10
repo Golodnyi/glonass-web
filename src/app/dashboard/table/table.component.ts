@@ -13,6 +13,8 @@ export class TableComponent implements OnChanges {
   @Input() move = false;
   public table: any;
   public keys = [];
+  public loading = true;
+
   constructor(private chartsService: ChartsService, private keysPipe: KeysPipe) {
     if (this.car) {
       this.loadData(this.car);
@@ -29,12 +31,17 @@ export class TableComponent implements OnChanges {
     if (car === undefined) {
       return;
     }
-
+    this.loading = true;
     this.chartsService.getTable(car).subscribe(
       table => {
         this.keys = this.keysPipe.transform(table.headers);
         this.table = table;
+        this.loading = false;
       }
     );
+  }
+
+  public onScroll() {
+    console.log('scroll');
   }
 }
