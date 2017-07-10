@@ -14,7 +14,7 @@ export class TableComponent implements OnChanges {
   public table: any;
   public keys = [];
   public loading = true;
-
+  private page = 0;
   constructor(private chartsService: ChartsService, private keysPipe: KeysPipe) {
     if (this.car) {
       this.loadData(this.car);
@@ -27,12 +27,12 @@ export class TableComponent implements OnChanges {
     }
   }
 
-  private loadData(car) {
+  private loadData(car, page = 0) {
     if (car === undefined) {
       return;
     }
     this.loading = true;
-    this.chartsService.getTable(car).subscribe(
+    this.chartsService.getTable(car, page).subscribe(
       table => {
         this.keys = this.keysPipe.transform(table.headers);
         this.table = table;
@@ -41,7 +41,8 @@ export class TableComponent implements OnChanges {
     );
   }
 
-  public onScroll() {
-    console.log('scroll');
+  public paginate(event) {
+    this.page = event.page;
+    this.loadData(this.car, this.page);
   }
 }

@@ -11,7 +11,7 @@ import {
   CalendarModule,
   CheckboxModule, FieldsetModule,
   InputSwitchModule,
-  MultiSelectModule,
+  MultiSelectModule, PaginatorModule,
   PanelModule,
   TabViewModule,
   ToggleButtonModule,
@@ -28,7 +28,6 @@ import { SensorsService } from '../shared/services/sensors.service';
 import { YmapsComponent } from './ymaps/ymaps.component';
 import { CompanyComponent } from './company/company.component';
 import { TableComponent } from './table/table.component';
-import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 @NgModule({
   imports: [
     CommonModule,
@@ -46,7 +45,7 @@ import { InfiniteScrollModule } from 'angular2-infinite-scroll';
     TabViewModule,
     ToggleButtonModule,
     FieldsetModule,
-    InfiniteScrollModule
+    PaginatorModule
   ],
   declarations: [
     DashboardComponent, NavigationComponent, ChartsComponent, StateComponent,

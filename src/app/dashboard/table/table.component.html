@@ -1,23 +1,26 @@
-<table *ngIf="table" class="table table-striped">
-    <thead>
-    <tr>
-        <th class="text-center">Дата</th>
-        <th *ngFor="let key of keys">
-            {{table.headers[key].name}} ({{table.headers[key].unit}})
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let row of table.rows" [hidden]="move && row['speed'] == 0" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="300" (scrolled)="onScroll()">
-        <th>
-            {{row['time'] | date: 'dd.MM.yyyy H:mm:ss'}}
-        </th>
-        <td *ngFor="let key of keys" [hidden]="key === 'criticals'">
-            {{row[key]}}
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div *ngIf="table">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th class="text-center">Дата</th>
+            <th *ngFor="let key of keys">
+                {{table.headers[key].name}} ({{table.headers[key].unit}})
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of table.rows" [hidden]="move && row['speed'] == 0">
+            <th>
+                {{row['time'] | date: 'dd.MM.yyyy H:mm:ss'}}
+            </th>
+            <td *ngFor="let key of keys" [hidden]="key === 'criticals'">
+                {{row[key]}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p-paginator rows="100" totalRecords="{{table.pagination.total*100}}" (onPageChange)="paginate($event)"></p-paginator>
+</div>
 <div *ngIf="!table">
     <div class="load" *ngIf="loading">
         Загрузка...
@@ -28,3 +31,4 @@
             фильтра.</h3>
     </div>
 </div>
+
