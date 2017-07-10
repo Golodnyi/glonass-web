@@ -31,8 +31,10 @@ export class ChartsComponent implements OnDestroy {
   public engine: Engine;
   public loading = true;
   public viewMode = true;
+  public viewChartMode = true;
   public mapCars: MapCar[];
   public mapPolyLines: MapPolyLines[];
+  public move = false;
 
   constructor(private route: ActivatedRoute,
               private chartsService: ChartsService,
