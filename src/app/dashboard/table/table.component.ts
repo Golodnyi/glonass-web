@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnChanges, ViewChild } from '@angular/core';
 import { ChartsService } from '../../shared/services/charts.service';
 import { KeysPipe } from '../../shared/pipes/keys.pipe';
 
@@ -15,6 +15,7 @@ export class TableComponent implements OnChanges {
   public keys = [];
   public loading = true;
   private page = 0;
+
   constructor(private chartsService: ChartsService, private keysPipe: KeysPipe) {
     if (this.car) {
       this.loadData(this.car);
