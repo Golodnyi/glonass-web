@@ -21,7 +21,6 @@ export class ChartsService {
   private car: Subject<Car> = new Subject();
   private filter: BehaviorSubject<Filter> = new BehaviorSubject(new Filter());
   private sensors: BehaviorSubject<Sensor[]> = new BehaviorSubject([]);
-  private map: BehaviorSubject<any[]> = new BehaviorSubject([]);
   private autoRefresh: BehaviorSubject<AutoRefresh> = new BehaviorSubject(new AutoRefresh());
   private host: string = environment.host;
 
@@ -47,14 +46,6 @@ export class ChartsService {
     return this.car.asObservable();
   }
 
-  public setMap(map) {
-    this.map.next(map);
-  }
-
-  public getMap() {
-    return this.map.asObservable();
-  }
-
   public setAutoRefresh(autoRefresh: any) {
     this.autoRefresh.next(autoRefresh);
   }
@@ -68,9 +59,9 @@ export class ChartsService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(this.host + '/v1/cars/' + car + '/report', options)
+    return this.http.get(this.host + '/v1/cars/' + car + '/report/map', options)
       .map((response: Response) => {
-        return response.json().map;
+        return response.json();
       }).catch((error: any) => {
         Error.check(error, this.authService, this.router, this.msgService);
         return Observable.throw(error.json().message || 'Server error');
@@ -103,7 +94,6 @@ export class ChartsService {
       .subscribe((response: Response) => {
         this.data.next(response.json().data);
         this.sensors.next(response.json().allowedSensors);
-        this.map.next(response.json().map);
       }, error => {
         Error.check(error, this.authService, this.router, this.msgService);
         this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
