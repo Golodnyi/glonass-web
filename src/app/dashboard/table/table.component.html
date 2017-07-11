@@ -2,7 +2,7 @@
     Загрузка...
     <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
 </div>
-<table *ngIf="table && !loading" class="table table-striped">
+<table *ngIf="table && !loading" class="table table-striped table-hover table-bordered">
     <thead>
     <tr>
         <th class="text-center">Дата</th>
@@ -24,7 +24,7 @@
     </tr>
     </tbody>
 </table>
-<p-paginator *ngIf="table.pagination.total" rows="100" totalRecords="{{table.pagination.total*100}}"
+<p-paginator *ngIf="table && table.pagination" rows="100" totalRecords="{{table.pagination.total*100}}"
              (onPageChange)="paginate($event)"></p-paginator>
 
 
