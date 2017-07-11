@@ -51,26 +51,6 @@ export class ChartsComponent implements OnDestroy {
       })
     );
 
-    this.subscription.add(
-      this.chartsService.getMap().subscribe(data => {
-        this.mapCars = [];
-        this.mapPolyLines = [];
-
-        if (data.length) {
-          const car = new MapCar();
-          car.name = this.car.name;
-          car.point = [data[data.length - 1][1], data[data.length - 1][2]];
-          this.mapCars.push(car);
-          const polyLines = new MapPolyLines();
-          polyLines.name = 'Маршрут';
-          polyLines.color = '#000000';
-          data.forEach(d => {
-            polyLines.points.push([d[1], d[2]]);
-          });
-          this.mapPolyLines.push(polyLines);
-        }
-      }));
-
     this.subscription.add(this.route.params.subscribe(params => {
         this.options = []; // уничтожаем графики
         const car_id = +params['car'];
@@ -89,6 +69,25 @@ export class ChartsComponent implements OnDestroy {
             }
           )
         );
+        this.chartsService.mapData(car_id).subscribe(data => {
+          this.mapCars = [];
+          this.mapPolyLines = [];
+
+          if (data.length) {
+            const car = new MapCar();
+            car.name = this.car.name;
+            car.point = [data[data.length - 1][1], data[data.length - 1][2]];
+            this.mapCars.push(car);
+            const polyLines = new MapPolyLines();
+            polyLines.name = 'Маршрут';
+            polyLines.color = '#000000';
+            data.forEach(d => {
+              polyLines.points.push([d[1], d[2]]);
+            });
+            this.mapPolyLines.push(polyLines);
+          }
+        });
+
         /**
          * подписка на изменение данных
          */
