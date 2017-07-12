@@ -15,7 +15,6 @@ export class TableComponent implements OnChanges {
   public keys = [];
   public loading = true;
   private page = 0;
-  public width = '10%';
 
   constructor(private chartsService: ChartsService, private keysPipe: KeysPipe) {
     if (this.car) {
@@ -38,8 +37,6 @@ export class TableComponent implements OnChanges {
     this.chartsService.getTable(car, page).subscribe(
       table => {
         this.keys = this.keysPipe.transform(table.headers);
-        this.width = (100 / (this.keys.length + 1)) + '%';
-        console.log(this.width);
         this.table = table;
         this.loading = false;
       }
