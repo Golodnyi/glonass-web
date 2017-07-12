@@ -127,9 +127,6 @@ export class ChartsService {
         params += 'dateFrom=' + filter.before + '&dateTo=' + filter.after + '&';
       }
     }
-    if (autoRefresh.enabled && ((filter.last && filter.enabled) || !filter.enabled)) {
-      params += 'afterTime=' + autoRefresh.afterTime;
-    }
 
     return this.http.get(this.host + '/v1/cars/' + car + '/report/table' + params, options)
       .map((response: Response) => {
