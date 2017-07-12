@@ -17,6 +17,7 @@
                             <div class="col-md-9">
                                 <p-toggleButton onLabel="Графики" offLabel="Таблица"
                                                 onIcon="fa-area-chart" offIcon="fa-table"
+                                                (onChange)="viewModeChange($event)"
                                                 [(ngModel)]="viewMode">
                                 </p-toggleButton>
                                 <p-toggleButton [disabled]="!viewMode" onLabel="Сеткой" offLabel="Списком"
@@ -31,7 +32,7 @@
                                 <strong>Автообновление данных:</strong>
                             </div>
                             <div class="col-md-6">
-                                <p-inputSwitch [disabled]="(filter.enabled && !filter.last) || !viewMode"
+                                <p-inputSwitch [disabled]="filter.enabled && !filter.last"
                                                [(ngModel)]="autoRefresh.enabled"
                                                (onChange)="autoRefreshChange($event)" onLabel="да"
                                                offLabel="нет"></p-inputSwitch>

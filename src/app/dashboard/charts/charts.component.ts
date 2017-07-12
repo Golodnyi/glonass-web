@@ -147,7 +147,7 @@ export class ChartsComponent implements OnDestroy {
     }
     this.subscriptionAutoRefresh = this.chartsService.getAutoRefresh().subscribe(
       autoRefresh => {
-        if (!autoRefresh.enabled && this.subscriptionTimer) {
+        if ((!autoRefresh.enabled || !this.viewMode) && this.subscriptionTimer) {
           this.subscriptionTimer.unsubscribe();
         }
       }
@@ -214,6 +214,15 @@ export class ChartsComponent implements OnDestroy {
     }
     if (this.subscriptionAutoRefresh) {
       this.subscriptionAutoRefresh.unsubscribe();
+    }
+  }
+
+  public viewModeChange(event: any) {
+    this.autoRefresh.enabled = false;
+    this.chartsService.setAutoRefresh(this.autoRefresh);
+    if (event.checked) {
+      // resync данных при возврате к графикам
+      this.chartsService.resync(this.car.id);
     }
   }
 }
