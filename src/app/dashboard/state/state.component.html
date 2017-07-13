@@ -40,6 +40,16 @@
     <div *ngIf="!compact">
         Моточасы: {{state.motochas}} ч.
     </div>
+    <div>
+        <strong>Выявленные проблемы:</strong>
+        <div class="alert alert-danger" *ngFor="let issue of state.issues">
+            <div>Состояние: {{issue.name}}</div>
+            <div>Прогноз: {{issue.forecast}}</div>
+        </div>
+        <div class="alert alert-success" *ngIf="!state.issues.length">
+            Отсутсвуют
+        </div>
+    </div>
     <div *ngIf="!compact" class="label label-default">
         Информация за {{state.time}}
     </div>

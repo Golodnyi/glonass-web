@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import { IIssue, Issue } from './issue.model';
 
 export interface IState {
   time: string;
@@ -10,6 +11,7 @@ export interface IState {
   roaming: boolean;
   power: boolean;
   motochas: number;
+  issues: IIssue[];
 }
 export class State {
   public last_time: string = moment().format('DD.MM.YYYY HH:mm:ss');
@@ -29,4 +31,5 @@ export class State {
   public roaming: boolean;
   public power: boolean;
   public motochas = 0;
+  public issues = [];
 }
