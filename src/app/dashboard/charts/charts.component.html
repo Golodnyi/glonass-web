@@ -15,11 +15,7 @@
                                 <strong>Отображение:</strong>
                             </div>
                             <div class="col-md-9">
-                                <p-toggleButton onLabel="Графики" offLabel="Таблица"
-                                                onIcon="fa-area-chart" offIcon="fa-table"
-                                                (onChange)="viewModeChange($event)"
-                                                [(ngModel)]="viewMode">
-                                </p-toggleButton>
+                                <p-selectButton [options]="viewModeButtons" tabindex="1" [(ngModel)]="viewMode" (onChange)="viewModeChange($event)"></p-selectButton>
                                 <p-toggleButton [disabled]="!viewMode" onLabel="Сеткой" offLabel="Списком"
                                                 onIcon="fa-th-large" offIcon="fa-align-justify"
                                                 [(ngModel)]="viewChartMode">

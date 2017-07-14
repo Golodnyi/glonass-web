@@ -13,15 +13,14 @@ export class StateComponent implements OnChanges {
   @Input() toggleable = true;
   @Input() compact = false;
   private audio = new Audio();
-  private alert = false;
   constructor() {
     this.audio.src = '/assets/signal.mp3';
     this.audio.load();
   }
 
   ngOnChanges(changes) {
-    if (this.alert) {
-      this.audio.play();
+    if (this.state && this.state.issues.length) {
+      // this.audio.play();
     }
   }
 
