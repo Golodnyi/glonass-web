@@ -11,6 +11,7 @@ import { EnginesService } from '../../shared/services/engines.service';
 import { Engine } from '../../shared/models/engine.model';
 import { MapCar } from '../ymaps/shared/map-car.model';
 import { MapPolyLines } from '../ymaps/shared/map-polylines.model';
+import { SelectItem } from 'primeng/primeng';
 
 @Component({
   selector: 'app-charts',
@@ -35,6 +36,7 @@ export class ChartsComponent implements OnDestroy {
   public mapCars: MapCar[];
   public mapPolyLines: MapPolyLines[];
   public move = false;
+  public viewModeButtons: SelectItem[] = [];
 
   private mapUpd(car_id: number) {
     this.chartsService.mapData(car_id).subscribe(data => {
@@ -158,6 +160,8 @@ export class ChartsComponent implements OnDestroy {
               private chartsService: ChartsService,
               private carsService: CarsService,
               private enginesService: EnginesService) {
+    this.viewModeButtons.push({label: 'Графики', value: true});
+    this.viewModeButtons.push({label: 'Таблица', value: false});
     this.filterInit();
     this.subscription.add(
       this.route.params.subscribe(params => {
