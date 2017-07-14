@@ -9,10 +9,13 @@ import { NavigationComponent } from './navigation/navigation.component';
 import {
   AccordionModule,
   CalendarModule,
-  CheckboxModule, FieldsetModule,
+  CheckboxModule,
+  FieldsetModule,
   InputSwitchModule,
-  MultiSelectModule, PaginatorModule,
+  MultiSelectModule,
+  PaginatorModule,
   PanelModule,
+  SelectButtonModule,
   TabViewModule,
   ToggleButtonModule,
   TreeModule
@@ -45,7 +48,8 @@ import { TableComponent } from './table/table.component';
     TabViewModule,
     ToggleButtonModule,
     FieldsetModule,
-    PaginatorModule
+    PaginatorModule,
+    SelectButtonModule
   ],
   declarations: [
     DashboardComponent, NavigationComponent, ChartsComponent, StateComponent,
