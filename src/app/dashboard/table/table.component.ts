@@ -50,6 +50,10 @@ export class TableComponent implements OnChanges, OnDestroy {
 
     this.loading = true;
 
+    if (this.subscriptionAutoRefresh) {
+      this.subscriptionAutoRefresh.unsubscribe();
+    }
+
     if (this.autoRefresh) {
       this.subscriptionAutoRefresh = this.timer.subscribe(
         () => {
