@@ -7,7 +7,6 @@ import 'rxjs/add/operator/catch';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { Error } from '../models/error.model';
-import { Car } from '../models/car.model';
 import { MsgService } from './msg';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CarModel } from '../models/car-model.model';

@@ -83,7 +83,7 @@ export class CompanyComponent implements OnDestroy {
 
   private buildState(car: Car) {
     this.subscriptionTimer.push(
-      this.timer.subscribe(t => {
+      this.timer.subscribe(() => {
         this.carsService.getState(car.id).subscribe(
           state => {
             car.state = state;

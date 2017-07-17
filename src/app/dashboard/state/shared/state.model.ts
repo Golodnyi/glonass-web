@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import { IIssue, Issue } from './issue.model';
+import { IIssue } from './issue.model';
 
 export interface IState {
   time: string;

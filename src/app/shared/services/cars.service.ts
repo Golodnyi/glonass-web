@@ -80,14 +80,6 @@ export class CarsService {
     return this.car.asObservable();
   }
 
-  /**
-   * name:test
-   model_id:1
-   subdivision_id:1
-   is_visible:true
-   * @param car
-   * @returns {Observable<R|T>}
-   */
   public create(car: Car): Observable<Car> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
