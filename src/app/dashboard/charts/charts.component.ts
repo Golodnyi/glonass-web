@@ -133,12 +133,14 @@ export class ChartsComponent implements OnDestroy {
     }
     this.subscriptionFilter = this.chartsService.getFilter().subscribe(
       (filter) => {
-        this.loading = true;
-        this.filter = filter;
-        this.options = [];
-        this.autoRefresh.enabled = false;
-        this.chartsService.setAutoRefresh(this.autoRefresh);
-        this.chartsService.resync(car_id);
+        if (this.viewMode) {
+          this.loading = true;
+          this.filter = filter;
+          this.options = [];
+          this.autoRefresh.enabled = false;
+          this.chartsService.setAutoRefresh(this.autoRefresh);
+          this.chartsService.resync(car_id);
+        }
       }
     );
   }
