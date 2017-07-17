@@ -18,9 +18,8 @@ import { Subscription } from 'rxjs/Subscription';
 export class NavigationComponent implements OnDestroy {
 
   public companies: Company[];
-  private cs: Subscription;
-  private ss: Subscription;
-  private cas: Subscription;
+  private companySubscribe: Subscription = new Subscription();
+  private treeSubscribe = [];
 
   constructor(private companiesService: CompaniesService,
               private subdivisionsService: SubdivisionsService,
@@ -28,54 +27,54 @@ export class NavigationComponent implements OnDestroy {
               private msgService: MsgService,
               private router: Router,
               private tree: TreePipe) {
-    this.cs = this.companiesService.all(true).subscribe(
-      companies => {
-        this.companies = companies;
-      },
-      error => {
-        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-      }
+    this.companySubscribe.add(
+      this.companiesService.all(true).subscribe(
+        companies => {
+          this.companies = companies;
+        },
+        error => {
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+        }
+      )
     );
   }
 
   ngOnDestroy() {
-    if (this.cs) {
-      this.cs.unsubscribe();
-    }
-    if (this.ss) {
-      this.ss.unsubscribe();
-    }
-    if (this.cas) {
-      this.cas.unsubscribe();
-    }
+    this.companySubscribe.unsubscribe();
+    this.unsubscribeTree();
+  }
+
+  private unsubscribeTree() {
+    this.treeSubscribe.forEach(subscribe => {
+      subscribe.unsubscribe();
+    });
   }
 
   public onNodeExpand(event: any) {
+    this.unsubscribeTree();
     const obj = event.node.data;
     if (obj instanceof Company) {
-      if (this.ss) {
-        this.ss.unsubscribe();
-      }
-      this.ss = this.subdivisionsService.all(obj.id, true).subscribe(
-        subdivisions => {
-          event.node.children = this.tree.transform(subdivisions);
-        },
-        error => {
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-        }
+      this.treeSubscribe.push(
+        this.subdivisionsService.all(obj.id, true).subscribe(
+          subdivisions => {
+            event.node.children = this.tree.transform(subdivisions);
+          },
+          error => {
+            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+          }
+        )
       );
     } else if (obj instanceof Subdivision) {
       const parentObj = [event.node.parent.data];
-      if (this.cas) {
-        this.cas.unsubscribe();
-      }
-      this.cas = this.carsService.all(parentObj[0].id, obj.id, true).subscribe(
-        cars => {
-          event.node.children = this.tree.transform(cars, true, true);
-        },
-        error => {
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-        }
+      this.treeSubscribe.push(
+        this.carsService.all(parentObj[0].id, obj.id, true).subscribe(
+          cars => {
+            event.node.children = this.tree.transform(cars, true, true);
+          },
+          error => {
+            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+          }
+        )
       );
     }
   }
@@ -87,9 +86,5 @@ export class NavigationComponent implements OnDestroy {
     } else if (obj instanceof Car) {
       this.router.navigate(['dashboard/charts/' + obj.id]);
     }
-  }
-
-  public isCar(car: Car) {
-    return car instanceof Car;
   }
 }

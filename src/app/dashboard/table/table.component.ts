@@ -3,6 +3,7 @@ import { ChartsService } from '../../shared/services/charts.service';
 import { KeysPipe } from '../../shared/pipes/keys.pipe';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { Filter } from '../../shared/models/filter.model';
 
 @Component({
   selector: 'app-table',
@@ -14,6 +15,7 @@ export class TableComponent implements OnChanges, OnDestroy {
   @Input() car;
   @Input() move = false;
   @Input() autoRefresh = false;
+  @Input() filter: Filter;
   public table: any;
   public keys = [];
   public loading = true;
@@ -33,6 +35,10 @@ export class TableComponent implements OnChanges, OnDestroy {
     }
 
     if (changes.autoRefresh && !changes.autoRefresh.firstChange) {
+      this.loadData(this.car);
+    }
+
+    if (changes.filter && !changes.filter.firstChange) {
       this.loadData(this.car);
     }
   }

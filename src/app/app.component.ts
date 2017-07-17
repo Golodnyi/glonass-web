@@ -11,7 +11,6 @@ import { AuthService } from './shared/services/auth.service';
 })
 export class AppComponent {
   public growl: Message[] = [];
-  public msg: Message[] = [];
   public user: User;
 
   constructor(private msgService: MsgService, private authService: AuthService) {
@@ -25,15 +24,5 @@ export class AppComponent {
         this.growl.push(notice);
       }
     );
-
-    this.msgService.getMsg().subscribe(
-      msg => {
-        this.msg.push(msg);
-      }
-    );
-  }
-
-  public logout() {
-    this.authService.logout();
   }
 }

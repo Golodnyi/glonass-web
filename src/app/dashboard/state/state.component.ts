@@ -18,7 +18,7 @@ export class StateComponent implements OnChanges {
     this.audio.load();
   }
 
-  ngOnChanges(changes) {
+  ngOnChanges() {
     if (this.state && this.state.issues.length) {
       // this.audio.play();
     }

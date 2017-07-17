@@ -15,10 +15,10 @@ export class Filter {
       } else if (filter.charts && filter.charts !== undefined) {
         this.charts = [filter.charts];
       }
-      this.last = filter.last === 'true' ? true : false;
+      this.last = filter.last === 'true';
       this.before = filter.before;
       this.after = filter.after;
-      this.enabled = filter.enabled === 'true' ? true : false;
+      this.enabled = filter.enabled === 'true';
     }
   }
 }

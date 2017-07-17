@@ -20,10 +20,8 @@ import { Subscription } from 'rxjs/Subscription';
 export class NavigationComponent implements OnDestroy {
 
   public companies: Company[];
-  private cs: Subscription;
-  private ss: Subscription;
-  private cas: Subscription;
-  private es: Subscription;
+  private companySubscribe: Subscription = new Subscription();
+  private treeSubscribe = [];
 
   constructor(private companiesService: CompaniesService,
               private subdivisionsService: SubdivisionsService,
@@ -32,74 +30,70 @@ export class NavigationComponent implements OnDestroy {
               private enginesService: EnginesService,
               private router: Router,
               private tree: TreePipe) {
-    this.cs = this.companiesService.all(true).subscribe(
-      companies => {
-        this.companies = companies;
-      },
-      error => {
-        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-      }
+    this.companySubscribe.add(
+      this.companiesService.all(true).subscribe(
+        companies => {
+          this.companies = companies;
+        },
+        error => {
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+        }
+      )
     );
   }
 
   ngOnDestroy() {
-    if (this.cs) {
-      this.cs.unsubscribe();
-    }
-    if (this.ss) {
-      this.ss.unsubscribe();
-    }
-    if (this.cas) {
-      this.cas.unsubscribe();
-    }
-    if (this.es) {
-      this.es.unsubscribe();
-    }
+    this.companySubscribe.unsubscribe();
+    this.unsubscribeTree();
+  }
+
+  private unsubscribeTree() {
+    this.treeSubscribe.forEach(subscribe => {
+      subscribe.unsubscribe();
+    });
   }
 
   public onNodeExpand(event: any) {
+    this.unsubscribeTree();
     const obj = event.node.data;
     if (obj instanceof Company) {
-      if (this.ss) {
-        this.ss.unsubscribe();
-      }
-      this.ss = this.subdivisionsService.all(obj.id, true).subscribe(
-        subdivision => {
-          event.node.children = this.tree.transform(subdivision, false, true);
-        },
-        error => {
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-        }
+      this.treeSubscribe.push(
+        this.subdivisionsService.all(obj.id, true).subscribe(
+          subdivision => {
+            event.node.children = this.tree.transform(subdivision, false, true);
+          },
+          error => {
+            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+          }
+        )
       );
     } else if (obj instanceof Subdivision) {
       const parentObj = [event.node.parent.data];
-      if (this.cas) {
-        this.cas.unsubscribe();
-      }
-      this.cas = this.carsService.all(parentObj[0].id, obj.id, true).subscribe(
-        cars => {
-          event.node.children = this.tree.transform(cars, false, true);
-        },
-        error => {
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-        }
+      this.treeSubscribe.push(
+        this.carsService.all(parentObj[0].id, obj.id, true).subscribe(
+          cars => {
+            event.node.children = this.tree.transform(cars, false, true);
+          },
+          error => {
+            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+          }
+        )
       );
     } else if (obj instanceof Car) {
       const parentObj = [];
       parentObj.push(event.node.parent.data);
       parentObj.push(event.node.parent.parent.data);
-      if (this.es) {
-        this.es.unsubscribe();
-      }
-      this.es = this.enginesService.get(parentObj[1].id, parentObj[0].id, obj.id, true).subscribe(
-        engine => {
-          if (engine.id) {
-            event.node.children = this.tree.transform([engine], true, true);
+      this.treeSubscribe.push(
+        this.enginesService.get(parentObj[1].id, parentObj[0].id, obj.id, true).subscribe(
+          engine => {
+            if (engine.id) {
+              event.node.children = this.tree.transform([engine], true, true);
+            }
+          },
+          error => {
+            this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
           }
-        },
-        error => {
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-        }
+        )
       );
     }
   }

@@ -13,23 +13,23 @@ import { Subscription } from 'rxjs/Subscription';
 export class NavigationComponent implements OnDestroy {
 
   public users: User[];
-  private us: Subscription;
+  private usersSubscribe: Subscription = new Subscription();
 
   constructor(private msgService: MsgService, private usersService: UsersService, private router: Router) {
-    this.us = this.usersService.all().subscribe(
-      users => {
-        this.users = users;
-      },
-      error => {
-        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
-      }
+    this.usersSubscribe.add(
+      this.usersService.all().subscribe(
+        users => {
+          this.users = users;
+        },
+        error => {
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+        }
+      )
     );
   }
 
   ngOnDestroy() {
-    if (this.us) {
-      this.us.unsubscribe();
-    }
+    this.usersSubscribe.unsubscribe();
   }
 
   public onNodeSelect(event: any) {

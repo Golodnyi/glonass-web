@@ -110,7 +110,6 @@ export class ChartsService {
 
   public getTable(car: number, page: number): Observable<any> {
     const filter = this.filter.getValue();
-    const autoRefresh = this.autoRefresh.getValue();
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
