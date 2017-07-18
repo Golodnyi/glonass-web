@@ -1,0 +1,13 @@
+.dialog {
+    width: 400px;
+    height: 300px;
+    text-align: center;
+}
+.dialog input {
+    width: 100%;
+}
+.dialog .bottom {
+    bottom: 10px;
+    right: 10px;
+    position: absolute;
+}
