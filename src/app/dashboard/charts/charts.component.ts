@@ -226,7 +226,7 @@ export class ChartsComponent implements OnDestroy {
   public viewModeChange(event: any) {
     this.autoRefresh.enabled = false;
     this.chartsService.setAutoRefresh(this.autoRefresh);
-    if (event.checked) {
+    if (event.value) {
       // resync данных при возврате к графикам
       this.chartsService.resync(this.car.id);
     }
