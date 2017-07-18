@@ -6,13 +6,17 @@
                 <strong>{{issue.name}}</strong>
             </div>
             <div class="text-left">Прогноз: {{issue.forecast}}</div>
-            <!-- hr/>
+            <hr/>
             <div class="text-right">
-                <button class="btn btn-danger">
+                <button *ngIf="!isMuted(issue.id)" class="btn btn-danger" (click)="mute(issue.id)">
                     <span class="fa fa-music">&nbsp;</span>
-                    выкл
+                    включено
                 </button>
-            </div -->
+                <button *ngIf="isMuted(issue.id)" class="btn btn-success" (click)="unMute(issue.id)">
+                    <span class="fa fa-music">&nbsp;</span>
+                    отключено
+                </button>
+            </div>
         </div>
         <div class="alert alert-success" *ngIf="!state.issues.length">
             <span class="fa fa-check">&nbsp;</span>Проблем не обнаружено
