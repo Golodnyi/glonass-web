@@ -30,6 +30,11 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
           }
         }
       };
+      highstock.setOptions({
+        global: {
+          useUTC: false
+        }
+      });
       this.chart = highstock.stockChart(this.el.nativeElement, config);
     }
   }
