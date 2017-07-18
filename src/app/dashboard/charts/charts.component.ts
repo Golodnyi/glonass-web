@@ -226,7 +226,13 @@ export class ChartsComponent implements OnDestroy {
   public viewModeChange(event: any) {
     this.autoRefresh.enabled = false;
     this.chartsService.setAutoRefresh(this.autoRefresh);
-    if (event.value) {
+    /**
+     * TODO: грязный хак, обновлять данные, только если они отсутствуют
+     * отсутствовать они могут если до перехода в табличный вид
+     * стояло автообновление страницы, при возврате там пустые данные,
+     * если автообновление не стояла, данные  заполнены и условие не сработает.
+     */
+    if (event.value && !this.options[0].data.length) {
       // resync данных при возврате к графикам
       this.chartsService.resync(this.car.id);
     }
