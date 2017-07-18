@@ -202,7 +202,7 @@ export class ChartsComponent implements OnDestroy {
     if (series) {
       const data = series.data[series.data.length - 1];
       if (data) {
-        return data[0];
+        return data[0] / 1000;
       }
     }
 
