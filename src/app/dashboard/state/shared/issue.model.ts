@@ -1,4 +1,5 @@
 export interface IIssue {
+  id: number;
   name: string;
   minDuration: number;
   maxDuration: number;
@@ -8,6 +9,7 @@ export interface IIssue {
   lastCheckAt: number;
 }
 export class Issue {
+  public id: number;
   public name: string;
   public minDuration: number;
   public maxDuration: number;
