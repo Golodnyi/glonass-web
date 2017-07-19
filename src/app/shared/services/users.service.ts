@@ -71,4 +71,42 @@ export class UsersService {
         return Observable.throw(error.json().message || 'Server error');
       });
   }
+
+  public roles(): Observable<Role[]> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+
+    return this.http.get(this.host + '/v1/roles', options)
+      .map((response: Response) => {
+        const roles: Role[] = [];
+        response.json().forEach(r => {
+          roles.push(Object.assign(new Role(), r))
+        });
+        return roles;
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
+
+  public create(user: User): Observable<User> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+    return this.http.post(
+      this.host + '/v1/users',
+      'send_email=1&login=' + user.login + '&name=' + user.name
+      + '&email=' + user.email + '&password=' + user.password
+      + '&role_id=' + user.role_id + '&company_id=' + user.company_id,
+      options)
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
 }
