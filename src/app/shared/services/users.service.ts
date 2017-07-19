@@ -81,7 +81,7 @@ export class UsersService {
       .map((response: Response) => {
         const roles: Role[] = [];
         response.json().forEach(r => {
-          roles.push(Object.assign(new Role(), r))
+          roles.push(Object.assign(new Role(), r));
         });
         return roles;
       })
