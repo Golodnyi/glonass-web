@@ -1,26 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { UserCreateForm } from '../shared/user/create.form';
 import { UsersService } from '../../../../shared/services/users.service';
-import { Company } from '../../../../shared/models/company.model';
 import { FormGroup } from '@angular/forms';
 import { User } from '../../../../shared/models/user.model';
 import { CompaniesService } from '../../../../shared/services/companies.service';
 import { MsgService } from '../../../../shared/services/msg';
 import { Router } from '@angular/router';
 import { Role } from '../../../../shared/models/role.model';
+import { UserForm } from '../shared/user.form';
 
 @Component({
   selector: 'app-user-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css'],
-  providers: [UserCreateForm, CompaniesService]
+  providers: [UserForm, CompaniesService]
 })
 export class UserCreateComponent implements OnInit {
   public user: User = new User();
   public roles: Role[];
   public form: FormGroup;
   public submit: boolean;
-  constructor(private userCreateForm: UserCreateForm,
+  constructor(private userCreateForm: UserForm,
               private usersService: UsersService,
               private msg: MsgService,
               private router: Router
