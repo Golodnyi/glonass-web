@@ -14,7 +14,6 @@ export interface IUser {
 
 export class User implements IUser {
   public id: number;
-  public company_id;
   public login: string;
   public name: string;
   public email: string;

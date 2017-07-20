@@ -1,9 +1,9 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
-import { User } from '../../../../../shared/models/user.model';
+import { User } from '../../../../shared/models/user.model';
 
 @Injectable()
-export class UserCreateForm {
+export class UserForm {
   private form: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -11,7 +11,6 @@ export class UserCreateForm {
 
   public create(user: User) {
     this.form = this.fb.group({
-      company_id: [user.company_id, Validators.required],
       login: [user.login, Validators.required],
       password: [user.password, [Validators.required, Validators.min(6)]],
       name: [user.name, Validators.required],

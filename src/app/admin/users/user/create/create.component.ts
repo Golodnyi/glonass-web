@@ -1,45 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { UserCreateForm } from '../shared/user/create.form';
+import { Component } from '@angular/core';
 import { UsersService } from '../../../../shared/services/users.service';
-import { Company } from '../../../../shared/models/company.model';
 import { FormGroup } from '@angular/forms';
 import { User } from '../../../../shared/models/user.model';
-import { CompaniesService } from '../../../../shared/services/companies.service';
 import { MsgService } from '../../../../shared/services/msg';
 import { Router } from '@angular/router';
 import { Role } from '../../../../shared/models/role.model';
+import { UserForm } from '../shared/user.form';
 
 @Component({
   selector: 'app-user-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css'],
-  providers: [UserCreateForm, CompaniesService]
+  providers: [UserForm]
 })
-export class UserCreateComponent implements OnInit {
+export class UserCreateComponent {
   public user: User = new User();
-  public companies: Company[];
   public roles: Role[];
   public form: FormGroup;
   public submit: boolean;
-  constructor(private userCreateForm: UserCreateForm,
+
+  constructor(private userForm: UserForm,
               private usersService: UsersService,
-              private companiesService: CompaniesService,
               private msg: MsgService,
-              private router: Router
-  ) {
-    this.form = this.userCreateForm.create(this.user);
+              private router: Router) {
+    this.form = this.userForm.create(this.user);
     this.form.valueChanges.subscribe((data) => {
       this.user = data;
     });
-
-    this.companiesService.all(true).subscribe(
-      companies => {
-        this.companies = companies;
-      },
-      error => {
-        this.msg.notice(MsgService.ERROR, 'Ошибка', error);
-      }
-    );
 
     this.usersService.roles().subscribe(
       roles => {
@@ -49,9 +36,6 @@ export class UserCreateComponent implements OnInit {
         this.msg.notice(MsgService.ERROR, 'Ошибка', error);
       }
     );
-  }
-
-  ngOnInit() {
   }
 
   public onSubmit() {
