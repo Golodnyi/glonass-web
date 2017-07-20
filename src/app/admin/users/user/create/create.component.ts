@@ -17,13 +17,11 @@ import { Role } from '../../../../shared/models/role.model';
 })
 export class UserCreateComponent implements OnInit {
   public user: User = new User();
-  public companies: Company[];
   public roles: Role[];
   public form: FormGroup;
   public submit: boolean;
   constructor(private userCreateForm: UserCreateForm,
               private usersService: UsersService,
-              private companiesService: CompaniesService,
               private msg: MsgService,
               private router: Router
   ) {
@@ -31,15 +29,6 @@ export class UserCreateComponent implements OnInit {
     this.form.valueChanges.subscribe((data) => {
       this.user = data;
     });
-
-    this.companiesService.all(true).subscribe(
-      companies => {
-        this.companies = companies;
-      },
-      error => {
-        this.msg.notice(MsgService.ERROR, 'Ошибка', error);
-      }
-    );
 
     this.usersService.roles().subscribe(
       roles => {

@@ -1,8 +1,5 @@
 <h3>Создание пользователя</h3>
 <form [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
-    <label for="company">Компания:</label><br/>
-    <p-dropdown id="company" [options]="companies | DropDown" formControlName="company_id" [filter]="true"
-                [style]="{'width':'190px'}"></p-dropdown><br/>
     <label for="login">Логин:</label><br/>
     <input class="input-sm" id="login" type="text" pInputText formControlName="login"
            placeholder="Логин"/><br/>

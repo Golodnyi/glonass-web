@@ -11,7 +11,6 @@ export class UserCreateForm {
 
   public create(user: User) {
     this.form = this.fb.group({
-      company_id: [user.company_id, Validators.required],
       login: [user.login, Validators.required],
       password: [user.password, [Validators.required, Validators.min(6)]],
       name: [user.name, Validators.required],

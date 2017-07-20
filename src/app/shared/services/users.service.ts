@@ -99,7 +99,7 @@ export class UsersService {
       this.host + '/v1/users',
       'send_email=1&login=' + user.login + '&name=' + user.name
       + '&email=' + user.email + '&password=' + user.password
-      + '&role_id=' + user.role_id + '&company_id=' + user.company_id,
+      + '&role_id=' + user.role_id,
       options)
       .map((response: Response) => {
         return response.json();
