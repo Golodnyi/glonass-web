@@ -109,4 +109,23 @@ export class UsersService {
         return Observable.throw(error.json().message || 'Server error');
       });
   }
+
+  public update(user: User): Observable<User> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+    return this.http.put(
+      this.host + '/v1/users/' + user.id,
+      'login=' + user.login + '&name=' + user.name
+      + '&email=' + user.email + '&password=' + user.password
+      + '&role_id=' + user.role_id,
+      options)
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
 }
