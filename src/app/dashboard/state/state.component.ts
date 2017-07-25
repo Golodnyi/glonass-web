@@ -6,6 +6,7 @@ import { FormGroup } from '@angular/forms';
 import { ResetForm } from './shared/reset.form';
 import { ResetService } from './shared/reset.service';
 import { MsgService } from '../../shared/services/msg';
+import { Car } from '../../shared/models/car.model';
 
 @Component({
   selector: 'app-state',
@@ -15,7 +16,7 @@ import { MsgService } from '../../shared/services/msg';
 })
 export class StateComponent implements OnChanges {
   @Input() state: State;
-  @Input() title: string;
+  @Input() car: Car;
   @Input() toggleable = true;
   @Input() compact = false;
   public ru = new Calendar();
@@ -28,7 +29,7 @@ export class StateComponent implements OnChanges {
     this.form = this.resetForm.create();
     this.form.valueChanges
       .map((value) => {
-        value.date = moment(value.date).format('YYYY-MM-DD');
+        value.date = moment(value.date).format();
         return value;
       })
       .subscribe((data) => {
@@ -55,9 +56,10 @@ export class StateComponent implements OnChanges {
 
   public onSubmit() {
     this.submit = true;
-    this.resetService.reset(this.resetData).subscribe(
-      data => {
-        console.log(data);
+    this.resetService.reset(this.resetData, this.car).subscribe(
+      () => {
+        this.msg.notice(MsgService.SUCCESS, 'Сброс', 'Моточасы сброшены');
+        this.display = false;
       },
       error => {
         this.submit = false;

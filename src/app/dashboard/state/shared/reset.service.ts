@@ -9,6 +9,7 @@ import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../shared/services/auth.service';
 import { MsgService } from '../../../shared/services/msg';
 import { Error } from '../../../shared/models/error.model';
+import { Car } from '../../../shared/models/car.model';
 
 @Injectable()
 export class ResetService {
@@ -20,13 +21,13 @@ export class ResetService {
               private msgService: MsgService) {
   }
 
-  public reset(data: any): Observable<any> {
+  public reset(data: any, car: Car): Observable<any> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
     return this.http.post(
       this.host + '/v1/engine-maintenances/',
-      'date=' + data['date'] + '&comment=' + data['comment'],
+      'engine_id=' + car.engine.id + 'date=' + data['date'] + '&comment=' + data['comment'],
       options)
       .map((response: Response) => {
         return response.json();
