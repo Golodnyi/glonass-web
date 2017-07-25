@@ -59,10 +59,11 @@
         </div>
         <div *ngIf="!compact">
             <hr/>
-            Моточасы: {{state.motochas}} ч.
-            <br/><br/>
-            <button type="text" (click)="showHistory()" pButton icon="fa-info" label="История сбросов"></button>
-            <button *ngIf="car.engine" type="text" (click)="showDialog()" pButton icon="fa-refresh" label="Сброс"></button>
+            Моточасы: {{state.motochas}} ч.<br/>
+            <div *ngIf="car.engine" class="btn-st">
+                <button type="text" (click)="showHistory()" pButton icon="fa-info" label="История сбросов"></button>
+                <button type="text" (click)="showDialog()" pButton icon="fa-refresh" label="Сброс"></button>
+            </div>
         </div>
     </div>
     <div *ngIf="!compact" class="label label-default">
@@ -73,7 +74,9 @@
 <p-dialog header="Сброс моточасов" #dialog [(visible)]="display">
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="dialog input-group">
         <label>Дата</label><br/>
-        <p-calendar formControlName="date" dateFormat="dd.mm.yy" required [locale]="ru"></p-calendar><br/>
+        <p-calendar formControlName="date" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24" required
+                    [locale]="ru"></p-calendar>
+        <br/>
         <label>Комментарий</label><br/>
         <textarea formControlName="comment" pInputTextarea required></textarea>
         <div class="bottom">
@@ -81,4 +84,8 @@
                     label="Сбросить"></button>
         </div>
     </form>
+</p-dialog>
+<p-blockUI [blocked]="displayHistory"></p-blockUI>
+<p-dialog header="История сбросов" #dialogHistory [(visible)]="displayHistory">
+    vot!
 </p-dialog>

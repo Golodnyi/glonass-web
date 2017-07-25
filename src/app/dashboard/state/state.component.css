@@ -1,6 +1,6 @@
 .dialog {
-    width: 400px;
-    height: 300px;
+    width: 300px;
+    height: 380px;
     text-align: center;
 }
 .dialog input {
@@ -10,4 +10,7 @@
     bottom: 10px;
     right: 10px;
     position: absolute;
+}
+.btn-st {
+    padding-top: 20px;
 }

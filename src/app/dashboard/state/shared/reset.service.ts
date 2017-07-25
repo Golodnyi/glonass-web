@@ -27,7 +27,23 @@ export class ResetService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
     return this.http.post(
       this.host + '/v1/engine-maintenances/',
-      'engine_id=' + car.engine.id + 'date=' + data['date'] + '&comment=' + data['comment'],
+      'engine_id=' + car.engine.id + '&date=' + data.date + '&comment=' + data.comment,
+      options)
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
+
+  public all(car: Car): Observable<any> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+    return this.http.get(
+      this.host + '/v1/engine-maintenances/' + car.engine.id,
       options)
       .map((response: Response) => {
         return response.json();

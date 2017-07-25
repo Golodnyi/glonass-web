@@ -22,6 +22,7 @@ export class StateComponent implements OnChanges {
   public ru = new Calendar();
   private audio = new Audio();
   public display = false;
+  public displayHistory = false;
   public form: FormGroup;
   public submit: boolean;
   private resetData: any;
@@ -69,5 +70,14 @@ export class StateComponent implements OnChanges {
   }
 
   public showHistory() {
+    this.resetService.all(this.car).subscribe(
+      (data) => {
+        console.log(data);
+        this.displayHistory = true;
+      },
+      error => {
+        this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+      }
+    );
   }
 }
