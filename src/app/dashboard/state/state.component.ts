@@ -67,4 +67,7 @@ export class StateComponent implements OnChanges {
       }
     );
   }
+
+  public showHistory() {
+  }
 }
