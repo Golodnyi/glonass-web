@@ -50,9 +50,16 @@ export class ChartsComponent implements OnDestroy {
         this.mapCars.push(car);
         const polyLines = new MapPolyLines();
         polyLines.name = 'Маршрут';
-        polyLines.color = '#000000';
+        let clr;
         data.forEach(d => {
-          polyLines.points.push([d[1], d[2]]);
+          if (d[3] === 'g') {
+            clr = '#00AA00';
+          } else if (d[3] === 'r') {
+            clr = '#AA0000';
+          } else if (d[3] === 'y') {
+            clr = '#FFD700';
+          }
+          polyLines.points.push([d[1], d[2], clr]);
         });
         this.mapPolyLines.push(polyLines);
       }
