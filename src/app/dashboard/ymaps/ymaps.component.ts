@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { MapCar } from './shared/map-car.model';
 import { MapPolyLines } from './shared/map-polylines.model';
+
 /// <reference path="./typings/ymaps.d.ts" />
 @Component({
   selector: 'app-ymaps',
@@ -39,6 +40,17 @@ export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
         }
       );
 
+      this.polyLines.forEach(polyLine => {
+        polyLine.points.forEach(point => {
+          this.map.geoObjects.add(
+            new ymaps.Circle([[point[0], point[1]], 1], {}, {
+              fillColor: point[2],
+              strokeColor: point[2],
+            })
+          );
+        });
+      });
+
       this.cars.forEach(car => {
         this.map.geoObjects.add(new ymaps.Placemark(car.point, {
           hintContent: car.name
@@ -49,18 +61,6 @@ export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
         }));
       });
 
-      this.polyLines.forEach(polyLine => {
-        this.map.geoObjects.add(
-          new ymaps.Polyline(polyLine.points,
-            {
-              hintContent: polyLine.name
-            },
-            {
-              strokeColor: polyLine.color,
-              strokeWidth: 2
-            })
-        );
-      });
     });
   }
 

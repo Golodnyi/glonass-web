@@ -22,4 +22,8 @@ declare namespace ymaps {
   export class Polyline {
     constructor([], {}, {});
   }
+
+  export class Circle {
+    constructor([], {}, {});
+  }
 }
