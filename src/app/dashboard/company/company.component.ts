@@ -60,8 +60,16 @@ export class CompanyComponent implements OnDestroy {
                         const polyLines = new MapPolyLines();
                         polyLines.name = 'Маршрут';
                         polyLines.color = '#' + Math.random().toString(16).substr(-6);
+                        let clr = '#000';
                         data.forEach(d => {
-                          polyLines.points.push([d[1], d[2]]);
+                          if (d[3] === 'g') {
+                            clr = '#00AA00';
+                          } else if (d[3] === 'r') {
+                            clr = '#AA0000';
+                          } else if (d[3] === 'y') {
+                            clr = '#FFD700';
+                          }
+                          polyLines.points.push([d[1], d[2], clr]);
                         });
 
                         this.mc.push(mCar);
