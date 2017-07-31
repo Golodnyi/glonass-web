@@ -87,5 +87,7 @@
 </p-dialog>
 <p-blockUI [blocked]="displayHistory"></p-blockUI>
 <p-dialog header="История сбросов" #dialogHistory [(visible)]="displayHistory">
-    vot!
+    <div *ngFor="let h of history" [class.alert-success]="h.active">
+        {{h.date | date:'y-MM-dd HH:mm:ss'}} {{h.comment}}
+    </div>
 </p-dialog>

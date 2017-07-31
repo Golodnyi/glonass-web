@@ -43,7 +43,7 @@ export class ResetService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
     return this.http.get(
-      this.host + '/v1/engine-maintenances/' + car.engine.id,
+      this.host + '/v1/engine-maintenances/engine/' + car.engine.id,
       options)
       .map((response: Response) => {
         return response.json();

@@ -25,6 +25,7 @@ export class StateComponent implements OnChanges {
   public displayHistory = false;
   public form: FormGroup;
   public submit: boolean;
+  public history = [];
   private resetData: any;
   constructor(private resetForm: ResetForm, private resetService: ResetService, private msg: MsgService) {
     this.form = this.resetForm.create();
@@ -71,8 +72,11 @@ export class StateComponent implements OnChanges {
 
   public showHistory() {
     this.resetService.all(this.car).subscribe(
-      (data) => {
-        console.log(data);
+      data => {
+        this.history = [];
+        data.forEach(d => {
+          this.history.push(d);
+        });
         this.displayHistory = true;
       },
       error => {
