@@ -1,4 +1,4 @@
-<p-panel *ngIf="state" header="{{title}}" [toggleable]="toggleable">
+<p-panel *ngIf="state" header="Состояние {{car.name}}" [toggleable]="toggleable">
     <div>
         <div class="alert alert-danger" *ngFor="let issue of state.issues">
             <div class="text-left">
@@ -62,10 +62,36 @@
             <span *ngIf="!state.power" class="badge alert-danger">нет</span>
         </div>
         <div *ngIf="!compact">
-            Моточасы: {{state.motochas}} ч.
+            <hr/>
+            Моточасы: {{state.motochas}} ч.<br/>
+            <div *ngIf="car.engine" class="btn-st">
+                <button type="text" (click)="showHistory()" pButton icon="fa-info" label="История сбросов"></button>
+                <button type="text" (click)="showDialog()" pButton icon="fa-refresh" label="Сброс"></button>
+            </div>
         </div>
     </div>
     <div *ngIf="!compact" class="label label-default">
         Информация за {{state.time}}
     </div>
 </p-panel>
+<p-blockUI [blocked]="display"></p-blockUI>
+<p-dialog header="Сброс моточасов" #dialog [(visible)]="display">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="dialog input-group">
+        <label>Дата</label><br/>
+        <p-calendar formControlName="date" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24" required
+                    [locale]="ru"></p-calendar>
+        <br/>
+        <label>Комментарий</label><br/>
+        <textarea formControlName="comment" pInputTextarea required></textarea>
+        <div class="bottom">
+            <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton
+                    label="Сбросить"></button>
+        </div>
+    </form>
+</p-dialog>
+<p-blockUI [blocked]="displayHistory"></p-blockUI>
+<p-dialog header="История сбросов" #dialogHistory [(visible)]="displayHistory">
+    <div *ngFor="let h of history" [class.alert-success]="h.active">
+        {{h.date | date:'y-MM-dd HH:mm:ss'}} {{h.comment}}
+    </div>
+</p-dialog>
