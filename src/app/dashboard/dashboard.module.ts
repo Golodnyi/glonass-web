@@ -8,10 +8,13 @@ import { CarsService } from '../shared/services/cars.service';
 import { NavigationComponent } from './navigation/navigation.component';
 import {
   AccordionModule,
+  BlockUIModule,
   CalendarModule,
   CheckboxModule,
+  DialogModule,
   FieldsetModule,
   InputSwitchModule,
+  InputTextareaModule,
   MultiSelectModule,
   PaginatorModule,
   PanelModule,
@@ -49,7 +52,10 @@ import { TableComponent } from './table/table.component';
     ToggleButtonModule,
     FieldsetModule,
     PaginatorModule,
-    SelectButtonModule
+    SelectButtonModule,
+    DialogModule,
+    BlockUIModule,
+    InputTextareaModule
   ],
   declarations: [
     DashboardComponent, NavigationComponent, ChartsComponent, StateComponent,
