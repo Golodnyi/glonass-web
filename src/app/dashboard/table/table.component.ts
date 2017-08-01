@@ -42,9 +42,13 @@ export class TableComponent implements OnChanges, OnDestroy {
     if (changes.filter && !changes.filter.firstChange) {
       this.loadData(this.car);
     }
+
+    if (changes.move && !changes.move.firstChange) {
+      this.loadData(this.car, this.move);
+    }
   }
 
-  private loadData(car, page = 0, sort = 'time', dir = 'desc') {
+  private loadData(car, move = false, page = 0, sort = 'time', dir = 'desc') {
     if (car === undefined) {
       return;
     }
@@ -58,7 +62,7 @@ export class TableComponent implements OnChanges, OnDestroy {
     if (this.autoRefresh) {
       this.subscriptionAutoRefresh = this.timer.subscribe(
         () => {
-          this.chartsService.getTable(car, page, sort, dir).subscribe(
+          this.chartsService.getTable(car, move, page, sort, dir).subscribe(
             table => {
               this.keys = this.keysPipe.transform(table.headers);
               this.table = table;
@@ -68,7 +72,7 @@ export class TableComponent implements OnChanges, OnDestroy {
         }
       );
     } else {
-      this.chartsService.getTable(car, page, sort, dir).subscribe(
+      this.chartsService.getTable(car, move, page, sort, dir).subscribe(
         table => {
           this.keys = this.keysPipe.transform(table.headers);
           this.table = table;
@@ -81,7 +85,7 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   public paginate(event) {
     this.page = event.page;
-    this.loadData(this.car, this.page, this.tsort, (this.tdir === -1 ? 'asc' : 'desc'));
+    this.loadData(this.car, this.move, this.page, this.tsort, (this.tdir === -1 ? 'asc' : 'desc'));
   }
 
   ngOnDestroy() {
@@ -97,6 +101,6 @@ export class TableComponent implements OnChanges, OnDestroy {
 
     this.tsort = event.field;
     this.tdir = event.order;
-    this.loadData(this.car, this.page, this.tsort, (this.tdir === -1 ? 'asc' : 'desc'));
+    this.loadData(this.car, this.move, this.page, this.tsort, (this.tdir === -1 ? 'asc' : 'desc'));
   }
 }
