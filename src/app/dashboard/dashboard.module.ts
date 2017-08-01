@@ -11,6 +11,7 @@ import {
   BlockUIModule,
   CalendarModule,
   CheckboxModule,
+  DataTableModule,
   DialogModule,
   FieldsetModule,
   InputSwitchModule,
@@ -34,6 +35,7 @@ import { SensorsService } from '../shared/services/sensors.service';
 import { YmapsComponent } from './ymaps/ymaps.component';
 import { CompanyComponent } from './company/company.component';
 import { TableComponent } from './table/table.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -55,7 +57,8 @@ import { TableComponent } from './table/table.component';
     SelectButtonModule,
     DialogModule,
     BlockUIModule,
-    InputTextareaModule
+    InputTextareaModule,
+    DataTableModule
   ],
   declarations: [
     DashboardComponent, NavigationComponent, ChartsComponent, StateComponent,

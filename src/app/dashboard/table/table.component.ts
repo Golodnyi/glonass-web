@@ -17,12 +17,13 @@ export class TableComponent implements OnChanges, OnDestroy {
   @Input() autoRefresh = false;
   @Input() filter: Filter;
   public table: any;
+  public loading = false;
   public keys = [];
-  public loading = true;
   private page = 0;
+  private tsort = 'time';
+  private tdir = 1;
   private subscriptionAutoRefresh: Subscription;
   private timer = Observable.timer(0, 5000);
-
   constructor(private chartsService: ChartsService, private keysPipe: KeysPipe) {
     if (this.car) {
       this.loadData(this.car);
@@ -43,12 +44,12 @@ export class TableComponent implements OnChanges, OnDestroy {
     }
   }
 
-  private loadData(car, page = 0) {
+  private loadData(car, page = 0, sort = 'time', dir = 'desc') {
     if (car === undefined) {
       return;
     }
 
-    this.loading = true;
+    // this.loading = true;
 
     if (this.subscriptionAutoRefresh) {
       this.subscriptionAutoRefresh.unsubscribe();
@@ -57,7 +58,7 @@ export class TableComponent implements OnChanges, OnDestroy {
     if (this.autoRefresh) {
       this.subscriptionAutoRefresh = this.timer.subscribe(
         () => {
-          this.chartsService.getTable(car, page).subscribe(
+          this.chartsService.getTable(car, page, sort, dir).subscribe(
             table => {
               this.keys = this.keysPipe.transform(table.headers);
               this.table = table;
@@ -67,7 +68,7 @@ export class TableComponent implements OnChanges, OnDestroy {
         }
       );
     } else {
-      this.chartsService.getTable(car, page).subscribe(
+      this.chartsService.getTable(car, page, sort, dir).subscribe(
         table => {
           this.keys = this.keysPipe.transform(table.headers);
           this.table = table;
@@ -80,12 +81,22 @@ export class TableComponent implements OnChanges, OnDestroy {
 
   public paginate(event) {
     this.page = event.page;
-    this.loadData(this.car, this.page);
+    this.loadData(this.car, this.page, this.tsort, (this.tdir === -1 ? 'asc' : 'desc'));
   }
 
   ngOnDestroy() {
     if (this.subscriptionAutoRefresh) {
       this.subscriptionAutoRefresh.unsubscribe();
     }
+  }
+
+  public sort(event: any) {
+    if (this.tsort === event.field && this.tdir === event.order) {
+      return false;
+    }
+
+    this.tsort = event.field;
+    this.tdir = event.order;
+    this.loadData(this.car, this.page, this.tsort, (this.tdir === -1 ? 'asc' : 'desc'));
   }
 }
