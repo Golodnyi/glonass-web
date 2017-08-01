@@ -108,7 +108,7 @@ export class ChartsService {
     return this.sensors.asObservable();
   }
 
-  public getTable(car: number, page: number): Observable<any> {
+  public getTable(car: number, move = false, page: number, sort = 'time', dir = 'desc'): Observable<any> {
     const filter = this.filter.getValue();
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -126,7 +126,10 @@ export class ChartsService {
         params += 'dateFrom=' + filter.before + '&dateTo=' + filter.after + '&';
       }
     }
-
+    if (move) {
+      params += 'drive=1&';
+    }
+    params += 'sort=' + sort + '&sortDirection=' + dir;
     return this.http.get(this.host + '/v1/cars/' + car + '/report/table' + params, options)
       .map((response: Response) => {
         return response.json();

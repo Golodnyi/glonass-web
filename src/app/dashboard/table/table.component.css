@@ -1,26 +1,7 @@
-table {
-    display: table;
+div.warning {
+    background-color: #fcf8e3;
 }
 
-tr {
-    display: table-row;
-}
-
-thead {
-    display: table;
-    position: sticky;
-    top: 0;
-    background: #fff;
-    width: 100%;
-    table-layout: fixed;
-}
-
-tbody {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-}
-
-td, th {
-    display: table-cell;
+div.danger {
+    background-color: #ebcccc;
 }
