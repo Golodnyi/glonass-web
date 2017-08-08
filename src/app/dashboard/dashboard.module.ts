@@ -35,6 +35,7 @@ import { SensorsService } from '../shared/services/sensors.service';
 import { YmapsComponent } from './ymaps/ymaps.component';
 import { CompanyComponent } from './company/company.component';
 import { TableComponent } from './table/table.component';
+import { PdfComponent } from './pdf/pdf.component';
 
 @NgModule({
   imports: [
@@ -62,7 +63,7 @@ import { TableComponent } from './table/table.component';
   ],
   declarations: [
     DashboardComponent, NavigationComponent, ChartsComponent, StateComponent,
-    FilterComponent, YmapsComponent, CompanyComponent, TableComponent
+    FilterComponent, YmapsComponent, CompanyComponent, TableComponent, PdfComponent
   ],
   providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService]
 })
