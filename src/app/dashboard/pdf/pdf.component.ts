@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Filter } from '../../shared/models/filter.model';
 
 @Component({
   selector: 'app-pdf',
@@ -9,15 +10,24 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 })
 export class PdfComponent {
   private content: any;
-
+  @Input() filter : Filter;
   constructor() {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
+  }
+
+  public prepare() {
     this.content = {
-      content: 'Hello world Привет'
+      content: [
+        {text: 'Отчет с ' + this.filter.before + ' по ' + this.filter.after, fontSize: 16, alignment: 'center'},
+      ]
     };
+
+    return true;
   }
 
   public download() {
-    pdfMake.createPdf(this.content).download();
+    if (this.prepare()) {
+      pdfMake.createPdf(this.content).download();
+    }
   }
 }
