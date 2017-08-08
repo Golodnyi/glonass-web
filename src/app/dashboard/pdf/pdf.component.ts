@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
@@ -7,17 +7,17 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
   templateUrl: './pdf.component.html',
   styleUrls: ['./pdf.component.css']
 })
-export class PdfComponent implements OnInit {
+export class PdfComponent {
+  private content: any;
 
   constructor() {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
-    const content = {
+    this.content = {
       content: 'Hello world Привет'
     };
-    pdfMake.createPdf(content).download();
   }
 
-  ngOnInit() {
+  public download() {
+    pdfMake.createPdf(this.content).download();
   }
-
 }
