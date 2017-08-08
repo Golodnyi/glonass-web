@@ -10,7 +10,8 @@ import { Filter } from '../../shared/models/filter.model';
 })
 export class PdfComponent {
   private content: any;
-  @Input() filter : Filter;
+  @Input() filter: Filter;
+
   constructor() {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
   }
