@@ -9,6 +9,9 @@ export class Chart {
     width: 600,
     height: 360
   };
+  public navigator = {
+    adaptToUpdatedData: false,
+  };
   public plotOptions = {
     pie: {
       size: '100%',
