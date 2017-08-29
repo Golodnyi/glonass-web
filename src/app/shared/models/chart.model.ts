@@ -9,6 +9,9 @@ export class Chart {
     width: 600,
     height: 360
   };
+  public scrollbar = {
+    liveRedraw: false
+  };
   public navigator = {
     adaptToUpdatedData: false,
   };
@@ -49,6 +52,11 @@ export class Chart {
       data: options.data,
       name: options.name,
       type: options.type,
+      dataGrouping: {
+        enabled: true,
+        forced: true,
+        groupPixelWidth: 12
+      },
       tooltip: {
         valueSuffix: ' ' + options.unit
       }
