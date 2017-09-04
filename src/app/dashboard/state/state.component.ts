@@ -28,6 +28,7 @@ export class StateComponent implements OnChanges {
   public history = [];
   private resetData: any;
   constructor(private resetForm: ResetForm, private resetService: ResetService, private msg: MsgService) {
+    moment.locale('ru');
     this.form = this.resetForm.create();
     this.form.valueChanges
       .map((value) => {
@@ -50,6 +51,17 @@ export class StateComponent implements OnChanges {
         }
       });
     }
+  }
+
+  public maintenanceDate(): number {
+    if (this.state) {
+      const dateReset = moment(this.state.maintenance_date);
+      const dateNow = moment();
+
+      return dateNow.diff(dateReset, 'days');
+    }
+
+    return 0;
   }
 
   public online() {

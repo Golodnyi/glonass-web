@@ -63,7 +63,7 @@
         </div>
         <div *ngIf="!compact">
             <hr/>
-            Моточасы: {{state.motochas}} ч.<br/>
+            Моточасы: {{state.motochas}} ч. ({{maintenanceDate()}} д. назад)<br/>
             <div *ngIf="car.engine" class="btn-st">
                 <button type="text" (click)="showHistory()" pButton icon="fa-info" label="История сбросов"></button>
                 <button type="text" (click)="showDialog()" pButton icon="fa-refresh" label="Сброс"></button>
