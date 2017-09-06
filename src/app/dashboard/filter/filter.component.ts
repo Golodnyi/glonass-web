@@ -40,8 +40,8 @@ export class FilterComponent implements OnInit, OnDestroy {
         this.form = this.filterForm.create(this.filter);
         this.form.valueChanges
           .map((value) => {
-            value.before = moment(value.before).format('YYYY-MM-DD');
-            value.after = moment(value.after).format('YYYY-MM-DD');
+            value.before = moment(value.before).format();
+            value.after = moment(value.after).format();
             return value;
           })
           .subscribe((data) => {
@@ -49,6 +49,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             this.filter.last = data.last;
             this.filter.before = data.before;
             this.filter.after = data.after;
+            console.log(data);
             this.submit = false;
           });
       }

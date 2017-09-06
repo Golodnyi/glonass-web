@@ -38,6 +38,7 @@ export class StateComponent implements OnChanges {
       .subscribe((data) => {
         this.submit = false;
         this.resetData = data;
+        this.resetData.engine_id = this.car.engine.id;
       });
     this.audio.src = '/assets/signal.mp3';
     this.audio.load();
@@ -91,7 +92,7 @@ export class StateComponent implements OnChanges {
 
   public onSubmit() {
     this.submit = true;
-    this.resetService.reset(this.resetData, this.car).subscribe(
+    this.resetService.reset(this.resetData).subscribe(
       () => {
         this.msg.notice(MsgService.SUCCESS, 'Сброс', 'Моточасы сброшены');
         this.display = false;

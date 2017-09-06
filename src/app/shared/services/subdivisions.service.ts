@@ -69,10 +69,7 @@ export class SubdivisionsService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.post(
-      this.host + '/v1/companies/' + subdivision.company_id + '/subdivisions',
-      'name=' + subdivision.name + '&company_id=' + subdivision.company_id,
-      options)
+    return this.http.post(this.host + '/v1/companies/' + subdivision.company_id + '/subdivisions', subdivision, options)
       .map((response: Response) => {
         const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());
         const list = [];
@@ -113,10 +110,7 @@ export class SubdivisionsService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.put(
-      this.host + '/v1/companies/' + subdivision.company_id + '/subdivisions/' + subdivision.id,
-      'name=' + subdivision.name,
-      options)
+    return this.http.put(this.host + '/v1/companies/' + subdivision.company_id + '/subdivisions/' + subdivision.id, subdivision, options)
       .map((response: Response) => {
         const subdivisionObj: Subdivision = Object.assign(new Subdivision(), response.json());
         this.subdivision.next(subdivisionObj);

@@ -1,17 +1,25 @@
 import { AfterViewChecked, Component, ElementRef, HostListener, Input, OnChanges, OnDestroy } from '@angular/core';
-import * as highstock from 'highcharts/highstock';
+import * as Highcharts from 'highcharts/highstock';
+import * as HighchartsExporting from 'highcharts/modules/exporting';
+import * as HighchartsOfflineExporting from 'highcharts/modules/offline-exporting';
 import { Chart } from '../models/chart.model';
+
+window['Highcharts'] = Highcharts;
+HighchartsExporting(Highcharts);
+HighchartsOfflineExporting(Highcharts);
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css']
 })
+
 export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
   public chart: any;
   @Input() data: any;
 
-  @Input() set options(options: any) {
+  @Input()
+  set options(options: any) {
     if (this.chart) {
       this.chart.destroy();
     }
@@ -21,7 +29,7 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
       config.xAxis.events = {
         setExtremes: function (e) {
           if (e.trigger !== 'syncExtremes') {
-            highstock.charts.forEach(function (chart) {
+            Highcharts.charts.forEach(function (chart) {
               if (chart === undefined || chart === currentChart) {
                 return false;
               }
@@ -30,12 +38,14 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
           }
         }
       };
-      highstock.setOptions({
+      Highcharts.setOptions({
         global: {
           useUTC: false
         }
       });
-      this.chart = highstock.stockChart(this.el.nativeElement, config);
+      this.chart = new Highcharts.stockChart(this.el.nativeElement, config);
+      // TODO: получение SVG графика
+      // console.log(this.chart.getSVG());
     }
   }
 
@@ -59,7 +69,7 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
     if (currentPoint === undefined) {
       return false;
     }
-    highstock.charts.forEach(chart => {
+    Highcharts.charts.forEach(chart => {
       if (chart === undefined || chart === this.chart) {
         return false;
       }
@@ -76,10 +86,10 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
   }
 
   constructor(private el: ElementRef) {
-    highstock.Point.prototype.highlight = function () {
+    Highcharts.Point.prototype.highlight = function () {
       this.onMouseOver();
     };
-    highstock.Pointer.prototype.reset = function () {
+    Highcharts.Pointer.prototype.reset = function () {
       return undefined;
     };
   }
@@ -92,7 +102,7 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
 
   ngAfterViewChecked() {
     const width = this.el.nativeElement.parentElement.offsetWidth - 35;
-    highstock.charts.forEach(chart => {
+    Highcharts.charts.forEach(chart => {
       if (chart && chart.chartWidth !== width) {
         chart.setSize(width, 360);
       }

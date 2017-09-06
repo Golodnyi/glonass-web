@@ -84,7 +84,7 @@ export class ChartsService {
         });
       }
       if (!filter.last) {
-        params += 'dateFrom=' + filter.before + '&dateTo=' + filter.after + '&';
+        params += 'dateFrom=' + encodeURIComponent(filter.before) + '&dateTo=' + encodeURIComponent(filter.after) + '&';
       }
     }
     if (autoRefresh.enabled && ((filter.last && filter.enabled) || !filter.enabled)) {
@@ -123,7 +123,7 @@ export class ChartsService {
         });
       }
       if (!filter.last) {
-        params += 'dateFrom=' + filter.before + '&dateTo=' + filter.after + '&';
+        params += 'dateFrom=' + encodeURIComponent(filter.before) + '&dateTo=' + encodeURIComponent(filter.after) + '&';
       }
     }
     if (move) {

@@ -69,10 +69,7 @@ export class CompaniesService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.put(
-      this.host + '/v1/companies/' + company.id,
-      'name=' + company.name + '&active_till=' + company.active_till,
-      options)
+    return this.http.put(this.host + '/v1/companies/' + company.id, company, options)
       .map((response: Response) => {
         const companyObj: Company = Object.assign(new Company(), response.json());
         this.company.next(companyObj);
@@ -96,10 +93,7 @@ export class CompaniesService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.post(
-      this.host + '/v1/companies',
-      'name=' + company.name + '&active_till=' + company.active_till,
-      options)
+    return this.http.post(this.host + '/v1/companies', company, options)
       .map((response: Response) => {
         const companyObj: Company = Object.assign(new Company(), response.json());
         const list = [];
