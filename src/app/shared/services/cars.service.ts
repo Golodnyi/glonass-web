@@ -84,10 +84,7 @@ export class CarsService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
-    return this.http.post(
-      this.host + '/v1/cars',
-      'name=' + car.name + '&model_id=' + car.model_id + '&subdivision_id=' + car.subdivision_id,
-      options)
+    return this.http.post(this.host + '/v1/cars', car, options)
       .map((response: Response) => {
         const carObj: Car = Object.assign(new Car(), response.json());
         const list = [];

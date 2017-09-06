@@ -7,7 +7,7 @@
            placeholder="пароль">
     <div class="checkbox">
         <label for="remember">
-            <input type="checkbox" id="remember" value="true" formControlName="remember"> Запомнить меня
+            <input type="checkbox" id="remember" formControlName="remember"> Запомнить меня
         </label>
     </div>
     <button type="submit" [disabled]="!form.valid || submit" class="btn btn-success">Войти</button>

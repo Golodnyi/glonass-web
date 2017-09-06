@@ -35,7 +35,7 @@ export class CompanyUpdateComponent {
           this.form = this.companyForm.create(this.company);
           this.form.valueChanges
             .map((value) => {
-              value.active_till = moment(value.active_till).format('YYYY-MM-DD HH:mm:ss');
+              value.active_till = moment(value.active_till).format();
               return value;
             })
             .subscribe((data) => {
