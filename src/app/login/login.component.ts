@@ -30,6 +30,11 @@ export class LoginComponent {
     this.form = this.authForm.create(this.auth);
     this.form.valueChanges.subscribe((data) => {
       this.auth = data;
+      if (data.remember === true) {
+        this.auth.remember = 1;
+      } else {
+        this.auth.remember = 0;
+      }
     });
   }
 

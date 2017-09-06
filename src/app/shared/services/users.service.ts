@@ -95,12 +95,7 @@ export class UsersService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
-    return this.http.post(
-      this.host + '/v1/users',
-      'send_email=1&login=' + user.login + '&name=' + user.name
-      + '&email=' + user.email + '&password=' + user.password
-      + '&role_id=' + user.role_id,
-      options)
+    return this.http.post(this.host + '/v1/users', user, options)
       .map((response: Response) => {
         return response.json();
       })
@@ -114,12 +109,7 @@ export class UsersService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
-    return this.http.put(
-      this.host + '/v1/users/' + user.id,
-      'login=' + user.login + '&name=' + user.name
-      + '&email=' + user.email + '&password=' + user.password
-      + '&role_id=' + user.role_id,
-      options)
+    return this.http.put(this.host + '/v1/users/' + user.id, user, options)
       .map((response: Response) => {
         return response.json();
       })

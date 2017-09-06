@@ -30,17 +30,11 @@ export class AuthService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    let remember = 0;
     if (auth.remember) {
-      remember = 1;
+      // auth.remember = 1;
     }
 
-    return this.http.post(
-      this.host + '/v1/auth/login',
-      'email=' + auth.email
-      + '&password=' + auth.password
-      + '&remember=' + remember, options
-    )
+    return this.http.post(this.host + '/v1/auth/login', auth, options)
       .map((response: Response) => {
         const user: User = Object.assign(new User, response.json());
         this.logger.next(true);
