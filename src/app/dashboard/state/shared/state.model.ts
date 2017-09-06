@@ -12,6 +12,7 @@ export interface IState {
   power: boolean;
   motochas: number;
   issues: IIssue[];
+  maintenance_date: string;
 }
 export class State {
   public last_time: string = moment().format('DD.MM.YYYY HH:mm:ss');
@@ -32,4 +33,5 @@ export class State {
   public power: boolean;
   public motochas = 0;
   public issues = [];
+  public maintenance_date: string;
 }
