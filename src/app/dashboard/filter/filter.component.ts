@@ -49,7 +49,6 @@ export class FilterComponent implements OnInit, OnDestroy {
             this.filter.last = data.last;
             this.filter.before = data.before;
             this.filter.after = data.after;
-            console.log(data);
             this.submit = false;
           });
       }
