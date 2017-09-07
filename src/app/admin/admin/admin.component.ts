@@ -11,6 +11,7 @@ export class AdminComponent implements OnInit {
   companiesActions: MenuItem[] = [];
   usersActions: MenuItem[] = [];
   rolesActions: MenuItem[] = [];
+  monitorActions: MenuItem[] = [];
 
   constructor(private router: Router) {
     this.companiesActions = [
@@ -60,5 +61,9 @@ export class AdminComponent implements OnInit {
 
   public roles() {
     this.router.navigate(['/admin/roles']);
+  }
+
+  public monitor() {
+    this.router.navigate(['/admin/monitoring']);
   }
 }

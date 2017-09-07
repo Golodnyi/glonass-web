@@ -1,0 +1,23 @@
+<p-panel *ngIf="state" header="Состояние {{state.name}}" [toggleable]="false">
+    <div>
+        <div class="alert alert-danger" *ngFor="let issue of state.issues">
+            <div class="text-left">
+                <span class="fa fa-warning">&nbsp;</span>
+                <strong>{{issue.name}}</strong>
+            </div>
+            <div class="text-left">Прогноз: {{issue.forecast}}</div>
+        </div>
+        <div class="alert alert-success" *ngIf="!state.issues.length">
+            <span class="fa fa-check">&nbsp;</span>Проблем не обнаружено
+        </div>
+    </div>
+    <div class="alert alert-info">
+        <div *ngIf="state.company">
+            {{state.company.name}}
+        </div>
+        <div *ngIf="state.subdivision">
+            {{state.subdivision.name}}
+        </div>
+    </div>
+</p-panel>
+
