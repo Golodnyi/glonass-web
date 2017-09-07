@@ -2,7 +2,7 @@ import {Component, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {StateService} from './shared/state.service';
-import {State} from "./shared/state.model";
+import {State} from './shared/state.model';
 
 @Component({
     selector: 'app-monitoring',
