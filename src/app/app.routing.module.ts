@@ -31,7 +31,7 @@ const routes: Routes = [
     },
     {
         path: 'admin/monitoring',
-        loadChildren: './monitoring/monitoring.module#MonitoringModule',
+        loadChildren: './admin/monitoring/monitoring.module#MonitoringModule',
         canActivate: [AdminGuard]
     }
 ];
