@@ -1,0 +1,10 @@
+<br/>
+<div class="row">
+    <div class="col-md-3" *ngFor="let state of stateWarnings">
+        <app-admin-state [state]="state"></app-admin-state>
+    </div>
+
+    <div class="col-md-3" *ngFor="let state of state">
+        <app-admin-state [state]="state"></app-admin-state>
+    </div>
+</div>
