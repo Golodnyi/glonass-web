@@ -15,8 +15,8 @@ export class MonitoringComponent implements OnDestroy {
     private timerWarning = Observable.timer(0, 5000);
     private subscriptionTimer: Subscription;
     private subscriptionWarningTimer: Subscription;
-    public state: State;
-    public stateWarnings: State;
+    public state: State[] = [];
+    public stateWarnings: State[] = [];
     constructor(private stateService: StateService) {
         this.update();
         this.updateWarnings();
