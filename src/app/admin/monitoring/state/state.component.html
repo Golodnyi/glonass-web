@@ -1,4 +1,4 @@
-<p-panel *ngIf="state" header="Состояние {{state.name}}" [toggleable]="false">
+<p-panel *ngIf="state" header="{{state.model.name}}" [toggleable]="false">
     <div>
         <div class="alert alert-danger" *ngFor="let issue of state.issues">
             <div class="text-left">
