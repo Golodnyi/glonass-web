@@ -210,14 +210,15 @@ export class ChartsComponent implements OnDestroy {
     }
 
     private lastTime(): number {
-        const series = this.options[this.options.length - 1];
-        if (series) {
-            const data = series.data[series.data.length - 1];
-            if (data) {
-                return data[0];
+        if (this.options) {
+            const series = this.options[this.options.length - 1];
+            if (series) {
+                const data = series.data[series.data.length - 1];
+                if (data) {
+                    return data[0];
+                }
             }
         }
-
         return this.autoRefresh.afterTime;
     }
 
@@ -249,7 +250,7 @@ export class ChartsComponent implements OnDestroy {
          * стояло автообновление страницы, при возврате там пустые данные,
          * если автообновление не стояла, данные  заполнены и условие не сработает.
          */
-        if (event.value && !this.options[0].data.length) {
+        if (event.value && (!this.options || !this.options.length || !this.options[0].data.length)) {
             // resync данных при возврате к графикам
             this.chartsService.resync(this.car.id);
         }
