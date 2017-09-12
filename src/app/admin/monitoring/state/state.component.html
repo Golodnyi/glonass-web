@@ -1,7 +1,11 @@
-<p-panel *ngIf="state" header="{{state.model.name}}" [toggleable]="false">
+<p-panel *ngIf="state"
+         header="{{state.model.name}} {{state.engine_model ? '(' + state.engine_model.name + ')' : ''}}"
+         [toggleable]="false">
     <div>
         <div class="alert alert-success" *ngIf="online(state.date)">В сети</div>
-        <div class="alert alert-warning" *ngIf="!online(state.date)">Не в сети, последний сеанс связи: {{lastDate(state.date)}}</div>
+        <div class="alert alert-warning" *ngIf="!online(state.date)">Не в сети, последний сеанс связи:
+            {{lastDate(state.date)}}
+        </div>
     </div>
     <div>
         <div class="alert alert-danger" *ngFor="let issue of state.issues">
@@ -16,6 +20,12 @@
         </div>
     </div>
     <div class="alert alert-info">
+        <div *ngIf="state.telemetry_device">IMEI: {{state.telemetry_device.id}}</div>
+        <div *ngIf="state.sensors">
+            <div *ngIf="state.sensors.engine">Двигатель: работает</div>
+            <div *ngIf="!state.sensors.engine">Двигатель: заглушен</div>
+            <div>Уровень сети: {{state.sensors.networkSignal}}%</div>
+        </div>
         <div *ngIf="state.company">
             {{state.company.name}}
         </div>

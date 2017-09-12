@@ -17,7 +17,11 @@ export class MonitoringComponent implements OnDestroy {
     private subscriptionWarningTimer: Subscription;
     public state: State[] = [];
     public stateWarnings: State[] = [];
+    private audio = new Audio();
+
     constructor(private stateService: StateService) {
+        this.audio.src = '/assets/monitoring.mp3';
+        this.audio.load();
         this.update();
         this.updateWarnings();
     }
@@ -29,13 +33,22 @@ export class MonitoringComponent implements OnDestroy {
         this.subscriptionTimer =
             this.timer.subscribe(
                 () => {
-                    this.stateService.getMonitor(false).subscribe(
-                        data => {
-                            this.state = data;
-                        }
+                  this.stateService.getMonitor(false).subscribe(
+                      data => {
+                          this.state = data;
+                          this.sound(data);
+                      }
                     );
                 }
             );
+    }
+
+    private sound(data: any) {
+      data.forEach(item => {
+        if (item.issues && item.issues.length && this.audio.paused) {
+            this.audio.play();
+        }
+      });
     }
 
     private updateWarnings() {
@@ -46,9 +59,10 @@ export class MonitoringComponent implements OnDestroy {
             this.timerWarning.subscribe(
                 () => {
                     this.stateService.getMonitor(true).subscribe(
-                        data => {
-                            this.stateWarnings = data;
-                        }
+                      data => {
+                          this.stateWarnings = data;
+                          this.sound(data);
+                      }
                     );
                 }
             );
