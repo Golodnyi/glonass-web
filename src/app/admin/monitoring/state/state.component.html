@@ -1,5 +1,9 @@
 <p-panel *ngIf="state" header="{{state.model.name}}" [toggleable]="false">
     <div>
+        <div class="alert alert-success" *ngIf="online(state.date)">В сети</div>
+        <div class="alert alert-danger" *ngIf="!online(state.date)">Не в сети, последний сеанс связи: {{lastDate(state.date)}}</div>
+    </div>
+    <div>
         <div class="alert alert-danger" *ngFor="let issue of state.issues">
             <div class="text-left">
                 <span class="fa fa-warning">&nbsp;</span>
