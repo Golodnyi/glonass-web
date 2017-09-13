@@ -40,7 +40,7 @@ export class StateComponent implements OnChanges {
         this.resetData = data;
         this.resetData.engine_id = this.car.engine.id;
       });
-    this.audio.src = '/assets/signal.mp3';
+    this.audio.src = '/assets/signal.ogg';
     this.audio.load();
   }
 
