@@ -20,7 +20,7 @@ export class MonitoringComponent implements OnDestroy {
     private audio = new Audio();
 
     constructor(private stateService: StateService) {
-        this.audio.src = '/assets/monitoring.ogg';
+        this.audio.src = '/assets/monitoring.wav';
         this.audio.load();
         this.update();
         this.updateWarnings();
@@ -45,7 +45,7 @@ export class MonitoringComponent implements OnDestroy {
 
     private sound(data: any) {
       data.forEach(item => {
-        if (item.issues && !item.issues.length && this.audio.paused) {
+        if (item.issues && item.issues.length && this.audio.paused) {
             this.audio.play();
         }
       });
