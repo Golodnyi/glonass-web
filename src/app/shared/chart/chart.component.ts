@@ -53,6 +53,7 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
         }
       });
       this.chart = new Highcharts.stockChart(this.el.nativeElement, config);
+      console.log('Chart ' + options.id + ' init');
       // TODO: получение SVG графика
       // console.log(this.chart.getSVG());
     }
