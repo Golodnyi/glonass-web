@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../shared/services/auth.service';
-import { MsgService } from '../shared/services/msg';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {AuthService} from '../shared/services/auth.service';
+import {MsgService} from '../shared/services/msg';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-logout',

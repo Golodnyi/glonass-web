@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
-import { MsgService } from '../services/msg';
+import {AuthService} from '../services/auth.service';
+import {Router} from '@angular/router';
+import {MsgService} from '../services/msg';
 
 @Injectable()
 export class Error {

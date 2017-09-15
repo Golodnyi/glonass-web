@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <p-tabView *ngIf="car">
+        <p-tabView *ngIf="car" (onChange)="tabView($event)">
             <p-tabPanel header="Информация" class="panel">
                 <div class="row">
                     <div class="col-md-6">
@@ -15,7 +15,8 @@
                                 <strong>Отображение:</strong>
                             </div>
                             <div class="col-md-9">
-                                <p-selectButton [options]="viewModeButtons" tabindex="1" [(ngModel)]="viewMode" (onChange)="viewModeChange($event)"></p-selectButton>
+                                <p-selectButton [options]="viewModeButtons" tabindex="1" [(ngModel)]="viewMode"
+                                                (onChange)="viewModeChange($event)"></p-selectButton>
                                 <p-toggleButton [disabled]="!viewMode" onLabel="Сеткой" offLabel="Списком"
                                                 onIcon="fa-th-large" offIcon="fa-align-justify"
                                                 [(ngModel)]="viewChartMode">
@@ -51,7 +52,7 @@
             <p-tabPanel header="Карта">
                 <div class="row">
                     <div class="col-md-12">
-                        <app-ymaps [cars]="mapCars" [polyLines]="mapPolyLines"></app-ymaps>
+                        <app-ymaps *ngIf="mapPolyLines.length" [cars]="mapCars" [polyLines]="mapPolyLines"></app-ymaps>
                     </div>
                 </div>
             </p-tabPanel>
@@ -87,7 +88,8 @@
                 </div>
             </div>
             <div class="col-md-12" *ngIf="!viewMode">
-                <app-table [car]="car.id" [filter]="filter" [move]="move" [autoRefresh]="autoRefresh.enabled"></app-table>
+                <app-table [car]="car.id" [filter]="filter" [move]="move"
+                           [autoRefresh]="autoRefresh.enabled"></app-table>
             </div>
         </div>
     </div>

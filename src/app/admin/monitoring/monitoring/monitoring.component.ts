@@ -5,75 +5,75 @@ import {StateService} from './shared/state.service';
 import {State} from './shared/state.model';
 
 @Component({
-    selector: 'app-monitoring',
-    templateUrl: './monitoring.component.html',
-    styleUrls: ['./monitoring.component.css'],
-    providers: [StateService]
+  selector: 'app-monitoring',
+  templateUrl: './monitoring.component.html',
+  styleUrls: ['./monitoring.component.css'],
+  providers: [StateService]
 })
 export class MonitoringComponent implements OnDestroy {
-    private timer = Observable.timer(0, 5000);
-    private timerWarning = Observable.timer(0, 5000);
-    private subscriptionTimer: Subscription;
-    private subscriptionWarningTimer: Subscription;
-    public state: State[] = [];
-    public stateWarnings: State[] = [];
-    private audio = new Audio();
+  public state: State[] = [];
+  public stateWarnings: State[] = [];
+  private timer = Observable.timer(0, 5000);
+  private timerWarning = Observable.timer(0, 5000);
+  private subscriptionTimer: Subscription;
+  private subscriptionWarningTimer: Subscription;
+  private audio = new Audio();
 
-    constructor(private stateService: StateService) {
-        this.audio.src = '/assets/monitoring.wav';
-        this.audio.load();
-        this.update();
-        this.updateWarnings();
-    }
+  constructor(private stateService: StateService) {
+    this.audio.src = '/assets/monitoring.wav';
+    this.audio.load();
+    this.update();
+    this.updateWarnings();
+  }
 
-    private update() {
-        if (this.subscriptionTimer) {
-            this.subscriptionTimer.unsubscribe();
-        }
-        this.subscriptionTimer =
-            this.timer.subscribe(
-                () => {
-                  this.stateService.getMonitor(false).subscribe(
-                      data => {
-                          this.state = data;
-                          this.sound(data);
-                      }
-                    );
-                }
-            );
+  ngOnDestroy() {
+    if (this.subscriptionTimer) {
+      this.subscriptionTimer.unsubscribe();
     }
+    if (this.subscriptionWarningTimer) {
+      this.subscriptionWarningTimer.unsubscribe();
+    }
+  }
 
-    private sound(data: any) {
-      data.forEach(item => {
-        if (item.issues && item.issues.length && this.audio.paused) {
-            this.audio.play();
-        }
-      });
+  private update() {
+    if (this.subscriptionTimer) {
+      this.subscriptionTimer.unsubscribe();
     }
+    this.subscriptionTimer =
+      this.timer.subscribe(
+        () => {
+          this.stateService.getMonitor(false).subscribe(
+            data => {
+              this.state = data;
+              this.sound(data);
+            }
+          );
+        }
+      );
+  }
 
-    private updateWarnings() {
-        if (this.subscriptionWarningTimer) {
-            this.subscriptionWarningTimer.unsubscribe();
-        }
-        this.subscriptionWarningTimer =
-            this.timerWarning.subscribe(
-                () => {
-                    this.stateService.getMonitor(true).subscribe(
-                      data => {
-                          this.stateWarnings = data;
-                          this.sound(data);
-                      }
-                    );
-                }
-            );
-    }
+  private sound(data: any) {
+    data.forEach(item => {
+      if (item.issues && item.issues.length && this.audio.paused) {
+        this.audio.play();
+      }
+    });
+  }
 
-    ngOnDestroy() {
-        if (this.subscriptionTimer) {
-            this.subscriptionTimer.unsubscribe();
-        }
-        if (this.subscriptionWarningTimer) {
-            this.subscriptionWarningTimer.unsubscribe();
-        }
+  private updateWarnings() {
+    if (this.subscriptionWarningTimer) {
+      this.subscriptionWarningTimer.unsubscribe();
     }
+    this.subscriptionWarningTimer =
+      this.timerWarning.subscribe(
+        () => {
+          this.stateService.getMonitor(true).subscribe(
+            data => {
+              this.stateWarnings = data;
+              this.sound(data);
+            }
+          );
+        }
+      );
+  }
 }

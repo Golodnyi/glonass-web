@@ -14,7 +14,8 @@
            placeholder="Имя"/><br/>
     <label for="roles">Роль:</label><br/>
     <p-dropdown id="roles" [options]="roles | DropDown" formControlName="role_id" [filter]="true"
-                [style]="{'width':'190px'}"></p-dropdown><br/>
+                [style]="{'width':'190px'}"></p-dropdown>
+    <br/>
     <hr/>
     <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton
             label="Изменить"></button>

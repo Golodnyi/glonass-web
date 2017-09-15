@@ -1,4 +1,4 @@
-import { ITree } from './tree.model';
+import {ITree} from './tree.model';
 
 export interface IEngine {
   id: number;
@@ -14,11 +14,11 @@ export class Engine implements IEngine, ITree {
   public model_id: number;
   public sensors_config: {};
 
-  set esn(param: number) {
-    this.name = String(param);
-  }
-
   get esn(): number {
     return Number(this.name);
+  }
+
+  set esn(param: number) {
+    this.name = String(param);
   }
 }

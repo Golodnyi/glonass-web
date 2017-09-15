@@ -1,9 +1,9 @@
-import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
-import { ChartsService } from '../../shared/services/charts.service';
-import { KeysPipe } from '../../shared/pipes/keys.pipe';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { Filter } from '../../shared/models/filter.model';
+import {Component, Input, OnChanges, OnDestroy} from '@angular/core';
+import {ChartsService} from '../../shared/services/charts.service';
+import {KeysPipe} from '../../shared/pipes/keys.pipe';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
+import {Filter} from '../../shared/models/filter.model';
 
 @Component({
   selector: 'app-table',
@@ -24,6 +24,7 @@ export class TableComponent implements OnChanges, OnDestroy {
   private tdir = 1;
   private subscriptionAutoRefresh: Subscription;
   private timer = Observable.timer(0, 5000);
+
   constructor(private chartsService: ChartsService, private keysPipe: KeysPipe) {
     if (this.car) {
       this.loadData(this.car);
@@ -46,6 +47,27 @@ export class TableComponent implements OnChanges, OnDestroy {
     if (changes.move && !changes.move.firstChange) {
       this.loadData(this.car, this.move);
     }
+  }
+
+  public paginate(event) {
+    this.page = event.page;
+    this.loadData(this.car, this.move, this.page, this.tsort, (this.tdir === -1 ? 'asc' : 'desc'));
+  }
+
+  ngOnDestroy() {
+    if (this.subscriptionAutoRefresh) {
+      this.subscriptionAutoRefresh.unsubscribe();
+    }
+  }
+
+  public sort(event: any) {
+    if (this.tsort === event.field && this.tdir === event.order) {
+      return false;
+    }
+
+    this.tsort = event.field;
+    this.tdir = event.order;
+    this.loadData(this.car, this.move, this.page, this.tsort, (this.tdir === -1 ? 'asc' : 'desc'));
   }
 
   private loadData(car, move = false, page = 0, sort = 'time', dir = 'desc') {
@@ -81,26 +103,5 @@ export class TableComponent implements OnChanges, OnDestroy {
       );
     }
 
-  }
-
-  public paginate(event) {
-    this.page = event.page;
-    this.loadData(this.car, this.move, this.page, this.tsort, (this.tdir === -1 ? 'asc' : 'desc'));
-  }
-
-  ngOnDestroy() {
-    if (this.subscriptionAutoRefresh) {
-      this.subscriptionAutoRefresh.unsubscribe();
-    }
-  }
-
-  public sort(event: any) {
-    if (this.tsort === event.field && this.tdir === event.order) {
-      return false;
-    }
-
-    this.tsort = event.field;
-    this.tdir = event.order;
-    this.loadData(this.car, this.move, this.page, this.tsort, (this.tdir === -1 ? 'asc' : 'desc'));
   }
 }

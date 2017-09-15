@@ -8,38 +8,38 @@ import {AuthGuard} from './shared/guards/auth.guard';
 import {AdminGuard} from './admin/shared/guards/admin.guard';
 
 const routes: Routes = [
-    {
-        path: '', component: HomeComponent
-    },
-    {
-        path: 'login',
-        component: LoginComponent,
-        canActivate: [GuestGuard]
-    },
-    {
-        path: 'logout',
-        component: LogoutComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'dashboard',
-        loadChildren: './dashboard/dashboard.module#DashboardModule'
-    },
-    {
-        path: 'admin',
-        loadChildren: './admin/admin.module#AdminModule'
-    },
-    {
-        path: 'admin/monitoring',
-        loadChildren: './admin/monitoring/monitoring.module#MonitoringModule',
-        canActivate: [AdminGuard]
-    }
+  {
+    path: '', component: HomeComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [GuestGuard]
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'dashboard',
+    loadChildren: './dashboard/dashboard.module#DashboardModule'
+  },
+  {
+    path: 'admin',
+    loadChildren: './admin/admin.module#AdminModule'
+  },
+  {
+    path: 'admin/monitoring',
+    loadChildren: './admin/monitoring/monitoring.module#MonitoringModule',
+    canActivate: [AdminGuard]
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule],
-    providers: []
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+  providers: []
 })
 export class AppRoutingModule {
 }

@@ -1,6 +1,6 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Injectable } from '@angular/core';
-import { User } from '../../../../shared/models/user.model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Injectable} from '@angular/core';
+import {User} from '../../../../shared/models/user.model';
 
 @Injectable()
 export class UserForm {
@@ -14,7 +14,7 @@ export class UserForm {
       login: [user.login, Validators.required],
       password: [user.password, [Validators.required, Validators.min(6)]],
       name: [user.name, Validators.required],
-      email: [user.email, [Validators.required, Validators.email] ],
+      email: [user.email, [Validators.required, Validators.email]],
       role_id: [user.role_id, Validators.required],
     });
 

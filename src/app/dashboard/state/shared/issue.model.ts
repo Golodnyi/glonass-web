@@ -8,6 +8,7 @@ export interface IIssue {
   createdAt: number;
   lastCheckAt: number;
 }
+
 export class Issue {
   public id: number;
   public name: string;

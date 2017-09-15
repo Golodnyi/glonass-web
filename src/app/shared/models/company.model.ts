@@ -1,5 +1,5 @@
-import { IUser } from './user.model';
-import { ITree } from './tree.model';
+import {IUser} from './user.model';
+import {ITree} from './tree.model';
 
 export interface ICompany {
   id: number;

@@ -1,6 +1,7 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Injectable } from '@angular/core';
-import { Auth } from '../models/auth.model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Injectable} from '@angular/core';
+import {Auth} from '../models/auth.model';
+
 @Injectable()
 export class AuthForm {
   private form: FormGroup;

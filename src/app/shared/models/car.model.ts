@@ -1,6 +1,6 @@
-import { ITree } from './tree.model';
-import { IEngine } from './engine.model';
-import { State } from '../../dashboard/state/shared/state.model';
+import {ITree} from './tree.model';
+import {IEngine} from './engine.model';
+import {State} from '../../dashboard/state/shared/state.model';
 
 export interface ICar {
   id: number;

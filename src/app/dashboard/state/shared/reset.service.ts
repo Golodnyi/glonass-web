@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Headers, Http, RequestOptions, Response } from '@angular/http';
+import {Injectable} from '@angular/core';
+import {Headers, Http, RequestOptions, Response} from '@angular/http';
 
-import { Observable } from 'rxjs/Rx';
+import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { Router } from '@angular/router';
-import { environment } from '../../../../environments/environment';
-import { AuthService } from '../../../shared/services/auth.service';
-import { MsgService } from '../../../shared/services/msg';
-import { Error } from '../../../shared/models/error.model';
-import { Car } from '../../../shared/models/car.model';
+import {Router} from '@angular/router';
+import {environment} from '../../../../environments/environment';
+import {AuthService} from '../../../shared/services/auth.service';
+import {MsgService} from '../../../shared/services/msg';
+import {Error} from '../../../shared/models/error.model';
+import {Car} from '../../../shared/models/car.model';
 
 @Injectable()
 export class ResetService {

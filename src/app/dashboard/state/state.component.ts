@@ -1,12 +1,12 @@
-import { Component, Input, OnChanges } from '@angular/core';
-import { State } from './shared/state.model';
+import {Component, Input, OnChanges} from '@angular/core';
+import {State} from './shared/state.model';
 import * as moment from 'moment';
-import { Calendar } from '../../shared/models/calendar.model';
-import { FormGroup } from '@angular/forms';
-import { ResetForm } from './shared/reset.form';
-import { ResetService } from './shared/reset.service';
-import { MsgService } from '../../shared/services/msg';
-import { Car } from '../../shared/models/car.model';
+import {Calendar} from '../../shared/models/calendar.model';
+import {FormGroup} from '@angular/forms';
+import {ResetForm} from './shared/reset.form';
+import {ResetService} from './shared/reset.service';
+import {MsgService} from '../../shared/services/msg';
+import {Car} from '../../shared/models/car.model';
 
 @Component({
   selector: 'app-state',
@@ -20,13 +20,14 @@ export class StateComponent implements OnChanges {
   @Input() toggleable = true;
   @Input() compact = false;
   public ru = new Calendar();
-  private audio = new Audio();
   public display = false;
   public displayHistory = false;
   public form: FormGroup;
   public submit: boolean;
   public history = [];
+  private audio = new Audio();
   private resetData: any;
+
   constructor(private resetForm: ResetForm, private resetService: ResetService, private msg: MsgService) {
     moment.locale('ru');
     this.form = this.resetForm.create();
