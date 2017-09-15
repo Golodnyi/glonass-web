@@ -1,6 +1,6 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { MapCar } from './shared/map-car.model';
-import { MapPolyLines } from './shared/map-polylines.model';
+import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
+import {MapCar} from './shared/map-car.model';
+import {MapPolyLines} from './shared/map-polylines.model';
 
 /// <reference path="./typings/ymaps.d.ts" />
 @Component({
@@ -10,10 +10,37 @@ import { MapPolyLines } from './shared/map-polylines.model';
 })
 export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
   public map: any;
-  private center = [55.75370903771494, 37.61981338262558];
   @Input() cars: MapCar[];
   @Input() polyLines: MapPolyLines[];
   @Input() zoom = 0;
+  private center = [55.75370903771494, 37.61981338262558];
+
+  constructor() {
+    this.build();
+  }
+
+  ngOnInit() {
+    /** navigator.geolocation.getCurrentPosition(data => {
+      this.center = [this.data.coords.latitude, this.data.coords.longitude];
+    }); **/
+  }
+
+  ngOnChanges(changes) {
+    if (changes.cars && !changes.cars.firstChange) {
+      this.cars = changes.cars.currentValue;
+      this.build();
+    }
+    if (changes.polyLines && !changes.polyLines.firstChange) {
+      this.polyLines = changes.polyLines.currentValue;
+      this.build();
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.map) {
+      this.map.destroy();
+    }
+  }
 
   private build() {
     ymaps.ready().then(() => {
@@ -62,32 +89,5 @@ export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
       });
 
     });
-  }
-
-  constructor() {
-    this.build();
-  }
-
-  ngOnInit() {
-    /** navigator.geolocation.getCurrentPosition(data => {
-      this.center = [this.data.coords.latitude, this.data.coords.longitude];
-    }); **/
-  }
-
-  ngOnChanges(changes) {
-    if (changes.cars && !changes.cars.firstChange) {
-      this.cars = changes.cars.currentValue;
-      this.build();
-    }
-    if (changes.polyLines && !changes.polyLines.firstChange) {
-      this.polyLines = changes.polyLines.currentValue;
-      this.build();
-    }
-  }
-
-  ngOnDestroy() {
-    if (this.map) {
-      this.map.destroy();
-    }
   }
 }

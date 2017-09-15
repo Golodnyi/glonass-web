@@ -12,10 +12,10 @@ export interface IState {
 }
 
 export class State implements IState {
-    public company: Company;
-    public id: number;
-    public issues: any;
-    public model: CarModel;
-    public name: string;
-    public subdivision: Subdivision;
+  public company: Company;
+  public id: number;
+  public issues: any;
+  public model: CarModel;
+  public name: string;
+  public subdivision: Subdivision;
 }

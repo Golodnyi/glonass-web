@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {State} from '../monitoring/shared/state.model';
 import * as moment from 'moment';
 
@@ -9,7 +9,9 @@ import * as moment from 'moment';
 })
 export class StateComponent {
   @Input() state: State;
-  constructor() { }
+
+  constructor() {
+  }
 
   public online(timestamp: number) {
     return (Number(moment().format('X')) - Number(timestamp) / 1000) < 3600;

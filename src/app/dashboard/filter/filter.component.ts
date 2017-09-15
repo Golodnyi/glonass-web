@@ -1,13 +1,13 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FilterForm } from '../../shared/forms/filter.form';
-import { FormGroup } from '@angular/forms';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {FilterForm} from '../../shared/forms/filter.form';
+import {FormGroup} from '@angular/forms';
 import * as moment from 'moment';
-import { Calendar } from '../../shared/models/calendar.model';
-import { ChartsService } from '../../shared/services/charts.service';
-import { Car } from '../../shared/models/car.model';
-import { Sensor } from '../../shared/models/sensor.model';
-import { Subscription } from 'rxjs/Subscription';
-import { Router } from '@angular/router';
+import {Calendar} from '../../shared/models/calendar.model';
+import {ChartsService} from '../../shared/services/charts.service';
+import {Car} from '../../shared/models/car.model';
+import {Sensor} from '../../shared/models/sensor.model';
+import {Subscription} from 'rxjs/Subscription';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-filter',

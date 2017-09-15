@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Headers, Http, RequestOptions, Response } from '@angular/http';
-import { User } from '../models/user.model';
+import {Injectable} from '@angular/core';
+import {Headers, Http, RequestOptions, Response} from '@angular/http';
+import {User} from '../models/user.model';
 
-import { BehaviorSubject, Observable } from 'rxjs/Rx';
+import {BehaviorSubject, Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { Auth } from '../../login/shared/models/auth.model';
-import { Router } from '@angular/router';
-import { MsgService } from './msg';
-import { CookieService } from 'ngx-cookie';
-import { environment } from '../../../environments/environment';
+import {Auth} from '../../login/shared/models/auth.model';
+import {Router} from '@angular/router';
+import {MsgService} from './msg';
+import {CookieService} from 'ngx-cookie';
+import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class AuthService {
@@ -83,22 +83,6 @@ export class AuthService {
       });
   }
 
-  private setStateAuth(): void {
-    const state = this.logger.getValue();
-
-    if (localStorage.getItem('user') !== null && this.cookieService.get('token') !== undefined) {
-      this.setCurrentUser(Object.assign(new User(), JSON.parse(localStorage.getItem('user'))));
-      this.logger.next(true);
-    } else {
-      this.logger.next(false);
-
-      if (state !== false) {
-        this.msg.notice(MsgService.ERROR, 'Ошибка', 'Необходима авторизация');
-        this.logout();
-      }
-    }
-  }
-
   public isLoggedIn(): Observable<boolean> {
     this.setStateAuth();
     return this.logger.asObservable();
@@ -127,5 +111,21 @@ export class AuthService {
 
   public getCurrentUser(): Observable<User> {
     return this.user.asObservable();
+  }
+
+  private setStateAuth(): void {
+    const state = this.logger.getValue();
+
+    if (localStorage.getItem('user') !== null && this.cookieService.get('token') !== undefined) {
+      this.setCurrentUser(Object.assign(new User(), JSON.parse(localStorage.getItem('user'))));
+      this.logger.next(true);
+    } else {
+      this.logger.next(false);
+
+      if (state !== false) {
+        this.msg.notice(MsgService.ERROR, 'Ошибка', 'Необходима авторизация');
+        this.logout();
+      }
+    }
   }
 }

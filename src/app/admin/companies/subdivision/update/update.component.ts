@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { Company } from '../../../../shared/models/company.model';
-import { MsgService } from '../../../../shared/services/msg';
-import { CompaniesService } from '../../../../shared/services/companies.service';
-import { Subdivision } from '../../../../shared/models/subdivision.model';
-import { SubdivisionsService } from '../../../../shared/services/subdivisions.service';
-import { ActivatedRoute } from '@angular/router';
-import { FormGroup } from '@angular/forms';
-import { SubdivisionUpdateForm } from '../../../shared/forms/subdivision/update.form';
+import {Component} from '@angular/core';
+import {Company} from '../../../../shared/models/company.model';
+import {MsgService} from '../../../../shared/services/msg';
+import {CompaniesService} from '../../../../shared/services/companies.service';
+import {Subdivision} from '../../../../shared/models/subdivision.model';
+import {SubdivisionsService} from '../../../../shared/services/subdivisions.service';
+import {ActivatedRoute} from '@angular/router';
+import {FormGroup} from '@angular/forms';
+import {SubdivisionUpdateForm} from '../../../shared/forms/subdivision/update.form';
 
 @Component({
   selector: 'app-subdivision-update',

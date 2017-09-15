@@ -1,14 +1,14 @@
-import { Component, OnDestroy } from '@angular/core';
-import { CarsService } from '../../shared/services/cars.service';
-import { Subscription } from 'rxjs/Subscription';
-import { ActivatedRoute } from '@angular/router';
-import { SubdivisionsService } from '../../shared/services/subdivisions.service';
-import { Subdivision } from '../../shared/models/subdivision.model';
-import { ChartsService } from '../../shared/services/charts.service';
-import { MapCar } from '../ymaps/shared/map-car.model';
-import { MapPolyLines } from '../ymaps/shared/map-polylines.model';
-import { Car } from '../../shared/models/car.model';
-import { Observable } from 'rxjs/Observable';
+import {Component, OnDestroy} from '@angular/core';
+import {CarsService} from '../../shared/services/cars.service';
+import {Subscription} from 'rxjs/Subscription';
+import {ActivatedRoute} from '@angular/router';
+import {SubdivisionsService} from '../../shared/services/subdivisions.service';
+import {Subdivision} from '../../shared/models/subdivision.model';
+import {ChartsService} from '../../shared/services/charts.service';
+import {MapCar} from '../ymaps/shared/map-car.model';
+import {MapPolyLines} from '../ymaps/shared/map-polylines.model';
+import {Car} from '../../shared/models/car.model';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-company',
@@ -16,14 +16,13 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./company.component.css']
 })
 export class CompanyComponent implements OnDestroy {
+  public subdivisions: Subdivision[] = [];
+  public mapCars: MapCar[] = [];
+  public mapPolyLines: MapPolyLines[] = [];
   private subscription: Subscription = new Subscription();
   private subscriptionTimer: Subscription[] = [];
   private mpl: MapPolyLines[];
   private mc: MapCar[];
-
-  public subdivisions: Subdivision[] = [];
-  public mapCars: MapCar[] = [];
-  public mapPolyLines: MapPolyLines[] = [];
   private timer = Observable.timer(0, 5000);
 
   constructor(private subdivisionsService: SubdivisionsService,
@@ -89,6 +88,13 @@ export class CompanyComponent implements OnDestroy {
     );
   }
 
+  ngOnDestroy() {
+    this.subscriptionTimer.forEach(s => {
+      s.unsubscribe();
+    });
+    this.subscription.unsubscribe();
+  }
+
   private buildState(car: Car) {
     this.subscriptionTimer.push(
       this.timer.subscribe(() => {
@@ -99,12 +105,5 @@ export class CompanyComponent implements OnDestroy {
         );
       })
     );
-  }
-
-  ngOnDestroy() {
-    this.subscriptionTimer.forEach(s => {
-      s.unsubscribe();
-    });
-    this.subscription.unsubscribe();
   }
 }

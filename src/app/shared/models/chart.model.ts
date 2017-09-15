@@ -9,6 +9,23 @@ export class Chart {
     width: 600,
     height: 360
   };
+  public tooltip = {
+    positioner: function () {
+      return {
+        x: this.chart.chartWidth - this.label.width,
+        y: -10
+      };
+    },
+    borderWidth: 0,
+    valueDecimals: 0,
+    backgroundColor: 'none',
+    pointFormat: '{point.x:%d.%m %H:%M:%S}: {point.y}',
+    headerFormat: '',
+    shadow: false,
+    style: {
+      fontSize: '14px'
+    },
+  };
   public scrollbar = {
     liveRedraw: false
   };
@@ -28,23 +45,6 @@ export class Chart {
   };
   public legend = {
     enabled: false
-  };
-  public tooltip = {
-    positioner: function () {
-      return {
-        x: this.chart.chartWidth - this.label.width,
-        y: -10
-      };
-    },
-    borderWidth: 0,
-    valueDecimals: 0,
-    backgroundColor: 'none',
-    pointFormat: '{point.x:%d.%m %H:%M:%S}: {point.y}',
-    headerFormat: '',
-    shadow: false,
-    style: {
-      fontSize: '14px'
-    },
   };
 
   constructor(options: any) {

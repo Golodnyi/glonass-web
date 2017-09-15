@@ -1,7 +1,7 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Injectable } from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Injectable} from '@angular/core';
 import * as moment from 'moment';
-import { Filter } from '../models/filter.model';
+import {Filter} from '../models/filter.model';
 
 @Injectable()
 export class FilterForm {

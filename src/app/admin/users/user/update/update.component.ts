@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UsersService } from '../../../../shared/services/users.service';
-import { User } from '../../../../shared/models/user.model';
-import { UserForm } from '../shared/user.form';
-import { Role } from '../../../../shared/models/role.model';
-import { FormGroup } from '@angular/forms';
-import { MsgService } from '../../../../shared/services/msg';
+import {Component} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UsersService} from '../../../../shared/services/users.service';
+import {User} from '../../../../shared/models/user.model';
+import {UserForm} from '../shared/user.form';
+import {Role} from '../../../../shared/models/role.model';
+import {FormGroup} from '@angular/forms';
+import {MsgService} from '../../../../shared/services/msg';
 
 @Component({
   selector: 'app-user-update',

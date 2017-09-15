@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { UsersService } from '../../../../shared/services/users.service';
-import { FormGroup } from '@angular/forms';
-import { User } from '../../../../shared/models/user.model';
-import { MsgService } from '../../../../shared/services/msg';
-import { Router } from '@angular/router';
-import { Role } from '../../../../shared/models/role.model';
-import { UserForm } from '../shared/user.form';
+import {Component} from '@angular/core';
+import {UsersService} from '../../../../shared/services/users.service';
+import {FormGroup} from '@angular/forms';
+import {User} from '../../../../shared/models/user.model';
+import {MsgService} from '../../../../shared/services/msg';
+import {Router} from '@angular/router';
+import {Role} from '../../../../shared/models/role.model';
+import {UserForm} from '../shared/user.form';
 
 @Component({
   selector: 'app-user-create',

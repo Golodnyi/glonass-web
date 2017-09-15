@@ -1,8 +1,8 @@
-import { AfterViewChecked, Component, ElementRef, HostListener, Input, OnChanges, OnDestroy } from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, HostListener, Input, OnChanges, OnDestroy} from '@angular/core';
 import * as Highcharts from 'highcharts/highstock';
 import * as HighchartsExporting from 'highcharts/modules/exporting';
 import * as HighchartsOfflineExporting from 'highcharts/modules/offline-exporting';
-import { Chart } from '../models/chart.model';
+import {Chart} from '../models/chart.model';
 
 window['Highcharts'] = Highcharts;
 HighchartsExporting(Highcharts);
@@ -17,6 +17,15 @@ HighchartsOfflineExporting(Highcharts);
 export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
   public chart: any;
   @Input() data: any;
+
+  constructor(private el: ElementRef) {
+    Highcharts.Point.prototype.highlight = function () {
+      this.onMouseOver();
+    };
+    Highcharts.Pointer.prototype.reset = function () {
+      return undefined;
+    };
+  }
 
   @Input()
   set options(options: any) {
@@ -83,15 +92,6 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
         }
       }
     });
-  }
-
-  constructor(private el: ElementRef) {
-    Highcharts.Point.prototype.highlight = function () {
-      this.onMouseOver();
-    };
-    Highcharts.Pointer.prototype.reset = function () {
-      return undefined;
-    };
   }
 
   ngOnDestroy() {
