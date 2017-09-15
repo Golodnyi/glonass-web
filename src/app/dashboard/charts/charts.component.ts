@@ -33,11 +33,15 @@ export class ChartsComponent implements OnDestroy {
     public loading = true;
     public viewMode = true;
     public viewChartMode = true;
-    public mapCars: MapCar[];
-    public mapPolyLines: MapPolyLines[];
+    public mapCars: MapCar[] = [];
+    public mapPolyLines: MapPolyLines[] = [];
     public move = false;
     public viewModeButtons: SelectItem[] = [];
 
+    private mapClean() {
+        this.mapCars = [];
+        this.mapPolyLines = [];
+    }
     private mapUpd(car_id: number) {
         this.chartsService.mapData(car_id).subscribe(data => {
             this.mapCars = [];
@@ -181,10 +185,8 @@ export class ChartsComponent implements OnDestroy {
             this.route.params.subscribe(params => {
                 this.options = []; // уничтожаем графики
                 const car_id = +params['car'];
-
                 this.carUpd(car_id);
                 this.engineUpd(car_id);
-                this.mapUpd(car_id);
                 this.chartsUpd();
                 this.filterUpd(car_id);
                 this.autoRefreshUpd();
@@ -253,6 +255,14 @@ export class ChartsComponent implements OnDestroy {
         if (event.value && (!this.options || !this.options.length || !this.options[0].data.length)) {
             // resync данных при возврате к графикам
             this.chartsService.resync(this.car.id);
+        }
+    }
+
+    public tabView(page: any) {
+        if (this.car && page.index === 1) {
+            this.mapUpd(this.car.id);
+        } else {
+            this.mapClean();
         }
     }
 }
