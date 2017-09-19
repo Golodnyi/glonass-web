@@ -15,15 +15,9 @@ export class TableComponent implements OnDestroy {
   constructor(private chartsService: ChartsService) {
     console.log('component table init');
     this.subscription.add(
-      this.chartsService.getFilter().subscribe(
-        () => {
-          this.subscription.add(
-            this.chartsService.getCar().subscribe(car => {
-              this.car = car;
-            })
-          );
-        }
-      )
+      this.chartsService.getCar().subscribe(car => {
+        this.car = car;
+      })
     );
   }
 
