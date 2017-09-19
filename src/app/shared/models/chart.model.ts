@@ -46,6 +46,51 @@ export class Chart {
   public legend = {
     enabled: false
   };
+  public rangeSelector = {
+    buttons: [{
+      type: 'hour',
+      count: 1,
+      text: '1ч'
+    }, {
+      type: 'hour',
+      count: 3,
+      text: '3ч'
+    }, {
+      type: 'hour',
+      count: 6,
+      text: '6ч'
+    }, {
+      type: 'hour',
+      count: 12,
+      text: '12ч'
+    }, {
+      type: 'day',
+      count: 1,
+      text: '1д'
+    }, {
+      type: 'day',
+      count: 3,
+      text: '3д'
+    }, {
+      type: 'week',
+      count: 1,
+      text: '1н'
+    }, {
+      type: 'month',
+      count: 1,
+      text: '1м'
+    }, {
+      type: 'month',
+      count: 3,
+      text: '3м'
+    }, {
+      type: 'all',
+      count: 1,
+      text: 'Все'
+    }],
+    selected: 1,
+    inputEnabled: false
+  };
 
   constructor(options: any) {
     this.series = [{
