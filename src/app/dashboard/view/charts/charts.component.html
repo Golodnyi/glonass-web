@@ -5,22 +5,9 @@
                      *ngFor="let option of options;"
                      header="{{option.name}}"
                      [toggleable]="true">
-                <app-chart *ngIf="option.data.length" [options]="option ? option : {}"
+                <app-chart [options]="option ? option : {}"
                            [data]="option ? option.data : []"></app-chart>
-                <div *ngIf="!option.data.length && !loading">
-                    <h5>Данные отсутствуют.</h5>
-                </div>
             </p-panel>
-        </div>
-        <div *ngIf="!options.length">
-            <div class="load" *ngIf="loading">
-                Загрузка...
-                <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-            </div>
-            <div *ngIf="!loading">
-                <h3 class="alert alert-danger">За выбранный период данные отсутствуют, измените параметры
-                    фильтра.</h3>
-            </div>
         </div>
     </div>
 </div>

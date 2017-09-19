@@ -2,6 +2,8 @@ import {Component, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {ChartsService} from '../../../shared/services/charts.service';
 import {Car} from '../../../shared/models/car.model';
+import {Observable} from 'rxjs/Observable';
+import {AutoRefresh} from '../../../shared/models/auto-refresh.model';
 
 @Component({
   selector: 'app-charts-view',
@@ -10,22 +12,30 @@ import {Car} from '../../../shared/models/car.model';
 })
 export class ChartsComponent implements OnDestroy {
   private subscription: Subscription = new Subscription();
+  private subscriptionAutoRefresh: Subscription;
   public options: any = [];
   public loading = true;
+  private timer = Observable.timer(5000, 5000);
+  private autoRefresh = new AutoRefresh();
 
   constructor(private chartsService: ChartsService) {
     console.log('component charts init');
+    this.update();
     this.subscription.add(
-      this.chartsService.getFilter().subscribe(
-        () => {
-          this.subscription.add(
-            this.chartsService.getCar().subscribe(car => {
-              this.update(car);
-            })
-          );
-        }
-      )
+      this.chartsService.getCar().subscribe(car => {
+        this.subscription.add(
+          this.chartsService.getFilter().subscribe(
+            (filter) => {
+              if (car) {
+                this.options = [];
+                this.autoUpdate(car, filter.last);
+              }
+            }
+          )
+        );
+      })
     );
+
   }
 
   ngOnDestroy() {
@@ -34,7 +44,7 @@ export class ChartsComponent implements OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  private update(car: Car) {
+  private update() {
     this.subscription.add(
       this.chartsService.get().subscribe(
         data => {
@@ -58,6 +68,42 @@ export class ChartsComponent implements OnDestroy {
         }
       )
     );
-    this.chartsService.resync(car);
+  }
+
+  private autoUpdate(car: Car, autoUpdate: boolean) {
+    if (this.subscriptionAutoRefresh) {
+      this.subscriptionAutoRefresh.unsubscribe();
+    }
+    if (autoUpdate) {
+      console.log('autoRefresh', this.options, this.options.length);
+      if (!this.options.length) {
+        // TODO: эта строка не работает при отключении фильтра, хз почему
+        this.chartsService.resync(car);
+      }
+      this.subscriptionAutoRefresh = this.timer.subscribe(
+        () => {
+          this.autoRefresh.enabled = true;
+          this.autoRefresh.afterTime = this.lastTime();
+          this.chartsService.setAutoRefresh(this.autoRefresh);
+          this.chartsService.resync(car);
+        }
+      );
+    } else {
+      console.log('dont autoRefresh');
+      this.chartsService.resync(car);
+    }
+  }
+
+  private lastTime(): number {
+    if (this.options) {
+      const series = this.options[this.options.length - 1];
+      if (series) {
+        const data = series.data[series.data.length - 1];
+        if (data) {
+          return data[0];
+        }
+      }
+    }
+    return this.autoRefresh.afterTime;
   }
 }

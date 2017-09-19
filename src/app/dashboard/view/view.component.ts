@@ -91,19 +91,6 @@ export class ViewComponent implements OnDestroy {
     );
   }
 
-  /**  private lastTime(): number {
-    if (this.options) {
-      const series = this.options[this.options.length - 1];
-      if (series) {
-        const data = series.data[series.data.length - 1];
-        if (data) {
-          return data[0];
-        }
-      }
-    }
-    return this.autoRefresh.afterTime;
-  } **/
-
   public viewModeChange(event: any) {
     switch (event.value) {
       case  0:
