@@ -21,7 +21,7 @@ export class ViewComponent implements OnDestroy {
   public engine: Engine;
   public move = false;
   public viewModeButtons: SelectItem[] = [];
-  public viewMode = 0;
+  public viewMode = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
   private subscriptionFilter: Subscription;
   private subscriptionAutoRefresh: Subscription;
   private subscription: Subscription = new Subscription();
@@ -30,9 +30,9 @@ export class ViewComponent implements OnDestroy {
               private chartsService: ChartsService,
               private carsService: CarsService,
               private enginesService: EnginesService) {
-    this.viewModeButtons.push({label: 'Графики', value: 0});
-    this.viewModeButtons.push({label: 'Таблица', value: 1});
-    this.viewModeButtons.push({label: 'Карта', value: 2});
+    this.viewModeButtons.push({label: 'Графики', value: 'charts'});
+    this.viewModeButtons.push({label: 'Таблица', value: 'table'});
+    this.viewModeButtons.push({label: 'Карта', value: 'map'});
     this.filterInit();
     this.subscription.add(
       this.route.params.subscribe(params => {
@@ -92,16 +92,6 @@ export class ViewComponent implements OnDestroy {
   }
 
   public viewModeChange(event: any) {
-    switch (event.value) {
-      case  0:
-        this.router.navigate(['dashboard', 'view', this.car.id, 'charts']);
-        break;
-      case 1:
-        this.router.navigate(['dashboard', 'view', this.car.id, 'table']);
-        break;
-      case 2:
-        this.router.navigate(['dashboard', 'view', this.car.id, 'map']);
-        break;
-    }
+    this.router.navigate(['dashboard', 'view', this.car.id, event.value]);
   }
 }
