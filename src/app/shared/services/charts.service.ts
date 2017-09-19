@@ -54,12 +54,15 @@ export class ChartsService {
     return this.autoRefresh.asObservable();
   }
 
-  public mapData(car: number): Observable<any> {
+  public mapData(car: Car): Observable<any> {
+    if (car === null) {
+      return;
+    }
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
 
-    return this.http.get(this.host + '/v1/cars/' + car + '/report/map', options)
+    return this.http.get(this.host + '/v1/cars/' + car.id + '/report/map', options)
       .map((response: Response) => {
         return response.json();
       }).catch((error: any) => {
@@ -68,7 +71,10 @@ export class ChartsService {
       });
   }
 
-  public resync(car: number): void {
+  public resync(car: Car): void {
+    if (car === null) {
+      return;
+    }
     const filter = this.filter.getValue();
     const autoRefresh = this.autoRefresh.getValue();
     const headers = new Headers();
@@ -90,7 +96,7 @@ export class ChartsService {
     if (autoRefresh.enabled && ((filter.last && filter.enabled) || !filter.enabled)) {
       params += 'afterTime=' + autoRefresh.afterTime;
     }
-    this.http.get(this.host + '/v1/cars/' + car + '/report' + params, options)
+    this.http.get(this.host + '/v1/cars/' + car.id + '/report' + params, options)
       .subscribe((response: Response) => {
         this.data.next(response.json().data);
         this.sensors.next(response.json().allowedSensors);

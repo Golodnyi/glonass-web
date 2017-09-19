@@ -32,7 +32,7 @@ export class MapComponent implements OnDestroy {
   }
 
   private update(car: Car) {
-    this.chartsService.mapData(car.id).subscribe(data => {
+    this.chartsService.mapData(car).subscribe(data => {
       this.mapCars = [];
       this.mapPolyLines = [];
 

@@ -21,10 +21,10 @@ export class ViewComponent implements OnDestroy {
   public engine: Engine;
   public move = false;
   public viewModeButtons: SelectItem[] = [];
+  public viewMode = 0;
   private subscriptionFilter: Subscription;
   private subscriptionAutoRefresh: Subscription;
   private subscription: Subscription = new Subscription();
-
   constructor(private route: ActivatedRoute,
               private router: Router,
               private chartsService: ChartsService,
@@ -39,7 +39,7 @@ export class ViewComponent implements OnDestroy {
         const car_id = +params['car'];
         this.carUpd(car_id);
         this.engineUpd(car_id);
-        this.filterUpd(car_id);
+        this.filterUpd();
       })
     );
   }
@@ -72,8 +72,11 @@ export class ViewComponent implements OnDestroy {
     this.subscription.add(
       this.carsService.get(car_id, true).subscribe(
         car => {
-          this.chartsService.setCar(car);
-          this.car = car;
+          if (Object.keys(car).length) {
+            console.log('car set');
+            this.chartsService.setCar(car);
+            this.car = car;
+          }
         }
       )
     );
@@ -90,7 +93,7 @@ export class ViewComponent implements OnDestroy {
   }
 
 
-  private filterUpd(car_id: number) {
+  private filterUpd() {
     /**
      * Подписка на фильтр
      */

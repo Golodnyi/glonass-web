@@ -1,7 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {ChartsService} from '../../../shared/services/charts.service';
-import {ActivatedRoute} from '@angular/router';
 import {Car} from '../../../shared/models/car.model';
 
 @Component({
@@ -52,6 +51,6 @@ export class ChartsComponent implements OnDestroy {
         }
       )
     );
-    this.chartsService.resync(car.id);
+    this.chartsService.resync(car);
   }
 }
