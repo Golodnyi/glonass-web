@@ -74,10 +74,11 @@ export class ChartsComponent implements OnDestroy {
     if (this.subscriptionAutoRefresh) {
       this.subscriptionAutoRefresh.unsubscribe();
     }
+    this.autoRefresh.enabled = false;
+    this.chartsService.setAutoRefresh(this.autoRefresh);
     if (autoUpdate) {
       console.log('autoRefresh', this.options, this.options.length);
       if (!this.options.length) {
-        // TODO: эта строка не работает при отключении фильтра, хз почему
         this.chartsService.resync(car);
       }
       this.subscriptionAutoRefresh = this.timer.subscribe(
