@@ -42,6 +42,9 @@ export class ChartsComponent implements OnDestroy {
     console.log('charts destroy');
     this.options = [];
     this.subscription.unsubscribe();
+    if (this.subscriptionAutoRefresh) {
+      this.subscriptionAutoRefresh.unsubscribe();
+    }
   }
 
   private update() {

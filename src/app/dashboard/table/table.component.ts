@@ -59,6 +59,9 @@ export class TableComponent implements OnChanges, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    if (this.subscriptionAutoRefresh) {
+      this.subscriptionAutoRefresh.unsubscribe();
+    }
   }
 
   public sort(event: any) {
