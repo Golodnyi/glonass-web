@@ -10,7 +10,7 @@ import {Car} from '../../../shared/models/car.model';
 })
 export class TableComponent implements OnDestroy {
   private subscription: Subscription = new Subscription();
-  private car: Car;
+  public car: Car;
 
   constructor(private chartsService: ChartsService) {
     console.log('component table init');
