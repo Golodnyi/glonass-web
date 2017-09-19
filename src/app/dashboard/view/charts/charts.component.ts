@@ -12,12 +12,19 @@ export class ChartsComponent implements OnDestroy {
   private subscription: Subscription = new Subscription();
   public options: any = [];
   public loading = true;
+
   constructor(private chartsService: ChartsService) {
     console.log('component charts init');
     this.subscription.add(
-      this.chartsService.getCar().subscribe(car => {
-        this.update(car);
-      })
+      this.chartsService.getFilter().subscribe(
+        () => {
+          this.subscription.add(
+            this.chartsService.getCar().subscribe(car => {
+              this.update(car);
+            })
+          );
+        }
+      )
     );
   }
 

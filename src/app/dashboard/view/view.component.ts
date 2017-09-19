@@ -39,7 +39,6 @@ export class ViewComponent implements OnDestroy {
         const car_id = +params['car'];
         this.carUpd(car_id);
         this.engineUpd(car_id);
-        this.filterUpd();
       })
     );
   }
@@ -89,21 +88,6 @@ export class ViewComponent implements OnDestroy {
           this.engine = engine;
         }
       )
-    );
-  }
-
-
-  private filterUpd() {
-    /**
-     * Подписка на фильтр
-     */
-    if (this.subscriptionFilter) {
-      this.subscriptionFilter.unsubscribe();
-    }
-    this.subscriptionFilter = this.chartsService.getFilter().subscribe(
-      (filter) => {
-        this.filter = filter;
-      }
     );
   }
 

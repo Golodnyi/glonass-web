@@ -14,13 +14,21 @@ export class MapComponent implements OnDestroy {
   private subscription: Subscription = new Subscription();
   public mapCars: MapCar[] = [];
   public mapPolyLines: MapPolyLines[] = [];
+  public loading = true;
 
   constructor(private chartsService: ChartsService) {
     console.log('component map init');
     this.subscription.add(
-      this.chartsService.getCar().subscribe(car => {
-        this.update(car);
-      })
+      this.chartsService.getFilter().subscribe(
+        () => {
+          console.log('filter update');
+          this.subscription.add(
+            this.chartsService.getCar().subscribe(car => {
+              this.update(car);
+            })
+          );
+        }
+      )
     );
   }
 
@@ -32,7 +40,11 @@ export class MapComponent implements OnDestroy {
   }
 
   private update(car: Car) {
+    if (car === null) {
+      return;
+    }
     this.chartsService.mapData(car).subscribe(data => {
+      this.loading = true;
       this.mapCars = [];
       this.mapPolyLines = [];
 
@@ -56,6 +68,8 @@ export class MapComponent implements OnDestroy {
         });
         this.mapPolyLines.push(polyLines);
       }
+      console.log(this.mapPolyLines);
+      this.loading = false;
     });
   }
 }

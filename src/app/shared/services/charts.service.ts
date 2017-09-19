@@ -55,14 +55,17 @@ export class ChartsService {
   }
 
   public mapData(car: Car): Observable<any> {
-    if (car === null) {
-      return;
-    }
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
-
-    return this.http.get(this.host + '/v1/cars/' + car.id + '/report/map', options)
+    const filter = this.filter.getValue();
+    let params = '?';
+    if (filter.enabled) {
+      if (!filter.last) {
+        params += 'dateFrom=' + encodeURIComponent(filter.before) + '&dateTo=' + encodeURIComponent(filter.after) + '&';
+      }
+    }
+    return this.http.get(this.host + '/v1/cars/' + car.id + '/report/map' + params, options)
       .map((response: Response) => {
         return response.json();
       }).catch((error: any) => {

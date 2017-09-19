@@ -1,5 +1,15 @@
 <div class="row">
-  <div class="col-md-12">
-    <app-ymaps *ngIf="mapPolyLines.length" [cars]="mapCars" [polyLines]="mapPolyLines"></app-ymaps>
-  </div>
+    <div class="col-md-12">
+        <app-ymaps *ngIf="mapPolyLines.length" [cars]="mapCars" [polyLines]="mapPolyLines"></app-ymaps>
+        <div *ngIf="!mapPolyLines.length">
+            <div class="load" *ngIf="loading">
+                Загрузка...
+                <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+            </div>
+            <div *ngIf="!loading">
+                <h3 class="alert alert-danger">За выбранный период данные отсутствуют, измените параметры
+                    фильтра.</h3>
+            </div>
+        </div>
+    </div>
 </div>
