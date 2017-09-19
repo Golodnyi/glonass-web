@@ -1,4 +1,6 @@
 <div class="col-md-12">
-    <div>Данные: <p-inputSwitch [(ngModel)]="inDrive" onLabel="В движении" offLabel="Все"></p-inputSwitch></div>
+    <div>Данные:
+        <p-inputSwitch [(ngModel)]="inDrive" onLabel="В движении" offLabel="Все"></p-inputSwitch>
+    </div>
     <app-table *ngIf="car" [car]="car.id" [move]="inDrive"></app-table>
 </div>

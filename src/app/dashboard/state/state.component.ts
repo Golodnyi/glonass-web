@@ -43,7 +43,6 @@ export class StateComponent implements OnChanges {
       });
     this.audio.src = '/assets/signal.wav';
     this.audio.load();
-    console.log('Last state init');
   }
 
   ngOnChanges() {

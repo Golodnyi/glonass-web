@@ -10,7 +10,8 @@
                         <span *ngIf="!engine.id">отсутствует</span>
                     </div>
                     <div class="col-md-6">
-                        <p-selectButton [options]="viewModeButtons" [(ngModel)]="viewMode" tabindex="1" (onChange)="viewModeChange($event)"></p-selectButton>
+                        <p-selectButton [options]="viewModeButtons" [(ngModel)]="viewMode" tabindex="1"
+                                        (onChange)="viewModeChange($event)"></p-selectButton>
                     </div>
                 </div>
             </p-tabPanel>

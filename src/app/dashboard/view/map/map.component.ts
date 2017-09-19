@@ -11,17 +11,15 @@ import {MapPolyLines} from '../../ymaps/shared/map-polylines.model';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnDestroy {
-  private subscription: Subscription = new Subscription();
   public mapCars: MapCar[] = [];
   public mapPolyLines: MapPolyLines[] = [];
   public loading = true;
+  private subscription: Subscription = new Subscription();
 
   constructor(private chartsService: ChartsService) {
-    console.log('component map init');
     this.subscription.add(
       this.chartsService.getFilter().subscribe(
         () => {
-          console.log('filter update');
           this.subscription.add(
             this.chartsService.getCar().subscribe(car => {
               this.update(car);
@@ -33,7 +31,6 @@ export class MapComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('map destroy');
     this.mapCars = [];
     this.mapPolyLines = [];
     this.subscription.unsubscribe();
@@ -68,7 +65,6 @@ export class MapComponent implements OnDestroy {
         });
         this.mapPolyLines.push(polyLines);
       }
-      console.log(this.mapPolyLines);
       this.loading = false;
     });
   }

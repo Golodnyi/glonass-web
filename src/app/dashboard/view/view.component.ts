@@ -25,6 +25,7 @@ export class ViewComponent implements OnDestroy {
   private subscriptionFilter: Subscription;
   private subscriptionAutoRefresh: Subscription;
   private subscription: Subscription = new Subscription();
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private chartsService: ChartsService,
@@ -54,6 +55,10 @@ export class ViewComponent implements OnDestroy {
     }
   }
 
+  public viewModeChange(event: any) {
+    this.router.navigate(['dashboard', 'view', this.car.id, event.value]);
+  }
+
   private filterInit() {
     this.subscription.add(this.route.queryParams.subscribe(filter => {
         if (Object.keys(filter).length) {
@@ -72,7 +77,6 @@ export class ViewComponent implements OnDestroy {
       this.carsService.get(car_id, true).subscribe(
         car => {
           if (Object.keys(car).length) {
-            console.log('car set');
             this.chartsService.setCar(car);
             this.car = car;
           }
@@ -89,9 +93,5 @@ export class ViewComponent implements OnDestroy {
         }
       )
     );
-  }
-
-  public viewModeChange(event: any) {
-    this.router.navigate(['dashboard', 'view', this.car.id, event.value]);
   }
 }

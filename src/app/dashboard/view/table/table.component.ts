@@ -9,11 +9,11 @@ import {Car} from '../../../shared/models/car.model';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnDestroy {
-  private subscription: Subscription = new Subscription();
   public car: Car;
   public inDrive: boolean;
+  private subscription: Subscription = new Subscription();
+
   constructor(private chartsService: ChartsService) {
-    console.log('component table init');
     this.subscription.add(
       this.chartsService.getCar().subscribe(car => {
         this.car = car;
@@ -22,7 +22,6 @@ export class TableComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('table destroy');
     this.subscription.unsubscribe();
   }
 }

@@ -84,10 +84,6 @@ export class TableComponent implements OnChanges, OnDestroy {
     this.subscription =
       this.chartsService.getFilter().subscribe(
         () => {
-          console.log('filter update table');
-
-          // this.loading = true;
-
           if (this.subscriptionAutoRefresh) {
             this.subscriptionAutoRefresh.unsubscribe();
           }

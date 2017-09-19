@@ -36,8 +36,8 @@ import {CompanyComponent} from './company/company.component';
 import {TableComponent} from './table/table.component';
 import {PdfComponent} from './pdf/pdf.component';
 import {ViewComponent} from './view/view.component';
-import { ChartsComponent } from './view/charts/charts.component';
-import { MapComponent } from './view/map/map.component';
+import {ChartsComponent} from './view/charts/charts.component';
+import {MapComponent} from './view/map/map.component';
 import {TableComponent as TableViewComponent} from './view/table/table.component';
 
 @NgModule({

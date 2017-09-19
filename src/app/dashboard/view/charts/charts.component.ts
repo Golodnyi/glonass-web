@@ -11,15 +11,14 @@ import {AutoRefresh} from '../../../shared/models/auto-refresh.model';
   styleUrls: ['./charts.component.css']
 })
 export class ChartsComponent implements OnDestroy {
-  private subscription: Subscription = new Subscription();
-  private subscriptionAutoRefresh: Subscription;
   public options: any = [];
   public loading = true;
+  private subscription: Subscription = new Subscription();
+  private subscriptionAutoRefresh: Subscription;
   private timer = Observable.timer(5000, 5000);
   private autoRefresh = new AutoRefresh();
 
   constructor(private chartsService: ChartsService) {
-    console.log('component charts init');
     this.update();
     this.subscription.add(
       this.chartsService.getCar().subscribe(car => {
@@ -39,7 +38,6 @@ export class ChartsComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('charts destroy');
     this.options = [];
     this.subscription.unsubscribe();
     if (this.subscriptionAutoRefresh) {
@@ -80,7 +78,6 @@ export class ChartsComponent implements OnDestroy {
     this.autoRefresh.enabled = false;
     this.chartsService.setAutoRefresh(this.autoRefresh);
     if (autoUpdate) {
-      console.log('autoRefresh', this.options, this.options.length);
       if (!this.options.length) {
         this.chartsService.resync(car);
       }
@@ -93,7 +90,6 @@ export class ChartsComponent implements OnDestroy {
         }
       );
     } else {
-      console.log('dont autoRefresh');
       this.chartsService.resync(car);
     }
   }
