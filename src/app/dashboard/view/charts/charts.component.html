@@ -5,8 +5,11 @@
                      *ngFor="let option of options;"
                      header="{{option.name}}"
                      [toggleable]="true">
-                <app-chart [options]="option ? option : {}"
+                <app-chart *ngIf="option.data.length" [options]="option ? option : {}"
                            [data]="option ? option.data : []"></app-chart>
+                <div *ngIf="!option.data.length && !loading">
+                    <h5>Данные отсутствуют.</h5>
+                </div>
             </p-panel>
         </div>
         <div *ngIf="!options.length">
