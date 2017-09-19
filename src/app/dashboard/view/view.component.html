@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-md-12">
+        <p-tabView *ngIf="car" (onChange)="tabView($event)">
+            <p-tabPanel header="Информация" class="panel">
+                <div class="row">
+                    <div class="col-md-6">
+                        Данные по {{car.name}}<br/>
+                        Двигатель:
+                        <span *ngIf="engine.id">{{engine.name}}</span>
+                        <span *ngIf="!engine.id">отсутствует</span>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-3" style="padding-top: 6px;">
+                                <strong>Отображение:</strong>
+                            </div>
+                            <div class="col-md-9">
+                                <p-selectButton [options]="viewModeButtons" tabindex="1" (onChange)="viewModeChange($event)"></p-selectButton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="Фильтр">
+                <div class="row">
+                    <div class="col-md-12">
+                        <app-filter *ngIf="filter" [filter]="filter" [car]="car"></app-filter>
+                    </div>
+                </div>
+            </p-tabPanel>
+        </p-tabView>
+        <hr/>
+        <div class="row">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

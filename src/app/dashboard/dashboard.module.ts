@@ -24,7 +24,6 @@ import {
   ToggleButtonModule,
   TreeModule
 } from 'primeng/primeng';
-import {ChartsComponent} from './charts/charts.component';
 import {TreePipe} from '../shared/pipes/tree.pipe';
 import {SharedModule} from '../shared/shared.module';
 import {ChartsService} from '../shared/services/charts.service';
@@ -36,6 +35,10 @@ import {YmapsComponent} from './ymaps/ymaps.component';
 import {CompanyComponent} from './company/company.component';
 import {TableComponent} from './table/table.component';
 import {PdfComponent} from './pdf/pdf.component';
+import {ViewComponent} from './view/view.component';
+import { ChartsComponent } from './view/charts/charts.component';
+import { MapComponent } from './view/map/map.component';
+import {TableComponent as TableViewComponent} from './view/table/table.component';
 
 @NgModule({
   imports: [
@@ -62,8 +65,8 @@ import {PdfComponent} from './pdf/pdf.component';
     DataTableModule
   ],
   declarations: [
-    DashboardComponent, NavigationComponent, ChartsComponent, StateComponent,
-    FilterComponent, YmapsComponent, CompanyComponent, TableComponent, PdfComponent
+    DashboardComponent, NavigationComponent, ViewComponent, StateComponent,
+    FilterComponent, YmapsComponent, CompanyComponent, TableComponent, PdfComponent, ChartsComponent, MapComponent, TableViewComponent
   ],
   providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService]
 })

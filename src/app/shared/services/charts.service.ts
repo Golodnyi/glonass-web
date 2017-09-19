@@ -18,7 +18,7 @@ import {environment} from '../../../environments/environment';
 @Injectable()
 export class ChartsService {
   private data: Subject<any> = new Subject();
-  private car: Subject<Car> = new Subject();
+  private car: BehaviorSubject<Car> = new BehaviorSubject(null);
   private filter: BehaviorSubject<Filter> = new BehaviorSubject(new Filter());
   private sensors: BehaviorSubject<Sensor[]> = new BehaviorSubject([]);
   private autoRefresh: BehaviorSubject<AutoRefresh> = new BehaviorSubject(new AutoRefresh());
