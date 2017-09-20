@@ -80,6 +80,21 @@ export class CarsService {
     return this.car.asObservable();
   }
 
+  public getWithoutSubject(car: number, resync = false): Observable<Car> {
+      const headers = new Headers();
+      headers.append('Content-Type', 'application/x-www-form-urlencoded');
+      const options = new RequestOptions({headers: headers, withCredentials: true});
+
+      return this.http.get(this.host + '/v1/cars/' + car, options)
+        .map((response: Response) => {
+          return Object.assign(new Car(), response.json());
+        }, error => {
+          this.car.next(new Car());
+          Error.check(error, this.authService, this.router, this.msgService);
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
+        });
+  }
+
   public create(car: Car): Observable<Car> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
