@@ -27,10 +27,10 @@ export class Chart {
     },
   };
   public scrollbar = {
-    liveRedraw: false
+    liveRedraw: true
   };
   public navigator = {
-    adaptToUpdatedData: false,
+    adaptToUpdatedData: true,
   };
   public plotOptions = {
     pie: {
@@ -84,8 +84,8 @@ export class Chart {
       count: 1,
       text: 'Все'
     }],
-    selected: 1,
-    inputEnabled: false
+    inputEnabled: false,
+    selected: 1
   };
 
   constructor(options: any) {
