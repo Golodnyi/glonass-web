@@ -22,6 +22,7 @@ export class ChartsComponent implements OnDestroy {
     this.update();
     this.subscription.add(
       this.chartsService.getCar().subscribe(car => {
+        this.options = [];
         this.subscription.add(
           this.chartsService.getFilter().subscribe(
             (filter) => {
