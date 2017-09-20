@@ -80,10 +80,6 @@ export class Chart {
       count: 1,
       text: '1м'
     }, {
-      type: 'month',
-      count: 3,
-      text: '3м'
-    }, {
       type: 'all',
       count: 1,
       text: 'Все'
@@ -97,11 +93,6 @@ export class Chart {
       data: options.data,
       name: options.name,
       type: options.type,
-      dataGrouping: {
-        enabled: true,
-        // forced: true,
-        groupPixelWidth: 3
-      },
       tooltip: {
         valueSuffix: ' ' + options.unit
       }
