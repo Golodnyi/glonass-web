@@ -23,13 +23,13 @@ export class ChartsComponent implements OnDestroy {
     this.update();
     this.subscription.add(
       this.chartsService.getCar().subscribe(car => {
-        this.options = [];
         if (this.subscriptionAutoRefresh) {
           this.subscriptionAutoRefresh.unsubscribe();
         }
         if (this.subscriptionFilter) {
           this.subscriptionFilter.unsubscribe();
         }
+        this.options = [];
         this.subscriptionFilter =
           this.chartsService.getFilter().subscribe(
             (filter) => {

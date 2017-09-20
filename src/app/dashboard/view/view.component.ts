@@ -74,7 +74,7 @@ export class ViewComponent implements OnDestroy {
 
   private carUpd(car_id: number) {
     this.subscription.add(
-      this.carsService.get(car_id, true).subscribe(
+      this.carsService.getWithoutSubject(car_id).subscribe(
         car => {
           if (Object.keys(car).length) {
             this.chartsService.setCar(car);
