@@ -53,7 +53,6 @@ export class DashboardComponent implements OnDestroy {
           });
       })
     );
-    console.log('Dashboard init');
   }
 
   ngOnDestroy() {

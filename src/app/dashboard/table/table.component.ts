@@ -23,6 +23,7 @@ export class TableComponent implements OnChanges, OnDestroy {
   private tsort = 'time';
   private tdir = 1;
   private subscriptionAutoRefresh: Subscription;
+  private subscription: Subscription;
   private timer = Observable.timer(0, 5000);
 
   constructor(private chartsService: ChartsService, private keysPipe: KeysPipe) {
@@ -55,6 +56,9 @@ export class TableComponent implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
     if (this.subscriptionAutoRefresh) {
       this.subscriptionAutoRefresh.unsubscribe();
     }
@@ -74,34 +78,37 @@ export class TableComponent implements OnChanges, OnDestroy {
     if (car === undefined) {
       return;
     }
-
-    // this.loading = true;
-
-    if (this.subscriptionAutoRefresh) {
-      this.subscriptionAutoRefresh.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
-
-    if (this.autoRefresh) {
-      this.subscriptionAutoRefresh = this.timer.subscribe(
+    this.subscription =
+      this.chartsService.getFilter().subscribe(
         () => {
-          this.chartsService.getTable(car, move, page, sort, dir).subscribe(
-            table => {
-              this.keys = this.keysPipe.transform(table.headers);
-              this.table = table;
-              this.loading = false;
-            }
-          );
+          if (this.subscriptionAutoRefresh) {
+            this.subscriptionAutoRefresh.unsubscribe();
+          }
+          if (!page) {
+            this.subscriptionAutoRefresh = this.timer.subscribe(
+              () => {
+                this.chartsService.getTable(car, move, page, sort, dir).subscribe(
+                  table => {
+                    this.keys = this.keysPipe.transform(table.headers);
+                    this.table = table;
+                    this.loading = false;
+                  }
+                );
+              }
+            );
+          } else {
+            this.chartsService.getTable(car, move, page, sort, dir).subscribe(
+              table => {
+                this.keys = this.keysPipe.transform(table.headers);
+                this.table = table;
+                this.loading = false;
+              }
+            );
+          }
         }
       );
-    } else {
-      this.chartsService.getTable(car, move, page, sort, dir).subscribe(
-        table => {
-          this.keys = this.keysPipe.transform(table.headers);
-          this.table = table;
-          this.loading = false;
-        }
-      );
-    }
-
   }
 }

@@ -50,7 +50,7 @@ export class CompanyComponent implements OnDestroy {
                 cars => {
                   subdiv.cars = cars;
                   subdiv.cars.forEach(car => {
-                    this.chartsService.mapData(car.id).subscribe(data => {
+                    this.chartsService.mapData(car).subscribe(data => {
                       if (data && data.length) {
                         const mCar = new MapCar();
                         mCar.name = car.name;

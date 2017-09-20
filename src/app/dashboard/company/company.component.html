@@ -10,7 +10,7 @@
                                 Машины отсутствуют
                             </div>
                             <div class="col-md-4" *ngFor="let car of subdivision.cars"
-                                 routerLink="/dashboard/charts/{{car.id}}"
+                                 routerLink="/dashboard/view/{{car.id}}/charts"
                                  style="cursor: pointer;">
                                 <app-state [compact]="true" [toggleable]="false"
                                            [state]="car.state" [car]="car">

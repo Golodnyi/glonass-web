@@ -17,7 +17,6 @@ export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor() {
     this.build();
-    console.log('Map init');
   }
 
   ngOnInit() {
