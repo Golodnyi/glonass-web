@@ -24,6 +24,9 @@ export class ChartsComponent implements OnDestroy {
     this.subscription.add(
       this.chartsService.getCar().subscribe(car => {
         this.options = [];
+        if (this.subscriptionAutoRefresh) {
+          this.subscriptionAutoRefresh.unsubscribe();
+        }
         if (this.subscriptionFilter) {
           this.subscriptionFilter.unsubscribe();
         }
