@@ -15,6 +15,7 @@ export class ChartsComponent implements OnDestroy {
   public loading = true;
   private subscription: Subscription = new Subscription();
   private subscriptionAutoRefresh: Subscription;
+  private subscriptionFilter: Subscription;
   private timer = Observable.timer(5000, 5000);
   private autoRefresh = new AutoRefresh();
 
@@ -23,7 +24,10 @@ export class ChartsComponent implements OnDestroy {
     this.subscription.add(
       this.chartsService.getCar().subscribe(car => {
         this.options = [];
-        this.subscription.add(
+        if (this.subscriptionFilter) {
+          this.subscriptionFilter.unsubscribe();
+        }
+        this.subscriptionFilter =
           this.chartsService.getFilter().subscribe(
             (filter) => {
               if (car) {
@@ -31,8 +35,7 @@ export class ChartsComponent implements OnDestroy {
                 this.autoUpdate(car, filter.last);
               }
             }
-          )
-        );
+          );
       })
     );
 
@@ -43,6 +46,9 @@ export class ChartsComponent implements OnDestroy {
     this.subscription.unsubscribe();
     if (this.subscriptionAutoRefresh) {
       this.subscriptionAutoRefresh.unsubscribe();
+    }
+    if (this.subscriptionFilter) {
+      this.subscriptionFilter.unsubscribe();
     }
   }
 
