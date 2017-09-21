@@ -1,10 +1,10 @@
 <div *ngIf="stateWarnings.length" class="row alert alert-danger">
     <div class="col-md-3" *ngFor="let s of stateWarnings">
-        <app-admin-state routerLink="/dashboard/charts/{{s.id}}" style="cursor: pointer;" [state]="s"></app-admin-state>
+        <app-admin-state routerLink="/dashboard/view/{{s.id}}/charts" style="cursor: pointer;" [state]="s"></app-admin-state>
     </div>
 </div>
 <div *ngIf="state.length" class="row">
-    <div class="col-md-3" routerLink="/dashboard/charts/{{s.id}}" style="cursor: pointer;" *ngFor="let s of state">
+    <div class="col-md-3" routerLink="/dashboard/view/{{s.id}}/charts" style="cursor: pointer;" *ngFor="let s of state">
         <app-admin-state [state]="s"></app-admin-state>
     </div>
 </div>
