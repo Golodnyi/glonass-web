@@ -1,4 +1,4 @@
-<p-panel *ngIf="state" header="Состояние {{car.name}}" [toggleable]="toggleable">
+<p-panel *ngIf="state && car" header="Состояние {{car.name}}" [toggleable]="toggleable">
     <div>
         <div class="alert alert-danger" *ngFor="let issue of state.issues">
             <div class="text-left">
