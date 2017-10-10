@@ -26,9 +26,7 @@ export class ResetService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
     return this.http.post(
-      this.host + '/v1/engine-maintenances/',
-      'engine_id=' + data.engine_id + '&date=' + encodeURIComponent(data.date) + '&comment=' + data.comment,
-      options)
+      this.host + '/v1/engine-maintenances/scheduled', data, options)
       .map((response: Response) => {
         return response.json();
       })
@@ -43,7 +41,7 @@ export class ResetService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
     return this.http.get(
-      this.host + '/v1/engine-maintenances/engine/' + car.engine.id,
+      this.host + '/v1/engine-maintenances/engine/' + car.engine.id + '/scheduled',
       options)
       .map((response: Response) => {
         return response.json();

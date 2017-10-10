@@ -70,11 +70,11 @@
             <div *ngIf="!garanted(state)" class="alert alert-danger">Гарантийное обслуживание завершено</div>
             <br/>
             <div *ngIf="user.role.is_global && car.engine" class="btn-st">
-                <button type="text" (click)="showDialog()" pButton icon="fa-refresh" label="Провести ТО"></button>
-                <button type="text" (click)="showHistory()" pButton icon="fa-info" label="История"></button><br/>
-                <br/>
-                <button type="text" (click)="showDialog()" pButton icon="fa-refresh" label="Провести ГО"></button>
-                <button type="text" (click)="showHistory()" pButton icon="fa-info" label="История"></button><br/>
+                <button type="text" (click)="showTODialog()" pButton icon="fa-refresh" label="Провести ТО"></button>
+                <button type="text" (click)="showTOHistory()" pButton icon="fa-info" label="История"></button>
+                <br/><br/>
+                <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton icon="fa-refresh" label="Провести ГО"></button>
+                <button type="text" class="ui-button-success" (click)="showGarantedHistory()" pButton icon="fa-info" label="История"></button><br/>
             </div>
         </div>
     </div>
@@ -84,9 +84,9 @@
 </p-panel>
 <p-blockUI [blocked]="display"></p-blockUI>
 <p-dialog header="Провести ТО" #dialog [(visible)]="display">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="dialog input-group">
+    <form [formGroup]="form" (ngSubmit)="onSubmitTO()" novalidate class="dialog input-group">
         <label>Дата ТО</label><br/>
-        <p-calendar formControlName="date" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24" required
+        <p-calendar formControlName="created_at" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24" required
                     [locale]="ru"></p-calendar>
         <br/>
         <label>Комментарий</label><br/>

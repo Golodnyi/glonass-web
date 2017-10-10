@@ -35,7 +35,7 @@ export class StateComponent implements OnChanges {
     this.form = this.resetForm.create();
     this.form.valueChanges
       .map((value) => {
-        value.date = moment(value.date).format();
+        value.created_at = moment(value.created_at).format();
         return value;
       })
       .subscribe((data) => {
@@ -92,11 +92,11 @@ export class StateComponent implements OnChanges {
     return !(localStorage.getItem('mute_' + id) === null);
   }
 
-  public showDialog() {
+  public showTODialog() {
     this.display = true;
   }
 
-  public onSubmit() {
+  public onSubmitTO() {
     this.submit = true;
     this.resetService.reset(this.resetData).subscribe(
       () => {
@@ -110,7 +110,7 @@ export class StateComponent implements OnChanges {
     );
   }
 
-  public showHistory() {
+  public showTOHistory() {
     this.resetService.all(this.car).subscribe(
       data => {
         this.history = [];
