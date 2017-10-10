@@ -11,7 +11,7 @@ export class ResetForm {
 
   public create() {
     this.form = this.fb.group({
-      date: [moment(new Date()).toDate(), Validators.required],
+      created_at: [moment(new Date()).toDate(), Validators.required],
       comment: ['', Validators.required],
     });
 

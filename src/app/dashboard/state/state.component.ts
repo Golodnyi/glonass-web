@@ -7,6 +7,8 @@ import {ResetForm} from './shared/reset.form';
 import {ResetService} from './shared/reset.service';
 import {MsgService} from '../../shared/services/msg';
 import {Car} from '../../shared/models/car.model';
+import {AuthService} from '../../shared/services/auth.service';
+import {User} from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-state',
@@ -27,13 +29,13 @@ export class StateComponent implements OnChanges {
   public history = [];
   private audio = new Audio();
   private resetData: any;
-
-  constructor(private resetForm: ResetForm, private resetService: ResetService, private msg: MsgService) {
+  public user: User;
+  constructor(private resetForm: ResetForm, private resetService: ResetService, private msg: MsgService, private authService: AuthService) {
     moment.locale('ru');
     this.form = this.resetForm.create();
     this.form.valueChanges
       .map((value) => {
-        value.date = moment(value.date).format();
+        value.created_at = moment(value.created_at).format();
         return value;
       })
       .subscribe((data) => {
@@ -43,6 +45,9 @@ export class StateComponent implements OnChanges {
       });
     this.audio.src = '/assets/signal.wav';
     this.audio.load();
+    this.authService.getCurrentUser().subscribe(user => {
+      this.user = user;
+    });
   }
 
   ngOnChanges() {
@@ -87,11 +92,11 @@ export class StateComponent implements OnChanges {
     return !(localStorage.getItem('mute_' + id) === null);
   }
 
-  public showDialog() {
+  public showTODialog() {
     this.display = true;
   }
 
-  public onSubmit() {
+  public onSubmitTO() {
     this.submit = true;
     this.resetService.reset(this.resetData).subscribe(
       () => {
@@ -105,7 +110,7 @@ export class StateComponent implements OnChanges {
     );
   }
 
-  public showHistory() {
+  public showTOHistory() {
     this.resetService.all(this.car).subscribe(
       data => {
         this.history = [];
@@ -118,5 +123,14 @@ export class StateComponent implements OnChanges {
         this.msg.notice(MsgService.ERROR, 'Ошибка', error);
       }
     );
+  }
+
+  public garanted(state: State): boolean {
+    return (state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours > 0) &&
+      (state.maintenances.capital.limits.days - state.maintenances.capital.value.days > 0);
+  }
+
+  public scheduled(state: State): boolean {
+    return state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours > 0;
   }
 }

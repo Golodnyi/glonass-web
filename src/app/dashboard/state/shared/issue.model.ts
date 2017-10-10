@@ -9,7 +9,7 @@ export interface IIssue {
   lastCheckAt: number;
 }
 
-export class Issue {
+export class Issue implements IIssue {
   public id: number;
   public name: string;
   public minDuration: number;
