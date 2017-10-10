@@ -129,4 +129,8 @@ export class StateComponent implements OnChanges {
     return (state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours > 0) &&
       (state.maintenances.capital.limits.days - state.maintenances.capital.value.days > 0);
   }
+
+  public scheduled(state: State): boolean {
+    return state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours > 0;
+  }
 }
