@@ -69,7 +69,7 @@
             <div *ngIf="garanted(state)">Гарантийное обслуживание заканчивается через {{state.maintenances.capital.limits.days - state.maintenances.capital.value.days}} д. или {{state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours}} моточасов.</div>
             <div *ngIf="!garanted(state)" class="alert alert-danger">Гарантийное обслуживание завершено</div>
             <br/>
-            <div *ngIf="car.engine" class="btn-st">
+            <div *ngIf="user.role.is_global && car.engine" class="btn-st">
                 <button type="text" (click)="showHistory()" pButton icon="fa-info" label="История сбросов"></button>
                 <button type="text" (click)="showDialog()" pButton icon="fa-refresh" label="Сброс"></button>
             </div>

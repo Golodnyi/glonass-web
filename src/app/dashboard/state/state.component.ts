@@ -7,6 +7,8 @@ import {ResetForm} from './shared/reset.form';
 import {ResetService} from './shared/reset.service';
 import {MsgService} from '../../shared/services/msg';
 import {Car} from '../../shared/models/car.model';
+import {AuthService} from '../../shared/services/auth.service';
+import {User} from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-state',
@@ -27,8 +29,8 @@ export class StateComponent implements OnChanges {
   public history = [];
   private audio = new Audio();
   private resetData: any;
-
-  constructor(private resetForm: ResetForm, private resetService: ResetService, private msg: MsgService) {
+  public user: User;
+  constructor(private resetForm: ResetForm, private resetService: ResetService, private msg: MsgService, private authService: AuthService) {
     moment.locale('ru');
     this.form = this.resetForm.create();
     this.form.valueChanges
@@ -43,6 +45,9 @@ export class StateComponent implements OnChanges {
       });
     this.audio.src = '/assets/signal.wav';
     this.audio.load();
+    this.authService.getCurrentUser().subscribe(user => {
+      this.user = user;
+    });
   }
 
   ngOnChanges() {
