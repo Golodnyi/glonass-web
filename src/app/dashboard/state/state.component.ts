@@ -23,10 +23,13 @@ export class StateComponent implements OnChanges {
   @Input() compact = false;
   public ru = new Calendar();
   public display = false;
+  public displayGaranted = false;
   public displayHistory = false;
+  public displayGarantedHistory = false;
   public form: FormGroup;
   public submit: boolean;
   public history = [];
+  public garantedHistory = [];
   private audio = new Audio();
   private resetData: any;
   public user: User;
@@ -96,11 +99,29 @@ export class StateComponent implements OnChanges {
     this.display = true;
   }
 
+  public showGarantedDialog() {
+    this.displayGaranted = true;
+  }
+
+  public onSubmitGaranted() {
+    this.submit = true;
+    this.resetService.resetGaranted(this.resetData).subscribe(
+      () => {
+        this.msg.notice(MsgService.SUCCESS, 'Гарантийное обслуживание', 'продлено');
+        this.displayGaranted = false;
+      },
+      error => {
+        this.submit = false;
+        this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+      }
+    );
+  }
+
   public onSubmitTO() {
     this.submit = true;
     this.resetService.reset(this.resetData).subscribe(
       () => {
-        this.msg.notice(MsgService.SUCCESS, 'Сброс', 'Моточасы сброшены');
+        this.msg.notice(MsgService.SUCCESS, 'Техническое обслуживание', 'проведено');
         this.display = false;
       },
       error => {
@@ -118,6 +139,21 @@ export class StateComponent implements OnChanges {
           this.history.push(d);
         });
         this.displayHistory = true;
+      },
+      error => {
+        this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+      }
+    );
+  }
+
+  public showGarantedHistory() {
+    this.resetService.allGaranted(this.car).subscribe(
+      data => {
+        this.garantedHistory = [];
+        data.forEach(d => {
+          this.garantedHistory.push(d);
+        });
+        this.displayGarantedHistory = true;
       },
       error => {
         this.msg.notice(MsgService.ERROR, 'Ошибка', error);
