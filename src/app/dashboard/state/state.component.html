@@ -73,7 +73,7 @@
                 <button type="text" (click)="showTODialog()" pButton icon="fa-refresh" label="Провести ТО"></button>
                 <button type="text" (click)="showTOHistory()" pButton icon="fa-info" label="История"></button>
                 <br/><br/>
-                <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton icon="fa-refresh" label="Провести ГО"></button>
+                <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton icon="fa-refresh" label="Продлить ГО"></button>
                 <button type="text" class="ui-button-success" (click)="showGarantedHistory()" pButton icon="fa-info" label="История"></button><br/>
             </div>
         </div>
@@ -82,8 +82,8 @@
         Информация за {{state.time}}
     </div>
 </p-panel>
-<p-blockUI [blocked]="display"></p-blockUI>
-<p-dialog header="Провести ТО" #dialog [(visible)]="display">
+<p-blockUI [blocked]="display || displayGaranted"></p-blockUI>
+<p-dialog header="Техническое обслуживание" #dialog [(visible)]="display">
     <form [formGroup]="form" (ngSubmit)="onSubmitTO()" novalidate class="dialog input-group">
         <label>Дата ТО</label><br/>
         <p-calendar formControlName="created_at" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24" required
@@ -97,9 +97,28 @@
         </div>
     </form>
 </p-dialog>
+<p-dialog header="Гарантийное обслуживание" #dialogGaranted [(visible)]="displayGaranted">
+    <form [formGroup]="form" (ngSubmit)="onSubmitGaranted()" novalidate class="dialog input-group">
+        <label>Дата с которой начать гарантийное обслуживание</label><br/>
+        <p-calendar formControlName="created_at" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24" required
+                    [locale]="ru"></p-calendar>
+        <br/>
+        <label>Комментарий</label><br/>
+        <textarea formControlName="comment" pInputTextarea required></textarea>
+        <div class="bottom">
+            <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton
+                    label="Сбросить"></button>
+        </div>
+    </form>
+</p-dialog>
 <p-blockUI [blocked]="displayHistory"></p-blockUI>
-<p-dialog header="История сбросов" #dialogHistory [(visible)]="displayHistory">
-    <div *ngFor="let h of history" [class.alert-success]="h.active">
-        {{h.date | date:'y-MM-dd HH:mm:ss'}} {{h.comment}}
+<p-dialog header="История технического обслуживания" #dialogHistory [(visible)]="displayHistory">
+    <div *ngFor="let h of history">
+        <span class="badge">{{h.created_at | date:'dd.MM.y HH:mm'}}</span> {{h.comment}}
+    </div>
+</p-dialog>
+<p-dialog header="История гарантийного обслуживания" #dialogGarantedHistory [(visible)]="displayGarantedHistory">
+    <div *ngFor="let h of garantedHistory" [class.alert-success]="h.active">
+        <span class="badge">{{h.date | date:'dd.MM.y HH:mm'}}</span> {{h.comment}}
     </div>
 </p-dialog>
