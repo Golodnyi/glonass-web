@@ -63,7 +63,12 @@
         </div>
         <div *ngIf="!compact">
             <hr/>
-            Моточасы: {{state.motochas}} ч. ({{maintenanceDate()}} д. назад)<br/>
+            Моточасы: {{state.motochas}} ч.<br/>
+            <div *ngIf="state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours > 0">До ТО: {{state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours}} ч.</div>
+            <div *ngIf="state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours <= 0" class="alert alert-danger">необходимо пройти ТО</div>
+            <div *ngIf="garanted(state)">Гарантийное обслуживание заканчивается через {{state.maintenances.capital.limits.days - state.maintenances.capital.value.days}} д. или {{state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours}} моточасов.</div>
+            <div *ngIf="!garanted(state)" class="alert alert-danger">Гарантийное обслуживание завершено</div>
+            <br/>
             <div *ngIf="car.engine" class="btn-st">
                 <button type="text" (click)="showHistory()" pButton icon="fa-info" label="История сбросов"></button>
                 <button type="text" (click)="showDialog()" pButton icon="fa-refresh" label="Сброс"></button>

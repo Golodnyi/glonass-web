@@ -14,7 +14,7 @@ export interface IState {
   motochas: number;
   issues: IIssue[];
   maintenance_date: string;
-  maintenance: Maintenances;
+  maintenances: Maintenances;
 }
 
 export class State implements IState {
@@ -30,7 +30,7 @@ export class State implements IState {
   public motochas = 0;
   public issues: IIssue[] = [];
   public maintenance_date: string;
-  public maintenance: Maintenances;
+  public maintenances: Maintenances;
 
   get time() {
     return this.last_time;

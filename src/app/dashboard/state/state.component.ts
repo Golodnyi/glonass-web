@@ -119,4 +119,9 @@ export class StateComponent implements OnChanges {
       }
     );
   }
+
+  public garanted(state: State): boolean {
+    return (state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours > 0) &&
+      (state.maintenances.capital.limits.days - state.maintenances.capital.value.days > 0);
+  }
 }
