@@ -13,6 +13,7 @@ export class Engine implements IEngine, ITree {
   public name: string;
   public model_id: number;
   public sensors_config: {};
+  public company_id: number;
 
   get esn(): number {
     return Number(this.name);

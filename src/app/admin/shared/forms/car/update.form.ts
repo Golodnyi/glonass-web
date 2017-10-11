@@ -11,9 +11,10 @@ export class CarUpdateForm {
 
   public create(car: Car) {
     this.form = this.fb.group({
+      id: [car.id, Validators.required],
       model_id: [car.model_id, Validators.required],
       name: [car.name, Validators.required],
-      is_visible: [car.is_visible, Validators.required],
+      subdivision_id: [car.subdivision_id, Validators.required],
     });
 
     return this.form;

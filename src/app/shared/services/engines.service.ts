@@ -11,6 +11,8 @@ import {MsgService} from './msg';
 import {Engine} from '../models/engine.model';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {environment} from '../../../environments/environment';
+import {NewEngine} from '../../admin/companies/engine/shared/newEngine.model';
+import {BaseEngine} from '../models/baseEngine.model';
 
 @Injectable()
 export class EnginesService {
@@ -39,5 +41,20 @@ export class EnginesService {
         });
     }
     return this.engine.asObservable();
+  }
+
+  public create(newEngine: NewEngine): Observable<BaseEngine> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+    return this.http.post(this.host + '/v1/engines', newEngine, options)
+      .map((response: Response) => {
+        const baseEngine: BaseEngine = Object.assign(new BaseEngine(), response.json());
+        return baseEngine;
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
   }
 }

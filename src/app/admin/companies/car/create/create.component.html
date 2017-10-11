@@ -1,8 +1,8 @@
-<h3>Создание компании</h3>
+<h3>Создание машины</h3>
 <form [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
     <label for="name">Название:</label><br/>
     <input class="input-sm" id="name" type="text" pInputText formControlName="name"
-           placeholder="Название компании"/><br/>
+           placeholder="Название машины"/><br/>
     <label for="company">Компания:</label><br/>
     <div *ngIf="companies.length">
         <p-dropdown (onChange)="onCompany($event)" id="company" [options]="companies | DropDown"

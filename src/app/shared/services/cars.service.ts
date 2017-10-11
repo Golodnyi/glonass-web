@@ -116,6 +116,27 @@ export class CarsService {
       });
   }
 
+  public update(car: Car): Observable<Car> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+    return this.http.put(this.host + '/v1/cars/' + car.id, car, options)
+      .map((response: Response) => {
+        const carObj: Car = Object.assign(new Car(), response.json());
+        const list = [];
+        this.cars.getValue().forEach(c => {
+          list.push(Object.assign(new Car(), c));
+        });
+        list.push(Object.assign(new Car(), carObj));
+        this.cars.next(list);
+        return carObj;
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
+
   public getState(car: number): Observable<State> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
