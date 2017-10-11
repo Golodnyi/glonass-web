@@ -124,10 +124,12 @@ export class CarsService {
       .map((response: Response) => {
         const carObj: Car = Object.assign(new Car(), response.json());
         const list = [];
-        this.cars.getValue().forEach(c => {
-          list.push(Object.assign(new Car(), c));
+        this.cars.getValue().filter(c => {
+          if (c.id === carObj.id) {
+            c = carObj;
+          }
+          list.push(c);
         });
-        list.push(Object.assign(new Car(), carObj));
         this.cars.next(list);
         return carObj;
       })
