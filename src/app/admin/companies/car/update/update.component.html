@@ -1,5 +1,5 @@
 <h3>Изменение машины</h3>
-<form [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
+<form *ngIf="form" [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
   <input id="id" type="hidden" pInputText formControlName="id"/>
   <label for="name">Название:</label><br/>
   <input class="input-sm" id="name" type="text" pInputText formControlName="name"

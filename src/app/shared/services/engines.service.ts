@@ -25,7 +25,7 @@ export class EnginesService {
               private msgService: MsgService) {
   }
 
-  public get(company: number, subdivision: number, car: number, resync = false): Observable<Engine> {
+  public get(company: number, subdivision: number, car: number, resync = false): Observable<any> {
     if (resync) {
       const headers = new Headers();
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -43,11 +43,40 @@ export class EnginesService {
     return this.engine.asObservable();
   }
 
+  public getBase(company: number, subdivision: number, car: number): Observable<BaseEngine> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+
+    return this.http.get(this.host + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine', options)
+      .map((response: Response) => {
+        return Object.assign(new BaseEngine(), response.json());
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
+
   public create(newEngine: NewEngine): Observable<BaseEngine> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers, withCredentials: true});
     return this.http.post(this.host + '/v1/engines', newEngine, options)
+      .map((response: Response) => {
+        return Object.assign(new BaseEngine(), response.json());
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
+
+  public update(newEngine: NewEngine): Observable<BaseEngine> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+    return this.http.put(this.host + '/v1/engines/' + newEngine.engine.id, newEngine, options)
       .map((response: Response) => {
         return Object.assign(new BaseEngine(), response.json());
       })
