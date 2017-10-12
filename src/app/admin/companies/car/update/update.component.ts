@@ -69,7 +69,7 @@ export class CarUpdateComponent implements OnDestroy {
     this.carServices.update(this.car).take(1).subscribe(
       car => {
         this.car = car;
-        this.msg.notice(MsgService.SUCCESS, 'Сохранено', this.car.name + ' создана');
+        this.msg.notice(MsgService.SUCCESS, 'Сохранено', this.car.name + ' изменена');
         this.router.navigate(
           [
             '/admin/companies/company',
