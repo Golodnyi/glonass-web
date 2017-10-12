@@ -17,7 +17,6 @@ import {environment} from '../../../environments/environment';
 export class CarsService {
   private cars: BehaviorSubject<Car[]> = new BehaviorSubject([]);
   private car: BehaviorSubject<Car> = new BehaviorSubject(new Car());
-  private state: BehaviorSubject<State> = new BehaviorSubject(new State());
   private host: string = environment.host;
 
   constructor(private http: Http,
@@ -80,7 +79,7 @@ export class CarsService {
     return this.car.asObservable();
   }
 
-  public getWithoutSubject(car: number, resync = false): Observable<Car> {
+  public getWithoutSubject(car: number): Observable<Car> {
       const headers = new Headers();
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       const options = new RequestOptions({headers: headers, withCredentials: true});

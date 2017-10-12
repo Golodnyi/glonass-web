@@ -49,8 +49,7 @@ export class EnginesService {
     const options = new RequestOptions({headers: headers, withCredentials: true});
     return this.http.post(this.host + '/v1/engines', newEngine, options)
       .map((response: Response) => {
-        const baseEngine: BaseEngine = Object.assign(new BaseEngine(), response.json());
-        return baseEngine;
+        return Object.assign(new BaseEngine(), response.json());
       })
       .catch((error: any) => {
         Error.check(error, this.authService, this.router, this.msgService);
