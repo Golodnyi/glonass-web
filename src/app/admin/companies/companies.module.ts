@@ -29,6 +29,8 @@ import {TreePipe} from '../../shared/pipes/tree.pipe';
 import {SharedModule} from '../../shared/shared.module';
 import {CarCreateComponent} from './car/create/create.component';
 import {CarModelsService} from '../../shared/services/car.models.service';
+import {CarUpdateComponent} from './car/update/update.component';
+import {EngineCreateComponent} from './engine/create/create.component';
 
 @NgModule({
   imports: [
@@ -49,7 +51,8 @@ import {CarModelsService} from '../../shared/services/car.models.service';
   ],
   declarations: [
     NavigationComponent, CompaniesComponent, CompanyUpdateComponent, CompanyCreateComponent,
-    CarComponent, EngineComponent, SubdivisionCreateComponent, SubdivisionUpdateComponent, CarCreateComponent
+    CarComponent, EngineComponent, SubdivisionCreateComponent, SubdivisionUpdateComponent,
+    CarCreateComponent, CarUpdateComponent, EngineCreateComponent
   ],
   providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService, TreePipe, CarModelsService],
 })

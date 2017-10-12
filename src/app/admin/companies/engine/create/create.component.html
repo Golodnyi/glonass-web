@@ -1,0 +1,38 @@
+<h3>Создание двигателя</h3>
+<form [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
+    <label for="esn">ESN:</label><br/>
+    <input class="input-sm" id="esn" type="text" pInputText formControlName="esn"
+           placeholder="ESN"/><br/>
+    <label for="model_id">Модель:</label><br/>
+    <div *ngIf="models.length">
+        <p-dropdown id="model_id" [options]="models | DropDown"
+                    formControlName="model_id" [filter]="true"
+                    [style]="{'width':'190px'}"></p-dropdown>
+    </div>
+    <label for="model_id">Компания:</label><br/>
+    <div *ngIf="companies.length">
+        <p-dropdown (onChange)="onCompany($event)" id="company_id" [options]="companies | DropDown"
+                    formControlName="company_id" [filter]="true"
+                    [style]="{'width':'190px'}"></p-dropdown>
+    </div>
+    <div *ngIf="subdivisions.length">
+        <label for="subdivision_id">Подразделение:</label><br/>
+        <div>
+            <p-dropdown (onChange)="onSubdivisions($event)" id="subdivision_id" [options]="subdivisions | DropDown"
+                        formControlName="subdivision_id" [filter]="true"
+                        [style]="{'width':'190px'}"></p-dropdown>
+        </div>
+    </div>
+    <div *ngIf="cars.length">
+        <label for="model_id">Машина:</label><br/>
+        <div>
+            <p-dropdown id="car_id" [options]="cars | DropDown"
+                        formControlName="car_id" [filter]="true"
+                        [style]="{'width':'190px'}"></p-dropdown>
+        </div>
+    </div>
+    <hr/>
+    <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton
+            label="Создать"></button>
+    <button pButton type="button" label="Отмена" routerLink="/admin/companies"></button>
+</form>

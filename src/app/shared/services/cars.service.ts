@@ -17,7 +17,6 @@ import {environment} from '../../../environments/environment';
 export class CarsService {
   private cars: BehaviorSubject<Car[]> = new BehaviorSubject([]);
   private car: BehaviorSubject<Car> = new BehaviorSubject(new Car());
-  private state: BehaviorSubject<State> = new BehaviorSubject(new State());
   private host: string = environment.host;
 
   constructor(private http: Http,
@@ -80,7 +79,7 @@ export class CarsService {
     return this.car.asObservable();
   }
 
-  public getWithoutSubject(car: number, resync = false): Observable<Car> {
+  public getWithoutSubject(car: number): Observable<Car> {
       const headers = new Headers();
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
       const options = new RequestOptions({headers: headers, withCredentials: true});
@@ -107,6 +106,29 @@ export class CarsService {
           list.push(Object.assign(new Car(), c));
         });
         list.push(Object.assign(new Car(), carObj));
+        this.cars.next(list);
+        return carObj;
+      })
+      .catch((error: any) => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        return Observable.throw(error.json().message || 'Server error');
+      });
+  }
+
+  public update(car: Car): Observable<Car> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+    return this.http.put(this.host + '/v1/cars/' + car.id, car, options)
+      .map((response: Response) => {
+        const carObj: Car = Object.assign(new Car(), response.json());
+        const list = [];
+        this.cars.getValue().filter(c => {
+          if (c.id === carObj.id) {
+            c = carObj;
+          }
+          list.push(c);
+        });
         this.cars.next(list);
         return carObj;
       })

@@ -11,8 +11,8 @@
     <p-column *ngFor="let key of keys" header="{{table.headers[key].name}} ({{table.headers[key].unit}})"
               field="{{key}}" sortable="custom" (sortFunction)="sort($event)">
         <ng-template let-row="rowData" pTemplate="body">
-            <div [class.warning]="row['criticals'].warning.indexOf(key) !== -1"
-                 [class.danger]="row['criticals'].danger.indexOf(key) !== -1">
+            <div [class.alert-warning]="row['criticals'].warning.indexOf(key) !== -1"
+                 [class.alert-danger]="row['criticals'].danger.indexOf(key) !== -1">
                 {{row[key]}}
             </div>
         </ng-template>
