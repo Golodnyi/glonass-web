@@ -82,7 +82,7 @@
         Информация за {{state.time}}
     </div>
 </p-panel>
-<p-blockUI [blocked]="display || displayGaranted"></p-blockUI>
+<p-blockUI [blocked]="display || displayGaranted || displayHistory || displayGarantedHistory"></p-blockUI>
 <p-dialog header="Техническое обслуживание" #dialog [(visible)]="display">
     <form [formGroup]="form" (ngSubmit)="onSubmitTO()" novalidate class="dialog input-group">
         <label>Дата ТО</label><br/>
@@ -111,7 +111,6 @@
         </div>
     </form>
 </p-dialog>
-<p-blockUI [blocked]="displayHistory"></p-blockUI>
 <p-dialog header="История технического обслуживания" #dialogHistory [(visible)]="displayHistory">
     <div *ngFor="let h of history">
         <span class="badge">{{h.created_at | date:'dd.MM.y HH:mm'}}</span> {{h.comment}}
