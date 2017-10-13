@@ -8,7 +8,7 @@ import {UsersService} from './shared/services/users.service';
 import {AuthService} from './shared/services/auth.service';
 import {AuthGuard} from './shared/guards/auth.guard';
 import {GuestGuard} from './login/shared/guards/guest.guard';
-import {AdminGuard} from './admin/shared/guards/admin.guard';
+import {AdminGuard} from './admin/shared/admin.guard';
 import {ChartsService} from './shared/services/charts.service';
 import {GrowlModule, MessagesModule} from 'primeng/primeng';
 import {MsgService} from './shared/services/msg';

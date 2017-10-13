@@ -4,7 +4,7 @@ import {Company} from '../../../../shared/models/company.model';
 import {CompaniesService} from '../../../../shared/services/companies.service';
 import {MsgService} from '../../../../shared/services/msg';
 import * as moment from 'moment';
-import {CompanyForm} from '../../../shared/forms/company.form';
+import {CompanyForm} from '../shared/company.form';
 import {FormGroup} from '@angular/forms';
 import {Calendar} from '../../../../shared/models/calendar.model';
 
