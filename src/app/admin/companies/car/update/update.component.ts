@@ -9,7 +9,7 @@ import {FormGroup} from '@angular/forms';
 import {Subdivision} from '../../../../shared/models/subdivision.model';
 import {CarModel} from '../../../../shared/models/car-model.model';
 import {Subscription} from 'rxjs/Subscription';
-import {CarUpdateForm} from '../../../shared/forms/car/update.form';
+import {CarUpdateForm} from '../shared/update.form';
 
 @Component({
   selector: 'app-car-update',

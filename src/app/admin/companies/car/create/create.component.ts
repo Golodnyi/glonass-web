@@ -2,7 +2,7 @@ import {Component, OnDestroy} from '@angular/core';
 import {MsgService} from '../../../../shared/services/msg';
 import {FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
-import {CarCreateForm} from '../../../shared/forms/car/create.form';
+import {CarCreateForm} from '../shared/create.form';
 import {CarsService} from '../../../../shared/services/cars.service';
 import {Car} from '../../../../shared/models/car.model';
 import {Subscription} from 'rxjs/Subscription';
