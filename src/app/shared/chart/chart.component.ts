@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component, ElementRef, HostListener, Input, OnChanges, OnDestroy} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, OnChanges, OnDestroy} from '@angular/core';
 import * as Highcharts from 'highcharts/highstock';
 import * as HighchartsExporting from 'highcharts/modules/exporting';
 import * as HighchartsOfflineExporting from 'highcharts/modules/offline-exporting';
@@ -14,7 +14,7 @@ HighchartsOfflineExporting(Highcharts);
   styleUrls: ['./chart.component.css']
 })
 
-export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
+export class ChartComponent implements OnChanges, OnDestroy {
   public chart: any;
   @Input() data: any;
 
@@ -35,6 +35,7 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
     if (Object.keys(options).length) {
       const currentChart = this.chart;
       const config = new Chart(options);
+      config.chart.width = this.el.nativeElement.parentElement.offsetWidth - 35;
       config.xAxis.events = {
         setExtremes: function (e) {
           if (e.trigger !== 'syncExtremes') {
@@ -98,14 +99,5 @@ export class ChartComponent implements OnChanges, OnDestroy, AfterViewChecked {
     if (this.chart) {
       this.chart.destroy();
     }
-  }
-
-  ngAfterViewChecked() {
-    const width = this.el.nativeElement.parentElement.offsetWidth - 35;
-    Highcharts.charts.forEach(chart => {
-      if (chart && chart.chartWidth !== width) {
-        chart.setSize(width, 360);
-      }
-    });
   }
 }

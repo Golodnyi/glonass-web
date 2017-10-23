@@ -7,7 +7,8 @@ export class Chart {
     spacingTop: 20,
     spacingBottom: 0,
     width: 600,
-    height: 360
+    height: 360,
+    reflow: false
   };
   public tooltip = {
     positioner: function () {
