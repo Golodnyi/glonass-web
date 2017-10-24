@@ -8,6 +8,7 @@ export interface IUser {
   role_id: number;
   role: IRole;
   active: number;
+  company_id: number;
   created_at: string;
   updated_at: string;
 }
@@ -21,6 +22,7 @@ export class User implements IUser {
   public role_id: number;
   public role: IRole;
   public active: number;
+  public company_id: number;
   public created_at: string;
   public updated_at: string;
 }

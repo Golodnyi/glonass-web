@@ -16,6 +16,7 @@ export class UserForm {
       name: [user.name, Validators.required],
       email: [user.email, [Validators.required, Validators.email]],
       role_id: [user.role_id, Validators.required],
+      company_id: [user.company_id],
     });
 
     return this.form;
