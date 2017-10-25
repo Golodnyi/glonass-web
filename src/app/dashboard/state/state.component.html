@@ -62,20 +62,42 @@
             <span *ngIf="!state.power" class="badge alert-danger">нет</span>
         </div>
         <div *ngIf="!compact">
-            <hr/>
-            Моточасы: {{state.motochas}} ч.<br/>
-            <div *ngIf="scheduled(state)">До ТО: {{state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours}} ч.</div>
-            <div *ngIf="!scheduled(state)" class="alert alert-danger">необходимо пройти ТО</div>
-            <div *ngIf="garanted(state)">Гарантийное обслуживание заканчивается через {{state.maintenances.capital.limits.days - state.maintenances.capital.value.days}} д. или {{state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours}} моточасов.</div>
-            <div *ngIf="!garanted(state)" class="alert alert-danger">Гарантийное обслуживание завершено</div>
-            <br/>
-            <div *ngIf="user.role.is_global && car.engine" class="btn-st">
-                <button type="text" (click)="showTODialog()" pButton icon="fa-refresh" label="Провести ТО"></button>
-                <button type="text" (click)="showTOHistory()" pButton icon="fa-info" label="История"></button>
-                <br/><br/>
-                <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton icon="fa-refresh" label="Продлить ГО"></button>
-                <button type="text" class="ui-button-success" (click)="showGarantedHistory()" pButton icon="fa-info" label="История"></button><br/>
-            </div>
+            Моточасы: {{state.motochas}} ч.
+        </div>
+    </div>
+    <div *ngIf="!compact">
+        <div class="alert" *ngIf="scheduled(state)">До ТО: {{state.maintenances.scheduled.limits.hours -
+            state.maintenances.scheduled.value.hours}} ч.
+            <span *ngIf="user.role.is_global && car.engine" class="btn-st">
+                <button type="text" (click)="showTODialog()" pButton icon="fa-refresh" title="Провести техническое обслуживание"></button>
+                <button type="text" (click)="showTOHistory()" pButton icon="fa-info" title="История технического обслуживания"></button>
+            </span>
+        </div>
+        <div *ngIf="!scheduled(state)" class="alert alert-danger">
+            Необходимо пройти ТО
+            <span *ngIf="user.role.is_global && car.engine" class="btn-st">
+                <button type="text" (click)="showTODialog()" pButton icon="fa-refresh" title="Провести техническое обслуживание"></button>
+                <button type="text" (click)="showTOHistory()" pButton icon="fa-info" title="История технического обслуживания"></button>
+            </span>
+        </div>
+        <div *ngIf="garanted(state)" class="alert">Гарантийное обслуживание заканчивается через
+            {{state.maintenances.capital.limits.days - state.maintenances.capital.value.days}} д. или
+            {{state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours}} моточасов.
+            <span *ngIf="user.role.is_global && car.engine" class="btn-st">
+                <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton
+                        icon="fa-refresh" title="Продлить гарантийное обслуживание"></button>
+                <button type="text" class="ui-button-success" (click)="showGarantedHistory()" pButton
+                        icon="fa-info" title="История гарантийного обслуживания"></button>
+            </span>
+        </div>
+        <div *ngIf="!garanted(state)" class="alert alert-danger">
+            Гарантийное обслуживание завершено
+            <span *ngIf="user.role.is_global && car.engine" class="btn-st">
+                <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton
+                        icon="fa-refresh" title="Продлить гарантийное обслуживание"></button>
+                <button type="text" class="ui-button-success" (click)="showGarantedHistory()" pButton
+                        icon="fa-info" title="История гарантийного обслуживания"></button>
+            </span>
         </div>
     </div>
     <div *ngIf="!compact" class="label label-default">

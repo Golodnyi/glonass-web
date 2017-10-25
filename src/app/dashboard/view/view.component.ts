@@ -8,11 +8,14 @@ import {Filter} from '../../shared/models/filter.model';
 import {EnginesService} from '../../shared/services/engines.service';
 import {Engine} from '../../shared/models/engine.model';
 import {SelectItem} from 'primeng/primeng';
+import {EngineModelsService} from '../../shared/services/engine.models.service';
+import {EngineModel} from '../../shared/models/engine-model.model';
 
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
-  styleUrls: ['./view.component.css']
+  styleUrls: ['./view.component.css'],
+  providers: [EngineModelsService]
 })
 export class ViewComponent implements OnDestroy {
 
@@ -20,6 +23,7 @@ export class ViewComponent implements OnDestroy {
   public filter: Filter;
   public engine: Engine;
   public move = false;
+  public engineModel: EngineModel;
   public viewModeButtons: SelectItem[] = [];
   public viewMode = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
   private subscriptionFilter: Subscription;
@@ -30,7 +34,8 @@ export class ViewComponent implements OnDestroy {
               private router: Router,
               private chartsService: ChartsService,
               private carsService: CarsService,
-              private enginesService: EnginesService) {
+              private enginesService: EnginesService,
+              private engineModelsService: EngineModelsService) {
     this.viewModeButtons.push({label: 'Графики', value: 'charts'});
     this.viewModeButtons.push({label: 'Таблица', value: 'table'});
     this.viewModeButtons.push({label: 'Карта', value: 'map'});
@@ -90,6 +95,11 @@ export class ViewComponent implements OnDestroy {
       this.enginesService.get(1, 1, car_id, true).subscribe(
         engine => {
           this.engine = engine;
+          this.engineModelsService.get(this.engine.model_id).subscribe(
+            engineModel => {
+              this.engineModel = engineModel;
+            }
+          );
         }
       )
     );
