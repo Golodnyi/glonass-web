@@ -4,10 +4,8 @@
             <p-tabPanel header="Информация" class="panel">
                 <div class="row">
                     <div class="col-md-6">
-                        Данные по {{car.name}}<br/>
-                        Двигатель:
-                        <span *ngIf="engine.id">{{engine.name}}</span>
-                        <span *ngIf="!engine.id">отсутствует</span>
+                        <span>Данные по {{car.name}}</span><br/>
+                        <span *ngIf="engine && engineModel">Двигатель: {{engine.name}} ({{engineModel.name}})</span>
                     </div>
                     <div class="col-md-6">
                         <p-selectButton [options]="viewModeButtons" [(ngModel)]="viewMode" tabindex="1"

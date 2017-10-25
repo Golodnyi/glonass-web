@@ -44,4 +44,18 @@ export class EngineModelsService {
     }
     return this.models.asObservable();
   }
+
+  public get(engineModelId: number): Observable<EngineModel> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers, withCredentials: true});
+
+    return this.http.get(this.host + '/v1/engine-models/' + engineModelId, options)
+      .map((response: Response) => {
+        return Object.assign(new EngineModel(), response.json());
+      }, error => {
+        Error.check(error, this.authService, this.router, this.msgService);
+        this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
+      });
+  }
 }
