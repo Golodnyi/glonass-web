@@ -6,10 +6,10 @@ import {Car} from '../../shared/models/car.model';
 import {Subscription} from 'rxjs/Subscription';
 import {Filter} from '../../shared/models/filter.model';
 import {EnginesService} from '../../shared/services/engines.service';
-import {Engine} from '../../shared/models/engine.model';
 import {SelectItem} from 'primeng/primeng';
 import {EngineModelsService} from '../../shared/services/engine.models.service';
 import {EngineModel} from '../../shared/models/engine-model.model';
+import {BaseEngine} from '../../shared/models/baseEngine.model';
 
 @Component({
   selector: 'app-view',
@@ -21,7 +21,7 @@ export class ViewComponent implements OnDestroy {
 
   public car: Car;
   public filter: Filter;
-  public engine: Engine;
+  public engine: BaseEngine;
   public move = false;
   public engineModel: EngineModel;
   public viewModeButtons: SelectItem[] = [];
@@ -92,7 +92,7 @@ export class ViewComponent implements OnDestroy {
 
   private engineUpd(car_id: number) {
     this.subscription.add(
-      this.enginesService.get(1, 1, car_id, true).subscribe(
+      this.enginesService.getBase(1, 1, car_id).subscribe(
         engine => {
           this.engine = engine;
           this.engineModelsService.get(this.engine.model_id).subscribe(
