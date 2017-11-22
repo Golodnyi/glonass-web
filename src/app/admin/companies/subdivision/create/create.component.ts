@@ -32,11 +32,7 @@ export class SubdivisionCreateComponent {
     this.form = this.subdivisionCreateForm.create(this.subdivision);
     this.form.valueChanges.subscribe((data) => {
       this.subdivision = data;
-      this.authService.getCurrentUser().subscribe(
-        user => {
-          this.subdivision.author = user;
-        }
-      );
+      this.subdivision.author = this.authService.getCurrentUser();
     });
 
     this.companiesService.all(false).subscribe(

@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptions, Response} from '@angular/http';
 
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
@@ -11,13 +10,14 @@ import {MsgService} from './msg';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {CarModel} from '../models/car-model.model';
 import {environment} from '../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class CarModelsService {
   private models: BehaviorSubject<CarModel[]> = new BehaviorSubject([]);
   private host: string = environment.host;
 
-  constructor(private http: Http,
+  constructor(private http: HttpClient,
               private authService: AuthService,
               private router: Router,
               private msgService: MsgService) {
@@ -25,21 +25,17 @@ export class CarModelsService {
 
   public all(resync = false): Observable<CarModel[]> {
     if (resync) {
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      const options = new RequestOptions({headers: headers, withCredentials: true});
-
-      this.http.get(this.host + '/v1/car-models', options)
-        .subscribe((response: Response) => {
+      this.http.get(this.host + '/v1/car-models')
+        .subscribe((response: any) => {
           const models = [];
-          response.json().forEach(item => {
+          response.forEach(item => {
             models.push(Object.assign(new CarModel(), item));
           });
           this.models.next(models);
         }, error => {
           this.models.next([]);
-          Error.check(error, this.authService, this.router, this.msgService);
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
+          Error.check(error, this.router, this.msgService);
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
         });
     }
     return this.models.asObservable();

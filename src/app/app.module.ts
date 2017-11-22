@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {HttpModule} from '@angular/http';
 import {AppRoutingModule} from './app.routing.module';
 import {RouterModule} from '@angular/router';
 import {AppComponent} from './app.component';
@@ -18,8 +17,9 @@ import {NavigationComponent} from './navigation/navigation.component';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {CookieModule} from 'ngx-cookie';
 import {LogoutComponent} from './logout/logout.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {TokenInterceptor} from './shared/interceptors/TokenInterceptor';
 
 @NgModule({
   declarations: [
@@ -32,17 +32,21 @@ import {LogoutComponent} from './logout/logout.component';
   imports: [
     RouterModule,
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     AppRoutingModule,
     GrowlModule,
     MessagesModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule,
-    CookieModule.forRoot()
+    ReactiveFormsModule
   ],
   providers: [
-    MsgService, UsersService, AuthService, AuthGuard, GuestGuard, AdminGuard, ChartsService, EnginesService
+    MsgService, UsersService, AuthService, AuthGuard, GuestGuard, AdminGuard, ChartsService, EnginesService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

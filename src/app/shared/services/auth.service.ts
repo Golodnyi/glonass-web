@@ -1,131 +1,93 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptions, Response} from '@angular/http';
 import {User} from '../models/user.model';
 
-import {BehaviorSubject, Observable} from 'rxjs/Rx';
+import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {Auth} from '../../login/shared/models/auth.model';
-import {Router} from '@angular/router';
 import {MsgService} from './msg';
-import {CookieService} from 'ngx-cookie';
 import {environment} from '../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {JwtHelper, tokenNotExpired} from 'angular2-jwt';
+import {UsersService} from './users.service';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
   private host: string = environment.host;
-  private user: BehaviorSubject<User> = new BehaviorSubject(null);
-  private logger: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  private admin: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  constructor(private http: Http,
-              private cookieService: CookieService,
+  constructor(private http: HttpClient,
+              private usersService: UsersService,
               private router: Router,
               private msg: MsgService) {
     this.isLoggedIn();
   }
 
-  public login(auth: Auth): Observable<User> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
+  public login(auth: Auth): Observable<boolean> {
+    return this.http.post(this.host + '/v1/auth/login', auth).map(
+      (data: any) => {
+        const jwtHelper: JwtHelper = new JwtHelper();
+        const token: any = jwtHelper.decodeToken(data.accessToken);
 
-    if (auth.remember) {
-      // auth.remember = 1;
-    }
+        if (!token) {
+          return false;
+        }
 
-    return this.http.post(this.host + '/v1/auth/login', auth, options)
-      .map((response: Response) => {
-        const user: User = Object.assign(new User, response.json());
-        this.logger.next(true);
-        return user;
+        if (jwtHelper.isTokenExpired(data.accessToken)) {
+          return false;
+        }
+
+        localStorage.setItem('Authorization', data.accessToken);
+        localStorage.setItem('Refresh', data.refreshToken);
+
+        this.usersService.current().subscribe(
+          (payload: any) => {
+            const user = Object.assign(new User(), payload.user);
+            user.role = payload.role;
+            localStorage.setItem('User', JSON.stringify(user));
+            this.router.navigate(['/dashboard']);
+          },
+          error => {
+            this.msg.notice(MsgService.ERROR, 'Ошибка получения пользователя', error);
+          }
+        );
       })
       .catch((error: any) => {
-        if (error.status === 409) {
-          this.logout().subscribe(
-            r => {
-              if (!r) {
-                this.localLogout();
-              }
-            }
-          );
-        }
-        this.logger.next(false);
-        return Observable.throw(error.json().message || 'Server error');
+        return Observable.throw(error.statusText || 'Server error');
       });
-  }
-
-  public localLogout() {
-    localStorage.removeItem('user');
-    this.cookieService.remove('token');
-    this.setCurrentUser(null);
-    this.logger.next(false);
-    this.admin.next(false);
-    this.router.navigate(['/login']);
   }
 
   public logout(): Observable<boolean> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
-
-    return this.http.post(
-      this.host + '/v1/auth/logout', null, options
-    )
+    return this.http.post(this.host + '/v1/auth/logout', {refreshToken: localStorage.getItem('Refresh')})
       .map(() => {
-        this.logger.next(false);
-        this.setCurrentUser(null);
-        this.admin.next(false);
+        localStorage.clear();
+        this.router.navigate(['/']);
         return true;
       })
       .catch((error: any) => {
-        return Observable.throw(error.json().message || 'Server error');
+        return Observable.throw(error.statusText || 'Server error');
       });
   }
 
-  public isLoggedIn(): Observable<boolean> {
-    this.setStateAuth();
-    return this.logger.asObservable();
+  public isLoggedIn(): boolean {
+    return !!localStorage.getItem('Authorization');
   }
 
-  public isAdmin(): Observable<boolean> {
-    this.setStateAuth();
-
-    const user: User = JSON.parse(localStorage.getItem('user'));
-
-    if (user === null) {
-      this.logout();
+  public isAdmin(): boolean {
+    const user: User = this.getCurrentUser();
+    if (user && user.role) {
+      return !!user.role.is_global;
     }
 
-    if (user.role.is_global && this.logger.getValue()) {
-      this.admin.next(true);
-    } else {
-      this.admin.next(false);
+    return false;
+  }
+
+  public getCurrentUser(): any {
+    const user = localStorage.getItem('User');
+    if (user) {
+      return JSON.parse(user);
     }
-    return this.admin.asObservable();
-  }
 
-  public setCurrentUser(user: User): void {
-    this.user.next(user);
-  }
-
-  public getCurrentUser(): Observable<User> {
-    return this.user.asObservable();
-  }
-
-  private setStateAuth(): void {
-    const state = this.logger.getValue();
-
-    if (localStorage.getItem('user') !== null && this.cookieService.get('token') !== undefined) {
-      this.setCurrentUser(Object.assign(new User(), JSON.parse(localStorage.getItem('user'))));
-      this.logger.next(true);
-    } else {
-      this.logger.next(false);
-
-      if (state !== false) {
-        this.msg.notice(MsgService.ERROR, 'Ошибка', 'Необходима авторизация');
-        this.logout();
-      }
-    }
+    return false;
   }
 }

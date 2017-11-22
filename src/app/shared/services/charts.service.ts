@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptions, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -14,6 +13,7 @@ import {Error} from '../models/error.model';
 import {Sensor} from '../models/sensor.model';
 import {Car} from '../models/car.model';
 import {environment} from '../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class ChartsService {
@@ -24,7 +24,7 @@ export class ChartsService {
   private autoRefresh: BehaviorSubject<AutoRefresh> = new BehaviorSubject(new AutoRefresh());
   private host: string = environment.host;
 
-  constructor(private http: Http,
+  constructor(private http: HttpClient,
               private authService: AuthService,
               private router: Router,
               private msgService: MsgService) {
@@ -55,9 +55,6 @@ export class ChartsService {
   }
 
   public mapData(car: Car): Observable<any> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
     const filter = this.filter.getValue();
     let params = '?';
     if (filter.enabled) {
@@ -65,12 +62,12 @@ export class ChartsService {
         params += 'dateFrom=' + encodeURIComponent(filter.before) + '&dateTo=' + encodeURIComponent(filter.after) + '&';
       }
     }
-    return this.http.get(this.host + '/v1/cars/' + car.id + '/report/map' + params, options)
-      .map((response: Response) => {
-        return response.json();
+    return this.http.get(this.host + '/v1/cars/' + car.id + '/report/map' + params)
+      .map((response: any) => {
+        return response;
       }).catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
-        return Observable.throw(error.json().message || 'Server error');
+        Error.check(error, this.router, this.msgService);
+        return Observable.throw(error.statusText || 'Server error');
       });
   }
 
@@ -80,9 +77,6 @@ export class ChartsService {
     }
     const filter = this.filter.getValue();
     const autoRefresh = this.autoRefresh.getValue();
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
     let params = '?';
     if (filter.enabled) {
       if (!Array.isArray(filter.charts) && filter.charts !== undefined) {
@@ -99,12 +93,12 @@ export class ChartsService {
     if (autoRefresh.enabled && ((filter.last && filter.enabled) || !filter.enabled)) {
       params += 'afterTime=' + autoRefresh.afterTime;
     }
-    this.http.get(this.host + '/v1/cars/' + car.id + '/report' + params, options)
-      .subscribe((response: Response) => {
-        this.data.next(response.json().data);
-        this.sensors.next(response.json().allowedSensors);
+    this.http.get(this.host + '/v1/cars/' + car.id + '/report' + params)
+      .subscribe((response: any) => {
+        this.data.next(response.data);
+        this.sensors.next(response.allowedSensors);
       }, error => {
-        Error.check(error, this.authService, this.router, this.msgService);
+        Error.check(error, this.router, this.msgService);
         this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
       });
   }
@@ -119,9 +113,6 @@ export class ChartsService {
 
   public getTable(car: number, move = false, page: number, sort = 'time', dir = 'desc'): Observable<any> {
     const filter = this.filter.getValue();
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
     let params = '?page=' + (page + 1) + '&';
     if (filter.enabled) {
       if (!Array.isArray(filter.charts) && filter.charts !== undefined) {
@@ -139,12 +130,12 @@ export class ChartsService {
       params += 'drive=1&';
     }
     params += 'sort=' + sort + '&sortDirection=' + dir;
-    return this.http.get(this.host + '/v1/cars/' + car + '/report/table' + params, options)
-      .map((response: Response) => {
-        return response.json();
+    return this.http.get(this.host + '/v1/cars/' + car + '/report/table' + params)
+      .map((response: any) => {
+        return response;
       }).catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
-        return Observable.throw(error.json().message || 'Server error');
+        Error.check(error, this.router, this.msgService);
+        return Observable.throw(error.statusText || 'Server error');
       });
   }
 }

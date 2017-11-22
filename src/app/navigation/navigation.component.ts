@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {User} from '../shared/models/user.model';
 import {AuthService} from '../shared/services/auth.service';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -10,9 +11,11 @@ import {AuthService} from '../shared/services/auth.service';
 export class NavigationComponent {
   public user: User;
 
-  constructor(private authService: AuthService) {
-    this.authService.getCurrentUser().subscribe(user => {
-      this.user = user;
+  constructor(private authService: AuthService, private router: Router) {
+    this.router.events.filter((e: any) => {
+      return e instanceof NavigationEnd;
+    }).subscribe((e) => {
+      this.user = this.authService.getCurrentUser();
     });
   }
 }

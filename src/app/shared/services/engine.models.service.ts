@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptions, Response} from '@angular/http';
 
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
@@ -11,13 +10,14 @@ import {MsgService} from './msg';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {environment} from '../../../environments/environment';
 import {EngineModel} from '../models/engine-model.model';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class EngineModelsService {
   private models: BehaviorSubject<EngineModel[]> = new BehaviorSubject([]);
   private host: string = environment.host;
 
-  constructor(private http: Http,
+  constructor(private http: HttpClient,
               private authService: AuthService,
               private router: Router,
               private msgService: MsgService) {
@@ -25,37 +25,29 @@ export class EngineModelsService {
 
   public all(resync = false): Observable<EngineModel[]> {
     if (resync) {
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      const options = new RequestOptions({headers: headers, withCredentials: true});
-
-      this.http.get(this.host + '/v1/engine-models', options)
-        .subscribe((response: Response) => {
+      this.http.get(this.host + '/v1/engine-models')
+        .subscribe((response: any) => {
           const models = [];
-          response.json().forEach(item => {
+          response.forEach(item => {
             models.push(Object.assign(new EngineModel(), item));
           });
           this.models.next(models);
         }, error => {
           this.models.next([]);
-          Error.check(error, this.authService, this.router, this.msgService);
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
+          Error.check(error, this.router, this.msgService);
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
         });
     }
     return this.models.asObservable();
   }
 
   public get(engineModelId: number): Observable<EngineModel> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
-
-    return this.http.get(this.host + '/v1/engine-models/' + engineModelId, options)
-      .map((response: Response) => {
-        return Object.assign(new EngineModel(), response.json());
+    return this.http.get(this.host + '/v1/engine-models/' + engineModelId)
+      .map((response: any) => {
+        return Object.assign(new EngineModel(), response);
       }, error => {
-        Error.check(error, this.authService, this.router, this.msgService);
-        this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
+        Error.check(error, this.router, this.msgService);
+        this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
       });
   }
 }

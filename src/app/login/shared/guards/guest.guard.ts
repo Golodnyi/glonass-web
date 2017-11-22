@@ -9,18 +9,10 @@ export class GuestGuard implements CanActivate {
   }
 
   canActivate() {
-    let guest = false;
-    this.authService.isLoggedIn().subscribe(loggedIn => {
-      if (!loggedIn) {
-        guest = true;
-      }
-    });
-
-    if (guest) {
+    if (!this.authService.isLoggedIn()) {
       return true;
     }
 
-    this.router.navigate(['/dashboard']);
     return false;
   }
 }

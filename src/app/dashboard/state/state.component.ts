@@ -30,9 +30,10 @@ export class StateComponent implements OnChanges {
   public submit: boolean;
   public history = [];
   public garantedHistory = [];
+  public user: User;
   private audio = new Audio();
   private resetData: any;
-  public user: User;
+
   constructor(private resetForm: ResetForm, private resetService: ResetService, private msg: MsgService, private authService: AuthService) {
     moment.locale('ru');
     this.form = this.resetForm.create();
@@ -48,9 +49,7 @@ export class StateComponent implements OnChanges {
       });
     this.audio.src = '/assets/signal.wav';
     this.audio.load();
-    this.authService.getCurrentUser().subscribe(user => {
-      this.user = user;
-    });
+    this.user = this.authService.getCurrentUser();
   }
 
   ngOnChanges() {

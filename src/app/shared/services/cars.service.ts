@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptions, Response} from '@angular/http';
 
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
@@ -12,6 +11,7 @@ import {MsgService} from './msg';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {State} from '../../dashboard/state/shared/state.model';
 import {environment} from '../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class CarsService {
@@ -19,7 +19,7 @@ export class CarsService {
   private car: BehaviorSubject<Car> = new BehaviorSubject(new Car());
   private host: string = environment.host;
 
-  constructor(private http: Http,
+  constructor(private http: HttpClient,
               private authService: AuthService,
               private router: Router,
               private msgService: MsgService) {
@@ -27,80 +27,61 @@ export class CarsService {
 
   public all(company: number, subdivision: number, resync = false): Observable<Car[]> {
     if (resync) {
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      const options = new RequestOptions({headers: headers, withCredentials: true});
-
-      this.http.get(this.host + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars', options)
-        .subscribe((response: Response) => {
+      this.http.get(this.host + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars')
+        .subscribe((response: any) => {
           const cars = [];
-          response.json().forEach(item => {
+          response.forEach(item => {
             cars.push(Object.assign(new Car(), item));
           });
           this.cars.next(cars);
         }, error => {
           this.cars.next([]);
-          Error.check(error, this.authService, this.router, this.msgService);
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
+          Error.check(error, this.router, this.msgService);
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
         });
     }
     return this.cars.asObservable();
   }
 
   public all_sync(company: number, subdivision: number): Observable<Car[]> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
-
-    return this.http.get(this.host + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars', options)
-      .map((response: Response) => {
-        return response.json();
+    return this.http.get(this.host + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars')
+      .map((response: any) => {
+        return response;
       }).catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
-        return Observable.throw(error.json().message || 'Server error');
+        Error.check(error, this.router, this.msgService);
+        return Observable.throw(error.statusText || 'Server error');
       });
   }
 
   public get(car: number, resync = false): Observable<Car> {
     if (resync) {
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      const options = new RequestOptions({headers: headers, withCredentials: true});
-
-      this.http.get(this.host + '/v1/cars/' + car, options)
-        .subscribe((response: Response) => {
-          this.car.next(Object.assign(new Car(), response.json()));
+      this.http.get(this.host + '/v1/cars/' + car)
+        .subscribe((response: any) => {
+          this.car.next(Object.assign(new Car(), response));
         }, error => {
           this.car.next(new Car());
-          Error.check(error, this.authService, this.router, this.msgService);
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
+          Error.check(error, this.router, this.msgService);
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
         });
     }
     return this.car.asObservable();
   }
 
   public getWithoutSubject(car: number): Observable<Car> {
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      const options = new RequestOptions({headers: headers, withCredentials: true});
-
-      return this.http.get(this.host + '/v1/cars/' + car, options)
-        .map((response: Response) => {
-          return Object.assign(new Car(), response.json());
-        }, error => {
-          this.car.next(new Car());
-          Error.check(error, this.authService, this.router, this.msgService);
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
-        });
+    return this.http.get(this.host + '/v1/cars/' + car)
+      .map((response: any) => {
+        return Object.assign(new Car(), response);
+      }, error => {
+        this.car.next(new Car());
+        Error.check(error, this.router, this.msgService);
+        this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
+      });
   }
 
   public create(car: Car): Observable<Car> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
-    return this.http.post(this.host + '/v1/cars', car, options)
-      .map((response: Response) => {
-        const carObj: Car = Object.assign(new Car(), response.json());
+    return this.http.post(this.host + '/v1/cars', car)
+      .map((response: any) => {
+        const carObj: Car = Object.assign(new Car(), response);
         const list = [];
         this.cars.getValue().forEach(c => {
           list.push(Object.assign(new Car(), c));
@@ -110,18 +91,15 @@ export class CarsService {
         return carObj;
       })
       .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
-        return Observable.throw(error.json().message || 'Server error');
+        Error.check(error, this.router, this.msgService);
+        return Observable.throw(error.statusText || 'Server error');
       });
   }
 
   public update(car: Car): Observable<Car> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
-    return this.http.put(this.host + '/v1/cars/' + car.id, car, options)
-      .map((response: Response) => {
-        const carObj: Car = Object.assign(new Car(), response.json());
+    return this.http.put(this.host + '/v1/cars/' + car.id, car)
+      .map((response: any) => {
+        const carObj: Car = Object.assign(new Car(), response);
         const list = [];
         this.cars.getValue().filter(c => {
           if (c.id === carObj.id) {
@@ -133,23 +111,19 @@ export class CarsService {
         return carObj;
       })
       .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
-        return Observable.throw(error.json().message || 'Server error');
+        Error.check(error, this.router, this.msgService);
+        return Observable.throw(error.statusText || 'Server error');
       });
   }
 
   public getState(car: number): Observable<State> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
-
-    return this.http.get(this.host + '/v1/cars/' + car + '/last-state', options)
-      .map((response: Response) => {
-        return Object.assign(new State(), response.json());
+    return this.http.get(this.host + '/v1/cars/' + car + '/last-state')
+      .map((response: any) => {
+        return Object.assign(new State(), response);
       })
       .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
-        return Observable.throw(error.json().message || 'Server error');
+        Error.check(error, this.router, this.msgService);
+        return Observable.throw(error.statusText || 'Server error');
       });
   }
 }

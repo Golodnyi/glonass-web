@@ -36,11 +36,7 @@ export class CompanyCreateComponent {
       })
       .subscribe((data) => {
         this.company = data;
-        this.authService.getCurrentUser().subscribe(
-          user => {
-            this.company.author = user;
-          }
-        );
+        this.company.author = this.authService.getCurrentUser();
       });
   }
 

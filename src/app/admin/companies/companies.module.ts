@@ -31,7 +31,7 @@ import {CarCreateComponent} from './car/create/create.component';
 import {CarModelsService} from '../../shared/services/car.models.service';
 import {CarUpdateComponent} from './car/update/update.component';
 import {EngineCreateComponent} from './engine/create/create.component';
-import { EngineUpdateComponent } from './engine/update/update.component';
+import {EngineUpdateComponent} from './engine/update/update.component';
 
 @NgModule({
   imports: [

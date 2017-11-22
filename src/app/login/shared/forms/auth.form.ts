@@ -13,7 +13,6 @@ export class AuthForm {
     this.form = this.fb.group({
       email: [auth.email, Validators.required],
       password: [auth.password, Validators.required],
-      remember: [auth.remember],
     });
 
     return this.form;

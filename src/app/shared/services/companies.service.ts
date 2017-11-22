@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptions, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -10,6 +9,7 @@ import {Error} from '../models/error.model';
 import {MsgService} from './msg';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {environment} from '../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class CompaniesService {
@@ -17,7 +17,7 @@ export class CompaniesService {
   private company: BehaviorSubject<Company> = new BehaviorSubject(new Company());
   private host: string = environment.host;
 
-  constructor(private http: Http,
+  constructor(private http: HttpClient,
               private authService: AuthService,
               private router: Router,
               private msgService: MsgService) {
@@ -25,22 +25,18 @@ export class CompaniesService {
 
   public all(resync = false): Observable<Company[]> {
     if (resync) {
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      const options = new RequestOptions({headers: headers, withCredentials: true});
-
-      this.http.get(this.host + '/v1/companies', options)
-        .subscribe((response: Response) => {
+      this.http.get(this.host + '/v1/companies')
+        .subscribe((response: any) => {
             const companies = [];
-            response.json().forEach(item => {
+            response.forEach(item => {
               companies.push(Object.assign(new Company(), item));
             });
             this.companies.next(companies);
           },
           error => {
             this.companies.next([]);
-            Error.check(error, this.authService, this.router, this.msgService);
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
+            Error.check(error, this.router, this.msgService);
+            this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
           });
     }
     return this.companies.asObservable();
@@ -48,30 +44,22 @@ export class CompaniesService {
 
   public get(company: number, resync = false): Observable<Company> {
     if (resync) {
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      const options = new RequestOptions({headers: headers, withCredentials: true});
-
-      this.http.get(this.host + '/v1/companies/' + company, options)
-        .subscribe((response: Response) => {
-          this.company.next(Object.assign(new Company(), response.json()));
+      this.http.get(this.host + '/v1/companies/' + company)
+        .subscribe((response: any) => {
+          this.company.next(Object.assign(new Company(), response));
         }, error => {
           this.company.next(new Company());
-          Error.check(error, this.authService, this.router, this.msgService);
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.json().message || 'Server error');
+          Error.check(error, this.router, this.msgService);
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
         });
     }
     return this.company.asObservable();
   }
 
   public update(company: Company): Observable<Company> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
-
-    return this.http.put(this.host + '/v1/companies/' + company.id, company, options)
-      .map((response: Response) => {
-        const companyObj: Company = Object.assign(new Company(), response.json());
+    return this.http.put(this.host + '/v1/companies/' + company.id, company)
+      .map((response: any) => {
+        const companyObj: Company = Object.assign(new Company(), response);
         this.company.next(companyObj);
         this.companies.next(
           this.companies.getValue().map(companyFilter => {
@@ -83,19 +71,15 @@ export class CompaniesService {
         return companyObj;
       })
       .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
-        return Observable.throw(error.json().message || 'Server error');
+        Error.check(error, this.router, this.msgService);
+        return Observable.throw(error.statusText || 'Server error');
       });
   }
 
   public create(company: Company): Observable<Company> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
-
-    return this.http.post(this.host + '/v1/companies', company, options)
-      .map((response: Response) => {
-        const companyObj: Company = Object.assign(new Company(), response.json());
+    return this.http.post(this.host + '/v1/companies', company)
+      .map((response: any) => {
+        const companyObj: Company = Object.assign(new Company(), response);
         const list = [];
         this.companies.getValue().forEach(c => {
           list.push(Object.assign(new Company(), c));
@@ -105,18 +89,15 @@ export class CompaniesService {
         return companyObj;
       })
       .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
-        return Observable.throw(error.json().message || 'Server error');
+        Error.check(error, this.router, this.msgService);
+        return Observable.throw(error.statusText || 'Server error');
       });
   }
 
   public delete(company: Company): Observable<boolean> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers, withCredentials: true});
-    return this.http.delete(this.host + '/v1/companies/' + company.id, options)
-      .map((response: Response) => {
-        this.msgService.notice(MsgService.SUCCESS, 'Удалена', response.json().message);
+    return this.http.delete(this.host + '/v1/companies/' + company.id)
+      .map((response: any) => {
+        this.msgService.notice(MsgService.SUCCESS, 'Удалена', response.message);
         const list = [];
         this.companies.getValue().forEach(c => {
           if (company.id !== c.id) {
@@ -127,8 +108,8 @@ export class CompaniesService {
         return true;
       })
       .catch((error: any) => {
-        Error.check(error, this.authService, this.router, this.msgService);
-        return Observable.throw(error.json().message || 'Server error');
+        Error.check(error, this.router, this.msgService);
+        return Observable.throw(error.statusText || 'Server error');
       });
   }
 }
