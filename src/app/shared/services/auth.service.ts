@@ -49,17 +49,6 @@ export class AuthService {
             user.role = payload.role;
             localStorage.setItem('User', JSON.stringify(user));
 
-            if (this.subscriptionRefreshToken) {
-              this.subscriptionRefreshToken.unsubscribe();
-            }
-
-            this.subscriptionRefreshToken = this.timer.subscribe(
-              () => {
-                this.refreshToken().subscribe();
-              }
-            );
-
-
             this.router.navigate(['/dashboard']);
           },
           error => {
@@ -123,6 +112,13 @@ export class AuthService {
   public getCurrentUser(): any {
     const user = localStorage.getItem('User');
     if (user) {
+      if (!this.subscriptionRefreshToken) {
+        this.subscriptionRefreshToken = this.timer.subscribe(
+          () => {
+            this.refreshToken().subscribe();
+          }
+        );
+      }
       return JSON.parse(user);
     }
 
