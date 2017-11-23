@@ -44,7 +44,6 @@ export class EngineUpdateComponent implements OnInit {
       this.enginesService.getBase(company_id, subdivision_id, car_id).subscribe(
         engine => {
           this.newEngine.engine = Object.assign(new BaseEngine(), engine);
-          console.log(this.newEngine);
           this.form = this.engineForm.create(this.newEngine);
           this.form.valueChanges
             .subscribe((data) => {

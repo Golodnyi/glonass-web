@@ -13,14 +13,14 @@
     <input class="input-sm" id="email" type="email" pInputText formControlName="email"
            placeholder="email"/><br/>
     <div *ngIf="roles">
-    <label for="roles">Роль:</label><br/>
-    <p-dropdown id="roles" [options]="roles | DropDown" formControlName="role_id" [filter]="true"
-                [style]="{'width':'190px'}"></p-dropdown>
+        <label for="roles">Роль:</label><br/>
+        <p-dropdown id="roles" [options]="roles | DropDown" formControlName="role_id" [filter]="true"
+                    [style]="{'width':'190px'}"></p-dropdown>
     </div>
     <div *ngIf="companies">
-    <label for="company">Компания:</label><br/>
-    <p-dropdown id="company" [options]="companies | DropDown" formControlName="company_id" [filter]="true"
-                [style]="{'width':'190px'}"></p-dropdown>
+        <label for="company">Компания:</label><br/>
+        <p-dropdown id="company" [options]="companies | DropDown" formControlName="company_id" [filter]="true"
+                    [style]="{'width':'190px'}"></p-dropdown>
     </div>
     <hr/>
     <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton

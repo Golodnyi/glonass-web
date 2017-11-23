@@ -22,7 +22,6 @@ export class ViewComponent implements OnDestroy {
   public car: Car;
   public filter: Filter;
   public engine: BaseEngine;
-  public move = false;
   public engineModel: EngineModel;
   public viewModeButtons: SelectItem[] = [];
   public viewMode = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);

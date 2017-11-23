@@ -5,10 +5,5 @@
     <label for="password" class="sr-only">Пароль</label>
     <input formControlName="password" type="password" id="password" class="form-control"
            placeholder="пароль">
-    <div class="checkbox">
-        <label for="remember">
-            <input type="checkbox" id="remember" formControlName="remember"> Запомнить меня
-        </label>
-    </div>
     <button type="submit" [disabled]="!form.valid || submit" class="btn btn-success">Войти</button>
 </form>

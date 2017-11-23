@@ -68,22 +68,26 @@
     <div *ngIf="!compact">
         <div class="alert" *ngIf="scheduled(state)">До ТО: {{state.maintenances.scheduled.limits.hours -
             state.maintenances.scheduled.value.hours}} ч.
-            <span *ngIf="user.role.is_global && car.engine" class="btn-st">
-                <button type="text" (click)="showTODialog()" pButton icon="fa-refresh" title="Провести техническое обслуживание"></button>
-                <button type="text" (click)="showTOHistory()" pButton icon="fa-info" title="История технического обслуживания"></button>
+            <span *ngIf="user && user.role.is_global && car.engine" class="btn-st">
+                <button type="text" (click)="showTODialog()" pButton icon="fa-refresh"
+                        title="Провести техническое обслуживание"></button>
+                <button type="text" (click)="showTOHistory()" pButton icon="fa-info"
+                        title="История технического обслуживания"></button>
             </span>
         </div>
         <div *ngIf="!scheduled(state)" class="alert alert-danger">
             Необходимо пройти ТО
-            <span *ngIf="user.role.is_global && car.engine" class="btn-st">
-                <button type="text" (click)="showTODialog()" pButton icon="fa-refresh" title="Провести техническое обслуживание"></button>
-                <button type="text" (click)="showTOHistory()" pButton icon="fa-info" title="История технического обслуживания"></button>
+            <span *ngIf="user && user.role.is_global && car.engine" class="btn-st">
+                <button type="text" (click)="showTODialog()" pButton icon="fa-refresh"
+                        title="Провести техническое обслуживание"></button>
+                <button type="text" (click)="showTOHistory()" pButton icon="fa-info"
+                        title="История технического обслуживания"></button>
             </span>
         </div>
         <div *ngIf="garanted(state)" class="alert">Гарантийное обслуживание заканчивается через
             {{state.maintenances.capital.limits.days - state.maintenances.capital.value.days}} д. или
             {{state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours}} моточасов.
-            <span *ngIf="user.role.is_global && car.engine" class="btn-st">
+            <span *ngIf="user && user.role.is_global && car.engine" class="btn-st">
                 <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton
                         icon="fa-refresh" title="Продлить гарантийное обслуживание"></button>
                 <button type="text" class="ui-button-success" (click)="showGarantedHistory()" pButton
@@ -92,7 +96,7 @@
         </div>
         <div *ngIf="!garanted(state)" class="alert alert-danger">
             Гарантийное обслуживание завершено
-            <span *ngIf="user.role.is_global && car.engine" class="btn-st">
+            <span *ngIf="user && user.role.is_global && car.engine" class="btn-st">
                 <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton
                         icon="fa-refresh" title="Продлить гарантийное обслуживание"></button>
                 <button type="text" class="ui-button-success" (click)="showGarantedHistory()" pButton

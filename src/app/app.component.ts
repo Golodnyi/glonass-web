@@ -14,9 +14,7 @@ export class AppComponent {
   public user: User;
 
   constructor(private msgService: MsgService, private authService: AuthService) {
-    this.authService.getCurrentUser().subscribe(user => {
-      this.user = user;
-    });
+    this.user = this.authService.getCurrentUser();
 
     this.msgService.getNotice().subscribe(
       notice => {
