@@ -12,26 +12,19 @@ import {State} from './shared/state.model';
 })
 export class MonitoringComponent implements OnDestroy {
   public state: State[] = [];
-  public stateWarnings: State[] = [];
   private timer = Observable.timer(0, 5000);
-  private timerWarning = Observable.timer(0, 5000);
   private subscriptionTimer: Subscription;
-  private subscriptionWarningTimer: Subscription;
   private audio = new Audio();
 
   constructor(private stateService: StateService) {
     this.audio.src = '/assets/monitoring.wav';
     this.audio.load();
     this.update();
-    this.updateWarnings();
   }
 
   ngOnDestroy() {
     if (this.subscriptionTimer) {
       this.subscriptionTimer.unsubscribe();
-    }
-    if (this.subscriptionWarningTimer) {
-      this.subscriptionWarningTimer.unsubscribe();
     }
   }
 
@@ -58,22 +51,5 @@ export class MonitoringComponent implements OnDestroy {
         this.audio.play();
       }
     });
-  }
-
-  private updateWarnings() {
-    if (this.subscriptionWarningTimer) {
-      this.subscriptionWarningTimer.unsubscribe();
-    }
-    this.subscriptionWarningTimer =
-      this.timerWarning.subscribe(
-        () => {
-          this.stateService.getMonitor(true).subscribe(
-            data => {
-              this.stateWarnings = data;
-              this.sound(data);
-            }
-          );
-        }
-      );
   }
 }
