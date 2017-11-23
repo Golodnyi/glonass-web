@@ -14,7 +14,7 @@ export class NavigationComponent {
   constructor(private authService: AuthService, private router: Router) {
     this.router.events.filter((e: any) => {
       return e instanceof NavigationEnd;
-    }).subscribe((e) => {
+    }).subscribe(() => {
       this.user = this.authService.getCurrentUser();
     });
   }

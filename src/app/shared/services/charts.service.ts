@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
 import {MsgService} from './msg';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
@@ -25,7 +24,6 @@ export class ChartsService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-              private authService: AuthService,
               private router: Router,
               private msgService: MsgService) {
   }

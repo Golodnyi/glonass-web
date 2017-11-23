@@ -3,7 +3,6 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
 import {Error} from '../models/error.model';
 import {Subdivision} from '../models/subdivision.model';
@@ -19,7 +18,6 @@ export class SubdivisionsService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-              private authService: AuthService,
               private router: Router,
               private msgService: MsgService) {
   }
