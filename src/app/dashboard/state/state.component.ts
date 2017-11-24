@@ -34,6 +34,25 @@ export class StateComponent implements OnChanges {
   private audio = new Audio();
   private resetData: any;
 
+  public static unMute(id) {
+    if (localStorage.getItem('mute_' + id) !== null) {
+      localStorage.removeItem('mute_' + id);
+    }
+  };
+
+  public static isMuted(id) {
+    return !(localStorage.getItem('mute_' + id) === null);
+  };
+
+  public static garanted(state: State): boolean {
+    return (state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours > 0) &&
+      (state.maintenances.capital.limits.days - state.maintenances.capital.value.days > 0);
+  };
+
+  public static scheduled(state: State): boolean {
+    return state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours > 0;
+  };
+
   constructor(private resetForm: ResetForm, private resetService: ResetService, private msg: MsgService, private authService: AuthService) {
     moment.locale('ru');
     this.form = this.resetForm.create();
@@ -55,7 +74,7 @@ export class StateComponent implements OnChanges {
   ngOnChanges() {
     if (this.state && this.state.issues.length) {
       this.state.issues.forEach(issue => {
-        if (!this.isMuted(issue.id)) {
+        if (!StateComponent.isMuted(issue.id)) {
           this.audio.play();
         }
       });
@@ -82,16 +101,6 @@ export class StateComponent implements OnChanges {
       localStorage.setItem('mute_' + id, id);
       this.audio.pause();
     }
-  }
-
-  public unMute(id) {
-    if (localStorage.getItem('mute_' + id) !== null) {
-      localStorage.removeItem('mute_' + id);
-    }
-  }
-
-  public isMuted(id) {
-    return !(localStorage.getItem('mute_' + id) === null);
   }
 
   public showTODialog() {
@@ -158,14 +167,5 @@ export class StateComponent implements OnChanges {
         this.msg.notice(MsgService.ERROR, 'Ошибка', error);
       }
     );
-  }
-
-  public garanted(state: State): boolean {
-    return (state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours > 0) &&
-      (state.maintenances.capital.limits.days - state.maintenances.capital.value.days > 0);
-  }
-
-  public scheduled(state: State): boolean {
-    return state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours > 0;
   }
 }

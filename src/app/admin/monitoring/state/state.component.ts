@@ -10,14 +10,11 @@ import * as moment from 'moment';
 export class StateComponent {
   @Input() state: State;
 
-  constructor() {
-  }
-
-  public online(timestamp: number) {
+  public static online(timestamp: number) {
     return (Number(moment().format('X')) - Number(timestamp) / 1000) < 3600;
-  }
+  };
 
-  public lastDate(timestamp: number) {
+  public static lastDate(timestamp: number) {
     return moment.unix(timestamp / 1000).format('DD.MM.YYYY h:mm');
-  }
+  };
 }
