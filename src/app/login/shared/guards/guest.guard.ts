@@ -5,10 +5,10 @@ import {AuthService} from '../../../shared/services/auth.service';
 @Injectable()
 export class GuestGuard implements CanActivate {
 
-  constructor(private authService: AuthService) {
+  constructor() {
   }
 
   canActivate() {
-    return !this.authService.isLoggedIn();
+    return !AuthService.isLoggedIn();
   }
 }

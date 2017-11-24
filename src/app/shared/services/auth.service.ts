@@ -19,11 +19,15 @@ export class AuthService {
   private timer = Observable.timer(0, 600000);
   private subscriptionRefreshToken: Subscription;
 
+  public static isLoggedIn(): boolean {
+    return !!localStorage.getItem('Authorization');
+  }
+
   constructor(private http: HttpClient,
               private usersService: UsersService,
               private router: Router,
               private msg: MsgService) {
-    this.isLoggedIn();
+    AuthService.isLoggedIn();
   }
 
   public login(auth: Auth): Observable<boolean> {
@@ -94,10 +98,6 @@ export class AuthService {
       .catch((error: any) => {
         return Observable.throw(error.statusText || 'Server error');
       });
-  }
-
-  public isLoggedIn(): boolean {
-    return !!localStorage.getItem('Authorization');
   }
 
   public isAdmin(): boolean {
