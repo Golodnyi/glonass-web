@@ -44,6 +44,10 @@ export class StateComponent implements OnChanges {
     return !(localStorage.getItem('mute_' + id) === null);
   };
 
+  public static online(state: State) {
+    return (Number(moment().format('X')) - Number(state.timestamp) / 1000) < 3600;
+  };
+
   public static garanted(state: State): boolean {
     return (state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours > 0) &&
       (state.maintenances.capital.limits.days - state.maintenances.capital.value.days > 0);
@@ -81,19 +85,24 @@ export class StateComponent implements OnChanges {
     }
   }
 
-  public maintenanceDate(): number {
-    if (this.state) {
-      const dateReset = moment(this.state.maintenance_date);
-      const dateNow = moment();
-
-      return dateNow.diff(dateReset, 'days');
-    }
-
-    return 0;
+  public isMuted(id: number): boolean {
+    return StateComponent.isMuted(id);
   }
 
-  public online() {
-    return (Number(moment().format('X')) - Number(this.state.timestamp) / 1000) < 3600;
+  public unMute(id: number) {
+    StateComponent.unMute(id);
+  }
+
+  public garanted(state: State): boolean {
+    return StateComponent.garanted(state);
+  }
+
+  public scheduled(state: State): boolean {
+    return StateComponent.scheduled(state);
+  }
+
+  public online(state: State) {
+    return StateComponent.online(state);
   }
 
   public mute(id) {

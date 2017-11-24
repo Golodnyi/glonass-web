@@ -8,7 +8,7 @@ import {MapPolyLines} from './shared/map-polylines.model';
   templateUrl: './ymaps.component.html',
   styleUrls: ['./ymaps.component.css']
 })
-export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
+export class YmapsComponent implements OnDestroy, OnChanges {
   public map: any;
   @Input() cars: MapCar[];
   @Input() polyLines: MapPolyLines[];
@@ -17,12 +17,6 @@ export class YmapsComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor() {
     this.build();
-  }
-
-  ngOnInit() {
-    /** navigator.geolocation.getCurrentPosition(data => {
-      this.center = [this.data.coords.latitude, this.data.coords.longitude];
-    }); **/
   }
 
   ngOnChanges(changes) {

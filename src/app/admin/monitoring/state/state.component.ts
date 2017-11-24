@@ -17,4 +17,12 @@ export class StateComponent {
   public static lastDate(timestamp: number) {
     return moment.unix(timestamp / 1000).format('DD.MM.YYYY h:mm');
   };
+
+  public online(timestamp: number) {
+    return StateComponent.online(timestamp);
+  };
+
+  public lastDate(timestamp: number) {
+    return StateComponent.lastDate(timestamp);
+  };
 }

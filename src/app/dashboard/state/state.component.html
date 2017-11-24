@@ -25,8 +25,8 @@
     <div class="alert alert-success">
         <div>
             Статус:
-            <span *ngIf="online()" class="badge alert-success">в сети</span>
-            <span *ngIf="!online()" class="badge alert-danger">не в сети</span>
+            <span *ngIf="online(state)" class="badge alert-success">в сети</span>
+            <span *ngIf="!online(state)" class="badge alert-danger">не в сети</span>
         </div>
         <div>
             Двигатель:
