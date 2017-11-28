@@ -1,17 +1,17 @@
-import {Injectable} from '@angular/core';
-import {User} from '../models/user.model';
+import { Injectable } from '@angular/core';
+import { User } from '../models/user.model';
 
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Auth} from '../../login/shared/models/auth.model';
-import {MsgService} from './msg';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import {JwtHelper} from 'angular2-jwt';
-import {UsersService} from './users.service';
-import {Router} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import { Auth } from '../../login/shared/models/auth.model';
+import { MsgService } from './msg';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { JwtHelper } from 'angular2-jwt';
+import { UsersService } from './users.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class AuthService {
@@ -24,9 +24,9 @@ export class AuthService {
   }
 
   constructor(private http: HttpClient,
-              private usersService: UsersService,
-              private router: Router,
-              private msg: MsgService) {
+    private usersService: UsersService,
+    private router: Router,
+    private msg: MsgService) {
     AuthService.isLoggedIn();
   }
 
@@ -66,7 +66,7 @@ export class AuthService {
   }
 
   public refreshToken(): Observable<boolean> {
-    return this.http.post(this.host + '/v1/auth/refresh', {refreshToken: localStorage.getItem('Refresh')}).map(
+    return this.http.post(this.host + '/v1/auth/refresh', { refreshToken: localStorage.getItem('Refresh') }).map(
       (data: any) => {
         const jwtHelper: JwtHelper = new JwtHelper();
         const token: any = jwtHelper.decodeToken(data.accessToken);
@@ -89,7 +89,7 @@ export class AuthService {
   }
 
   public logout(): Observable<boolean> {
-    return this.http.post(this.host + '/v1/auth/logout', {refreshToken: localStorage.getItem('Refresh')})
+    return this.http.post(this.host + '/v1/auth/logout', { refreshToken: localStorage.getItem('Refresh') })
       .map(() => {
         localStorage.clear();
         this.router.navigate(['/']);

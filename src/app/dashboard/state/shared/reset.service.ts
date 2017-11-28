@@ -1,24 +1,24 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Router} from '@angular/router';
-import {environment} from '../../../../environments/environment';
-import {AuthService} from '../../../shared/services/auth.service';
-import {MsgService} from '../../../shared/services/msg';
-import {Error} from '../../../shared/models/error.model';
-import {Car} from '../../../shared/models/car.model';
-import {HttpClient} from '@angular/common/http';
+import { Router } from '@angular/router';
+import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../shared/services/auth.service';
+import { MsgService } from '../../../shared/services/msg';
+import { Error } from '../../../shared/models/error.model';
+import { Car } from '../../../shared/models/car.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ResetService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-              private authService: AuthService,
-              private router: Router,
-              private msgService: MsgService) {
+    private authService: AuthService,
+    private router: Router,
+    private msgService: MsgService) {
   }
 
   public reset(data: any): Observable<any> {

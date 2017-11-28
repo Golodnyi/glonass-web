@@ -1,15 +1,15 @@
-import {Component, OnDestroy} from '@angular/core';
-import {MsgService} from '../../../../shared/services/msg';
-import {CarsService} from '../../../../shared/services/cars.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SubdivisionsService} from '../../../../shared/services/subdivisions.service';
-import {CarModelsService} from '../../../../shared/services/car.models.service';
-import {Car} from '../../../../shared/models/car.model';
-import {FormGroup} from '@angular/forms';
-import {Subdivision} from '../../../../shared/models/subdivision.model';
-import {CarModel} from '../../../../shared/models/car-model.model';
-import {Subscription} from 'rxjs/Subscription';
-import {CarUpdateForm} from '../shared/update.form';
+import { Component, OnDestroy } from '@angular/core';
+import { MsgService } from '../../../../shared/services/msg';
+import { CarsService } from '../../../../shared/services/cars.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SubdivisionsService } from '../../../../shared/services/subdivisions.service';
+import { CarModelsService } from '../../../../shared/services/car.models.service';
+import { Car } from '../../../../shared/models/car.model';
+import { FormGroup } from '@angular/forms';
+import { Subdivision } from '../../../../shared/models/subdivision.model';
+import { CarModel } from '../../../../shared/models/car-model.model';
+import { Subscription } from 'rxjs/Subscription';
+import { CarUpdateForm } from '../shared/update.form';
 
 @Component({
   selector: 'app-car-update',
@@ -26,12 +26,12 @@ export class CarUpdateComponent implements OnDestroy {
   private subscription: Subscription = new Subscription();
 
   constructor(private msg: MsgService,
-              private carServices: CarsService,
-              private carForm: CarUpdateForm,
-              private router: Router,
-              private subdivisionsService: SubdivisionsService,
-              private carModelsService: CarModelsService,
-              private route: ActivatedRoute) {
+    private carServices: CarsService,
+    private carForm: CarUpdateForm,
+    private router: Router,
+    private subdivisionsService: SubdivisionsService,
+    private carModelsService: CarModelsService,
+    private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       const car_id = +params['car'];
       const company_id = +params['company'];

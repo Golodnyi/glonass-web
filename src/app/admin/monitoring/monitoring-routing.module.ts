@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {MonitoringComponent} from './monitoring/monitoring.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { MonitoringComponent } from './monitoring/monitoring.component';
 
 const routes: Routes = [
   {

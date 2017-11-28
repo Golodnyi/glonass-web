@@ -1,15 +1,15 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Router} from '@angular/router';
-import {Error} from '../models/error.model';
-import {MsgService} from './msg';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {environment} from '../../../environments/environment';
-import {EngineModel} from '../models/engine-model.model';
-import {HttpClient} from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Error } from '../models/error.model';
+import { MsgService } from './msg';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { environment } from '../../../environments/environment';
+import { EngineModel } from '../models/engine-model.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class EngineModelsService {
@@ -17,8 +17,8 @@ export class EngineModelsService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private msgService: MsgService) {
+    private router: Router,
+    private msgService: MsgService) {
   }
 
   public all(resync = false): Observable<EngineModel[]> {

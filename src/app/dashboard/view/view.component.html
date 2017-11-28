@@ -4,12 +4,12 @@
             <p-tabPanel header="Информация" class="panel">
                 <div class="row">
                     <div class="col-md-6">
-                        <span>Данные по {{car.name}}</span><br/>
+                        <span>Данные по {{car.name}}</span>
+                        <br/>
                         <span *ngIf="engine && engineModel">Двигатель: {{engine.esn}} ({{engineModel.name}})</span>
                     </div>
                     <div class="col-md-6">
-                        <p-selectButton [options]="viewModeButtons" [(ngModel)]="viewMode" tabindex="1"
-                                        (onChange)="viewModeChange($event)"></p-selectButton>
+                        <p-selectButton [options]="viewModeButtons" [(ngModel)]="viewMode" tabindex="1" (onChange)="viewModeChange($event)"></p-selectButton>
                     </div>
                 </div>
             </p-tabPanel>

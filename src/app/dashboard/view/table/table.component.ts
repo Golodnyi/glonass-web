@@ -1,7 +1,7 @@
-import {Component, OnDestroy} from '@angular/core';
-import {ChartsService} from '../../../shared/services/charts.service';
-import {Subscription} from 'rxjs/Subscription';
-import {Car} from '../../../shared/models/car.model';
+import { Component, OnDestroy } from '@angular/core';
+import { ChartsService } from '../../../shared/services/charts.service';
+import { Subscription } from 'rxjs/Subscription';
+import { Car } from '../../../shared/models/car.model';
 
 @Component({
   selector: 'app-table-view',

@@ -8,17 +8,13 @@
             {{row['time'] | date: 'dd.MM.yyyy H:mm:ss'}}
         </ng-template>
     </p-column>
-    <p-column *ngFor="let key of keys" header="{{table.headers[key].name}} ({{table.headers[key].unit}})"
-              field="{{key}}" sortable="custom" (sortFunction)="sort($event)">
+    <p-column *ngFor="let key of keys" header="{{table.headers[key].name}} ({{table.headers[key].unit}})" field="{{key}}" sortable="custom"
+        (sortFunction)="sort($event)">
         <ng-template let-row="rowData" pTemplate="body">
-            <div [class.alert-warning]="row['criticals'].warning.indexOf(key) !== -1"
-                 [class.alert-danger]="row['criticals'].danger.indexOf(key) !== -1">
+            <div [class.alert-warning]="row['criticals'].warning.indexOf(key) !== -1" [class.alert-danger]="row['criticals'].danger.indexOf(key) !== -1">
                 {{row[key]}}
             </div>
         </ng-template>
     </p-column>
 </p-dataTable>
-<p-paginator *ngIf="table && table.pagination" rows="100" totalRecords="{{table.pagination.total*100}}"
-             (onPageChange)="paginate($event)"></p-paginator>
-
-
+<p-paginator *ngIf="table && table.pagination" rows="100" totalRecords="{{table.pagination.total*100}}" (onPageChange)="paginate($event)"></p-paginator>

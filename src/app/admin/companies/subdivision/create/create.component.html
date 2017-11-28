@@ -1,13 +1,13 @@
 <h3>Создание подразделения</h3>
 <form class="input-group" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-    <label for="name">Название:</label><br/>
-    <input class="input-sm" id="name" type="text" pInputText formControlName="name"
-           placeholder="Название подразделения"/><br/>
-    <label for="company">Компания:</label><br/>
-    <p-dropdown id="company" [options]="companies | DropDown" formControlName="company_id" [filter]="true"
-                [style]="{'width':'190px'}"></p-dropdown>
+    <label for="name">Название:</label>
+    <br/>
+    <input class="input-sm" id="name" type="text" pInputText formControlName="name" placeholder="Название подразделения" />
+    <br/>
+    <label for="company">Компания:</label>
+    <br/>
+    <p-dropdown id="company" [options]="companies | DropDown" formControlName="company_id" [filter]="true" [style]="{'width':'190px'}"></p-dropdown>
     <hr/>
-    <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton
-            label="Создать"></button>
+    <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton label="Создать"></button>
     <button pButton type="button" label="Отмена" routerLink="/admin/companies"></button>
 </form>

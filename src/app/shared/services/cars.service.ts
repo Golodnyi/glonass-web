@@ -1,16 +1,16 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Router} from '@angular/router';
-import {Error} from '../models/error.model';
-import {Car} from '../models/car.model';
-import {MsgService} from './msg';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {State} from '../../dashboard/state/shared/state.model';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Error } from '../models/error.model';
+import { Car } from '../models/car.model';
+import { MsgService } from './msg';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { State } from '../../dashboard/state/shared/state.model';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class CarsService {
@@ -19,8 +19,8 @@ export class CarsService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private msgService: MsgService) {
+    private router: Router,
+    private msgService: MsgService) {
   }
 
   public all(company: number, subdivision: number, resync = false): Observable<Car[]> {

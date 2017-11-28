@@ -1,16 +1,16 @@
-import {Component, OnDestroy} from '@angular/core';
-import {CompaniesService} from '../../../shared/services/companies.service';
-import {SubdivisionsService} from '../../../shared/services/subdivisions.service';
-import {CarsService} from '../../../shared/services/cars.service';
-import {MsgService} from '../../../shared/services/msg';
-import {EnginesService} from '../../../shared/services/engines.service';
-import {Router} from '@angular/router';
-import {TreePipe} from '../../../shared/pipes/tree.pipe';
-import {Company} from '../../../shared/models/company.model';
-import {Subdivision} from '../../../shared/models/subdivision.model';
-import {Car} from '../../../shared/models/car.model';
-import {Engine} from '../../../shared/models/engine.model';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, OnDestroy } from '@angular/core';
+import { CompaniesService } from '../../../shared/services/companies.service';
+import { SubdivisionsService } from '../../../shared/services/subdivisions.service';
+import { CarsService } from '../../../shared/services/cars.service';
+import { MsgService } from '../../../shared/services/msg';
+import { EnginesService } from '../../../shared/services/engines.service';
+import { Router } from '@angular/router';
+import { TreePipe } from '../../../shared/pipes/tree.pipe';
+import { Company } from '../../../shared/models/company.model';
+import { Subdivision } from '../../../shared/models/subdivision.model';
+import { Car } from '../../../shared/models/car.model';
+import { Engine } from '../../../shared/models/engine.model';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-navigation',
@@ -24,12 +24,12 @@ export class NavigationComponent implements OnDestroy {
   private treeSubscribe = [];
 
   constructor(private companiesService: CompaniesService,
-              private subdivisionsService: SubdivisionsService,
-              private carsService: CarsService,
-              private msgService: MsgService,
-              private enginesService: EnginesService,
-              private router: Router,
-              private tree: TreePipe) {
+    private subdivisionsService: SubdivisionsService,
+    private carsService: CarsService,
+    private msgService: MsgService,
+    private enginesService: EnginesService,
+    private router: Router,
+    private tree: TreePipe) {
     this.companySubscribe.add(
       this.companiesService.all(true).subscribe(
         companies => {

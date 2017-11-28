@@ -16,14 +16,14 @@ declare namespace ymaps {
   }
 
   export class Placemark {
-    constructor([], {}, {});
+    constructor([], { }, { });
   }
 
   export class Polyline {
-    constructor([], {}, {});
+    constructor([], { }, { });
   }
 
   export class Circle {
-    constructor([], {}, {});
+    constructor([], { }, { });
   }
 }

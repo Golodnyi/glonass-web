@@ -1,4 +1,4 @@
-import {BaseEngine} from '../../../../shared/models/baseEngine.model';
+import { BaseEngine } from '../../../../shared/models/baseEngine.model';
 
 export interface INewEngine {
   useModelSensors: boolean;

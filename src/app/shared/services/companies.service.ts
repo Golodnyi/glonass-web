@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Rx';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Company} from '../models/company.model';
-import {Router} from '@angular/router';
-import {Error} from '../models/error.model';
-import {MsgService} from './msg';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import { Company } from '../models/company.model';
+import { Router } from '@angular/router';
+import { Error } from '../models/error.model';
+import { MsgService } from './msg';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class CompaniesService {
@@ -17,25 +17,25 @@ export class CompaniesService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private msgService: MsgService) {
+    private router: Router,
+    private msgService: MsgService) {
   }
 
   public all(resync = false): Observable<Company[]> {
     if (resync) {
       this.http.get(this.host + '/v1/companies')
         .subscribe((response: any) => {
-            const companies = [];
-            response.forEach(item => {
-              companies.push(Object.assign(new Company(), item));
-            });
-            this.companies.next(companies);
-          },
-          error => {
-            this.companies.next([]);
-            Error.check(error, this.router, this.msgService);
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
+          const companies = [];
+          response.forEach(item => {
+            companies.push(Object.assign(new Company(), item));
           });
+          this.companies.next(companies);
+        },
+        error => {
+          this.companies.next([]);
+          Error.check(error, this.router, this.msgService);
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
+        });
     }
     return this.companies.asObservable();
   }

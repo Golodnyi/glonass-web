@@ -1,6 +1,6 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
-import {MapCar} from './shared/map-car.model';
-import {MapPolyLines} from './shared/map-polylines.model';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { MapCar } from './shared/map-car.model';
+import { MapPolyLines } from './shared/map-polylines.model';
 
 /// <reference path="./typings/ymaps.d.ts" />
 @Component({
@@ -76,10 +76,10 @@ export class YmapsComponent implements OnDestroy, OnChanges {
         this.map.geoObjects.add(new ymaps.Placemark(car.point, {
           hintContent: car.name
         }, {
-          iconLayout: 'default#image',
-          iconImageHref: '/assets/car.png',
-          iconImageSize: [32, 32],
-        }));
+            iconLayout: 'default#image',
+            iconImageHref: '/assets/car.png',
+            iconImageSize: [32, 32],
+          }));
       });
 
     });

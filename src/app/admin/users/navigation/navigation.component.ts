@@ -1,9 +1,9 @@
-import {Component, OnDestroy} from '@angular/core';
-import {MsgService} from '../../../shared/services/msg';
-import {UsersService} from '../../../shared/services/users.service';
-import {User} from '../../../shared/models/user.model';
-import {Router} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, OnDestroy } from '@angular/core';
+import { MsgService } from '../../../shared/services/msg';
+import { UsersService } from '../../../shared/services/users.service';
+import { User } from '../../../shared/models/user.model';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-navigation',

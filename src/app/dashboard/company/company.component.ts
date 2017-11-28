@@ -1,14 +1,14 @@
-import {Component, OnDestroy} from '@angular/core';
-import {CarsService} from '../../shared/services/cars.service';
-import {Subscription} from 'rxjs/Subscription';
-import {ActivatedRoute} from '@angular/router';
-import {SubdivisionsService} from '../../shared/services/subdivisions.service';
-import {Subdivision} from '../../shared/models/subdivision.model';
-import {ChartsService} from '../../shared/services/charts.service';
-import {MapCar} from '../ymaps/shared/map-car.model';
-import {MapPolyLines} from '../ymaps/shared/map-polylines.model';
-import {Car} from '../../shared/models/car.model';
-import {Observable} from 'rxjs/Observable';
+import { Component, OnDestroy } from '@angular/core';
+import { CarsService } from '../../shared/services/cars.service';
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute } from '@angular/router';
+import { SubdivisionsService } from '../../shared/services/subdivisions.service';
+import { Subdivision } from '../../shared/models/subdivision.model';
+import { ChartsService } from '../../shared/services/charts.service';
+import { MapCar } from '../ymaps/shared/map-car.model';
+import { MapPolyLines } from '../ymaps/shared/map-polylines.model';
+import { Car } from '../../shared/models/car.model';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-company',
@@ -26,9 +26,9 @@ export class CompanyComponent implements OnDestroy {
   private timer = Observable.timer(0, 5000);
 
   constructor(private subdivisionsService: SubdivisionsService,
-              private carsService: CarsService,
-              private route: ActivatedRoute,
-              private chartsService: ChartsService) {
+    private carsService: CarsService,
+    private route: ActivatedRoute,
+    private chartsService: ChartsService) {
     /**
      * TODO: нужен рефакторинг
      */

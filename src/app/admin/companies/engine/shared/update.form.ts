@@ -1,6 +1,6 @@
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Injectable} from '@angular/core';
-import {NewEngine} from './newEngine.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { NewEngine } from './newEngine.model';
 
 @Injectable()
 export class EngineUpdateForm {

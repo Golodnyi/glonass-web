@@ -1,18 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {Car} from '../../../../shared/models/car.model';
-import {FormGroup} from '@angular/forms';
-import {Company} from '../../../../shared/models/company.model';
-import {Subdivision} from '../../../../shared/models/subdivision.model';
-import {CarModel} from '../../../../shared/models/car-model.model';
-import {Subscription} from 'rxjs/Subscription';
-import {MsgService} from '../../../../shared/services/msg';
-import {ActivatedRoute, Router} from '@angular/router';
-import {CompaniesService} from '../../../../shared/services/companies.service';
-import {NewEngine} from '../shared/newEngine.model';
-import {EnginesService} from '../../../../shared/services/engines.service';
-import {EngineModelsService} from '../../../../shared/services/engine.models.service';
-import {EngineUpdateForm} from '../shared/update.form';
-import {BaseEngine} from '../../../../shared/models/baseEngine.model';
+import { Component, OnInit } from '@angular/core';
+import { Car } from '../../../../shared/models/car.model';
+import { FormGroup } from '@angular/forms';
+import { Company } from '../../../../shared/models/company.model';
+import { Subdivision } from '../../../../shared/models/subdivision.model';
+import { CarModel } from '../../../../shared/models/car-model.model';
+import { Subscription } from 'rxjs/Subscription';
+import { MsgService } from '../../../../shared/services/msg';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CompaniesService } from '../../../../shared/services/companies.service';
+import { NewEngine } from '../shared/newEngine.model';
+import { EnginesService } from '../../../../shared/services/engines.service';
+import { EngineModelsService } from '../../../../shared/services/engine.models.service';
+import { EngineUpdateForm } from '../shared/update.form';
+import { BaseEngine } from '../../../../shared/models/baseEngine.model';
 
 @Component({
   selector: 'app-update',
@@ -31,12 +31,12 @@ export class EngineUpdateComponent implements OnInit {
   private subscription: Subscription = new Subscription();
 
   constructor(private msg: MsgService,
-              private engineForm: EngineUpdateForm,
-              private router: Router,
-              private companiesService: CompaniesService,
-              private enginesService: EnginesService,
-              private route: ActivatedRoute,
-              private engineModelsService: EngineModelsService) {
+    private engineForm: EngineUpdateForm,
+    private router: Router,
+    private companiesService: CompaniesService,
+    private enginesService: EnginesService,
+    private route: ActivatedRoute,
+    private engineModelsService: EngineModelsService) {
     this.route.params.subscribe(params => {
       const company_id = +params['company'];
       const subdivision_id = +params['subdivision'];
