@@ -1,18 +1,18 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Rx';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Router} from '@angular/router';
-import {MsgService} from './msg';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Filter} from '../models/filter.model';
-import {Subject} from 'rxjs/Subject';
-import {AutoRefresh} from '../models/auto-refresh.model';
-import {Error} from '../models/error.model';
-import {Sensor} from '../models/sensor.model';
-import {Car} from '../models/car.model';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import { Router } from '@angular/router';
+import { MsgService } from './msg';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Filter } from '../models/filter.model';
+import { Subject } from 'rxjs/Subject';
+import { AutoRefresh } from '../models/auto-refresh.model';
+import { Error } from '../models/error.model';
+import { Sensor } from '../models/sensor.model';
+import { Car } from '../models/car.model';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ChartsService {
@@ -24,8 +24,8 @@ export class ChartsService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private msgService: MsgService) {
+    private router: Router,
+    private msgService: MsgService) {
   }
 
   public setFilter(filter: Filter) {

@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Company} from '../../../../shared/models/company.model';
-import {CompaniesService} from '../../../../shared/services/companies.service';
-import {MsgService} from '../../../../shared/services/msg';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Company } from '../../../../shared/models/company.model';
+import { CompaniesService } from '../../../../shared/services/companies.service';
+import { MsgService } from '../../../../shared/services/msg';
 import * as moment from 'moment';
-import {CompanyForm} from '../shared/company.form';
-import {FormGroup} from '@angular/forms';
-import {Calendar} from '../../../../shared/models/calendar.model';
+import { CompanyForm } from '../shared/company.form';
+import { FormGroup } from '@angular/forms';
+import { Calendar } from '../../../../shared/models/calendar.model';
 
 @Component({
   selector: 'app-company-update',
@@ -23,10 +23,10 @@ export class CompanyUpdateComponent {
   public submit: boolean;
 
   constructor(private route: ActivatedRoute,
-              private companiesService: CompaniesService,
-              private msg: MsgService,
-              private companyForm: CompanyForm,
-              private router: Router) {
+    private companiesService: CompaniesService,
+    private msg: MsgService,
+    private companyForm: CompanyForm,
+    private router: Router) {
     this.route.params.subscribe(params => {
       const company_id = +params['company'];
       this.companiesService.get(company_id, true).subscribe(

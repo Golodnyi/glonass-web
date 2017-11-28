@@ -1,13 +1,13 @@
-import {Component} from '@angular/core';
-import {Company} from '../../../../shared/models/company.model';
-import {MsgService} from '../../../../shared/services/msg';
-import {AuthService} from '../../../../shared/services/auth.service';
-import {CompaniesService} from '../../../../shared/services/companies.service';
-import {Subdivision} from '../../../../shared/models/subdivision.model';
-import {SubdivisionsService} from '../../../../shared/services/subdivisions.service';
-import {FormGroup} from '@angular/forms';
-import {SubdivisionCreateForm} from '../shared/create.form';
-import {Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { Company } from '../../../../shared/models/company.model';
+import { MsgService } from '../../../../shared/services/msg';
+import { AuthService } from '../../../../shared/services/auth.service';
+import { CompaniesService } from '../../../../shared/services/companies.service';
+import { Subdivision } from '../../../../shared/models/subdivision.model';
+import { SubdivisionsService } from '../../../../shared/services/subdivisions.service';
+import { FormGroup } from '@angular/forms';
+import { SubdivisionCreateForm } from '../shared/create.form';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-subdivision-create',
@@ -24,11 +24,11 @@ export class SubdivisionCreateComponent {
   public submit: boolean;
 
   constructor(private authService: AuthService,
-              private msg: MsgService,
-              private companiesService: CompaniesService,
-              private subdivisionsService: SubdivisionsService,
-              private subdivisionCreateForm: SubdivisionCreateForm,
-              private router: Router) {
+    private msg: MsgService,
+    private companiesService: CompaniesService,
+    private subdivisionsService: SubdivisionsService,
+    private subdivisionCreateForm: SubdivisionCreateForm,
+    private router: Router) {
     this.form = this.subdivisionCreateForm.create(this.subdivision);
     this.form.valueChanges.subscribe((data) => {
       this.subdivision = data;

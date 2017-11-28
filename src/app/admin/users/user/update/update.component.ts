@@ -1,11 +1,11 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {UsersService} from '../../../../shared/services/users.service';
-import {User} from '../../../../shared/models/user.model';
-import {UserForm} from '../shared/user.form';
-import {Role} from '../../../../shared/models/role.model';
-import {FormGroup} from '@angular/forms';
-import {MsgService} from '../../../../shared/services/msg';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UsersService } from '../../../../shared/services/users.service';
+import { User } from '../../../../shared/models/user.model';
+import { UserForm } from '../shared/user.form';
+import { Role } from '../../../../shared/models/role.model';
+import { FormGroup } from '@angular/forms';
+import { MsgService } from '../../../../shared/services/msg';
 
 @Component({
   selector: 'app-user-update',
@@ -20,10 +20,10 @@ export class UserUpdateComponent {
   public submit: boolean;
 
   constructor(private route: ActivatedRoute,
-              private usersService: UsersService,
-              private userForm: UserForm,
-              private msg: MsgService,
-              private router: Router) {
+    private usersService: UsersService,
+    private userForm: UserForm,
+    private msg: MsgService,
+    private router: Router) {
     this.route.params.subscribe(params => {
       const user_id = +params['user'];
       this.usersService.get(user_id).subscribe(

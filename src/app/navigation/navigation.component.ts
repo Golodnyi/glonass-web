@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {User} from '../shared/models/user.model';
-import {AuthService} from '../shared/services/auth.service';
-import {NavigationStart, Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { User } from '../shared/models/user.model';
+import { AuthService } from '../shared/services/auth.service';
+import { NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',

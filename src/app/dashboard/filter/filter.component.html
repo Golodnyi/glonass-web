@@ -9,12 +9,9 @@
     </div>
     <hr/>
     <div *ngIf="sensors.length">
-        <p-multiSelect defaultLabel="Датчики" id="charts" [options]="sensors|DropDown:false"
-                       formControlName="charts"></p-multiSelect>
+        <p-multiSelect defaultLabel="Датчики" id="charts" [options]="sensors|DropDown:false" formControlName="charts"></p-multiSelect>
         <hr/>
     </div>
-    <button class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton type="submit"
-            label="Применить"></button>
-    <button class="ui-button-danger" [disabled]="filter.enabled !== true" pButton label="Отключить"
-            (click)="onDisabled()"></button>
+    <button class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton type="submit" label="Применить"></button>
+    <button class="ui-button-danger" [disabled]="filter.enabled !== true" pButton label="Отключить" (click)="onDisabled()"></button>
 </form>

@@ -1,8 +1,8 @@
-import {Component, OnDestroy} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
-import {StateService} from './shared/state.service';
-import {State} from './shared/state.model';
+import { Component, OnDestroy } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { StateService } from './shared/state.service';
+import { State } from './shared/state.model';
 
 @Component({
   selector: 'app-monitoring',
@@ -19,19 +19,6 @@ export class MonitoringComponent implements OnDestroy {
   constructor(private stateService: StateService) {
     this.audio.src = '/assets/monitoring.wav';
     this.audio.load();
-    this.update();
-  }
-
-  ngOnDestroy() {
-    if (this.subscriptionTimer) {
-      this.subscriptionTimer.unsubscribe();
-    }
-  }
-
-  private update() {
-    if (this.subscriptionTimer) {
-      this.subscriptionTimer.unsubscribe();
-    }
     this.subscriptionTimer =
       this.timer.subscribe(
         () => {
@@ -43,6 +30,13 @@ export class MonitoringComponent implements OnDestroy {
           );
         }
       );
+  }
+
+  ngOnDestroy() {
+    this.audio.pause();
+    if (this.subscriptionTimer) {
+      this.subscriptionTimer.unsubscribe();
+    }
   }
 
   private sound(data: any) {

@@ -1,9 +1,6 @@
 <p-panel *ngIf="companies" header="Компании" [toggleable]="true">
-    <p-tree [value]="companies | tree : false : true"
-            selectionMode="single"
-            [(selection)]="node"
-            (onNodeExpand)="onNodeExpand($event)"
-            (onNodeSelect)="onNodeSelect($event)">
+    <p-tree [value]="companies | tree : false : true" selectionMode="single" [(selection)]="node" (onNodeExpand)="onNodeExpand($event)"
+        (onNodeSelect)="onNodeSelect($event)">
         <ng-template let-node pTemplate="default">
             <span>{{node.data.name}}</span>
         </ng-template>

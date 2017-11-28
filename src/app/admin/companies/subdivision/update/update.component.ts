@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
-import {Company} from '../../../../shared/models/company.model';
-import {MsgService} from '../../../../shared/services/msg';
-import {CompaniesService} from '../../../../shared/services/companies.service';
-import {Subdivision} from '../../../../shared/models/subdivision.model';
-import {SubdivisionsService} from '../../../../shared/services/subdivisions.service';
-import {ActivatedRoute} from '@angular/router';
-import {FormGroup} from '@angular/forms';
-import {SubdivisionUpdateForm} from '../shared/update.form';
+import { Component } from '@angular/core';
+import { Company } from '../../../../shared/models/company.model';
+import { MsgService } from '../../../../shared/services/msg';
+import { CompaniesService } from '../../../../shared/services/companies.service';
+import { Subdivision } from '../../../../shared/models/subdivision.model';
+import { SubdivisionsService } from '../../../../shared/services/subdivisions.service';
+import { ActivatedRoute } from '@angular/router';
+import { FormGroup } from '@angular/forms';
+import { SubdivisionUpdateForm } from '../shared/update.form';
 
 @Component({
   selector: 'app-subdivision-update',
@@ -23,10 +23,10 @@ export class SubdivisionUpdateComponent {
   public submit: boolean;
 
   constructor(private msg: MsgService,
-              private subdivisionsService: SubdivisionsService,
-              private route: ActivatedRoute,
-              private companiesService: CompaniesService,
-              private subdivisionUpdateForm: SubdivisionUpdateForm) {
+    private subdivisionsService: SubdivisionsService,
+    private route: ActivatedRoute,
+    private companiesService: CompaniesService,
+    private subdivisionUpdateForm: SubdivisionUpdateForm) {
     this.route.params.subscribe(params => {
       const company_id: number = +params['company'];
       const subdivision_id: number = +params['subdivision'];

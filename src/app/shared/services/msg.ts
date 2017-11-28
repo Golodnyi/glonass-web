@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Message} from 'primeng/primeng';
-import {Subject} from 'rxjs/Subject';
-import {Observable} from 'rxjs/Observable';
+import { Message } from 'primeng/primeng';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class MsgService {
@@ -20,7 +20,7 @@ export class MsgService {
   }
 
   public notice(severity: string, summary: string, detail: string) {
-    this._growl.next({severity, summary, detail});
+    this._growl.next({ severity, summary, detail });
   }
 
   public getNotice(): Observable<Message> {
@@ -28,7 +28,7 @@ export class MsgService {
   }
 
   public msg(severity: string, summary: string, detail: string) {
-    this._msg.next({severity, summary, detail});
+    this._msg.next({ severity, summary, detail });
   }
 
   public getMsg(): Observable<Message> {

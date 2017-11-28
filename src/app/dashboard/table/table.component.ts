@@ -1,9 +1,9 @@
-import {Component, Input, OnChanges, OnDestroy} from '@angular/core';
-import {ChartsService} from '../../shared/services/charts.service';
-import {KeysPipe} from '../../shared/pipes/keys.pipe';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
-import {Filter} from '../../shared/models/filter.model';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { ChartsService } from '../../shared/services/charts.service';
+import { KeysPipe } from '../../shared/pipes/keys.pipe';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { Filter } from '../../shared/models/filter.model';
 
 @Component({
   selector: 'app-table',

@@ -1,4 +1,4 @@
-import {ITree} from './tree.model';
+import { ITree } from './tree.model';
 
 export interface IEngine {
   id: number;

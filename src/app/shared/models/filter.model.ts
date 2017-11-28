@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import {Params} from '@angular/router';
+import { Params } from '@angular/router';
 
 export class Filter {
   public charts: any = [];

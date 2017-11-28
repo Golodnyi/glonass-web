@@ -1,13 +1,13 @@
-import {Component} from '@angular/core';
-import {Company} from '../../../../shared/models/company.model';
-import {MsgService} from '../../../../shared/services/msg';
-import {AuthService} from '../../../../shared/services/auth.service';
-import {CompaniesService} from '../../../../shared/services/companies.service';
+import { Component } from '@angular/core';
+import { Company } from '../../../../shared/models/company.model';
+import { MsgService } from '../../../../shared/services/msg';
+import { AuthService } from '../../../../shared/services/auth.service';
+import { CompaniesService } from '../../../../shared/services/companies.service';
 import * as moment from 'moment';
-import {CompanyForm} from '../shared/company.form';
-import {FormGroup} from '@angular/forms';
-import {Router} from '@angular/router';
-import {Calendar} from '../../../../shared/models/calendar.model';
+import { CompanyForm } from '../shared/company.form';
+import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Calendar } from '../../../../shared/models/calendar.model';
 
 @Component({
   selector: 'app-company-create',
@@ -24,10 +24,10 @@ export class CompanyCreateComponent {
   public submit: boolean;
 
   constructor(private authService: AuthService,
-              private msg: MsgService,
-              private companiesService: CompaniesService,
-              private companyForm: CompanyForm,
-              private router: Router) {
+    private msg: MsgService,
+    private companiesService: CompaniesService,
+    private companyForm: CompanyForm,
+    private router: Router) {
     this.form = this.companyForm.create(this.company);
     this.form.valueChanges
       .map((value) => {

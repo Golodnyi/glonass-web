@@ -1,13 +1,13 @@
-import {Component} from '@angular/core';
-import {UsersService} from '../../../../shared/services/users.service';
-import {FormGroup} from '@angular/forms';
-import {User} from '../../../../shared/models/user.model';
-import {MsgService} from '../../../../shared/services/msg';
-import {Router} from '@angular/router';
-import {Role} from '../../../../shared/models/role.model';
-import {UserForm} from '../shared/user.form';
-import {CompaniesService} from '../../../../shared/services/companies.service';
-import {Company} from '../../../../shared/models/company.model';
+import { Component } from '@angular/core';
+import { UsersService } from '../../../../shared/services/users.service';
+import { FormGroup } from '@angular/forms';
+import { User } from '../../../../shared/models/user.model';
+import { MsgService } from '../../../../shared/services/msg';
+import { Router } from '@angular/router';
+import { Role } from '../../../../shared/models/role.model';
+import { UserForm } from '../shared/user.form';
+import { CompaniesService } from '../../../../shared/services/companies.service';
+import { Company } from '../../../../shared/models/company.model';
 
 @Component({
   selector: 'app-user-create',
@@ -23,10 +23,10 @@ export class UserCreateComponent {
   public companies: Company[];
 
   constructor(private userForm: UserForm,
-              private usersService: UsersService,
-              private companiesService: CompaniesService,
-              private msg: MsgService,
-              private router: Router) {
+    private usersService: UsersService,
+    private companiesService: CompaniesService,
+    private msg: MsgService,
+    private router: Router) {
     this.form = this.userForm.create(this.user);
     this.form.valueChanges.subscribe((data) => {
       this.user = data;

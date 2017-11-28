@@ -1,4 +1,4 @@
-import {Capital} from './capital.model';
+import { Capital } from './capital.model';
 
 export interface IMaintenances {
   capital: Capital;
