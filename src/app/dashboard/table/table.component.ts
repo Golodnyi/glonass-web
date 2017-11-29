@@ -4,6 +4,7 @@ import { KeysPipe } from '../../shared/pipes/keys.pipe';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Filter } from '../../shared/models/filter.model';
+import {TimerObservable} from 'rxjs/observable/TimerObservable';
 
 @Component({
   selector: 'app-table',
@@ -24,7 +25,7 @@ export class TableComponent implements OnChanges, OnDestroy {
   private tdir = 1;
   private subscriptionAutoRefresh: Subscription;
   private subscription: Subscription;
-  private timer = Observable.timer(0, 5000);
+  private timer = TimerObservable.create(0, 5000);
 
   constructor(private chartsService: ChartsService, private keysPipe: KeysPipe) {
     if (this.car) {

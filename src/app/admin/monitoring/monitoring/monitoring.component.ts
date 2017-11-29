@@ -1,8 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { StateService } from './shared/state.service';
 import { State } from './shared/state.model';
+import { Observable } from 'rxjs/Observable';
+import {TimerObservable} from 'rxjs/observable/TimerObservable';
 
 @Component({
   selector: 'app-monitoring',
@@ -12,7 +13,7 @@ import { State } from './shared/state.model';
 })
 export class MonitoringComponent implements OnDestroy {
   public state: State[] = [];
-  private timer = Observable.timer(0, 5000);
+  private timer = TimerObservable.create(0, 5000);
   private subscriptionTimer: Subscription;
   private audio = new Audio();
 

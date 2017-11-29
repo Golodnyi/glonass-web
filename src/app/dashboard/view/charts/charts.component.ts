@@ -4,6 +4,7 @@ import { ChartsService } from '../../../shared/services/charts.service';
 import { Car } from '../../../shared/models/car.model';
 import { Observable } from 'rxjs/Observable';
 import { AutoRefresh } from '../../../shared/models/auto-refresh.model';
+import {TimerObservable} from 'rxjs/observable/TimerObservable';
 
 @Component({
   selector: 'app-charts-view',
@@ -16,7 +17,7 @@ export class ChartsComponent implements OnDestroy {
   private subscription: Subscription = new Subscription();
   private subscriptionAutoRefresh: Subscription;
   private subscriptionFilter: Subscription;
-  private timer = Observable.timer(5000, 5000);
+  private timer = TimerObservable.create(5000, 5000);
   private autoRefresh = new AutoRefresh();
 
   constructor(private chartsService: ChartsService) {
