@@ -9,6 +9,7 @@ import { MsgService } from '../../shared/services/msg';
 import { Car } from '../../shared/models/car.model';
 import { AuthService } from '../../shared/services/auth.service';
 import { User } from '../../shared/models/user.model';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-state',
@@ -16,7 +17,7 @@ import { User } from '../../shared/models/user.model';
   styleUrls: ['./state.component.css'],
   providers: [ResetForm, ResetService]
 })
-export class StateComponent implements OnChanges {
+export class StateComponent implements OnChanges, OnDestroy {
   @Input() state: State;
   @Input() car: Car;
   @Input() toggleable = true;
@@ -161,6 +162,10 @@ export class StateComponent implements OnChanges {
         this.msg.notice(MsgService.ERROR, 'Ошибка', error);
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.audio.pause();
   }
 
   public showGarantedHistory() {
