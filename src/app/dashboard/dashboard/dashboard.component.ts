@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { EnginesService } from '../../shared/services/engines.service';
 import { Engine } from '../../shared/models/engine.model';
 import { Car } from '../../shared/models/car.model';
+import {TimerObservable} from 'rxjs/observable/TimerObservable';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,7 @@ export class DashboardComponent implements OnDestroy {
   public car: Car;
   private subscription: Subscription = new Subscription();
   private subscriptionTimer: Subscription;
-  private timer = Observable.timer(0, 5000);
+  private timer = TimerObservable.create(0, 5000);
 
   constructor(private carsService: CarsService,
     private chartsService: ChartsService,

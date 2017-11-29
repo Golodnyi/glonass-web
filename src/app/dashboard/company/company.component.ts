@@ -9,6 +9,7 @@ import { MapCar } from '../ymaps/shared/map-car.model';
 import { MapPolyLines } from '../ymaps/shared/map-polylines.model';
 import { Car } from '../../shared/models/car.model';
 import { Observable } from 'rxjs/Observable';
+import {TimerObservable} from 'rxjs/observable/TimerObservable';
 
 @Component({
   selector: 'app-company',
@@ -23,7 +24,7 @@ export class CompanyComponent implements OnDestroy {
   private subscriptionTimer: Subscription[] = [];
   private mpl: MapPolyLines[];
   private mc: MapCar[];
-  private timer = Observable.timer(0, 5000);
+  private timer = TimerObservable.create(0, 5000);
 
   constructor(private subdivisionsService: SubdivisionsService,
     private carsService: CarsService,
