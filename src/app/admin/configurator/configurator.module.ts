@@ -5,11 +5,15 @@ import { ConfiguratorRoutingModule } from './configurator-routing.module';
 import { ConfiguratorComponent } from './configurator/configurator.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { SchemeComponent } from './scheme/scheme.component';
+import { DropdownModule } from 'primeng/primeng';
+import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    ConfiguratorRoutingModule
+    ConfiguratorRoutingModule,
+    SharedModule,
+    DropdownModule
   ],
   declarations: [ConfiguratorComponent, NavigationComponent, SchemeComponent]
 })
