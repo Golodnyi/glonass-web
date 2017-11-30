@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CompaniesService } from 'app/shared/services/companies.service';
 import { SubdivisionsService } from 'app/shared/services/subdivisions.service';
 import { CarsService } from 'app/shared/services/cars.service';
@@ -15,6 +15,8 @@ import { Subscription } from 'rxjs/Subscription';
   providers: [CompaniesService, SubdivisionsService, CarsService]
 })
 export class NavigationComponent implements OnDestroy {
+  @Output() carUpdated = new EventEmitter();
+
   public companies: Company[];
   public subdivisions: Subdivision[];
   public cars: Car[];
@@ -22,7 +24,6 @@ export class NavigationComponent implements OnDestroy {
   private subscription: Subscription = new Subscription();
   private company_id: number;
   private subdivision_id: number;
-  private car_id: number;
 
   constructor(
     private companiesService: CompaniesService,
@@ -75,6 +76,6 @@ export class NavigationComponent implements OnDestroy {
       return;
     }
 
-    this.car_id = event.value;
+    this.carUpdated.emit(event.value);
   }
 }

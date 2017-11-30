@@ -5,9 +5,9 @@
 </div>
 <div class="row">
   <div class="col-md-2">
-    <app-navigation></app-navigation>
+    <app-navigation (carUpdated)="carUpdate($event)"></app-navigation>
   </div>
   <div class="col-md-10">
-    <app-scheme></app-scheme>
+    <app-scheme [car]=car></app-scheme>
   </div>
 </div>
