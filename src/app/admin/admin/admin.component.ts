@@ -11,7 +11,6 @@ export class AdminComponent implements OnInit {
   companiesActions: MenuItem[] = [];
   usersActions: MenuItem[] = [];
   rolesActions: MenuItem[] = [];
-  monitorActions: MenuItem[] = [];
 
   constructor(private router: Router) {
     this.companiesActions = [
