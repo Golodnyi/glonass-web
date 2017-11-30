@@ -1,3 +1,7 @@
-<p>
-  scheme works!
-</p>
+<div *ngIf=!scheme>
+  Выберите машину
+</div>
+
+<div *ngIf=scheme>
+  {{scheme|json}}
+</div>

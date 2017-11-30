@@ -12,7 +12,7 @@ import { Error } from '../../../shared/models/error.model';
 import { MsgService } from '../../../shared/services/msg';
 
 @Injectable()
-export class SensorsService {
+export class SchemeService {
     private host: string = environment.host;
 
     constructor(
@@ -21,8 +21,8 @@ export class SensorsService {
         private msgService: MsgService) {
     }
 
-    public overallScheme(car_id: Car): Observable<Scheme> {
-        return this.http.get(this.host + '/v1/cars/' + car_id + '/overall-scheme')
+    public overallScheme(car: number): Observable<Scheme> {
+        return this.http.get(this.host + '/v1/cars/' + car + '/overall-scheme')
             .map((response: any) => {
                 console.log(response);
                 return response;
