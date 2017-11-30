@@ -53,6 +53,7 @@ export class NavigationComponent implements OnDestroy {
     this.subdivisionsService.all_resync(this.company_id).subscribe(
       subdivisions => {
         this.subdivisions = subdivisions;
+        this.cars = null;
       }
     );
   }
