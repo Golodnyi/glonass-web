@@ -3,9 +3,9 @@
 </div>
 
 <div *ngIf=scheme>
-  <div *ngFor="let sensor of scheme.sensors">
-    {{sensor.id}} {{sensor.name}}
-    <br/> {{sensor.model.id}} {{sensor.model.name}} {{sensor.model.units}} {{sensor.model.port}}
-    <hr/>
+  <div class="col-md-4" *ngFor="let sensor of scheme.sensors">
+    <label>{{sensor.name}}</label>
+    <br/>
+    <input type="text" size="30" value="{{sensor.model.port}}" pInputText>
   </div>
 </div>
