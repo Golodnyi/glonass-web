@@ -70,4 +70,8 @@ export class AdminComponent implements OnInit {
   public monitor() {
     this.router.navigate(['/admin/monitoring']);
   }
+
+  public configurator() {
+    this.router.navigate(['/admin/configurator']);
+  }
 }
