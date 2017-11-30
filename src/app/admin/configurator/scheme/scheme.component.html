@@ -3,5 +3,9 @@
 </div>
 
 <div *ngIf=scheme>
-  {{scheme|json}}
+  <div *ngFor="let sensor of scheme.sensors">
+    {{sensor.id}} {{sensor.name}}
+    <br/> {{sensor.model.id}} {{sensor.model.name}} {{sensor.model.units}} {{sensor.model.port}}
+    <hr/>
+  </div>
 </div>

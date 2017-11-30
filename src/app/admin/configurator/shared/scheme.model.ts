@@ -1,5 +1,7 @@
+import { ISchemeItem } from './schemeItem.model';
+
 export interface IScheme {
-    sensors;
+    sensors: ISchemeItem[];
     allowedPorts;
     usedPorts;
     unusedPorts;
