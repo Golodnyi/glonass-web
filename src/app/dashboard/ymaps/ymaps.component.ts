@@ -66,7 +66,7 @@ export class YmapsComponent implements OnDestroy, OnChanges {
           this.map.geoObjects.add(
             new ymaps.Circle([[point[0], point[1]], 1], {}, {
               fillColor: point[2],
-              strokeColor: point[2],
+              strokeColor: point[2]
             })
           );
         });
@@ -78,7 +78,7 @@ export class YmapsComponent implements OnDestroy, OnChanges {
         }, {
           iconLayout: 'default#image',
           iconImageHref: '/assets/car.png',
-          iconImageSize: [32, 32],
+          iconImageSize: [32, 32]
         }));
       });
 

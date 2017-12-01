@@ -22,7 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DropdownModule
   ],
   declarations: [UsersComponent, NavigationComponent, UserCreateComponent, UserUpdateComponent],
-  providers: [],
+  providers: []
 })
 export class UsersModule {
 }

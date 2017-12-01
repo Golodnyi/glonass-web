@@ -16,10 +16,10 @@ const routes: Routes = [{
       children: [
         {path: 'charts', component: ChartsComponent},
         {path: 'map', component: MapComponent},
-        {path: 'table', component: TableComponent},
+        {path: 'table', component: TableComponent}
       ]
     },
-    {path: 'company/:company', component: CompanyComponent},
+    {path: 'company/:company', component: CompanyComponent}
   ]
 }];
 

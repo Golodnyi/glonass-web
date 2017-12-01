@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '', component: UsersComponent,
     children: [
       {path: 'user/create', component: UserCreateComponent},
-      {path: 'user/:user', component: UserUpdateComponent},
+      {path: 'user/:user', component: UserUpdateComponent}
     ]
   }
 ];

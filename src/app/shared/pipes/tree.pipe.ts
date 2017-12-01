@@ -19,7 +19,7 @@ export class TreePipe implements PipeTransform {
           expanded: expanded,
           collapsedIcon: 'fa-folder',
           leaf: leaf || false,
-          selectable: selectable || false,
+          selectable: selectable || false
         }
       );
     });

@@ -55,7 +55,7 @@ import { EngineUpdateComponent } from './engine/update/update.component';
     CarComponent, EngineComponent, SubdivisionCreateComponent, SubdivisionUpdateComponent,
     CarCreateComponent, CarUpdateComponent, EngineCreateComponent, EngineUpdateComponent
   ],
-  providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService, TreePipe, CarModelsService],
+  providers: [CompaniesService, SubdivisionsService, CarsService, EnginesService, TreePipe, CarModelsService]
 })
 export class CompaniesModule {
 }

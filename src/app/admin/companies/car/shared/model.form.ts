@@ -11,7 +11,7 @@ export class CarModelForm {
 
   public create(carModel: CarModel) {
     this.form = this.fb.group({
-      name: [carModel.name, Validators.required],
+      name: [carModel.name, Validators.required]
     });
 
     return this.form;

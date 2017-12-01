@@ -12,7 +12,7 @@ export class SubdivisionCreateForm {
   public create(subdivision: Subdivision) {
     this.form = this.fb.group({
       name: [subdivision.name, Validators.required],
-      company_id: [subdivision.company_id, Validators.required],
+      company_id: [subdivision.company_id, Validators.required]
     });
 
     return this.form;

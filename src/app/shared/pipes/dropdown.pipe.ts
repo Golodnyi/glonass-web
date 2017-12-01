@@ -16,7 +16,7 @@ export class DropDownPipe implements PipeTransform {
       items.push(
         {
           'label': item.name,
-          'value': item.id,
+          'value': item.id
         }
       );
     });

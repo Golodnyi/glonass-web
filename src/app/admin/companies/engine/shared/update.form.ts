@@ -13,7 +13,7 @@ export class EngineUpdateForm {
     this.form = this.fb.group({
       esn: [newEngine.engine.esn, Validators.required],
       model_id: [newEngine.engine.model_id, Validators.required],
-      company_id: [newEngine.engine.company_id, Validators.required],
+      company_id: [newEngine.engine.company_id, Validators.required]
     });
 
     return this.form;

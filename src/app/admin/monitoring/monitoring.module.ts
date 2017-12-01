@@ -12,7 +12,7 @@ import { PanelModule } from 'primeng/primeng';
     MonitoringRoutingModule,
     PanelModule
   ],
-  declarations: [MonitoringComponent, StateComponent],
+  declarations: [MonitoringComponent, StateComponent]
 })
 export class MonitoringModule {
 }

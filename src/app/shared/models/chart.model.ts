@@ -25,13 +25,13 @@ export class Chart {
     shadow: false,
     style: {
       fontSize: '14px'
-    },
+    }
   };
   public scrollbar = {
     liveRedraw: true
   };
   public navigator = {
-    adaptToUpdatedData: true,
+    adaptToUpdatedData: true
   };
   public plotOptions = {
     pie: {

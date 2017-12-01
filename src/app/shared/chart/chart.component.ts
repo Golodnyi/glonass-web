@@ -18,15 +18,6 @@ export class ChartComponent implements OnChanges, OnDestroy {
   public chart: any;
   @Input() data: any;
 
-  constructor(private el: ElementRef) {
-    Highcharts.Point.prototype.highlight = function () {
-      this.onMouseOver();
-    };
-    Highcharts.Pointer.prototype.reset = function () {
-      return undefined;
-    };
-  }
-
   @Input()
   set options(options: any) {
     if (this.chart) {
@@ -57,6 +48,15 @@ export class ChartComponent implements OnChanges, OnDestroy {
       // TODO: получение SVG графика
       // console.log(this.chart.getSVG());
     }
+  }
+
+  constructor(private el: ElementRef) {
+    Highcharts.Point.prototype.highlight = function () {
+      this.onMouseOver();
+    };
+    Highcharts.Pointer.prototype.reset = function () {
+      return undefined;
+    };
   }
 
   ngOnChanges(changes: any) {

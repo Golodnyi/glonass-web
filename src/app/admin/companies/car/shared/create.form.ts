@@ -14,7 +14,7 @@ export class CarCreateForm {
       model_id: [car.model_id, Validators.required],
       name: [car.name, Validators.required],
       company_id: [car.company_id, Validators.required],
-      subdivision_id: [car.subdivision_id, Validators.required],
+      subdivision_id: [car.subdivision_id, Validators.required]
     });
 
     return this.form;

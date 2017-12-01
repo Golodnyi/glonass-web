@@ -12,7 +12,7 @@ import { SplitButtonModule, TabMenuModule, ToolbarModule } from 'primeng/primeng
     SplitButtonModule,
     ToolbarModule
   ],
-  declarations: [AdminComponent],
+  declarations: [AdminComponent]
 })
 export class AdminModule {
 }

@@ -4,7 +4,7 @@ import { ConfiguratorComponent } from './configurator/configurator.component';
 
 const routes: Routes = [
   {
-    path: '', component: ConfiguratorComponent,
+    path: '', component: ConfiguratorComponent
   }
 ];
 
