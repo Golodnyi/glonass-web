@@ -14,14 +14,14 @@ const routes: Routes = [
   {
     path: '', component: CompaniesComponent,
     children: [
-      { path: 'company/create', component: CompanyCreateComponent },
-      { path: 'company/:company', component: CompanyUpdateComponent },
-      { path: 'subdivision/create', component: SubdivisionCreateComponent },
-      { path: 'car/create', component: CarCreateComponent },
-      { path: 'engine/create', component: EngineCreateComponent },
-      { path: 'company/:company/subdivision/:subdivision', component: SubdivisionUpdateComponent },
-      { path: 'company/:company/subdivision/:subdivision/car/:car', component: CarUpdateComponent },
-      { path: 'company/:company/subdivision/:subdivision/car/:car/engine/:engine', component: EngineUpdateComponent }
+      {path: 'company/create', component: CompanyCreateComponent},
+      {path: 'company/:company', component: CompanyUpdateComponent},
+      {path: 'subdivision/create', component: SubdivisionCreateComponent},
+      {path: 'car/create', component: CarCreateComponent},
+      {path: 'engine/create', component: EngineCreateComponent},
+      {path: 'company/:company/subdivision/:subdivision', component: SubdivisionUpdateComponent},
+      {path: 'company/:company/subdivision/:subdivision/car/:car', component: CarUpdateComponent},
+      {path: 'company/:company/subdivision/:subdivision/car/:car/engine/:engine', component: EngineUpdateComponent}
     ]
   }
 ];

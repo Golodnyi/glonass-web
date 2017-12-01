@@ -18,4 +18,5 @@ import { SharedModule } from 'app/shared/shared.module';
   ],
   declarations: [ConfiguratorComponent, NavigationComponent, SchemeComponent]
 })
-export class ConfiguratorModule { }
+export class ConfiguratorModule {
+}

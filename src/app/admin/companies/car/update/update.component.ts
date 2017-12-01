@@ -26,12 +26,12 @@ export class CarUpdateComponent implements OnDestroy {
   private subscription: Subscription = new Subscription();
 
   constructor(private msg: MsgService,
-    private carServices: CarsService,
-    private carForm: CarUpdateForm,
-    private router: Router,
-    private subdivisionsService: SubdivisionsService,
-    private carModelsService: CarModelsService,
-    private route: ActivatedRoute) {
+              private carServices: CarsService,
+              private carForm: CarUpdateForm,
+              private router: Router,
+              private subdivisionsService: SubdivisionsService,
+              private carModelsService: CarModelsService,
+              private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       const car_id = +params['car'];
       const company_id = +params['company'];

@@ -2,25 +2,27 @@
 <form *ngIf="user" [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
     <label for="login">Логин:</label>
     <br/>
-    <input class="input-sm" id="login" type="text" pInputText formControlName="login" placeholder="Логин" />
+    <input class="input-sm" id="login" type="text" pInputText formControlName="login" placeholder="Логин"/>
     <br/>
     <label for="password">Пароль:</label>
     <br/>
-    <input class="input-sm" id="password" type="password" pInputText formControlName="password" placeholder="Пароль" />
+    <input class="input-sm" id="password" type="password" pInputText formControlName="password" placeholder="Пароль"/>
     <br/>
     <label for="name">Имя:</label>
     <br/>
-    <input class="input-sm" id="name" type="text" pInputText formControlName="name" placeholder="Имя" />
+    <input class="input-sm" id="name" type="text" pInputText formControlName="name" placeholder="Имя"/>
     <br/>
     <label for="email">E-mail:</label>
     <br/>
-    <input class="input-sm" id="email" type="email" pInputText formControlName="email" placeholder="email" />
+    <input class="input-sm" id="email" type="email" pInputText formControlName="email" placeholder="email"/>
     <br/>
     <label for="roles">Роль:</label>
     <br/>
-    <p-dropdown id="roles" [options]="roles | DropDown" formControlName="role_id" [filter]="true" [style]="{'width':'190px'}"></p-dropdown>
+    <p-dropdown id="roles" [options]="roles | DropDown" formControlName="role_id" [filter]="true"
+                [style]="{'width':'190px'}"></p-dropdown>
     <br/>
     <hr/>
-    <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton label="Изменить"></button>
+    <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton
+            label="Изменить"></button>
     <button pButton type="button" label="Отмена" routerLink="/admin/users"></button>
 </form>

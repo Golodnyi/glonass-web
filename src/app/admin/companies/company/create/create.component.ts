@@ -24,10 +24,10 @@ export class CompanyCreateComponent {
   public submit: boolean;
 
   constructor(private authService: AuthService,
-    private msg: MsgService,
-    private companiesService: CompaniesService,
-    private companyForm: CompanyForm,
-    private router: Router) {
+              private msg: MsgService,
+              private companiesService: CompaniesService,
+              private companyForm: CompanyForm,
+              private router: Router) {
     this.form = this.companyForm.create(this.company);
     this.form.valueChanges
       .map((value) => {

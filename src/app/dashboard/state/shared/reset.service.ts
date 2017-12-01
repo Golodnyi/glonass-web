@@ -16,9 +16,9 @@ export class ResetService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-    private authService: AuthService,
-    private router: Router,
-    private msgService: MsgService) {
+              private authService: AuthService,
+              private router: Router,
+              private msgService: MsgService) {
   }
 
   public reset(data: any): Observable<any> {

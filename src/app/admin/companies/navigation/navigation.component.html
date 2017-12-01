@@ -1,7 +1,8 @@
 <div *ngIf="companies">
     <h3>Компании</h3>
-    <p-tree [value]="companies | tree : false : true" selectionMode="single" [(selection)]="node" (onNodeExpand)="onNodeExpand($event)"
-        (onNodeSelect)="onNodeSelect($event)">
+    <p-tree [value]="companies | tree : false : true" selectionMode="single" [(selection)]="node"
+            (onNodeExpand)="onNodeExpand($event)"
+            (onNodeSelect)="onNodeSelect($event)">
         <ng-template let-node pTemplate="default">
             <span>{{node.data.name}}</span>
         </ng-template>

@@ -1,17 +1,20 @@
 <div class="text-center">
-  <div *ngIf="companies">
-    <label for="company">Компания:</label>
-    <br/>
-    <p-dropdown id="company" [options]="companies | DropDown" (onChange)="companySelect($event)" [filter]="true" [style]="{'width':'190px'}"></p-dropdown>
-  </div>
-  <div *ngIf="subdivisions">
-    <label for="subdivision">Подразделение:</label>
-    <br/>
-    <p-dropdown id="subdivision" [options]="subdivisions | DropDown" (onChange)="subdivisionSelect($event)" [filter]="true" [style]="{'width':'190px'}"></p-dropdown>
-  </div>
-  <div *ngIf="cars">
-    <label for="cars">Машина:</label>
-    <br/>
-    <p-dropdown id="cars" [options]="cars | DropDown" (onChange)="carSelect($event)" [filter]="true" [style]="{'width':'190px'}"></p-dropdown>
-  </div>
+    <div *ngIf="companies">
+        <label for="company">Компания:</label>
+        <br/>
+        <p-dropdown id="company" [options]="companies | DropDown" (onChange)="companySelect($event)" [filter]="true"
+                    [style]="{'width':'190px'}"></p-dropdown>
+    </div>
+    <div *ngIf="subdivisions">
+        <label for="subdivision">Подразделение:</label>
+        <br/>
+        <p-dropdown id="subdivision" [options]="subdivisions | DropDown" (onChange)="subdivisionSelect($event)"
+                    [filter]="true" [style]="{'width':'190px'}"></p-dropdown>
+    </div>
+    <div *ngIf="cars">
+        <label for="cars">Машина:</label>
+        <br/>
+        <p-dropdown id="cars" [options]="cars | DropDown" (onChange)="carSelect($event)" [filter]="true"
+                    [style]="{'width':'190px'}"></p-dropdown>
+    </div>
 </div>

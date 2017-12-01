@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Car } from 'app/shared/models/car.model';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-configurator',
@@ -10,7 +8,8 @@ import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 export class ConfiguratorComponent {
   public car: number;
 
-  constructor() { }
+  constructor() {
+  }
 
   public carUpdate(car: number) {
     this.car = car;

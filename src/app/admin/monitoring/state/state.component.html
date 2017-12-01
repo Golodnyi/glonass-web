@@ -1,7 +1,9 @@
-<p-panel *ngIf="state" header="{{state.model.name}} {{state.engine_model ? '(' + state.engine_model.name + ')' : ''}}" [toggleable]="false">
+<p-panel *ngIf="state" header="{{state.model.name}} {{state.engine_model ? '(' + state.engine_model.name + ')' : ''}}"
+         [toggleable]="false">
     <div>
         <div class="alert alert-success" *ngIf="online(state.date)">В сети</div>
-        <div class="alert alert-warning" *ngIf="!online(state.date)">Не в сети, последний сеанс связи: {{lastDate(state.date)}}
+        <div class="alert alert-warning" *ngIf="!online(state.date)">Не в сети, последний сеанс связи:
+            {{lastDate(state.date)}}
         </div>
     </div>
     <div>

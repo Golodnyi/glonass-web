@@ -23,10 +23,10 @@ export class CompanyUpdateComponent {
   public submit: boolean;
 
   constructor(private route: ActivatedRoute,
-    private companiesService: CompaniesService,
-    private msg: MsgService,
-    private companyForm: CompanyForm,
-    private router: Router) {
+              private companiesService: CompaniesService,
+              private msg: MsgService,
+              private companyForm: CompanyForm,
+              private router: Router) {
     this.route.params.subscribe(params => {
       const company_id = +params['company'];
       this.companiesService.get(company_id, true).subscribe(

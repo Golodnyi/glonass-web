@@ -23,10 +23,10 @@ export class UserCreateComponent {
   public companies: Company[];
 
   constructor(private userForm: UserForm,
-    private usersService: UsersService,
-    private companiesService: CompaniesService,
-    private msg: MsgService,
-    private router: Router) {
+              private usersService: UsersService,
+              private companiesService: CompaniesService,
+              private msg: MsgService,
+              private router: Router) {
     this.form = this.userForm.create(this.user);
     this.form.valueChanges.subscribe((data) => {
       this.user = data;

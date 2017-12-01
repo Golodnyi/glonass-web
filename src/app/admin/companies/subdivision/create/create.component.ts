@@ -24,11 +24,11 @@ export class SubdivisionCreateComponent {
   public submit: boolean;
 
   constructor(private authService: AuthService,
-    private msg: MsgService,
-    private companiesService: CompaniesService,
-    private subdivisionsService: SubdivisionsService,
-    private subdivisionCreateForm: SubdivisionCreateForm,
-    private router: Router) {
+              private msg: MsgService,
+              private companiesService: CompaniesService,
+              private subdivisionsService: SubdivisionsService,
+              private subdivisionCreateForm: SubdivisionCreateForm,
+              private router: Router) {
     this.form = this.subdivisionCreateForm.create(this.subdivision);
     this.form.valueChanges.subscribe((data) => {
       this.subdivision = data;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CompaniesService } from 'app/shared/services/companies.service';
 import { SubdivisionsService } from 'app/shared/services/subdivisions.service';
 import { CarsService } from 'app/shared/services/cars.service';
@@ -25,11 +25,9 @@ export class NavigationComponent implements OnDestroy {
   private company_id: number;
   private subdivision_id: number;
 
-  constructor(
-    private companiesService: CompaniesService,
-    private subdivisionsService: SubdivisionsService,
-    private carsService: CarsService
-  ) {
+  constructor(private companiesService: CompaniesService,
+              private subdivisionsService: SubdivisionsService,
+              private carsService: CarsService) {
     this.subscription.add(
       this.companiesService.all(true).subscribe(
         companies => {

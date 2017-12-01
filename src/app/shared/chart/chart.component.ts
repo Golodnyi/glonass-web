@@ -43,7 +43,7 @@ export class ChartComponent implements OnChanges, OnDestroy {
               if (chart === undefined || chart === currentChart) {
                 return false;
               }
-              chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, { trigger: 'syncExtremes' });
+              chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {trigger: 'syncExtremes'});
             });
           }
         }

@@ -22,11 +22,11 @@ export class NavigationComponent implements OnDestroy {
   private treeSubscribe = [];
 
   constructor(private companiesService: CompaniesService,
-    private subdivisionsService: SubdivisionsService,
-    private carsService: CarsService,
-    private msgService: MsgService,
-    private router: Router,
-    private tree: TreePipe) {
+              private subdivisionsService: SubdivisionsService,
+              private carsService: CarsService,
+              private msgService: MsgService,
+              private router: Router,
+              private tree: TreePipe) {
     this.companySubscribe.add(
       this.companiesService.all(true).subscribe(
         companies => {

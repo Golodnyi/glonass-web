@@ -3,11 +3,10 @@ import { CarsService } from '../../shared/services/cars.service';
 import { ChartsService } from '../../shared/services/charts.service';
 import { IState } from '../state/shared/state.model';
 import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
 import { EnginesService } from '../../shared/services/engines.service';
 import { Engine } from '../../shared/models/engine.model';
 import { Car } from '../../shared/models/car.model';
-import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,8 +21,8 @@ export class DashboardComponent implements OnDestroy {
   private timer = TimerObservable.create(0, 5000);
 
   constructor(private carsService: CarsService,
-    private chartsService: ChartsService,
-    private engineService: EnginesService) {
+              private chartsService: ChartsService,
+              private engineService: EnginesService) {
     this.subscription.add(
       this.chartsService.getCar().subscribe(car => {
         this.car = car;

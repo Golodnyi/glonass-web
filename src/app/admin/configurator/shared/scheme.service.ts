@@ -7,28 +7,26 @@ import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Scheme } from './scheme.model';
-import { Car } from '../../../shared/models/car.model';
 import { Error } from '../../../shared/models/error.model';
 import { MsgService } from '../../../shared/services/msg';
 
 @Injectable()
 export class SchemeService {
-    private host: string = environment.host;
+  private host: string = environment.host;
 
-    constructor(
-        private http: HttpClient,
-        private router: Router,
-        private msgService: MsgService) {
-    }
+  constructor(private http: HttpClient,
+              private router: Router,
+              private msgService: MsgService) {
+  }
 
-    public overallScheme(car: number): Observable<Scheme> {
-        return this.http.get(this.host + '/v1/cars/' + car + '/overall-scheme')
-            .map((response: any) => {
-                console.log(response);
-                return response;
-            }).catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
-                return Observable.throw(error.statusText || 'Server error');
-            });
-    }
+  public overallScheme(car: number): Observable<Scheme> {
+    return this.http.get(this.host + '/v1/cars/' + car + '/overall-scheme')
+      .map((response: any) => {
+        console.log(response);
+        return response;
+      }).catch((error: any) => {
+        Error.check(error, this.router, this.msgService);
+        return Observable.throw(error.statusText || 'Server error');
+      });
+  }
 }

@@ -17,25 +17,25 @@ export class CompaniesService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-    private router: Router,
-    private msgService: MsgService) {
+              private router: Router,
+              private msgService: MsgService) {
   }
 
   public all(resync = false): Observable<Company[]> {
     if (resync) {
       this.http.get(this.host + '/v1/companies')
         .subscribe((response: any) => {
-          const companies = [];
-          response.forEach(item => {
-            companies.push(Object.assign(new Company(), item));
+            const companies = [];
+            response.forEach(item => {
+              companies.push(Object.assign(new Company(), item));
+            });
+            this.companies.next(companies);
+          },
+          error => {
+            this.companies.next([]);
+            Error.check(error, this.router, this.msgService);
+            this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
           });
-          this.companies.next(companies);
-        },
-        error => {
-          this.companies.next([]);
-          Error.check(error, this.router, this.msgService);
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
-        });
     }
     return this.companies.asObservable();
   }
