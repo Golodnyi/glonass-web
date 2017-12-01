@@ -19,7 +19,7 @@ export class PdfComponent {
   public prepare() {
     this.content = {
       content: [
-        { text: 'Отчет с ' + this.filter.before + ' по ' + this.filter.after, fontSize: 16, alignment: 'center' },
+        {text: 'Отчет с ' + this.filter.before + ' по ' + this.filter.after, fontSize: 16, alignment: 'center'}
       ]
     };
 

@@ -13,7 +13,7 @@ export class CompanyForm {
   public create(company: Company) {
     this.form = this.fb.group({
       name: [company.name, Validators.required],
-      active_till: [moment(company.active_till).toDate(), Validators.required],
+      active_till: [moment(company.active_till).toDate(), Validators.required]
     });
 
     return this.form;

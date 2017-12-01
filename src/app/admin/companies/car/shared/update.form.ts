@@ -14,7 +14,7 @@ export class CarUpdateForm {
       id: [car.id, Validators.required],
       model_id: [car.model_id, Validators.required],
       name: [car.name, Validators.required],
-      subdivision_id: [car.subdivision_id, Validators.required],
+      subdivision_id: [car.subdivision_id, Validators.required]
     });
 
     return this.form;

@@ -10,7 +10,7 @@ import { MsgService } from '../shared/services/msg';
 export class LogoutComponent {
 
   constructor(private authService: AuthService,
-    private msgService: MsgService) {
+              private msgService: MsgService) {
     this.authService.logout().subscribe(
       logout => {
         if (logout === false) {

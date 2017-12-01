@@ -9,7 +9,7 @@ import { ColorPipe } from './pipes/color.pipe';
 
 @NgModule({
   imports: [
-    CommonModule,
+    CommonModule
   ],
   declarations: [
     TreePipe, DropDownPipe, ChartComponent, TablePipe, KeysPipe, ColorPipe

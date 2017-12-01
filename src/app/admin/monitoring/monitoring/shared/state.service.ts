@@ -14,9 +14,9 @@ export class StateService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-    private router: Router,
-    private authService: AuthService,
-    private msgService: MsgService) {
+              private router: Router,
+              private authService: AuthService,
+              private msgService: MsgService) {
   }
 
   public getMonitor(warning: boolean): Observable<any> {

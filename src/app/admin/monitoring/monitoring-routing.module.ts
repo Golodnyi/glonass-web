@@ -4,7 +4,7 @@ import { MonitoringComponent } from './monitoring/monitoring.component';
 
 const routes: Routes = [
   {
-    path: '', component: MonitoringComponent,
+    path: '', component: MonitoringComponent
   }
 ];
 

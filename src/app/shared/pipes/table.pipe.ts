@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { isArray } from 'util';
 
-@Pipe({ name: 'table' })
+@Pipe({name: 'table'})
 export class TablePipe implements PipeTransform {
   transform(data: any): any {
     const temp = [];

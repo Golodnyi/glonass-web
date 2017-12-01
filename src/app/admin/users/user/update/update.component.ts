@@ -20,10 +20,10 @@ export class UserUpdateComponent {
   public submit: boolean;
 
   constructor(private route: ActivatedRoute,
-    private usersService: UsersService,
-    private userForm: UserForm,
-    private msg: MsgService,
-    private router: Router) {
+              private usersService: UsersService,
+              private userForm: UserForm,
+              private msg: MsgService,
+              private router: Router) {
     this.route.params.subscribe(params => {
       const user_id = +params['user'];
       this.usersService.get(user_id).subscribe(

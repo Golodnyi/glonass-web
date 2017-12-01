@@ -19,8 +19,8 @@ export class CarsService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-    private router: Router,
-    private msgService: MsgService) {
+              private router: Router,
+              private msgService: MsgService) {
   }
 
   public all(company: number, subdivision: number, resync = false): Observable<Car[]> {

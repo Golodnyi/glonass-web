@@ -19,8 +19,8 @@ export class LoginComponent {
   public form: FormGroup;
 
   constructor(private authService: AuthService,
-    private msgService: MsgService,
-    private authForm: AuthForm) {
+              private msgService: MsgService,
+              private authForm: AuthForm) {
     this.form = this.authForm.create(this.auth);
     this.form.valueChanges.subscribe((data) => {
       this.auth = data;

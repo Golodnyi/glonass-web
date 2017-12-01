@@ -31,12 +31,12 @@ export class EngineUpdateComponent implements OnInit {
   private subscription: Subscription = new Subscription();
 
   constructor(private msg: MsgService,
-    private engineForm: EngineUpdateForm,
-    private router: Router,
-    private companiesService: CompaniesService,
-    private enginesService: EnginesService,
-    private route: ActivatedRoute,
-    private engineModelsService: EngineModelsService) {
+              private engineForm: EngineUpdateForm,
+              private router: Router,
+              private companiesService: CompaniesService,
+              private enginesService: EnginesService,
+              private route: ActivatedRoute,
+              private engineModelsService: EngineModelsService) {
     this.route.params.subscribe(params => {
       const company_id = +params['company'];
       const subdivision_id = +params['subdivision'];

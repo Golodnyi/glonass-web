@@ -15,7 +15,7 @@ export class EngineCreateForm {
       esn: [newEngine.engine.esn, Validators.required],
       model_id: [newEngine.engine.model_id, Validators.required],
       company_id: [newEngine.engine.company_id, Validators.required],
-      subdivision_id: [newEngine.subdivision_id, Validators.required],
+      subdivision_id: [newEngine.subdivision_id, Validators.required]
     });
 
     return this.form;

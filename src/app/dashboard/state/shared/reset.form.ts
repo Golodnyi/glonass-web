@@ -12,7 +12,7 @@ export class ResetForm {
   public create() {
     this.form = this.fb.group({
       created_at: [moment(new Date()).toDate(), Validators.required],
-      comment: ['', Validators.required],
+      comment: ['', Validators.required]
     });
 
     return this.form;

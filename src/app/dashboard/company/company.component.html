@@ -3,12 +3,14 @@
         <p-tabView>
             <p-tabPanel header="Состояние">
                 <p-accordion *ngIf="subdivisions.length" [multiple]="true">
-                    <p-accordionTab *ngFor="let subdivision of subdivisions" header="{{subdivision.name}}" [selected]="true">
+                    <p-accordionTab *ngFor="let subdivision of subdivisions" header="{{subdivision.name}}"
+                                    [selected]="true">
                         <div class="row">
                             <div *ngIf="!subdivision.cars || !subdivision.cars.length" class="col-md-pull-12">
                                 Машины отсутствуют
                             </div>
-                            <div class="col-md-4" *ngFor="let car of subdivision.cars" routerLink="/dashboard/view/{{car.id}}/charts" style="cursor: pointer;">
+                            <div class="col-md-4" *ngFor="let car of subdivision.cars"
+                                 routerLink="/dashboard/view/{{car.id}}/charts" style="cursor: pointer;">
                                 <app-state [compact]="true" [toggleable]="false" [state]="car.state" [car]="car">
                                 </app-state>
                             </div>

@@ -25,8 +25,8 @@ export class FilterComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   constructor(private filterForm: FilterForm,
-    private chartsService: ChartsService,
-    private router: Router) {
+              private chartsService: ChartsService,
+              private router: Router) {
   }
 
   ngOnDestroy() {
@@ -52,7 +52,7 @@ export class FilterComponent implements OnInit, OnDestroy {
             this.submit = false;
           });
       }
-    )
+      )
     );
   }
 
@@ -64,13 +64,13 @@ export class FilterComponent implements OnInit, OnDestroy {
       this.filter.charts = [this.filter.charts];
     }
     qparams = this.filter;
-    this.router.navigate([], { queryParams: qparams });
+    this.router.navigate([], {queryParams: qparams});
   }
 
   public onDisabled() {
     this.filter.enabled = false;
     this.submit = false;
-    this.router.navigate([], { queryParams: {} });
+    this.router.navigate([], {queryParams: {}});
     return false;
   }
 }

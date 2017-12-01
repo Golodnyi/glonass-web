@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'color' })
+@Pipe({name: 'color'})
 export class ColorPipe implements PipeTransform {
   transform(plot: any, value: any): any {
     if (plot === undefined) {

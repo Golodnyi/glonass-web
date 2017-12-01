@@ -11,7 +11,7 @@ export class SubdivisionUpdateForm {
 
   public create(subdivision: Subdivision) {
     this.form = this.fb.group({
-      name: [subdivision.name, Validators.required],
+      name: [subdivision.name, Validators.required]
     });
 
     return this.form;

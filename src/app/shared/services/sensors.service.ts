@@ -16,8 +16,8 @@ export class SensorsService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-    private router: Router,
-    private msgService: MsgService) {
+              private router: Router,
+              private msgService: MsgService) {
   }
 
   public all(car: number, resync = false): Observable<any> {

@@ -2,8 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { StateService } from './shared/state.service';
 import { State } from './shared/state.model';
-import { Observable } from 'rxjs/Observable';
-import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 @Component({
   selector: 'app-monitoring',

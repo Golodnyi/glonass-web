@@ -8,8 +8,7 @@ import { ChartsService } from '../../shared/services/charts.service';
 import { MapCar } from '../ymaps/shared/map-car.model';
 import { MapPolyLines } from '../ymaps/shared/map-polylines.model';
 import { Car } from '../../shared/models/car.model';
-import { Observable } from 'rxjs/Observable';
-import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 @Component({
   selector: 'app-company',
@@ -27,9 +26,9 @@ export class CompanyComponent implements OnDestroy {
   private timer = TimerObservable.create(0, 5000);
 
   constructor(private subdivisionsService: SubdivisionsService,
-    private carsService: CarsService,
-    private route: ActivatedRoute,
-    private chartsService: ChartsService) {
+              private carsService: CarsService,
+              private route: ActivatedRoute,
+              private chartsService: ChartsService) {
     /**
      * TODO: нужен рефакторинг
      */

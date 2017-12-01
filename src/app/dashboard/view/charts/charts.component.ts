@@ -2,9 +2,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { ChartsService } from '../../../shared/services/charts.service';
 import { Car } from '../../../shared/models/car.model';
-import { Observable } from 'rxjs/Observable';
 import { AutoRefresh } from '../../../shared/models/auto-refresh.model';
-import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 @Component({
   selector: 'app-charts-view',

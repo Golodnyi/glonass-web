@@ -23,10 +23,10 @@ export class SubdivisionUpdateComponent {
   public submit: boolean;
 
   constructor(private msg: MsgService,
-    private subdivisionsService: SubdivisionsService,
-    private route: ActivatedRoute,
-    private companiesService: CompaniesService,
-    private subdivisionUpdateForm: SubdivisionUpdateForm) {
+              private subdivisionsService: SubdivisionsService,
+              private route: ActivatedRoute,
+              private companiesService: CompaniesService,
+              private subdivisionUpdateForm: SubdivisionUpdateForm) {
     this.route.params.subscribe(params => {
       const company_id: number = +params['company'];
       const subdivision_id: number = +params['subdivision'];
