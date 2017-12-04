@@ -15,14 +15,13 @@ export class SchemeService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private msgService: MsgService) {
+    private router: Router,
+    private msgService: MsgService) {
   }
 
   public overallScheme(car: number): Observable<Scheme> {
     return this.http.get(this.host + '/v1/cars/' + car + '/overall-scheme')
       .map((response: any) => {
-        console.log(response);
         return response;
       }).catch((error: any) => {
         Error.check(error, this.router, this.msgService);
