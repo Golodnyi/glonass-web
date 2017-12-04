@@ -13,6 +13,7 @@ export class SchemeComponent implements OnChanges {
   @Input() car: number;
 
   public scheme: Scheme;
+  public allowedPorts = [];
 
   constructor(private schemeService: SchemeService) {
     if (this.car && this.car !== undefined) {
@@ -34,7 +35,9 @@ export class SchemeComponent implements OnChanges {
     this.schemeService.overallScheme(this.car).subscribe(
       scheme => {
         this.scheme = scheme;
-        console.log(this.scheme);
+        this.scheme.allowedPorts.forEach(item => {
+          this.allowedPorts.push({ value: item, label: item });
+        });
       }
     );
   }
