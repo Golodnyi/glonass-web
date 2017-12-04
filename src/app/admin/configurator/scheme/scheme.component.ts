@@ -35,6 +35,7 @@ export class SchemeComponent implements OnChanges {
     this.schemeService.overallScheme(this.car).subscribe(
       scheme => {
         this.scheme = scheme;
+        this.allowedPorts = [];
         this.scheme.allowedPorts.forEach(item => {
           this.allowedPorts.push({ value: item, label: item });
         });
