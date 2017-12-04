@@ -7,6 +7,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { SchemeComponent } from './scheme/scheme.component';
 import { DropdownModule, InputTextModule } from 'primeng/primeng';
 import { SharedModule } from 'app/shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { SharedModule } from 'app/shared/shared.module';
     ConfiguratorRoutingModule,
     SharedModule,
     DropdownModule,
-    InputTextModule
+    InputTextModule,
+    FormsModule
   ],
   declarations: [ConfiguratorComponent, NavigationComponent, SchemeComponent]
 })
