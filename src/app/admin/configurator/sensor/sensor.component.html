@@ -1,6 +1,25 @@
-<div *ngIf="sensor">
-  <label>{{sensor.name}}</label>
-  <br/>
+<p-panel *ngIf="sensor" header="{{sensor.name}}" [toggleable]="true">
+  <label>Порт: </label>
   <p-dropdown [options]="allowedPorts|AllowPorts:sensor.model.allowedPorts" [(ngModel)]="sensor.model.port" [filter]="true"
     [style]="{'width':'190px'}"></p-dropdown>
-</div>
+  <hr/>
+  <div *ngIf="sensor.limits">
+    <h4 class="text-center">Лимиты</h4>
+    <br/>
+    <label>Нижний желтый</label>
+    <br/>
+    <input value="{{sensor.limits.noticeLower}}" />
+    <br/>
+    <label>Верхний желтый</label>
+    <br/>
+    <input value="{{sensor.limits.noticeUpper}}" />
+    <br/>
+    <label>Нижний красный</label>
+    <br/>
+    <input value="{{sensor.limits.warningLower}}" />
+    <br/>
+    <label>Верхний красный</label>
+    <br/>
+    <input value="{{sensor.limits.warningUpper}}" />
+  </div>
+</p-panel>

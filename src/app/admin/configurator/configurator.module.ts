@@ -5,7 +5,7 @@ import { ConfiguratorRoutingModule } from './configurator-routing.module';
 import { ConfiguratorComponent } from './configurator/configurator.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { SchemeComponent } from './scheme/scheme.component';
-import { DropdownModule, InputTextModule } from 'primeng/primeng';
+import { DropdownModule, InputTextModule, PanelModule } from 'primeng/primeng';
 import { SharedModule } from 'app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { SensorComponent } from './sensor/sensor.component';
@@ -17,7 +17,8 @@ import { SensorComponent } from './sensor/sensor.component';
     SharedModule,
     DropdownModule,
     InputTextModule,
-    FormsModule
+    FormsModule,
+    PanelModule
   ],
   declarations: [ConfiguratorComponent, NavigationComponent, SchemeComponent, SensorComponent]
 })

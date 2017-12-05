@@ -3,7 +3,7 @@
 </div>
 
 <div *ngIf=scheme>
-    <div class="col-md-4" *ngFor="let sensor of scheme.sensors">
+    <div class="col-md-6" *ngFor="let sensor of scheme.sensors">
         <app-sensor [sensor]="sensor" [allowedPorts]="allowedPorts"></app-sensor>
     </div>
 </div>
