@@ -13,4 +13,16 @@ export class SensorComponent {
 
   constructor() { }
 
+  public onLimits(event: any) {
+    if (event) {
+      this.sensor.limits = {
+        noticeLower: 0,
+        noticeUpper: 0,
+        warningLower: 0,
+        warningUpper: 0
+      };
+    } else {
+      this.sensor.limits = null;
+    }
+  }
 }
