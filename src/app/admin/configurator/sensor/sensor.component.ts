@@ -40,7 +40,6 @@ export class SensorComponent {
         console.log(data);
       },
       error => {
-        console.log(error);
         this.msgService.notice(MsgService.ERROR, 'Ошибка обновления датчика', error);
       }
     );

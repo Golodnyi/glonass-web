@@ -25,7 +25,7 @@ export class SchemeService {
         return response;
       }).catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
@@ -44,12 +44,11 @@ export class SchemeService {
 
     return this.http.post(this.host + '/v1/cars/' + car + '/overall-scheme', data)
       .map((response: any) => {
-        console.log(response);
         return response;
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 }

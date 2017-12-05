@@ -17,25 +17,25 @@ export class CompaniesService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private msgService: MsgService) {
+    private router: Router,
+    private msgService: MsgService) {
   }
 
   public all(resync = false): Observable<Company[]> {
     if (resync) {
       this.http.get(this.host + '/v1/companies')
         .subscribe((response: any) => {
-            const companies = [];
-            response.forEach(item => {
-              companies.push(Object.assign(new Company(), item));
-            });
-            this.companies.next(companies);
-          },
-          error => {
-            this.companies.next([]);
-            Error.check(error, this.router, this.msgService);
-            this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
+          const companies = [];
+          response.forEach(item => {
+            companies.push(Object.assign(new Company(), item));
           });
+          this.companies.next(companies);
+        },
+        error => {
+          this.companies.next([]);
+          Error.check(error, this.router, this.msgService);
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
+        });
     }
     return this.companies.asObservable();
   }
@@ -48,7 +48,7 @@ export class CompaniesService {
         }, error => {
           this.company.next(new Company());
           Error.check(error, this.router, this.msgService);
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
         });
     }
     return this.company.asObservable();
@@ -70,7 +70,7 @@ export class CompaniesService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
@@ -88,7 +88,7 @@ export class CompaniesService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
@@ -107,7 +107,7 @@ export class CompaniesService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 }

@@ -16,8 +16,8 @@ export class SensorsService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private msgService: MsgService) {
+    private router: Router,
+    private msgService: MsgService) {
   }
 
   public all(car: number, resync = false): Observable<any> {
@@ -27,7 +27,7 @@ export class SensorsService {
           this.sensors.next(response);
         }, error => {
           Error.check(error, this.router, this.msgService);
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
         });
     }
     return this.sensors.asObservable();

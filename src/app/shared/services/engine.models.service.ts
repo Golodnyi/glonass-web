@@ -17,8 +17,8 @@ export class EngineModelsService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private msgService: MsgService) {
+    private router: Router,
+    private msgService: MsgService) {
   }
 
   public all(resync = false): Observable<EngineModel[]> {
@@ -33,7 +33,7 @@ export class EngineModelsService {
         }, error => {
           this.models.next([]);
           Error.check(error, this.router, this.msgService);
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
         });
     }
     return this.models.asObservable();
@@ -45,7 +45,7 @@ export class EngineModelsService {
         return Object.assign(new EngineModel(), response);
       }, error => {
         Error.check(error, this.router, this.msgService);
-        this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
+        this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
       });
   }
 }

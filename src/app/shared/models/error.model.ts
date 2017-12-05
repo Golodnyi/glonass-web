@@ -12,7 +12,7 @@ export class Error {
       localStorage.clear();
       router.navigate(['/login']);
     } else if (error.status === 500) {
-      msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText);
+      msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message);
     }
   }
 }

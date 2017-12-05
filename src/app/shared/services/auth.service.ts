@@ -25,9 +25,9 @@ export class AuthService {
   };
 
   constructor(private http: HttpClient,
-              private usersService: UsersService,
-              private router: Router,
-              private msg: MsgService) {
+    private usersService: UsersService,
+    private router: Router,
+    private msg: MsgService) {
     AuthService.isLoggedIn();
   }
 
@@ -62,12 +62,12 @@ export class AuthService {
         );
       })
       .catch((error: any) => {
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
   public refreshToken(): Observable<boolean> {
-    return this.http.post(this.host + '/v1/auth/refresh', {refreshToken: localStorage.getItem('Refresh')}).map(
+    return this.http.post(this.host + '/v1/auth/refresh', { refreshToken: localStorage.getItem('Refresh') }).map(
       (data: any) => {
         const jwtHelper: JwtHelper = new JwtHelper();
         const token: any = jwtHelper.decodeToken(data.accessToken);
@@ -85,19 +85,19 @@ export class AuthService {
         return true;
       })
       .catch((error: any) => {
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
   public logout(): Observable<boolean> {
-    return this.http.post(this.host + '/v1/auth/logout', {refreshToken: localStorage.getItem('Refresh')})
+    return this.http.post(this.host + '/v1/auth/logout', { refreshToken: localStorage.getItem('Refresh') })
       .map(() => {
         localStorage.clear();
         this.router.navigate(['/']);
         return true;
       })
       .catch((error: any) => {
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 

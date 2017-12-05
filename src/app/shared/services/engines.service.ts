@@ -19,8 +19,8 @@ export class EnginesService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private msgService: MsgService) {
+    private router: Router,
+    private msgService: MsgService) {
   }
 
   public get(company: number, subdivision: number, car: number, resync = false): Observable<any> {
@@ -31,7 +31,7 @@ export class EnginesService {
         }, error => {
           this.engine.next(new Engine());
           Error.check(error, this.router, this.msgService);
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
         });
     }
     return this.engine.asObservable();
@@ -44,7 +44,7 @@ export class EnginesService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
@@ -55,7 +55,7 @@ export class EnginesService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
@@ -66,7 +66,7 @@ export class EnginesService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 }
