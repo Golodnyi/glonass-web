@@ -18,7 +18,8 @@ import { SensorComponent } from './sensor/sensor.component';
     DropdownModule,
     InputTextModule,
     FormsModule,
-    PanelModule
+    PanelModule,
+    InputTextModule
   ],
   declarations: [ConfiguratorComponent, NavigationComponent, SchemeComponent, SensorComponent]
 })

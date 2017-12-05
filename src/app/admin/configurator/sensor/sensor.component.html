@@ -7,18 +7,18 @@
     <br/>
     <label>Нижний желтый</label>
     <br/>
-    <input value="{{sensor.limits.noticeLower}}" />
+    <input pInputText [(ngModel)]="sensor.limits.noticeLower" />
     <br/>
     <label>Верхний желтый</label>
     <br/>
-    <input value="{{sensor.limits.noticeUpper}}" />
+    <input pInputText [(ngModel)]="sensor.limits.noticeUpper" />
     <br/>
     <label>Нижний красный</label>
     <br/>
-    <input value="{{sensor.limits.warningLower}}" />
+    <input pInputText [(ngModel)]="sensor.limits.warningLower" />
     <br/>
     <label>Верхний красный</label>
     <br/>
-    <input value="{{sensor.limits.warningUpper}}" />
+    <input pInputText [(ngModel)]="sensor.limits.warningUpper" />
   </div>
 </p-panel>
