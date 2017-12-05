@@ -1,5 +1,5 @@
 export interface ISchemeModel {
-  id: number;
+  id: string;
   name: string;
   units: string;
   port: string;
@@ -7,7 +7,7 @@ export interface ISchemeModel {
 }
 
 export class SchemeModel implements ISchemeModel {
-  public id: number;
+  public id: string;
   public name: string;
   public units: string;
   public port: string;

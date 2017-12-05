@@ -21,5 +21,7 @@
     <label>Верхний красный</label>
     <br/>
     <input pInputText [(ngModel)]="sensor.limits.warningUpper" />
+    <hr/>
   </div>
+  <button pButton type="button" (click)="submit()" label="Сохранить"></button>
 </p-panel>
