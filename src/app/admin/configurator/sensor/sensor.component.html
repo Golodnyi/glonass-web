@@ -1,8 +1,7 @@
-<p-panel *ngIf="sensor" header="{{sensor.name}}" [toggleable]="true">
+<p-panel *ngIf="sensor" header="{{sensor.name}}" [toggleable]="false">
   <label>Порт: </label>
   <p-dropdown [options]="allowedPorts|AllowPorts:sensor.model.allowedPorts" [(ngModel)]="sensor.model.port" [filter]="true"
     [style]="{'width':'190px'}"></p-dropdown>
-  <hr/>
   <div *ngIf="sensor.limits">
     <h4 class="text-center">Лимиты</h4>
     <br/>
