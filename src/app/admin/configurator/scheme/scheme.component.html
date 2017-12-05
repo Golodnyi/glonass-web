@@ -4,10 +4,6 @@
 
 <div *ngIf=scheme>
     <div class="col-md-4" *ngFor="let sensor of scheme.sensors">
-        <label>{{sensor.name}}</label>
-        <br/>
-        <p-dropdown [options]="allowedPorts|AllowPorts:sensor.model.allowedPorts" [(ngModel)]="sensor.model.port" [filter]="true"
-            [style]="{'width':'190px'}"></p-dropdown>
+        <app-sensor [sensor]="sensor" [allowedPorts]="allowedPorts"></app-sensor>
     </div>
 </div>
-{{scheme|json}}

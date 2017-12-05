@@ -8,6 +8,7 @@ import { SchemeComponent } from './scheme/scheme.component';
 import { DropdownModule, InputTextModule } from 'primeng/primeng';
 import { SharedModule } from 'app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { SensorComponent } from './sensor/sensor.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { FormsModule } from '@angular/forms';
     InputTextModule,
     FormsModule
   ],
-  declarations: [ConfiguratorComponent, NavigationComponent, SchemeComponent]
+  declarations: [ConfiguratorComponent, NavigationComponent, SchemeComponent, SensorComponent]
 })
 export class ConfiguratorModule {
 }

@@ -1,0 +1,6 @@
+<div *ngIf="sensor">
+  <label>{{sensor.name}}</label>
+  <br/>
+  <p-dropdown [options]="allowedPorts|AllowPorts:sensor.model.allowedPorts" [(ngModel)]="sensor.model.port" [filter]="true"
+    [style]="{'width':'190px'}"></p-dropdown>
+</div>
