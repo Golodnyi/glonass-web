@@ -24,8 +24,8 @@ export class ChartsService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private msgService: MsgService) {
+    private router: Router,
+    private msgService: MsgService) {
   }
 
   public setFilter(filter: Filter) {
@@ -65,7 +65,7 @@ export class ChartsService {
         return response;
       }).catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
@@ -133,7 +133,7 @@ export class ChartsService {
         return response;
       }).catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 }

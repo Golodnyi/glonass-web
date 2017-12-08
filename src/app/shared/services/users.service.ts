@@ -16,8 +16,8 @@ export class UsersService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private msgService: MsgService) {
+    private router: Router,
+    private msgService: MsgService) {
   }
 
   public all(): Observable<User[]> {
@@ -32,7 +32,7 @@ export class UsersService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
@@ -43,7 +43,7 @@ export class UsersService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
@@ -54,7 +54,7 @@ export class UsersService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
@@ -65,7 +65,7 @@ export class UsersService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
@@ -80,7 +80,7 @@ export class UsersService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
@@ -91,7 +91,7 @@ export class UsersService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
@@ -102,7 +102,7 @@ export class UsersService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 }

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Scheme } from './scheme.model';
 import { Error } from '../../../shared/models/error.model';
 import { MsgService } from '../../../shared/services/msg';
+import { SchemeItem } from './schemeItem.model';
+import { SchemePostItem } from './schemePostItem.model';
 
 @Injectable()
 export class SchemeService {
@@ -25,7 +25,30 @@ export class SchemeService {
         return response;
       }).catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
+      });
+  }
+
+  public setOverallScheme(car: number, sensor: SchemeItem): Observable<any> {
+    const data = new SchemePostItem();
+    data.id = car;
+    data.sensor_id = sensor.id;
+    data.sensor_model = sensor.model.id;
+    data.port = sensor.model.port;
+
+    if (sensor.limits) {
+      data.limits = sensor.limits;
+    } else {
+      delete data.limits;
+    }
+
+    return this.http.post(this.host + '/v1/cars/' + car + '/overall-scheme', data)
+      .map((response: any) => {
+        return response;
+      })
+      .catch((error: any) => {
+        Error.check(error, this.router, this.msgService);
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 }

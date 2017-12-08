@@ -1,12 +1,5 @@
-<div *ngIf=!scheme class="text-center">
-    <strong>Выберите машину</strong>
-</div>
-
 <div *ngIf=scheme>
-    <div class="col-md-4" *ngFor="let sensor of scheme.sensors">
-        <label>{{sensor.name}}</label>
-        <br/>
-        <p-dropdown [options]="allowedPorts|AllowPorts:sensor.model.allowedPorts" [(ngModel)]="sensor.model.port" [filter]="true"
-            [style]="{'width':'190px'}"></p-dropdown>
+    <div *ngFor="let sensor of scheme.sensors">
+        <app-sensor class="col-md-4" [sensor]="sensor" [allowedPorts]="allowedPorts" [car]="car"></app-sensor>
     </div>
 </div>

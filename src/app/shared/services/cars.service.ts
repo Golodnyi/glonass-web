@@ -19,8 +19,8 @@ export class CarsService {
   private host: string = environment.host;
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private msgService: MsgService) {
+    private router: Router,
+    private msgService: MsgService) {
   }
 
   public all(company: number, subdivision: number, resync = false): Observable<Car[]> {
@@ -35,7 +35,7 @@ export class CarsService {
         }, error => {
           this.cars.next([]);
           Error.check(error, this.router, this.msgService);
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
         });
     }
     return this.cars.asObservable();
@@ -47,7 +47,7 @@ export class CarsService {
         return response;
       }).catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
@@ -59,7 +59,7 @@ export class CarsService {
         }, error => {
           this.car.next(new Car());
           Error.check(error, this.router, this.msgService);
-          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
+          this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
         });
     }
     return this.car.asObservable();
@@ -72,7 +72,7 @@ export class CarsService {
       }, error => {
         this.car.next(new Car());
         Error.check(error, this.router, this.msgService);
-        this.msgService.notice(MsgService.ERROR, 'Ошибка', error.statusText || 'Server error');
+        this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
       });
   }
 
@@ -90,7 +90,7 @@ export class CarsService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
@@ -110,7 +110,7 @@ export class CarsService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 
@@ -121,7 +121,7 @@ export class CarsService {
       })
       .catch((error: any) => {
         Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.statusText || 'Server error');
+        return Observable.throw(error.error.message || 'Server error');
       });
   }
 }
