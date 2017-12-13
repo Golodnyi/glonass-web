@@ -147,8 +147,8 @@ export class ChartsService {
       });
   }
 
-  public thermocouplesTable(car: number): Observable<any> {
-    return this.http.get(this.host + '/v1/cars/' + car + '/report/thermocouples/table')
+  public thermocouplesTable(car: number, page: number): Observable<any> {
+    return this.http.get(this.host + '/v1/cars/' + car + '/report/thermocouples/table?page=' + (page + 1))
       .map((response: any) => {
         return response;
       }, error => {

@@ -90,7 +90,7 @@ export class ThermocouplesTableComponent implements OnChanges, OnDestroy {
           if (!page) {
             this.subscriptionAutoRefresh = this.timer.subscribe(
               () => {
-                this.chartsService.thermocouplesTable(car).subscribe(
+                this.chartsService.thermocouplesTable(car, page).subscribe(
                   table => {
                     this.keys = this.keysPipe.transform(table.headers, false);
                     this.table = table;
@@ -100,7 +100,7 @@ export class ThermocouplesTableComponent implements OnChanges, OnDestroy {
               }
             );
           } else {
-            this.chartsService.thermocouplesTable(car).subscribe(
+            this.chartsService.thermocouplesTable(car, page).subscribe(
               table => {
                 this.keys = this.keysPipe.transform(table.headers, false);
                 this.table = table;
