@@ -67,7 +67,8 @@ import { ThermocouplesComponent } from './view/thermocouples/thermocouples.compo
   ],
   declarations: [
     DashboardComponent, NavigationComponent, ViewComponent, StateComponent,
-    FilterComponent, YmapsComponent, CompanyComponent, TableComponent, PdfComponent, ChartsComponent, MapComponent, TableViewComponent, ThermocouplesComponent
+    FilterComponent, YmapsComponent, CompanyComponent, TableComponent, PdfComponent,
+    ChartsComponent, MapComponent, TableViewComponent, ThermocouplesComponent
   ],
   providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService]
 })
