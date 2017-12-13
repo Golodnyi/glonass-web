@@ -7,7 +7,7 @@ export class MultiChart {
     spacingTop: 20,
     spacingBottom: 0,
     width: 600,
-    height: 360,
+    height: 480,
     reflow: false
   };
   public tooltip = {
@@ -45,7 +45,7 @@ export class MultiChart {
     enabled: false
   };
   public legend = {
-    enabled: false
+    enabled: true
   };
   public rangeSelector = {
     buttons: [{
@@ -97,7 +97,7 @@ export class MultiChart {
         type: option.type,
         color: option.color,
         tooltip: {
-          valueSuffix: ' ' + option.unit + ' ' + option.name
+          valueSuffix: ' ' + option.unit
         }
       });
     });
