@@ -1,5 +1,8 @@
 <div class="col-md-12">
-  <div *ngIf="options">
+  <div *ngIf="options && options.data && options.data.length">
       <app-multi-chart [options]="options"></app-multi-chart>
+  </div>
+  <div *ngIf="options && options.data && !options.data.length">
+    <h2 class="text-center">Термопары не установлены</h2>
   </div>
 </div>

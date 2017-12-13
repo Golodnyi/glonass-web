@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class ThermocouplesComponent {
   private subscription: Subscription = new Subscription();
-  public options: any = [];
+  public options: any;
 
   constructor(private chartsService: ChartsService) {
     this.chartsService.getCar().subscribe(car => {
