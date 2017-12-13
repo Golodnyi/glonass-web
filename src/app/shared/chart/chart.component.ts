@@ -63,11 +63,16 @@ export class ChartComponent implements OnChanges, OnDestroy {
     if (changes.data) {
       const data = changes.data;
       if (data) {
+        let update = false;
         if (!data.firstChange) {
           data.currentValue.forEach(point => {
+            update = true;
             this.chart.series[0].addPoint(point, false);
           });
-          this.chart.redraw(true);
+
+          if (update) {
+            this.chart.redraw(true);
+          }
         }
       }
     }

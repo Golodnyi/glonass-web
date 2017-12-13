@@ -71,13 +71,17 @@ export class MultiChartComponent implements OnDestroy, OnChanges {
       if (data) {
         if (!data.firstChange) {
           let i = 0;
+          let update = false;
           data.currentValue.forEach(item => {
             item.data.forEach(point => {
+              update = true;
               this.chart.series[i].addPoint(point, false);
             });
             i++;
           });
-          this.chart.redraw(true);
+          if (update) {
+            this.chart.redraw(true);
+          }
         }
       }
     }
