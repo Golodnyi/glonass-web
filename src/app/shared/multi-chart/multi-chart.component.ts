@@ -14,8 +14,9 @@ HighchartsOfflineExporting(Highcharts);
   styleUrls: ['./multi-chart.component.css']
 })
 
-export class MultiChartComponent implements OnDestroy {
+export class MultiChartComponent implements OnDestroy, OnChanges {
   public chart: any;
+  @Input() data: any;
 
   @Input()
   set options(options: any) {
@@ -58,31 +59,28 @@ export class MultiChartComponent implements OnDestroy {
     };
   }
 
-  @HostListener('mousemove', ['$event'])
-  public onMousemove(e) {
-    const currentPoint = this.chart.series[0].searchPoint(e, true);
-    if (currentPoint === undefined) {
-      return false;
-    }
-    Highcharts.charts.forEach(chart => {
-      if (chart === undefined || chart === this.chart) {
-        return false;
-      }
-      if (chart.series[0]) {
-        const point = chart.series[0].searchPoint({
-          chartX: currentPoint.plotX + chart.plotLeft,
-          chartY: currentPoint.plotY + chart.plotTop
-        }, true);
-        if (point) {
-          point.highlight(e);
-        }
-      }
-    });
-  }
-
   ngOnDestroy() {
     if (this.chart) {
       this.chart.destroy();
     }
   }
+
+  ngOnChanges(changes: any) {
+    if (changes.data) {
+      const data = changes.data;
+      if (data) {
+        if (!data.firstChange) {
+          let i = 0;
+          data.currentValue.forEach(item => {
+            item.data.forEach(point => {
+              this.chart.series[i].addPoint(point, false);
+            });
+            i++;
+          });
+          this.chart.redraw(true);
+        }
+      }
+    }
+  }
+
 }
