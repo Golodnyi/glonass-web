@@ -37,6 +37,7 @@ export class ViewComponent implements OnDestroy {
               private engineModelsService: EngineModelsService) {
     this.viewModeButtons.push({label: 'Графики', value: 'charts'});
     this.viewModeButtons.push({label: 'Таблица', value: 'table'});
+    this.viewModeButtons.push({label: 'Термопары', value: 'thermocouples'});
     this.viewModeButtons.push({label: 'Карта', value: 'map'});
     this.filterInit();
     this.subscription.add(

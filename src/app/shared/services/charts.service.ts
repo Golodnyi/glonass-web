@@ -136,4 +136,14 @@ export class ChartsService {
         return Observable.throw(error.error.message || 'Server error');
       });
   }
+
+  public thermocouples(car: Car): Observable<any> {
+    return this.http.get(this.host + '/v1/cars/' + car.id + '/report/thermocouples')
+      .map((response: any) => {
+        return response;
+      }, error => {
+        Error.check(error, this.router, this.msgService);
+        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+      });
+  }
 }

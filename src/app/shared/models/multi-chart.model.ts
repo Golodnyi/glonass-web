@@ -90,14 +90,14 @@ export class MultiChart {
   };
 
   constructor(options: any) {
-    options.forEach(option => {
+    options.data.forEach(option => {
       this.series.push({
         data: option.data,
         name: option.name,
         type: option.type,
         color: option.color,
         tooltip: {
-          valueSuffix: ' ' + option.unit
+          valueSuffix: ' ' + option.unit + ' ' + option.name
         }
       });
     });
