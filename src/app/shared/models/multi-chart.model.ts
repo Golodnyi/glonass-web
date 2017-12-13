@@ -1,5 +1,5 @@
-export class Chart {
-  public series;
+export class MultiChart {
+  public series = [];
   public xAxis;
   public yAxis;
   public chart = {
@@ -90,14 +90,18 @@ export class Chart {
   };
 
   constructor(options: any) {
-    this.series = [{
-      data: options.data,
-      name: options.name,
-      type: options.type,
-      tooltip: {
-        valueSuffix: ' ' + options.unit
-      }
-    }];
+    options.forEach(option => {
+      this.series.push({
+        data: option.data,
+        name: option.name,
+        type: option.type,
+        color: option.color,
+        tooltip: {
+          valueSuffix: ' ' + option.unit
+        }
+      });
+    });
+
     this.xAxis = {
       crosshair: true,
       events: null

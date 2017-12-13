@@ -2,19 +2,19 @@ import { Component, ElementRef, HostListener, Input, OnChanges, OnDestroy } from
 import * as Highcharts from 'highcharts/highstock';
 import * as HighchartsExporting from 'highcharts/modules/exporting';
 import * as HighchartsOfflineExporting from 'highcharts/modules/offline-exporting';
-import { Chart } from '../models/chart.model';
+import { MultiChart } from '../models/multi-chart.model';
 
 window['Highcharts'] = Highcharts;
 HighchartsExporting(Highcharts);
 HighchartsOfflineExporting(Highcharts);
 
 @Component({
-  selector: 'app-chart',
-  templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.css']
+  selector: 'app-multi-chart',
+  templateUrl: './multi-chart.component.html',
+  styleUrls: ['./multi-chart.component.css']
 })
 
-export class ChartComponent implements OnChanges, OnDestroy {
+export class MultiChartComponent implements OnChanges, OnDestroy {
   public chart: any;
   @Input() data: any;
 
@@ -25,7 +25,7 @@ export class ChartComponent implements OnChanges, OnDestroy {
     }
     if (Object.keys(options).length) {
       const currentChart = this.chart;
-      const config = new Chart(options);
+      const config = new MultiChart(options);
       config.chart.width = this.el.nativeElement.parentElement.offsetWidth - 35;
       config.xAxis.events = {
         setExtremes: function (e) {
@@ -63,12 +63,12 @@ export class ChartComponent implements OnChanges, OnDestroy {
     if (changes.data) {
       const data = changes.data;
       if (data) {
-        if (!data.firstChange) {
+        /**if (!data.firstChange) {
           data.currentValue.forEach(point => {
             this.chart.series[0].addPoint(point, false);
           });
           this.chart.redraw(true);
-        }
+        }**/
       }
     }
   }
