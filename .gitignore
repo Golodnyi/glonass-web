@@ -40,3 +40,4 @@ Thumbs.db
 env.ts
 *.js
 !/karma.conf.js
+package-lock.json
