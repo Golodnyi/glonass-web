@@ -29,7 +29,7 @@
     "bootstrap": "3.3.7",
     "core-js": "2.5.1",
     "font-awesome": "4.7.0",
-    "highcharts": "6.0.1",
+    "highcharts": "*",
     "moment": "2.18.1",
     "pdfmake": "0.1.33",
     "primeng": "4.2.2",

@@ -34,7 +34,6 @@ export class MultiChartComponent implements OnDestroy, OnChanges {
               if (chart === undefined || chart === currentChart) {
                 return false;
               }
-              chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, { trigger: 'syncExtremes' });
             });
           }
         }
@@ -50,14 +49,7 @@ export class MultiChartComponent implements OnDestroy, OnChanges {
     }
   }
 
-  constructor(private el: ElementRef) {
-    Highcharts.Point.prototype.highlight = function () {
-      this.onMouseOver();
-    };
-    Highcharts.Pointer.prototype.reset = function () {
-      return undefined;
-    };
-  }
+  constructor(private el: ElementRef) { }
 
   ngOnDestroy() {
     if (this.chart) {

@@ -7,7 +7,7 @@ export class MultiChart {
     spacingTop: 20,
     spacingBottom: 0,
     width: 600,
-    height: 480,
+    height: 680,
     reflow: false
   };
   public tooltip = {
@@ -20,11 +20,10 @@ export class MultiChart {
     borderWidth: 0,
     valueDecimals: 0,
     backgroundColor: 'none',
-    pointFormat: '{point.x:%d.%m %H:%M:%S}: {point.y}',
     headerFormat: '',
     shadow: false,
     style: {
-      fontSize: '14px'
+      fontSize: '10px'
     }
   };
   public scrollbar = {
@@ -46,6 +45,11 @@ export class MultiChart {
   };
   public legend = {
     enabled: true
+  };
+  public boost = {
+    useGPUTranslations: true,
+    usePreAllocated: true,
+    seriesThreshold: 5,
   };
   public rangeSelector = {
     buttons: [{
@@ -97,7 +101,9 @@ export class MultiChart {
         type: option.type,
         color: option.color,
         tooltip: {
-          valueSuffix: ' ' + option.unit
+          valueSuffix: ' ' + option.unit,
+          pointFormat: '{point.x:%d.%m %H:%M:%S} <span style="color: ' + option.color + '"> ' + option.name + ' </span>: <b>{point.y}</b>',
+          split: true
         }
       });
     });
