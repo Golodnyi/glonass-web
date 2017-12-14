@@ -41,6 +41,11 @@ export class Chart {
       }
     }
   };
+  public boost = {
+    useGPUTranslations: true,
+    usePreAllocated: true,
+    seriesThreshold: 5,
+  };
   public credits = {
     enabled: false
   };
