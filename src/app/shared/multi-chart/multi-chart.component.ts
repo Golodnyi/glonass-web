@@ -2,19 +2,19 @@ import { Component, ElementRef, HostListener, Input, OnChanges, OnDestroy } from
 import * as Highcharts from 'highcharts/highstock';
 import * as HighchartsExporting from 'highcharts/modules/exporting';
 import * as HighchartsOfflineExporting from 'highcharts/modules/offline-exporting';
-import { Chart } from '../models/chart.model';
+import { MultiChart } from '../models/multi-chart.model';
 
 window['Highcharts'] = Highcharts;
 HighchartsExporting(Highcharts);
 HighchartsOfflineExporting(Highcharts);
 
 @Component({
-  selector: 'app-chart',
-  templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.css']
+  selector: 'app-multi-chart',
+  templateUrl: './multi-chart.component.html',
+  styleUrls: ['./multi-chart.component.css']
 })
 
-export class ChartComponent implements OnChanges, OnDestroy {
+export class MultiChartComponent implements OnDestroy, OnChanges {
   public chart: any;
   @Input() data: any;
 
@@ -25,7 +25,7 @@ export class ChartComponent implements OnChanges, OnDestroy {
     }
     if (Object.keys(options).length) {
       const currentChart = this.chart;
-      const config = new Chart(options);
+      const config = new MultiChart(options);
       config.chart.width = this.el.nativeElement.parentElement.offsetWidth - 35;
       config.xAxis.events = {
         setExtremes: function (e) {
@@ -59,17 +59,26 @@ export class ChartComponent implements OnChanges, OnDestroy {
     };
   }
 
+  ngOnDestroy() {
+    if (this.chart) {
+      this.chart.destroy();
+    }
+  }
+
   ngOnChanges(changes: any) {
     if (changes.data) {
       const data = changes.data;
       if (data) {
-        let update = false;
         if (!data.firstChange) {
-          data.currentValue.forEach(point => {
-            update = true;
-            this.chart.series[0].addPoint(point, false);
+          let i = 0;
+          let update = false;
+          data.currentValue.forEach(item => {
+            item.data.forEach(point => {
+              update = true;
+              this.chart.series[i].addPoint(point, false);
+            });
+            i++;
           });
-
           if (update) {
             this.chart.redraw(true);
           }
@@ -78,31 +87,4 @@ export class ChartComponent implements OnChanges, OnDestroy {
     }
   }
 
-  @HostListener('mousemove', ['$event'])
-  public onMousemove(e) {
-    const currentPoint = this.chart.series[0].searchPoint(e, true);
-    if (currentPoint === undefined) {
-      return false;
-    }
-    Highcharts.charts.forEach(chart => {
-      if (chart === undefined || chart === this.chart) {
-        return false;
-      }
-      if (chart.series[0]) {
-        const point = chart.series[0].searchPoint({
-          chartX: currentPoint.plotX + chart.plotLeft,
-          chartY: currentPoint.plotY + chart.plotTop
-        }, true);
-        if (point) {
-          point.highlight(e);
-        }
-      }
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.chart) {
-      this.chart.destroy();
-    }
-  }
 }

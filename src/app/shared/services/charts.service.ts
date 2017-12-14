@@ -136,4 +136,30 @@ export class ChartsService {
         return Observable.throw(error.error.message || 'Server error');
       });
   }
+
+  public thermocouples(car: Car, lastDate: number): Observable<any> {
+    let afterTime = '';
+
+    if (lastDate) {
+      afterTime = '?afterTime=' + lastDate;
+    }
+
+    return this.http.get(this.host + '/v1/cars/' + car.id + '/report/thermocouples' + afterTime)
+      .map((response: any) => {
+        return response;
+      }, error => {
+        Error.check(error, this.router, this.msgService);
+        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+      });
+  }
+
+  public thermocouplesTable(car: number, page: number): Observable<any> {
+    return this.http.get(this.host + '/v1/cars/' + car + '/report/thermocouples/table?page=' + (page + 1))
+      .map((response: any) => {
+        return response;
+      }, error => {
+        Error.check(error, this.router, this.msgService);
+        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+      });
+  }
 }

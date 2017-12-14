@@ -37,7 +37,7 @@ export class SensorComponent {
 
     this.schemeService.setOverallScheme(this.car, this.sensor).subscribe(
       data => {
-        console.log(data);
+        // console.log(data);
       },
       error => {
         this.msgService.notice(MsgService.ERROR, 'Ошибка обновления датчика', error);

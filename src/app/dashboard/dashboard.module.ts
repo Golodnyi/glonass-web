@@ -39,6 +39,8 @@ import { ViewComponent } from './view/view.component';
 import { ChartsComponent } from './view/charts/charts.component';
 import { MapComponent } from './view/map/map.component';
 import { TableComponent as TableViewComponent } from './view/table/table.component';
+import { ThermocouplesTableComponent } from './thermocouples-table/thermocouples-table.component';
+import { ThermocouplesComponent } from './view/thermocouples/thermocouples.component';
 
 @NgModule({
   imports: [
@@ -66,7 +68,8 @@ import { TableComponent as TableViewComponent } from './view/table/table.compone
   ],
   declarations: [
     DashboardComponent, NavigationComponent, ViewComponent, StateComponent,
-    FilterComponent, YmapsComponent, CompanyComponent, TableComponent, PdfComponent, ChartsComponent, MapComponent, TableViewComponent
+    FilterComponent, YmapsComponent, CompanyComponent, TableComponent, PdfComponent,
+    ChartsComponent, MapComponent, TableViewComponent, ThermocouplesTableComponent, ThermocouplesComponent
   ],
   providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService]
 })

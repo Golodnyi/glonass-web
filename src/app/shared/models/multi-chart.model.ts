@@ -1,5 +1,5 @@
-export class Chart {
-  public series;
+export class MultiChart {
+  public series = [];
   public xAxis;
   public yAxis;
   public chart = {
@@ -7,7 +7,7 @@ export class Chart {
     spacingTop: 20,
     spacingBottom: 0,
     width: 600,
-    height: 360,
+    height: 480,
     reflow: false
   };
   public tooltip = {
@@ -45,7 +45,7 @@ export class Chart {
     enabled: false
   };
   public legend = {
-    enabled: false
+    enabled: true
   };
   public rangeSelector = {
     buttons: [{
@@ -90,14 +90,18 @@ export class Chart {
   };
 
   constructor(options: any) {
-    this.series = [{
-      data: options.data,
-      name: options.name,
-      type: options.type,
-      tooltip: {
-        valueSuffix: ' ' + options.unit
-      }
-    }];
+    options.data.forEach(option => {
+      this.series.push({
+        data: option.data,
+        name: option.name,
+        type: option.type,
+        color: option.color,
+        tooltip: {
+          valueSuffix: ' ' + option.unit
+        }
+      });
+    });
+
     this.xAxis = {
       crosshair: true,
       events: null

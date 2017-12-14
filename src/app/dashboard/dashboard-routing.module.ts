@@ -7,6 +7,7 @@ import { ViewComponent } from './view/view.component';
 import { ChartsComponent } from './view/charts/charts.component';
 import { MapComponent } from './view/map/map.component';
 import { TableComponent } from './view/table/table.component';
+import { ThermocouplesComponent } from './view/thermocouples/thermocouples.component';
 
 const routes: Routes = [{
   path: '', component: DashboardComponent, canActivate: [AuthGuard],
@@ -16,6 +17,7 @@ const routes: Routes = [{
       children: [
         {path: 'charts', component: ChartsComponent},
         {path: 'map', component: MapComponent},
+        {path: 'thermocouples', component: ThermocouplesComponent},
         {path: 'table', component: TableComponent}
       ]
     },
