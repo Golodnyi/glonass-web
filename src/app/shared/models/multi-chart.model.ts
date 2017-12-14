@@ -97,7 +97,9 @@ export class MultiChart {
         type: option.type,
         color: option.color,
         tooltip: {
-          valueSuffix: ' ' + option.unit
+          valueSuffix: ' ' + option.unit,
+          pointFormat: '<span style="color: ' + option.color + '"> ' + option.name + ' </span>: <b>{point.y}</b><br/>',
+          split: true
         }
       });
     });
