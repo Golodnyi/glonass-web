@@ -1,5 +1,5 @@
 <div *ngIf=scheme>
     <div *ngFor="let sensor of scheme.sensors">
-        <app-sensor class="col-md-4" [sensor]="sensor" [allowedPorts]="allowedPorts" [car]="car"></app-sensor>
+        <app-sensor class="col-md-4" (sensorUpdated)="sensorUpdate($event)" [sensor]="sensor" [allowedPorts]="allowedPorts" [car]="car"></app-sensor>
     </div>
 </div>

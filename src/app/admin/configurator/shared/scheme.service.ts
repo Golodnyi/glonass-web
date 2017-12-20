@@ -42,7 +42,7 @@ export class SchemeService {
       delete data.limits;
     }
 
-    return this.http.post(this.host + '/v1/cars/' + car + '/overall-scheme', data)
+    return this.http.put(this.host + '/v1/cars/' + car + '/overall-scheme', data)
       .map((response: any) => {
         return response;
       })
