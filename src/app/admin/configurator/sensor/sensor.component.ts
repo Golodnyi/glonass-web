@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SchemeItem } from '../shared/schemeItem.model';
 import { Car } from 'app/shared/models/car.model';
 import { SchemeService } from 'app/admin/configurator/shared/scheme.service';
@@ -10,6 +10,7 @@ import { MsgService } from 'app/shared/services/msg';
   styleUrls: ['./sensor.component.css']
 })
 export class SensorComponent {
+  @Output() sensorUpdated = new EventEmitter();
 
   @Input() sensor: SchemeItem = null;
   @Input() allowedPorts: any[] = [];
@@ -38,6 +39,7 @@ export class SensorComponent {
     this.schemeService.setOverallScheme(this.car, this.sensor).subscribe(
       data => {
         this.msgService.notice(MsgService.SUCCESS, 'Успех', data.message);
+        this.sensorUpdated.emit();
       },
       error => {
         this.msgService.notice(MsgService.ERROR, 'Ошибка обновления датчика', error);

@@ -42,4 +42,8 @@ export class SchemeComponent implements OnChanges {
       }
     );
   }
+
+  public sensorUpdate(event: any) {
+    this.viewScheme();
+  }
 }
