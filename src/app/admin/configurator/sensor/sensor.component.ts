@@ -36,6 +36,10 @@ export class SensorComponent {
       return false;
     }
 
+    if (!confirm('Вы действительно хотите заменить датчик?')) {
+      return false;
+    }
+
     this.schemeService.setOverallScheme(this.car, this.sensor).subscribe(
       data => {
         this.msgService.notice(MsgService.SUCCESS, 'Успех', data.message);
