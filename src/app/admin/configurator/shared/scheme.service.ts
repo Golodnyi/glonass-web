@@ -29,7 +29,7 @@ export class SchemeService {
       });
   }
 
-  public setOverallScheme(car: number, sensor: SchemeItem): Observable<any> {
+  public updateOverallScheme(car: number, sensor: SchemeItem): Observable<any> {
     const data = new SchemePostItem();
     data.id = car;
     data.sensor_id = sensor.id;

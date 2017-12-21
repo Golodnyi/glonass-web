@@ -40,7 +40,7 @@ export class SensorComponent {
       return false;
     }
 
-    this.schemeService.setOverallScheme(this.car, this.sensor).subscribe(
+    this.schemeService.updateOverallScheme(this.car, this.sensor).subscribe(
       data => {
         this.msgService.notice(MsgService.SUCCESS, 'Успех', data.message);
         this.sensorUpdated.emit();
