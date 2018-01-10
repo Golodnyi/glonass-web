@@ -13,10 +13,16 @@ export class SensorComponent {
   @Output() sensorUpdated = new EventEmitter();
 
   @Input() sensor: SchemeItem = null;
+  @Input() new = true;
   @Input() allowedPorts: any[] = [];
   @Input() car: number;
+  @Input() sensorNames: any[];
 
-  constructor(private schemeService: SchemeService, private msgService: MsgService) { }
+  constructor(private schemeService: SchemeService, private msgService: MsgService) {
+    if (this.new) {
+      this.sensor = new SchemeItem();
+    }
+  }
 
   public onLimits(event: any) {
     if (event) {
@@ -40,14 +46,26 @@ export class SensorComponent {
       return false;
     }
 
-    this.schemeService.updateOverallScheme(this.car, this.sensor).subscribe(
-      data => {
-        this.msgService.notice(MsgService.SUCCESS, 'Успех', data.message);
-        this.sensorUpdated.emit();
-      },
-      error => {
-        this.msgService.notice(MsgService.ERROR, 'Ошибка обновления датчика', error);
-      }
-    );
+    if (this.new) {
+      this.schemeService.createOverallScheme(this.car, this.sensor).subscribe(
+        data => {
+          this.msgService.notice(MsgService.SUCCESS, 'Успех', data.message);
+          this.sensorUpdated.emit();
+        },
+        error => {
+          this.msgService.notice(MsgService.ERROR, 'Ошибка обновления датчика', error);
+        }
+      );
+    } else {
+      this.schemeService.updateOverallScheme(this.car, this.sensor).subscribe(
+        data => {
+          this.msgService.notice(MsgService.SUCCESS, 'Успех', data.message);
+          this.sensorUpdated.emit();
+        },
+        error => {
+          this.msgService.notice(MsgService.ERROR, 'Ошибка обновления датчика', error);
+        }
+      );
+    }
   }
 }

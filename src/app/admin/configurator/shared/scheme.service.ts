@@ -29,6 +29,16 @@ export class SchemeService {
       });
   }
 
+  public allowedSensors(car: number): Observable<any[]> {
+    return this.http.get(this.host + '/v1/cars/' + car + '/overall-scheme/allowed-sensors')
+      .map((response: any) => {
+        return response;
+      }).catch((error: any) => {
+        Error.check(error, this.router, this.msgService);
+        return Observable.throw(error.error.message || 'Server error');
+      });
+  }
+
   public updateOverallScheme(car: number, sensor: SchemeItem): Observable<any> {
     const data = new SchemePostItem();
     data.id = car;
@@ -43,6 +53,31 @@ export class SchemeService {
     }
 
     return this.http.put(this.host + '/v1/cars/' + car + '/overall-scheme', data)
+      .map((response: any) => {
+        return response;
+      })
+      .catch((error: any) => {
+        Error.check(error, this.router, this.msgService);
+        return Observable.throw(error.error.message || 'Server error');
+      });
+  }
+
+  public createOverallScheme(car: number, sensor: SchemeItem): Observable<any> {
+    const data = new SchemePostItem();
+    data.id = car;
+    data.sensor_id = sensor.id;
+    data.sensor_model = sensor.model.id;
+    data.port = sensor.model.port;
+
+    if (sensor.limits) {
+      data.limits = sensor.limits;
+    } else {
+      delete data.limits;
+    }
+
+    console.log(data);
+
+    return this.http.post(this.host + '/v1/cars/' + car + '/overall-scheme', data)
       .map((response: any) => {
         return response;
       })

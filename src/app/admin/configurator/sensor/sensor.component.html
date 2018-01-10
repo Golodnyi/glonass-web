@@ -1,7 +1,16 @@
-<p-panel *ngIf="sensor" header="{{sensor.name}}" [toggleable]="false">
-  <label>Порт: </label>
-  <p-dropdown [options]="allowedPorts|AllowPorts:sensor.model.allowedPorts" [(ngModel)]="sensor.model.port" [filter]="true"
-    [style]="{'width':'190px'}"></p-dropdown>
+<p-panel *ngIf="sensor || new" header="{{sensor.name}}" [toggleable]="false">
+  <div *ngIf=!new>
+    <label>Порт: </label>
+    <p-dropdown [options]="allowedPorts|AllowPorts:sensor.model.allowedPorts" [(ngModel)]="sensor.model.port" [filter]="true"
+      [style]="{'width':'190px'}"></p-dropdown>
+  </div>
+  <div *ngIf=new>
+    <label>Название: </label>
+    <p-dropdown [options]="sensorNames" [(ngModel)]="sensor.model.name" [filter]="true" [style]="{'width':'190px'}"></p-dropdown>
+    <hr/>
+    <label>Порт: </label>
+    <p-dropdown [options]="allowedPorts" [(ngModel)]="sensor.model.port" [filter]="true" [style]="{'width':'190px'}"></p-dropdown>
+  </div>
   <hr/>
   <p-checkbox binary="true" [(ngModel)]="sensor.limits" (onChange)="onLimits($event)"></p-checkbox> Установить лимиты
   <hr/>
