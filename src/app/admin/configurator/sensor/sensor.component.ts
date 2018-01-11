@@ -17,6 +17,7 @@ export class SensorComponent {
   @Input() allowedPorts: any[] = [];
   @Input() car: number;
   @Input() sensorNames: any[];
+  @Input() sensorModels: any[];
 
   constructor(private schemeService: SchemeService, private msgService: MsgService) {
     if (this.new) {
@@ -67,5 +68,16 @@ export class SensorComponent {
         }
       );
     }
+  }
+
+  public sensorNameChange(event: any) {
+    this.sensorModels = [];
+    this.schemeService.allowedSensorModels(this.car, event.value).subscribe(
+      data => {
+        data.forEach(item => {
+          this.sensorModels.push({value: item.id, label: item.name});
+        });
+      }
+    );
   }
 }

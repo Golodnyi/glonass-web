@@ -39,6 +39,16 @@ export class SchemeService {
       });
   }
 
+  public allowedSensorModels(car: number, sensor: number): Observable<any[]> {
+    return this.http.get(this.host + '/v1/cars/' + car + '/overall-scheme/allowed-sensors/' + sensor + '/models')
+      .map((response: any) => {
+        return response;
+      }).catch((error: any) => {
+        Error.check(error, this.router, this.msgService);
+        return Observable.throw(error.error.message || 'Server error');
+      });
+  }
+
   public updateOverallScheme(car: number, sensor: SchemeItem): Observable<any> {
     const data = new SchemePostItem();
     data.id = car;
@@ -63,6 +73,7 @@ export class SchemeService {
   }
 
   public createOverallScheme(car: number, sensor: SchemeItem): Observable<any> {
+    console.log(sensor);
     const data = new SchemePostItem();
     data.id = car;
     data.sensor_id = sensor.id;
