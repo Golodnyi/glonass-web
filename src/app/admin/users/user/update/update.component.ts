@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../../../shared/services/users.service';
 import { User } from '../../../../shared/models/user.model';
-import { UserForm } from '../shared/user.form';
+import { UserUpdateForm } from '../shared/user.update.form';
 import { Role } from '../../../../shared/models/role.model';
 import { FormGroup } from '@angular/forms';
 import { MsgService } from '../../../../shared/services/msg';
@@ -11,7 +11,7 @@ import { MsgService } from '../../../../shared/services/msg';
   selector: 'app-user-update',
   templateUrl: './update.component.html',
   styleUrls: ['./update.component.css'],
-  providers: [UserForm]
+  providers: [UserUpdateForm]
 })
 export class UserUpdateComponent {
   public user: User;
@@ -21,7 +21,7 @@ export class UserUpdateComponent {
 
   constructor(private route: ActivatedRoute,
               private usersService: UsersService,
-              private userForm: UserForm,
+              private userForm: UserUpdateForm,
               private msg: MsgService,
               private router: Router) {
     this.route.params.subscribe(params => {
@@ -34,7 +34,6 @@ export class UserUpdateComponent {
             this.user.login = data.login;
             this.user.name = data.name;
             this.user.email = data.email;
-            this.user.password = data.password;
             this.user.role_id = data.role_id;
           });
         }
