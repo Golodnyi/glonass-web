@@ -50,11 +50,15 @@ export class AuthService {
 
         this.usersService.current().subscribe(
           (payload: any) => {
-            const user = Object.assign(new User(), payload.user);
+            const user: User = Object.assign(new User(), payload.user);
             user.role = payload.role;
             localStorage.setItem('User', JSON.stringify(user));
 
-            this.router.navigate(['/dashboard']);
+            if (!user.company_id) {
+              this.router.navigate(['/dashboard']);
+            } else {
+              this.router.navigate(['/dashboard/company/' + user.company_id]);
+            }
           },
           error => {
             this.msg.notice(MsgService.ERROR, 'Ошибка получения пользователя', error);
