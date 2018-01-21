@@ -10,7 +10,7 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/dashboard">Личный кабинет</a>
                 </li>
-                <li *ngIf="user.role.is_global" class="nav-item">
+                <li *ngIf="user.role.is_global == 1" class="nav-item">
                     <a class="nav-link" routerLink="/admin">Администрирование</a>
                 </li>
             </ul>
