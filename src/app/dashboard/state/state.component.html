@@ -65,7 +65,7 @@
             Моточасы: {{state.motochas}} ч.
         </div>
     </div>
-    <div *ngIf="!compact && state.maintenances.length">
+    <div *ngIf="!compact && state.maintenances.length && user && user.role">
         <div class="alert" *ngIf="scheduled(state)">До ТО: {{state.maintenances.scheduled.limits.hours -
             state.maintenances.scheduled.value.hours}} ч.
             <span *ngIf="user && user.role.is_global == 1 && car.engine" class="btn-st">
