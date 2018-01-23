@@ -61,6 +61,7 @@ export class AuthService {
             }
           },
           error => {
+            localStorage.clear();
             this.msg.notice(MsgService.ERROR, 'Ошибка получения пользователя', error);
           }
         );
@@ -116,7 +117,12 @@ export class AuthService {
 
   public getCurrentUser(): any {
     const user = localStorage.getItem('User');
-    if (user) {
+    const authorization = localStorage.getItem('Authorization');
+    const refresh = localStorage.getItem('Refresh');
+
+    if (!user || !authorization || !refresh) {
+      localStorage.clear();
+    } else if (user) {
       if (!this.subscriptionRefreshToken) {
         this.subscriptionRefreshToken = this.timer.subscribe(
           () => {
