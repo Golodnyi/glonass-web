@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 import { Company } from '../models/company.model';
 import { Router } from '@angular/router';
 import { Error } from '../models/error.model';

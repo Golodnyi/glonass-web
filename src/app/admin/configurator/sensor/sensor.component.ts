@@ -1,8 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { SchemeItem } from '../shared/schemeItem.model';
-import { Car } from 'app/shared/models/car.model';
-import { SchemeService } from 'app/admin/configurator/shared/scheme.service';
-import { MsgService } from 'app/shared/services/msg';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {SchemeItem} from '../shared/schemeItem.model';
+import {SchemeService} from 'app/admin/configurator/shared/scheme.service';
+import {MsgService} from 'app/shared/services/msg';
 
 @Component({
   selector: 'app-sensor',

@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../../shared/services/auth.service';
-import { MsgService } from '../../../../shared/services/msg';
-import { environment } from '../../../../../environments/environment';
-import { Error } from '../../../../shared/models/error.model';
-import { HttpClient } from '@angular/common/http';
+import {Router} from '@angular/router';
+import {MsgService} from '../../../../shared/services/msg';
+import {environment} from '../../../../../environments/environment';
+import {Error} from '../../../../shared/models/error.model';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class StateService {
@@ -15,7 +14,6 @@ export class StateService {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private authService: AuthService,
               private msgService: MsgService) {
   }
 
