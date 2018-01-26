@@ -1,7 +1,4 @@
 import {Component, OnChanges, OnDestroy} from '@angular/core';
-import * as moment from 'moment';
-import {AuthService} from '../../shared/services/auth.service';
-import {User} from '../../shared/models/user.model';
 
 @Component({
     selector   : 'app-monitoring',
