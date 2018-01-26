@@ -1,10 +1,10 @@
-import {Component} from "@angular/core";
-import {ChartsService} from "app/shared/services/charts.service";
-import {Subscription} from "rxjs/Subscription";
-import {Car} from "app/shared/models/car.model";
-import {TimerObservable} from "rxjs/observable/TimerObservable";
-import {OnDestroy} from "@angular/core/src/metadata/lifecycle_hooks";
-import {AutoRefresh} from "app/shared/models/auto-refresh.model";
+import {Component} from '@angular/core';
+import {ChartsService} from 'app/shared/services/charts.service';
+import {Subscription} from 'rxjs/Subscription';
+import {Car} from 'app/shared/models/car.model';
+import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
+import {AutoRefresh} from 'app/shared/models/auto-refresh.model';
 
 @Component({
   selector: 'app-thermocouples',

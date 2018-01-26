@@ -1,12 +1,12 @@
-import {Injectable} from "@angular/core";
-import {Observable} from "rxjs/Observable";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
-import {Router} from "@angular/router";
-import {MsgService} from "../../../../shared/services/msg";
-import {environment} from "../../../../../environments/environment";
-import {Error} from "../../../../shared/models/error.model";
-import {HttpClient} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import {Router} from '@angular/router';
+import {MsgService} from '../../../../shared/services/msg';
+import {environment} from '../../../../../environments/environment';
+import {Error} from '../../../../shared/models/error.model';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class StateService {
