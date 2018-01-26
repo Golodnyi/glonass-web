@@ -11,8 +11,8 @@
                             </div>
                             <div class="col-md-4" *ngFor="let car of subdivision.cars"
                                  routerLink="/dashboard/view/{{car.id}}/charts" style="cursor: pointer;">
-                                <app-state [compact]="true" [toggleable]="false" [state]="car.state" [car]="car">
-                                </app-state>
+                                <app-monitoring [car]="car">
+                                </app-monitoring>
                             </div>
                         </div>
                     </p-accordionTab>

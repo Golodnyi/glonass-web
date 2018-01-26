@@ -1,2 +1,2 @@
-<p-panel header="">
+<p-panel *ngIf="car && car.engine" header="{{car.engine.name}} | {{car.name}}">
 </p-panel>

@@ -1,4 +1,5 @@
-import {Component, OnChanges, OnDestroy} from '@angular/core';
+import {Component, OnChanges, OnDestroy, Input} from '@angular/core';
+import {Car} from '../../shared/models/car.model';
 
 @Component({
     selector   : 'app-monitoring',
@@ -6,6 +7,7 @@ import {Component, OnChanges, OnDestroy} from '@angular/core';
     styleUrls  : ['monitoring.component.css'],
 })
 export class MonitoringComponent implements OnChanges, OnDestroy {
+    @Input() car: Car;
 
     constructor() {
     }
