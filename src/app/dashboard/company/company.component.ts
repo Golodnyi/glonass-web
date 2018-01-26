@@ -9,6 +9,7 @@ import {MapCar} from '../ymaps/shared/map-car.model';
 import {MapPolyLines} from '../ymaps/shared/map-polylines.model';
 import {Car} from '../../shared/models/car.model';
 import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import {EnginesService} from '../../shared/services/engines.service';
 
 @Component({
     selector   : 'app-company',
@@ -27,6 +28,7 @@ export class CompanyComponent implements OnDestroy {
 
     constructor(private subdivisionsService: SubdivisionsService,
                 private carsService: CarsService,
+                private enginesService: EnginesService,
                 private route: ActivatedRoute,
                 private chartsService: ChartsService) {
         /**
@@ -50,6 +52,10 @@ export class CompanyComponent implements OnDestroy {
                                 cars => {
                                     subdiv.cars = cars;
                                     subdiv.cars.forEach(car => {
+                                        this.enginesService.get(company_id, subdiv.id, car.id, true).subscribe(engine => {
+                                            car.engine = engine;
+                                        });
+
                                         this.chartsService.mapData(car).subscribe(data => {
                                             if (data && data.length) {
                                                 const mCar = new MapCar();
