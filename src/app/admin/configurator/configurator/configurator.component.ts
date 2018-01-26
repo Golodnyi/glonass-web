@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-configurator',
-  templateUrl: './configurator.component.html',
-  styleUrls: ['./configurator.component.css']
+    selector   : 'app-configurator',
+    templateUrl: './configurator.component.html',
+    styleUrls  : ['./configurator.component.css']
 })
 export class ConfiguratorComponent {
-  public car: number;
+    public car: number;
 
-  constructor() {
-  }
+    constructor() {
+    }
 
-  public carUpdate(car: number) {
-    this.car = car;
-  }
+    public carUpdate(car: number) {
+        this.car = car;
+    }
 }

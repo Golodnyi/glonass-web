@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-engine',
-  templateUrl: './engine.component.html',
-  styleUrls: ['./engine.component.css']
+    selector   : 'app-engine',
+    templateUrl: './engine.component.html',
+    styleUrls  : ['./engine.component.css']
 })
 export class EngineComponent implements OnInit {
 
-  constructor() {
-  }
+    constructor() {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }

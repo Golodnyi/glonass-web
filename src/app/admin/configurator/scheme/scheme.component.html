@@ -1,13 +1,15 @@
 <div *ngIf=scheme>
     <div class="row text-center">
         <h4>Добавить новый датчик</h4>
-        <app-sensor class="col-md-4" (sensorUpdated)="sensorUpdate($event)" [sensorNames]="sensorNames" [new]=true [allowedPorts]="unusedPorts" [car]="car"></app-sensor>
+        <app-sensor class="col-md-4" (sensorUpdated)="sensorUpdate($event)" [sensorNames]="sensorNames" [new]=true
+                    [allowedPorts]="unusedPorts" [car]="car"></app-sensor>
     </div>
     <div class="row text-center">
         <h4>Обновить датчики</h4>
         <div *ngFor="let sensor of scheme.sensors">
-            <app-sensor class="col-md-4" (sensorUpdated)="sensorUpdate($event)" [new]=false [sensor]="sensor" [allowedPorts]="allowedPorts"
-                [car]="car"></app-sensor>
+            <app-sensor class="col-md-4" (sensorUpdated)="sensorUpdate($event)" [new]=false [sensor]="sensor"
+                        [allowedPorts]="allowedPorts"
+                        [car]="car"></app-sensor>
         </div>
     </div>
 </div>

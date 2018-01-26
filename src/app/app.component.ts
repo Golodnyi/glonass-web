@@ -1,26 +1,26 @@
-import { Component } from '@angular/core';
-import { MsgService } from './shared/services/msg';
-import { Message } from 'primeng/primeng';
-import { User } from './shared/models/user.model';
-import { AuthService } from './shared/services/auth.service';
+import {Component} from '@angular/core';
+import {MsgService} from './shared/services/msg';
+import {Message} from 'primeng/primeng';
+import {User} from './shared/models/user.model';
+import {AuthService} from './shared/services/auth.service';
 
 @Component({
-  selector: 'app-run',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector   : 'app-run',
+    templateUrl: './app.component.html',
+    styleUrls  : ['./app.component.css']
 })
 export class AppComponent {
-  public growl: Message[] = [];
-  public user: User;
+    public growl: Message[] = [];
+    public user: User;
 
-  constructor(private msgService: MsgService, private authService: AuthService) {
-    this.user = this.authService.getCurrentUser();
+    constructor(private msgService: MsgService, private authService: AuthService) {
+        this.user = this.authService.getCurrentUser();
 
-    this.msgService.getNotice().subscribe(
-      notice => {
-        this.growl = [];
-        this.growl.push(notice);
-      }
-    );
-  }
+        this.msgService.getNotice().subscribe(
+            notice => {
+                this.growl = [];
+                this.growl.push(notice);
+            }
+        );
+    }
 }
