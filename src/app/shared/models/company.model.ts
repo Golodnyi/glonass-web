@@ -1,5 +1,6 @@
 import {IUser} from './user.model';
 import {ITree} from './tree.model';
+import {Subdivision} from './subdivision.model';
 
 export interface ICompany {
     id: number;
@@ -19,4 +20,5 @@ export class Company implements ICompany, ITree {
     public active_till: string;
     public created_at: string;
     public updated_at: string;
+    public subdivisions: Subdivision[] = [];
 }

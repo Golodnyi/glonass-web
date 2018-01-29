@@ -42,6 +42,8 @@ import {TableComponent as TableViewComponent} from './view/table/table.component
 import {ThermocouplesTableComponent} from './thermocouples-table/thermocouples-table.component';
 import {ThermocouplesComponent} from './view/thermocouples/thermocouples.component';
 import {MonitoringComponent} from './monitoring/monitoring.component';
+import {WelcomeComponent} from './welcome/welcome.component';
+import {MonitoringService} from './monitoring/shared/monitoring.service';
 
 @NgModule({
     imports     : [
@@ -70,9 +72,11 @@ import {MonitoringComponent} from './monitoring/monitoring.component';
     declarations: [
         DashboardComponent, NavigationComponent, ViewComponent, StateComponent, MonitoringComponent,
         FilterComponent, YmapsComponent, CompanyComponent, TableComponent, PdfComponent,
-        ChartsComponent, MapComponent, TableViewComponent, ThermocouplesTableComponent, ThermocouplesComponent
+        ChartsComponent, MapComponent, TableViewComponent, ThermocouplesTableComponent, ThermocouplesComponent,
+        WelcomeComponent
     ],
-    providers   : [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService]
+    providers   : [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService,
+        MonitoringService]
 })
 export class DashboardModule {
 }

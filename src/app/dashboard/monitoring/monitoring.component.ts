@@ -8,8 +8,7 @@ import {TimerObservable} from 'rxjs/observable/TimerObservable';
 @Component({
     selector   : 'app-monitoring',
     templateUrl: 'monitoring.component.html',
-    styleUrls  : ['monitoring.component.css'],
-    providers  : [MonitoringService]
+    styleUrls  : ['monitoring.component.css']
 })
 export class MonitoringComponent implements OnChanges, OnDestroy {
     @Input() car: Car;
