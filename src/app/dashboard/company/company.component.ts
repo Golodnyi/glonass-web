@@ -18,7 +18,6 @@ export class CompanyComponent implements OnDestroy {
     public subdivisions: Subdivision[]        = [];
     public mapCars: MapCar[]                  = [];
     public mapPolyLines: MapPolyLines[]       = [];
-    private subscriptionTimer: Subscription[] = [];
     private subscription: Subscription        = new Subscription();
     private mpl: MapPolyLines[];
     private mc: MapCar[];
@@ -36,11 +35,6 @@ export class CompanyComponent implements OnDestroy {
                 this.mc          = [];
                 this.mpl         = [];
                 const company_id = +params['company'];
-                if (this.subscriptionTimer.length) {
-                    this.subscriptionTimer.forEach(s => {
-                        s.unsubscribe();
-                    });
-                }
                 this.subdivisionsService.all_resync(company_id).subscribe(
                     subdivisions => {
                         this.subdivisions = subdivisions;
@@ -91,9 +85,6 @@ export class CompanyComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriptionTimer.forEach(s => {
-            s.unsubscribe();
-        });
         this.subscription.unsubscribe();
     }
 }
