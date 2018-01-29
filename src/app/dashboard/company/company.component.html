@@ -6,13 +6,14 @@
                     <p-accordionTab *ngFor="let subdivision of subdivisions" header="{{subdivision.name}}"
                                     [selected]="true">
                         <div class="row">
-                            <div *ngIf="!subdivision.cars || !subdivision.cars.length" class="col-md-pull-12">
+                            <div *ngIf="!subdivision.cars.length" class="col-md-pull-12">
                                 Машины отсутствуют
                             </div>
-                            <div class="col-md-4" *ngFor="let car of subdivision.cars"
-                                 routerLink="/dashboard/view/{{car.id}}/charts" style="cursor: pointer;">
-                                <app-monitoring [car]="car">
-                                </app-monitoring>
+                            <div *ngIf="subdivision.cars.length">
+                                <div *ngFor="let car of subdivision.cars; let even = even; let odd = odd">
+                                    <app-monitoring class="col-md-6" [car]="car"></app-monitoring>
+                                    <hr *ngIf="odd"/>
+                                </div>
                             </div>
                         </div>
                     </p-accordionTab>

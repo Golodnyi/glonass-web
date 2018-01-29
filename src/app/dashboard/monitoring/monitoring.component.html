@@ -1,2 +1,21 @@
-<p-panel *ngIf="car && car.engine" header="{{car.engine.name}} | {{car.name}}">
+<p-panel *ngIf="car && car.engine && status" header="Двигатель: {{car.engine.name}}, шасси: {{car.name}}" [toggleable]="true">
+    <table class="table table-striped">
+        <tbody>
+        <tr *ngFor="let sensor of status.sensors">
+            <td>{{sensor.name}}</td>
+            <td *ngIf="!status.issue_locations.hasOwnProperty(sensor.id)">
+                <span class="label label-success">норма</span>
+            </td>
+            <td *ngIf="status.issue_locations.hasOwnProperty(sensor.id)">
+                <div *ngFor="let error of showError(sensor.id)" style="cursor: pointer;" (click)="showDetailsError()">
+                    <span class="label label-danger">{{error}}</span>
+                    <i class="fa fa-question-circle-o" aria-hidden="true">&nbsp;подробнее</i>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </p-panel>
+<p-dialog header="Информация о неисправности" modal="modal" width="600" [(visible)]="detailsError">
+    123
+</p-dialog>

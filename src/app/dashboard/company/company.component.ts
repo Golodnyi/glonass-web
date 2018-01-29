@@ -7,7 +7,6 @@ import {Subdivision} from '../../shared/models/subdivision.model';
 import {ChartsService} from '../../shared/services/charts.service';
 import {MapCar} from '../ymaps/shared/map-car.model';
 import {MapPolyLines} from '../ymaps/shared/map-polylines.model';
-import {Car} from '../../shared/models/car.model';
 import {TimerObservable} from 'rxjs/observable/TimerObservable';
 import {EnginesService} from '../../shared/services/engines.service';
 
@@ -81,7 +80,6 @@ export class CompanyComponent implements OnDestroy {
                                                 this.mpl.push(polyLines);
                                             }
                                         });
-                                        this.buildState(car);
                                     });
                                 }
                             );
@@ -99,17 +97,5 @@ export class CompanyComponent implements OnDestroy {
             s.unsubscribe();
         });
         this.subscription.unsubscribe();
-    }
-
-    private buildState(car: Car) {
-        this.subscriptionTimer.push(
-            this.timer.subscribe(() => {
-                this.carsService.getState(car.id).subscribe(
-                    state => {
-                        car.state = state;
-                    }
-                );
-            })
-        );
     }
 }

@@ -23,5 +23,5 @@ export class Subdivision implements ISubdivision, ITree {
     public author: IUser;
     public created_at: string;
     public updated_at: string;
-    public cars: Car[];
+    public cars: Car[] = [];
 }
