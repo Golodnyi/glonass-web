@@ -2,6 +2,8 @@ import {Component, OnChanges, OnDestroy, Input} from '@angular/core';
 import {MonitoringService} from './shared/monitoring.service';
 import {Car} from '../../shared/models/car.model';
 import {Monitoring} from './shared/monitoring.model';
+import {Subscription} from 'rxjs';
+import {TimerObservable} from 'rxjs/observable/TimerObservable';
 
 @Component({
     selector   : 'app-monitoring',
@@ -13,21 +15,33 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
     @Input() car: Car;
     public status: Monitoring;
     public detailsError = false;
+    private subscription: Subscription = new Subscription();
+    private timer                      = TimerObservable.create(0, 5000);
+
     constructor(private monitoringService: MonitoringService) {
     }
 
     ngOnChanges(event: any) {
         if (event.car && event.car.currentValue !== undefined) {
-            this.monitoringService.status(this.car).subscribe(
-                data => {
-                    this.status = data;
-                    console.log(this.status);
-                }
-            );
+
+            if (this.subscription) {
+                this.subscription.unsubscribe();
+            }
+
+            this.subscription = this.timer.subscribe(() => {
+                this.monitoringService.status(this.car).subscribe(
+                    data => {
+                        this.status = data;
+                    }
+                );
+            });
         }
     }
 
     ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 
     showError(id: string): any[] {
