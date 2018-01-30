@@ -16,6 +16,14 @@
         </tbody>
     </table>
     <button class="btn btn-sm" routerLink="/dashboard/view/{{car.id}}/charts">Подробнее</button>
+    <div style="float: right">
+        <button *ngIf="!isMuted()" class="btn btn-success" (click)="mute()">
+            <span class="fa fa-music"></span>
+        </button>
+        <button *ngIf="isMuted()" class="btn btn-danger" (click)="unMute()">
+            <span class="fa fa-music"></span>
+        </button>
+    </div>
 </p-panel>
 <p-dialog header="Информация о неисправности" modal="modal" width="600" [(visible)]="detailsError">
     <h3>Возможные причины:</h3>

@@ -16,10 +16,13 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
     public detailsError = false;
     public reasons: any[];
     public solutions: any[];
+    private audio = new Audio();
     private subscription: Subscription = new Subscription();
     private timer                      = TimerObservable.create(0, 5000);
 
     constructor(private monitoringService: MonitoringService) {
+        this.audio.src = '/assets/signal.wav';
+        this.audio.load();
     }
 
     ngOnChanges(event: any) {
@@ -43,6 +46,7 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+        this.audio.pause();
     }
 
     showError(id: string): any[] {
@@ -64,11 +68,31 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
             }
         });
 
+        if (errors.length && !this.isMuted() && this.audio.paused) {
+            this.audio.play();
+        }
+
         return errors;
     }
 
+    public isMuted() {
+        return !(localStorage.getItem('mute_monitoring') === null);
+    }
+
+    public unMute() {
+        if (localStorage.getItem('mute_monitoring') !== null) {
+            localStorage.removeItem('mute_monitoring');
+        }
+    }
+
+    public mute() {
+        if (localStorage.getItem('mute_monitoring') === null) {
+            localStorage.setItem('mute_monitoring', '1');
+            this.audio.pause();
+        }
+    }
+
     showDetailsError(error_id) {
-        console.log(error_id);
         this.reasons = this.status.issues[error_id].reasons;
         this.solutions = this.status.issues[error_id].solutions;
         this.detailsError = true;
