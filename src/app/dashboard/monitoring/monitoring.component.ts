@@ -14,6 +14,8 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
     @Input() car: Car;
     public status: Monitoring;
     public detailsError = false;
+    public reasons: any[];
+    public solutions: any[];
     private subscription: Subscription = new Subscription();
     private timer                      = TimerObservable.create(0, 5000);
 
@@ -56,16 +58,19 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
         });
 
         this.status.issues.forEach(issue => {
-            if (codes.indexOf(issue.id) !== -1) {
-                errors.push(issue.name);
+            const key = codes.indexOf(issue.id);
+            if (key !== -1) {
+                errors.push({id: issue.id, name: issue.name, key: key});
             }
         });
 
-        console.log(errors);
         return errors;
     }
 
-    showDetailsError() {
+    showDetailsError(error_id) {
+        console.log(error_id);
+        this.reasons = this.status.issues[error_id].reasons;
+        this.solutions = this.status.issues[error_id].solutions;
         this.detailsError = true;
     }
 }
