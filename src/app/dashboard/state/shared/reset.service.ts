@@ -11,58 +11,58 @@ import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class ResetService {
-  private host: string = environment.host;
+    private host: string = environment.host;
 
-  constructor(private http: HttpClient,
-              private router: Router,
-              private msgService: MsgService) {
-  }
+    constructor(private http: HttpClient,
+                private router: Router,
+                private msgService: MsgService) {
+    }
 
-  public reset(data: any): Observable<any> {
-    return this.http.post(
-      this.host + '/v1/engine-maintenances/scheduled', data)
-      .map((response: any) => {
-        return response;
-      })
-      .catch((error: any) => {
-        Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.error.message || 'Server error');
-      });
-  }
+    public reset(data: any): Observable<any> {
+        return this.http.post(
+            this.host + '/v1/engine-maintenances/scheduled', data)
+            .map((response: any) => {
+                return response;
+            })
+            .catch((error: any) => {
+                Error.check(error, this.router, this.msgService);
+                return Observable.throw(error.error.message || 'Server error');
+            });
+    }
 
-  public resetGaranted(data: any): Observable<any> {
-    return this.http.post(
-      this.host + '/v1/engine-maintenances/', data)
-      .map((response: any) => {
-        return response;
-      })
-      .catch((error: any) => {
-        Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.error.message || 'Server error');
-      });
-  }
+    public resetGaranted(data: any): Observable<any> {
+        return this.http.post(
+            this.host + '/v1/engine-maintenances/', data)
+            .map((response: any) => {
+                return response;
+            })
+            .catch((error: any) => {
+                Error.check(error, this.router, this.msgService);
+                return Observable.throw(error.error.message || 'Server error');
+            });
+    }
 
-  public all(car: Car): Observable<any> {
-    return this.http.get(
-      this.host + '/v1/engine-maintenances/engine/' + car.engine.id + '/scheduled')
-      .map((response: any) => {
-        return response;
-      })
-      .catch((error: any) => {
-        Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.error.message || 'Server error');
-      });
-  }
+    public all(car: Car): Observable<any> {
+        return this.http.get(
+            this.host + '/v1/engine-maintenances/engine/' + car.engine.id + '/scheduled')
+            .map((response: any) => {
+                return response;
+            })
+            .catch((error: any) => {
+                Error.check(error, this.router, this.msgService);
+                return Observable.throw(error.error.message || 'Server error');
+            });
+    }
 
-  public allGaranted(car: Car): Observable<any> {
-    return this.http.get(
-      this.host + '/v1/engine-maintenances/engine/' + car.engine.id)
-      .map((response: any) => {
-        return response;
-      })
-      .catch((error: any) => {
-        Error.check(error, this.router, this.msgService);
-        return Observable.throw(error.error.message || 'Server error');
-      });
-  }
+    public allGaranted(car: Car): Observable<any> {
+        return this.http.get(
+            this.host + '/v1/engine-maintenances/engine/' + car.engine.id)
+            .map((response: any) => {
+                return response;
+            })
+            .catch((error: any) => {
+                Error.check(error, this.router, this.msgService);
+                return Observable.throw(error.error.message || 'Server error');
+            });
+    }
 }

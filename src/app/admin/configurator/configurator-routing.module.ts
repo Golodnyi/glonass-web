@@ -1,16 +1,16 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ConfiguratorComponent } from './configurator/configurator.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {ConfiguratorComponent} from './configurator/configurator.component';
 
 const routes: Routes = [
-  {
-    path: '', component: ConfiguratorComponent
-  }
+    {
+        path: '', component: ConfiguratorComponent
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 export class ConfiguratorRoutingModule {
 }
