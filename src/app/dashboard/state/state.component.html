@@ -8,11 +8,11 @@
             <div class="text-left">Прогноз: {{issue.forecast}}</div>
             <hr/>
             <div class="text-right">
-                <button *ngIf="!isMuted(issue.id)" class="btn btn-danger" (click)="mute(issue.id)">
+                <button *ngIf="!isMuted(issue.id)" class="btn btn-success" (click)="mute(issue.id)">
                     <span class="fa fa-music">&nbsp;</span>
                     включен
                 </button>
-                <button *ngIf="isMuted(issue.id)" class="btn btn-success" (click)="unMute(issue.id)">
+                <button *ngIf="isMuted(issue.id)" class="btn btn-danger" (click)="unMute(issue.id)">
                     <span class="fa fa-music">&nbsp;</span>
                     отключен
                 </button>
