@@ -113,7 +113,6 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
         }
 
         const result = (this.minDuration / this.maxDuration * 100 || 0) * progress / 100;
-        console.log('green: ' + result);
 
         return result;
     }
@@ -131,7 +130,6 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
         }
 
         const result = (80 - this.greenProgressWidth() || 0) * progress / 100;
-        console.log('orange: ' + result);
 
         return result;
     }
@@ -146,7 +144,6 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
         }
 
         const result = 20 * (progress - 100) / 100;
-        console.log('red: ' + result);
 
         return result;
     }

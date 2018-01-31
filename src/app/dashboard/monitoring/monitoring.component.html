@@ -28,7 +28,7 @@
 <p-dialog header="{{forecast}}" modal="modal" width="600" [(visible)]="detailsError">
     <div class="progress">
         <div class="progress-bar progress-bar-success" [style.width]="greenProgressWidth() + '%'"></div>
-        <div class="progress-bar progress-bar-warning progress-bar-striped" [style.width]="orangeProgressWidth() + '%'"></div>
+        <div class="progress-bar progress-bar-warning" [style.width]="orangeProgressWidth() + '%'"></div>
         <div class="progress-bar progress-bar-danger" [style.width]="redProgressWidth() + '%'"></div>
     </div>
     <h3 *ngIf="reasons.length">Возможные причины:</h3>
