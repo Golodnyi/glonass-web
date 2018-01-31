@@ -1,0 +1,12 @@
+.progress-bar[aria-valuenow="0"] {
+    color: green;
+}
+
+.progress-bar[aria-valuenow="20"] {
+    color: orange;
+}
+
+.progress-bar[aria-valuenow="80"] {
+    color: red;
+}
+

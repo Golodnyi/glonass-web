@@ -14,8 +14,12 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
     @Input() car: Car;
     public status: Monitoring;
     public detailsError = false;
-    public reasons: any[];
-    public solutions: any[];
+    public reasons: any[]   = [];
+    public solutions: any[] = [];
+    public forecast: string;
+    public minDuration: number;
+    public maxDuration: number;
+    public duration: number;
     private audio = new Audio();
     private subscription: Subscription = new Subscription();
     private timer                      = TimerObservable.create(0, 5000);
@@ -92,9 +96,58 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
         }
     }
 
-    showDetailsError(error_id) {
-        this.reasons = this.status.issues[error_id].reasons;
-        this.solutions = this.status.issues[error_id].solutions;
+    public showDetailsError(error_id) {
+        this.forecast     = this.status.issues[error_id].forecast;
+        this.reasons      = this.status.issues[error_id].reasons;
+        this.solutions    = this.status.issues[error_id].solutions;
+        this.minDuration  = this.status.issues[error_id].minDuration;
+        this.maxDuration  = this.status.issues[error_id].maxDuration;
+        this.duration     = this.status.issues[error_id].duration;
         this.detailsError = true;
+    }
+
+    public greenProgressWidth(): number {
+        let progress = this.duration / this.minDuration * 100;
+        if (progress > 100) {
+            progress = 100;
+        }
+
+        const result = (this.minDuration / this.maxDuration * 100 || 0) * progress / 100;
+        console.log('green: ' + result);
+
+        return result;
+    }
+
+    public orangeProgressWidth(): number {
+        let progress = this.duration / this.minDuration * 100;
+        if (progress < 100) {
+            return 0;
+        }
+
+        progress = this.duration / this.maxDuration * 100;
+
+        if (progress > 100) {
+            progress = 100;
+        }
+
+        const result = (80 - this.greenProgressWidth() || 0) * progress / 100;
+        console.log('orange: ' + result);
+
+        return result;
+    }
+
+    public redProgressWidth(): number {
+        let progress = (this.duration / this.maxDuration * 100);
+
+        if (progress < 100) {
+            return 0;
+        } else if (progress > 200) {
+            progress = 200;
+        }
+
+        const result = 20 * (progress - 100) / 100;
+        console.log('red: ' + result);
+
+        return result;
     }
 }
