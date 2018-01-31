@@ -25,12 +25,17 @@
         </button>
     </div>
 </p-panel>
-<p-dialog header="Информация о неисправности" modal="modal" width="600" [(visible)]="detailsError">
-    <h3>Возможные причины:</h3>
+<p-dialog header="{{forecast}}" modal="modal" width="600" [(visible)]="detailsError">
+    <div class="progress">
+        <div class="progress-bar progress-bar-success" [style.width]="greenProgressWidth() + '%'"></div>
+        <div class="progress-bar progress-bar-warning" [style.width]="orangeProgressWidth() + '%'"></div>
+        <div class="progress-bar progress-bar-danger" [style.width]="redProgressWidth() + '%'"></div>
+    </div>
+    <h3 *ngIf="reasons.length">Возможные причины:</h3>
     <div *ngFor="let reason of reasons" class="alert alert-success">
         {{reason}}
     </div>
-    <h3>Решение:</h3>
+    <h3 *ngIf="solutions.length">Решение:</h3>
     <div *ngFor="let solution of solutions" class="alert alert-danger">
         {{solution}}
     </div>
