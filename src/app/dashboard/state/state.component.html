@@ -5,7 +5,12 @@
                 <span class="fa fa-warning">&nbsp;</span>
                 <strong>{{issue.name}}</strong>
             </div>
-            <div class="text-left">Прогноз: {{issue.forecast}}</div>
+            <div class="text-left" *ngIf="issue.forecast.length">Прогноз:</div>
+            <ul>
+                <li *ngFor="let forecast of issue.forecast">
+                    {{forecast.name}}
+                </li>
+            </ul>
             <hr/>
             <div class="text-right">
                 <button *ngIf="!isMuted(issue.id)" class="btn btn-success" (click)="mute(issue.id)">

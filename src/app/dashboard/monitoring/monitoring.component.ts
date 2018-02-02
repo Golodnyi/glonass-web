@@ -15,11 +15,13 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
     public status: Monitoring;
     public detailsError = false;
     public reasons: any[]   = [];
-    public solutions: any[] = [];
-    public forecast: string;
+    public forecasts: any[] = [];
     public minDuration: number;
     public maxDuration: number;
     public duration: number;
+    public greenWidth: number;
+    public orangeWidth: number;
+    public redWidth: number;
     private audio = new Audio();
     private subscription: Subscription = new Subscription();
     private timer                      = TimerObservable.create(0, 5000);
@@ -97,12 +99,14 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
     }
 
     public showDetailsError(error_id) {
-        this.forecast     = this.status.issues[error_id].forecast;
+        this.forecasts    = this.status.issues[error_id].forecast;
         this.reasons      = this.status.issues[error_id].reasons;
-        this.solutions    = this.status.issues[error_id].solutions;
         this.minDuration  = this.status.issues[error_id].minDuration;
         this.maxDuration  = this.status.issues[error_id].maxDuration;
         this.duration     = this.status.issues[error_id].duration;
+        this.greenWidth   = this.greenProgressWidth();
+        this.orangeWidth  = this.orangeProgressWidth();
+        this.redWidth     = this.redProgressWidth();
         this.detailsError = true;
     }
 
