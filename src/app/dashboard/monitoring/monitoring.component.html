@@ -25,18 +25,27 @@
         </button>
     </div>
 </p-panel>
-<p-dialog header="{{forecast}}" modal="modal" width="600" [(visible)]="detailsError">
+<p-dialog header="Подробности" modal="modal" width="600" [(visible)]="detailsError">
     <div class="progress">
-        <div class="progress-bar progress-bar-success" [style.width]="greenProgressWidth() + '%'"></div>
-        <div class="progress-bar progress-bar-warning" [style.width]="orangeProgressWidth() + '%'"></div>
-        <div class="progress-bar progress-bar-danger" [style.width]="redProgressWidth() + '%'"></div>
+        <div class="progress-bar progress-bar-success" [style.width.%]="greenWidth"></div>
+        <div class="progress-bar progress-bar-warning" [style.width.%]="orangeWidth"></div>
+        <div class="progress-bar progress-bar-danger" [style.width.%]="redWidth"></div>
     </div>
-    <h3 *ngIf="reasons.length">Возможные причины:</h3>
-    <div *ngFor="let reason of reasons" class="alert alert-success">
-        {{reason}}
-    </div>
-    <h3 *ngIf="solutions.length">Решение:</h3>
-    <div *ngFor="let solution of solutions" class="alert alert-danger">
-        {{solution}}
-    </div>
+    <h4 *ngIf="forecasts.length">Прогноз:</h4>
+    <ul>
+        <li *ngFor="let forecast of forecasts">
+            {{forecast.name}}
+        </li>
+    </ul>
+    <h4 *ngIf="reasons.length">Возможные причины:</h4>
+    <ul>
+        <li *ngFor="let reason of reasons">
+            <strong>{{reason.name}}</strong>
+            <div *ngIf="reason.solutions">
+                <div *ngFor="let solution of reason.solutions" class="alert alert-info">
+                    {{solution.name}}
+                </div>
+            </div>
+        </li>
+    </ul>
 </p-dialog>
