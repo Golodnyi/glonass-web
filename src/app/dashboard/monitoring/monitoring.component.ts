@@ -22,6 +22,7 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
     public greenWidth: number;
     public orangeWidth: number;
     public redWidth: number;
+    public errorIcon = false;
     private audio = new Audio();
     private subscription: Subscription = new Subscription();
     private timer                      = TimerObservable.create(0, 5000);
@@ -42,6 +43,11 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
                 this.monitoringService.status(this.car).subscribe(
                     data => {
                         this.status = data;
+                        if (this.status.issues.length) {
+                            this.errorIcon = true;
+                        } else {
+                            this.errorIcon = false;
+                        }
                     }
                 );
             });
