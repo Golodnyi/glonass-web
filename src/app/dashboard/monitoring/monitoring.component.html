@@ -1,4 +1,10 @@
-<p-panel *ngIf="car && car.engine && status" header="Двигатель: {{car.engine.name}}, шасси: {{car.name}}" [toggleable]="true">
+<p-panel *ngIf="car && car.engine && status" [toggleable]="true" [collapsed]="true">
+    <p-header>
+        <span *ngIf="errorIcon">
+            <i class="fa fa-exclamation-triangle" style="color: darkred;"></i>
+        </span>
+        Двигатель: {{car.engine.name}}, шасси: {{car.name}}
+    </p-header>
     <table class="table table-striped">
         <tbody>
         <tr *ngFor="let sensor of status.sensors">
@@ -42,9 +48,9 @@
         <li *ngFor="let reason of reasons">
             <strong>{{reason.name}}</strong>
             <div *ngIf="reason.solutions">
-                <div *ngFor="let solution of reason.solutions" class="alert alert-info">
+                <span *ngFor="let solution of reason.solutions" class="alert alert-info">
                     {{solution.name}}
-                </div>
+                </span>
             </div>
         </li>
     </ul>
