@@ -48,9 +48,9 @@
         <li *ngFor="let reason of reasons">
             <strong>{{reason.name}}</strong>
             <div *ngIf="reason.solutions">
-                <span *ngFor="let solution of reason.solutions" class="alert alert-info">
+                <div *ngFor="let solution of reason.solutions" class="alert alert-info">
                     {{solution.name}}
-                </span>
+                </div>
             </div>
         </li>
     </ul>
