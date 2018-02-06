@@ -23,6 +23,7 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
     public orangeWidth: number;
     public redWidth: number;
     public errorIcon = false;
+    private currentError: number;
     private audio = new Audio();
     private subscription: Subscription = new Subscription();
     private timer                      = TimerObservable.create(0, 5000);
@@ -33,25 +34,31 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
     }
 
     ngOnChanges(event: any) {
-        if (event.car && event.car.currentValue !== undefined) {
-
-            if (this.subscription) {
-                this.subscription.unsubscribe();
-            }
-
-            this.subscription = this.timer.subscribe(() => {
-                this.monitoringService.status(this.car).subscribe(
-                    data => {
-                        this.status = data;
-                        if (this.status.issues.length) {
-                            this.errorIcon = true;
-                        } else {
-                            this.errorIcon = false;
-                        }
-                    }
-                );
-            });
+        if (!event.car || event.car.currentValue === undefined) {
+            return false;
         }
+
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+
+        this.subscription = this.timer.subscribe(() => {
+            this.monitoringService.status(this.car).subscribe(
+                data => {
+                    this.status = data;
+
+                    if (this.currentError || this.currentError === 0) {
+                        this.showDetailsError(this.currentError);
+                    }
+
+                    if (this.status.issues.length) {
+                        this.errorIcon = true;
+                    } else {
+                        this.errorIcon = false;
+                    }
+                }
+            );
+        });
     }
 
     ngOnDestroy() {
@@ -105,6 +112,7 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
     }
 
     public showDetailsError(error_id) {
+        this.currentError = error_id;
         this.forecasts    = this.status.issues[error_id].forecast;
         this.reasons      = this.status.issues[error_id].reasons;
         this.minDuration  = this.status.issues[error_id].minDuration;
