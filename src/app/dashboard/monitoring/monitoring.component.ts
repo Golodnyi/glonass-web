@@ -4,12 +4,18 @@ import {Car} from '../../shared/models/car.model';
 import {Monitoring} from './shared/monitoring.model';
 import {Subscription} from 'rxjs/Subscription';
 import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import * as moment from 'moment';
 
 @Component({
     selector   : 'app-monitoring',
     templateUrl: 'monitoring.component.html',
     styleUrls  : ['monitoring.component.css']
 })
+
+/**
+ * TODO: отрефакторить полностью
+ */
+
 export class MonitoringComponent implements OnChanges, OnDestroy {
     @Input() car: Car;
     public status: Monitoring;
@@ -19,6 +25,7 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
     public minDuration: number;
     public maxDuration: number;
     public duration: number;
+    public dateList: string[] = ['', '', ''];
     public greenWidth: number;
     public orangeWidth: number;
     public redWidth: number;
@@ -113,6 +120,9 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
 
     public showDetailsError(error_id) {
         this.currentError = error_id;
+        this.dateList[0]   = moment.unix(this.status.issues[error_id].createdAt / 1000).format("DD.MM.YY HH:mm");
+        this.dateList[1]   = moment.unix(this.status.issues[error_id].createdAt / 1000 + this.status.issues[error_id].minDuration / 1000).format("DD.MM.YY HH:mm");
+        this.dateList[2]   = moment.unix(this.status.issues[error_id].createdAt / 1000 + this.status.issues[error_id].maxDuration / 1000).format("DD.MM.YY HH:mm");
         this.forecasts    = this.status.issues[error_id].forecast;
         this.reasons      = this.status.issues[error_id].reasons;
         this.minDuration  = this.status.issues[error_id].minDuration;
