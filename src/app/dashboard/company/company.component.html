@@ -10,9 +10,8 @@
                                 Машины отсутствуют
                             </div>
                             <div *ngIf="subdivision.cars.length">
-                                <div *ngFor="let car of subdivision.cars; let even = even; let odd = odd">
+                                <div *ngFor="let car of subdivision.cars;">
                                     <app-monitoring class="col-md-6" [car]="car"></app-monitoring>
-                                    <hr *ngIf="odd"/>
                                 </div>
                             </div>
                         </div>

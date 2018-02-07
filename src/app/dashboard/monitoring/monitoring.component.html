@@ -31,27 +31,43 @@
         </button>
     </div>
 </p-panel>
-<p-dialog header="Подробности" modal="modal" width="600" [(visible)]="detailsError">
-    <div class="progress">
-        <div class="progress-bar progress-bar-success" [style.width.%]="greenWidth"></div>
-        <div class="progress-bar progress-bar-warning" [style.width.%]="orangeWidth"></div>
-        <div class="progress-bar progress-bar-danger" [style.width.%]="redWidth"></div>
-    </div>
-    <h4 *ngIf="forecasts.length">Прогноз:</h4>
-    <ul>
-        <li *ngFor="let forecast of forecasts">
-            {{forecast.name}}
-        </li>
-    </ul>
-    <h4 *ngIf="reasons.length">Возможные причины:</h4>
-    <ul>
-        <li *ngFor="let reason of reasons">
-            <strong>{{reason.name}}</strong>
-            <div *ngIf="reason.solutions">
-                <div *ngFor="let solution of reason.solutions" class="alert alert-info">
-                    {{solution.name}}
-                </div>
+<p-dialog header="Подробности" modal="modal" width="720" [(visible)]="detailsError">
+    <div class="progress-width">
+        <div class="row">
+            <div class="vertical-text _orange" [style.margin-left.%]="greenWidth"><span class="text-transform-orange">{{dateList[1]}}</span></div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="row">
+            <div class="progress" style="height: 20px; margin-bottom: 0;">
+                <div class="progress-bar progress-bar-success" [style.width.%]="greenWidth"></div>
+                <div class="progress-bar progress-bar-warning" [style.width.%]="orangeWidth"></div>
+                <div class="progress-bar progress-bar-danger" [style.width.%]="redWidth"></div>
             </div>
-        </li>
-    </ul>
+        </div>
+        <div class="row">
+            <div class="vertical-text _green"><span class="text-transform">{{dateList[0]}}</span></div>
+            <div class="vertical-text _red" [style.margin-left.%]="orangeWidth"><span class="text-transform">{{dateList[2]}}</span></div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <h4 *ngIf="forecasts.length">Прогноз:</h4>
+        <ul>
+            <li *ngFor="let forecast of forecasts">
+                {{forecast.name}}
+            </li>
+        </ul>
+        <h4 *ngIf="reasons.length">Возможные причины:</h4>
+        <ul>
+            <li *ngFor="let reason of reasons">
+                <strong>{{reason.name}}</strong>
+                <div *ngIf="reason.solutions">
+                    <div *ngFor="let solution of reason.solutions" class="alert alert-info">
+                        {{solution.name}}
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
 </p-dialog>
