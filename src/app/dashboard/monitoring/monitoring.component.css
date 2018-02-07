@@ -17,14 +17,14 @@
 }
 
 ._red {
-    transform: translateX(-14px);
+    transform: translateX(-12px);
     border-top: 0;
     border-bottom-color: #d9534f;
 }
 
 .progress-width {
     width: 80%;
-    margin: 15px auto;
+    margin: 10px auto;
 }
 
 .clearfix {
@@ -44,4 +44,13 @@
     width: 100px;
     margin-left: -50px;
     bottom: 10px;
+}
+
+ul {
+    margin-bottom: 0;
+}
+
+.row {
+    margin-right: 0;
+    margin-left: 0;
 }
