@@ -120,9 +120,9 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
 
     public showDetailsError(error_id) {
         this.currentError = error_id;
-        this.dateList[0]   = moment.unix(this.status.issues[error_id].createdAt / 1000).format("DD.MM.YY HH:mm");
-        this.dateList[1]   = moment.unix(this.status.issues[error_id].createdAt / 1000 + this.status.issues[error_id].minDuration / 1000).format("DD.MM.YY HH:mm");
-        this.dateList[2]   = moment.unix(this.status.issues[error_id].createdAt / 1000 + this.status.issues[error_id].maxDuration / 1000).format("DD.MM.YY HH:mm");
+        this.dateList[0]   = moment.unix(this.status.issues[error_id].createdAt / 1000).format('DD.MM.YY HH:mm');
+        this.dateList[1]   = moment.unix(this.status.issues[error_id].createdAt / 1000 + this.status.issues[error_id].minDuration / 1000).format('DD.MM.YY HH:mm');
+        this.dateList[2]   = moment.unix(this.status.issues[error_id].createdAt / 1000 + this.status.issues[error_id].maxDuration / 1000).format('DD.MM.YY HH:mm');
         this.forecasts    = this.status.issues[error_id].forecast;
         this.reasons      = this.status.issues[error_id].reasons;
         this.minDuration  = this.status.issues[error_id].minDuration;
