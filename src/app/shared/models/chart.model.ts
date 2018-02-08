@@ -13,13 +13,13 @@ export class Chart {
     public tooltip       = {
         positioner     : function () {
             return {
-                x: this.chart.chartWidth - this.label.width,
+                x: this.chart.chartWidth - this.label.width / 2,
                 y: -10
             };
         },
         borderWidth    : 0,
         valueDecimals  : 0,
-        backgroundColor: 'none',
+        backgroundColor: '#e6e6e6',
         pointFormat    : '{point.x:%d.%m %H:%M:%S}: {point.y}',
         headerFormat   : '',
         shadow         : false,
@@ -98,14 +98,13 @@ export class Chart {
         this.series                = [{
             data   : options.data,
             name   : options.name,
-            type   : options.type,
+            type   : 'column',
             tooltip: {
                 valueSuffix: ' ' + options.unit
             }
         }];
         this.xAxis                 = {
             crosshair: true,
-            events   : null
         };
         this.yAxis                 = {
             plotBands: options.plotBands,
