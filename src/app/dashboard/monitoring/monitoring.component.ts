@@ -28,6 +28,7 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
     public dateList: string[] = ['', '', ''];
     public greenWidth: number;
     public orangeWidth: number;
+    public orangeLabelWidth: number;
     public redWidth: number;
     public errorIcon = false;
     private currentError: number;
@@ -132,6 +133,7 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
         this.duration     = this.status.issues[error_id].duration;
         this.greenWidth   = this.greenProgressWidth();
         this.orangeWidth  = this.orangeProgressWidth();
+        this.orangeLabelWidth  = this.orangeProgressWidth(true);
         this.redWidth     = this.redProgressWidth();
         this.detailsError = true;
     }
@@ -147,7 +149,11 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
         return result;
     }
 
-    public orangeProgressWidth(): number {
+    public orangeProgressWidth(label = false): number {
+        if (label) {
+            return (80 - this.greenProgressWidth() || 0) * 100 / 100;
+        }
+
         let progress = this.duration / this.minDuration * 100;
         if (progress < 100) {
             return 0;
