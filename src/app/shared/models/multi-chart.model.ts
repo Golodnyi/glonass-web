@@ -98,7 +98,7 @@ export class MultiChart {
             this.series.push({
                 data   : option.data,
                 name   : option.name,
-                type   : option.type,
+                type   : 'column',
                 color  : option.color,
                 tooltip: {
                     valueSuffix: ' ' + option.unit,
