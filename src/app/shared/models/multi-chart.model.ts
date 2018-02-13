@@ -101,7 +101,8 @@ export class MultiChart {
                 type   : 'column    ',
                 color  : option.color,
                 dataGrouping: {
-                    groupPixelWidth: 0
+                    groupPixelWidth: 5,
+                    approximation: 'average'
                 },
                 tooltip: {
                     valueSuffix: ' ' + option.unit,

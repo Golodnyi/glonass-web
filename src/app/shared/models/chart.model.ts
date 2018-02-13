@@ -102,7 +102,8 @@ export class Chart {
                 valueSuffix: ' ' + options.unit
             },
             dataGrouping: {
-                groupPixelWidth: 0
+                groupPixelWidth: 5,
+                approximation: 'average'
             }
         }];
         this.xAxis                 = {
