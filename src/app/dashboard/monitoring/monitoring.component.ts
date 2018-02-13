@@ -56,7 +56,7 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
                     this.status = data;
 
                     if (this.currentError || this.currentError === 0) {
-                        this.showDetailsError(this.currentError);
+                        this.reinitError(this.currentError);
                     }
 
                     if (this.status.issues.length) {
@@ -119,7 +119,7 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
         }
     }
 
-    public showDetailsError(error_id) {
+    public reinitError(error_id) {
         this.currentError = error_id;
         this.dateList[0]   = moment.unix(this.status.issues[error_id].createdAt / 1000).format('DD.MM.YY HH:mm');
         this.dateList[1]   = moment.unix(this.status.issues[error_id].createdAt / 1000
@@ -135,6 +135,10 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
         this.orangeWidth  = this.orangeProgressWidth();
         this.orangeLabelWidth  = this.orangeProgressWidth(true);
         this.redWidth     = this.redProgressWidth();
+    }
+
+    public showDetailsError(error_id) {
+        this.reinitError(error_id);
         this.detailsError = true;
     }
 
@@ -182,5 +186,9 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
         const result = 20 * (progress - 100) / 100;
 
         return result;
+    }
+
+    public hideModal() {
+        this.detailsError = false;
     }
 }
