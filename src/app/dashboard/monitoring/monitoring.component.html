@@ -31,7 +31,7 @@
         </button>
     </div>
 </p-panel>
-<p-dialog header="Подробности" modal="modal" width="720" [(visible)]="detailsError" (onHide)="hideModal($event)">
+<p-dialog header="Подробности" modal="modal" width="720" [(visible)]="detailsError" (onHide)="hideModal()">
     <div class="progress-width">
         <div class="row">
             <div class="vertical-text _orange" [style.margin-left.%]="greenWidth"><span class="text-transform-orange">{{dateList[1]}}</span></div>
