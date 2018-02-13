@@ -100,6 +100,9 @@ export class MultiChart {
                 name   : option.name,
                 type   : 'column    ',
                 color  : option.color,
+                dataGrouping: {
+                    groupPixelWidth: 0
+                },
                 tooltip: {
                     valueSuffix: ' ' + option.unit,
                     pointFormat: '{point.x:%d.%m %H:%M:%S} <span style="color: ' + option.color + '"> ' + option.name +
