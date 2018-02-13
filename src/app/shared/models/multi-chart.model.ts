@@ -98,7 +98,7 @@ export class MultiChart {
             this.series.push({
                 data   : option.data,
                 name   : option.name,
-                type   : 'column    ',
+                type   : 'column',
                 color  : option.color,
                 dataGrouping: {
                     groupPixelWidth: 5,
