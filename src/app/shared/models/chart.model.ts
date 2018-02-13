@@ -8,7 +8,7 @@ export class Chart {
         spacingBottom: 0,
         width        : 600,
         height       : 360,
-        reflow       : false
+        reflow       : true
     };
     public tooltip       = {
         positioner     : function () {
@@ -28,7 +28,7 @@ export class Chart {
         }
     };
     public scrollbar     = {
-        liveRedraw: true
+        liveRedraw: false
     };
     public navigator     = {
         adaptToUpdatedData: true
@@ -44,7 +44,6 @@ export class Chart {
     public boost         = {
         useGPUTranslations: true,
         usePreAllocated   : true,
-        seriesThreshold   : 5,
     };
     public credits       = {
         enabled: false
@@ -101,6 +100,9 @@ export class Chart {
             type   : 'column',
             tooltip: {
                 valueSuffix: ' ' + options.unit
+            },
+            dataGrouping: {
+                groupPixelWidth: 0
             }
         }];
         this.xAxis                 = {
