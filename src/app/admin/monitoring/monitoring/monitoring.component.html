@@ -1,12 +1,10 @@
 <div class="row">
     <div routerLink="/dashboard/view/{{s.id}}/charts" style="cursor: pointer;" *ngFor="let s of state; let index = index">
         <app-admin-state *ngIf="s.issues.length" class="col-md-3" [state]="s"></app-admin-state>
-        <hr *ngIf="!((index+1) / 4)" />
     </div>
 </div>
 <div class="row">
     <div routerLink="/dashboard/view/{{s.id}}/charts" style="cursor: pointer;" *ngFor="let s of state; let index = index">
         <app-admin-state *ngIf="!s.issues.length" class="col-md-3" [state]="s"></app-admin-state>
-        <hr *ngIf="!((index+1) / 4)" />
     </div>
 </div>

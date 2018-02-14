@@ -2,7 +2,7 @@
          [toggleable]="false">
     <div>
         <div class="alert alert-success" *ngIf="online(state.date)">В сети</div>
-        <div class="alert alert-warning" *ngIf="!online(state.date)">Не в сети, последний сеанс связи:
+        <div class="alert alert-warning" *ngIf="!online(state.date)">Посл. сеанс связи:
             {{lastDate(state.date)}}
         </div>
     </div>
