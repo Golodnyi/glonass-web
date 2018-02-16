@@ -29,6 +29,10 @@
     </div>
     <div class="alert alert-success">
         <div>
+            IMEI:
+            <span class="badge alert-success">{{state.imei}}</span>
+        </div>
+        <div>
             Статус:
             <span *ngIf="online(state)" class="badge alert-success">в сети</span>
             <span *ngIf="!online(state)" class="badge alert-danger">не в сети</span>
