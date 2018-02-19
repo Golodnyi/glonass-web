@@ -3,7 +3,6 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {Router} from '@angular/router';
-import {Error} from '../models/error.model';
 import {Car} from '../models/car.model';
 import {MsgService} from './msg';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
@@ -11,6 +10,7 @@ import {State} from '../../dashboard/state/shared/state.model';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Comment} from './comment.model';
+import {Error} from '../../../shared/models/error.model';
 
 @Injectable()
 export class CommentsService {
