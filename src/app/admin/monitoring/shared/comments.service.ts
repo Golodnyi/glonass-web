@@ -3,19 +3,15 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {Router} from '@angular/router';
-import {Car} from '../models/car.model';
-import {MsgService} from './msg';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {State} from '../../dashboard/state/shared/state.model';
-import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Comment} from './comment.model';
 import {Error} from '../../../shared/models/error.model';
+import {Car} from '../../../shared/models/car.model';
+import {MsgService} from '../../../shared/services/msg';
+import {environment} from '../../../../environments/environment';
 
 @Injectable()
 export class CommentsService {
-    private cars: BehaviorSubject<Car[]> = new BehaviorSubject([]);
-    private car: BehaviorSubject<Car>    = new BehaviorSubject(new Car());
     private host: string                 = environment.host;
 
     constructor(private http: HttpClient,
@@ -34,7 +30,7 @@ export class CommentsService {
     }
 
     public create(car: Car): Observable<Comment> {
-        comment = '';
+        let comment = '';
         return this.http.post(this.host + '/v1/cars/' + car.id + '/comments', comment)
             .map((response: any) => {
                 return response;

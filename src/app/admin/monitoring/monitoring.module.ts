@@ -3,13 +3,14 @@ import {CommonModule} from '@angular/common';
 import {MonitoringRoutingModule} from './monitoring-routing.module';
 import {MonitoringComponent} from './monitoring/monitoring.component';
 import {StateComponent} from './state/state.component';
-import {PanelModule} from 'primeng/primeng';
+import {PanelModule, DialogModule} from 'primeng/primeng';
 
 @NgModule({
     imports     : [
         CommonModule,
         MonitoringRoutingModule,
-        PanelModule
+        PanelModule,
+        DialogModule
     ],
     declarations: [MonitoringComponent, StateComponent]
 })

@@ -9,6 +9,7 @@ import * as moment from 'moment';
 })
 export class StateComponent {
     @Input() state: State;
+    public displayComments = false;
 
     public static online(timestamp: number) {
         return (Number(moment().format('X')) - Number(timestamp) / 1000) < 3600;
@@ -25,4 +26,12 @@ export class StateComponent {
     public lastDate(timestamp: number) {
         return StateComponent.lastDate(timestamp);
     };
+
+    public hideModal() {
+        this.displayComments = false;
+    }
+
+    public showModal() {
+        this.displayComments = true;
+    }
 }
