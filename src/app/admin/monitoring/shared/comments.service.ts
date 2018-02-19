@@ -10,6 +10,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {State} from '../../dashboard/state/shared/state.model';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
+import {Comment} from './comment.model';
 
 @Injectable()
 export class CommentsService {
@@ -22,7 +23,7 @@ export class CommentsService {
                 private msgService: MsgService) {
     }
 
-    public all(car: Car): Observable<any[]> {
+    public all(car: Car): Observable<Comment[]> {
         return this.http.get(this.host + '/v1/cars/' + car.id + '/comments')
             .map((response: any) => {
                 return response;
@@ -32,7 +33,7 @@ export class CommentsService {
             });
     }
 
-    public create(car: Car): Observable<Car> {
+    public create(car: Car): Observable<Comment> {
         comment = '';
         return this.http.post(this.host + '/v1/cars/' + car.id + '/comments', comment)
             .map((response: any) => {
