@@ -12,6 +12,7 @@ export interface IState {
     roaming: boolean;
     power: boolean;
     motochas: number;
+    imei: number;
     issues: IIssue[];
     maintenance_date: string;
     maintenances: Maintenances;
@@ -28,6 +29,7 @@ export class State implements IState {
     public roaming: boolean;
     public power: boolean;
     public motochas          = 0;
+    public imei = 0;
     public issues: IIssue[]  = [];
     public maintenance_date: string;
     public maintenances: Maintenances;
