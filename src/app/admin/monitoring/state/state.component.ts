@@ -1,14 +1,15 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, EventEmitter, Output} from '@angular/core';
 import {State} from '../monitoring/shared/state.model';
 import * as moment from 'moment';
 
 @Component({
     selector   : 'app-admin-state',
     templateUrl: './state.component.html',
-    styleUrls  : ['./state.component.css']
+    styleUrls  : ['./state.component.css'],
 })
 export class StateComponent {
     @Input() state: State;
+    @Output() showComments = new EventEmitter();
 
     public static online(timestamp: number) {
         return (Number(moment().format('X')) - Number(timestamp) / 1000) < 3600;
@@ -25,4 +26,8 @@ export class StateComponent {
     public lastDate(timestamp: number) {
         return StateComponent.lastDate(timestamp);
     };
+
+    public showModal() {
+        this.showComments.emit(true);
+    }
 }

@@ -15,6 +15,8 @@ export class MonitoringComponent implements OnDestroy {
     private timer         = TimerObservable.create(0, 5000);
     private subscriptionTimer: Subscription;
     private audio         = new Audio();
+    public showCommentsModal: boolean;
+    public car: number;
 
     constructor(private stateService: StateService) {
         this.audio.src = '/assets/monitoring.wav';
@@ -45,5 +47,14 @@ export class MonitoringComponent implements OnDestroy {
                 this.audio.play();
             }
         });
+    }
+
+    public showComments(s: State) {
+        this.showCommentsModal = true;
+        this.car = s.id;
+    }
+
+    public hideComments() {
+        this.showCommentsModal = false;
     }
 }

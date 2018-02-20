@@ -6,7 +6,9 @@
 </div>
 <div class="row">
     <div *ngFor="let s of state; let index = index">
-        <app-admin-state *ngIf="!s.issues.length" class="col-md-3" [state]="s"></app-admin-state>
+        <app-admin-state *ngIf="!s.issues.length" class="col-md-3" [state]="s"
+                         (showComments)="showComments(s)"></app-admin-state>
         <div class="clearfix" *ngIf="!((index+1) % 4)"></div>
     </div>
+    <app-admin-modal [car]="car" [show]="showCommentsModal" (hideComments)="hideComments()"></app-admin-modal>
 </div>
