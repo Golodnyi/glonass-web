@@ -28,9 +28,8 @@ export class CommentsService {
             });
     }
 
-    public create(car: number): Observable<Comment> {
-        const comment = '';
-        return this.http.post(this.host + '/v1/cars/' + car + '/comments', comment)
+    public create(car: number, message: string): Observable<Comment> {
+        return this.http.post(this.host + '/v1/cars/' + car + '/comments', {message: message})
             .map((response: any) => {
                 return response;
             })

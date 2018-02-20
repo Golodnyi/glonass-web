@@ -1,11 +1,13 @@
 <p-dialog header="Комментарии" modal="modal" width="720" [(visible)]="show" (onHide)="hideModal()">
     <div *ngFor="let comment of comments">
-        <div>comment.created_at</div>
-        <div>comment.message</div>
+        <div><span class="badge">{{comment.created_at | date:'dd.MM.yy HH:mm'}}</span> {{comment.message}}</div>
     </div>
     <div *ngIf="!comments.length">Нет комментариев</div>
     <hr/>
-    <!--label>Комментарий</label><br/>
-    <textarea></textarea><br/>
-    <input type="button" value="Добавить"/-->
+    <form [formGroup]="form" class="input-group" (ngSubmit)="onSubmit()" novalidate>
+        <label>Комментарий</label><br/>
+        <textarea formControlName="message"></textarea><br/>
+        <button type="submit" class="ui-button-success" [disabled]="!form.valid" icon="fa-check" pButton
+                label="Добавить"></button>
+    </form>
 </p-dialog>
