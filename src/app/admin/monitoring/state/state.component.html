@@ -1,7 +1,8 @@
 <p-panel *ngIf="state" header="{{state.model.name}} {{state.engine_model ? '(' + state.engine_model.name + ')' : ''}}"
          [toggleable]="false">
     <div>
-        <div class="alert alert-success" *ngIf="online(state.date)">В сети</div>
+        <div class="alert alert-success" *ngIf="state.sensors.engine && online(state.date)">В сети</div>
+        <div class="alert alert-info" *ngIf="!state.sensors.engine && online(state.date)">В сети</div>
         <div class="alert alert-warning" *ngIf="!online(state.date)">Последний сеанс связи:
             {{lastDate(state.date)}}
         </div>
@@ -34,9 +35,6 @@
     </div>
     <div class="btn-group">
         <div class="btn" routerLink="/dashboard/view/{{state.id}}/charts">Подробнее</div>
-        <div class="btn">Комментарии</div>
+        <div class="btn" (click)="showModal()">Комментарии</div>
     </div>
 </p-panel>
-
-<p-dialog header="Комментарии" modal="modal" width="720" [(visible)]="displayComments" (onHide)="hideModal()"></p-dialog>
-

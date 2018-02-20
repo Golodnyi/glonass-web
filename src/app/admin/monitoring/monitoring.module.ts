@@ -4,6 +4,7 @@ import {MonitoringRoutingModule} from './monitoring-routing.module';
 import {MonitoringComponent} from './monitoring/monitoring.component';
 import {StateComponent} from './state/state.component';
 import {PanelModule, DialogModule} from 'primeng/primeng';
+import {ModalComponent} from './modal/modal.component';
 
 @NgModule({
     imports     : [
@@ -12,7 +13,7 @@ import {PanelModule, DialogModule} from 'primeng/primeng';
         PanelModule,
         DialogModule
     ],
-    declarations: [MonitoringComponent, StateComponent]
+    declarations: [MonitoringComponent, StateComponent, ModalComponent]
 })
 export class MonitoringModule {
 }
