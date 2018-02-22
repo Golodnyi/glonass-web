@@ -2,7 +2,5 @@
     <div>Данные:
         <p-inputSwitch [(ngModel)]="inDrive" onLabel="В движении" offLabel="Все"></p-inputSwitch>
     </div>
-    <div style="height: 601.5px!important;">
-        <app-table *ngIf="car" [car]="car.id" [move]="inDrive"></app-table>
-    </div>
+    <app-table *ngIf="car" [car]="car.id" [move]="inDrive"></app-table>
 </div>
