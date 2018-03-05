@@ -83,11 +83,11 @@ export class TableComponent implements OnChanges, OnDestroy {
         }
         this.subscription =
             this.chartsService.getFilter().subscribe(
-                () => {
+                (filter: Filter) => {
                     if (this.subscriptionAutoRefresh) {
                         this.subscriptionAutoRefresh.unsubscribe();
                     }
-                    if (!page) {
+                    if (!page && !filter.enabled) {
                         this.subscriptionAutoRefresh = this.timer.subscribe(
                             () => {
                                 this.chartsService.getTable(car, move, page, sort, dir).subscribe(
