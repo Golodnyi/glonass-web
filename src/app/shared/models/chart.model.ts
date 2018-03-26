@@ -109,10 +109,36 @@ export class Chart {
         this.xAxis                 = {
             crosshair: true,
         };
+
         this.yAxis                 = {
             plotBands: options.plotBands,
             plotLines: options.plotLines
         };
+
+        if (options.plotLines && options.plotLines !== undefined) {
+            let min = 0;
+            let max = 0;
+
+            options.plotLines.forEach(value => {
+                if (value.color === 'red') {
+                    if (!max) {
+                        max = value.value;
+                    } else if (max < value.value) {
+                        min = max;
+                        max = value.value;
+                    }
+                }
+            });
+
+            if (max) {
+                this.yAxis.max = max;
+            }
+
+            if (min) {
+                this.yAxis.min = min;
+            }
+        }
+
         this.tooltip.valueDecimals = options.decimals;
     }
 }
