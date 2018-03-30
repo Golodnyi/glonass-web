@@ -90,7 +90,7 @@ export class MultiChart {
             text : 'Все'
         }],
         inputEnabled: false,
-        selected    : 1
+        selected    : 8
     };
 
     constructor(options: any) {
