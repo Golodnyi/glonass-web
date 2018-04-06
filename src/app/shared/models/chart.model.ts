@@ -120,7 +120,6 @@ export class Chart {
             let max = 0;
 
             options.plotLines.forEach(value => {
-                console.log(Number(value.value));
                 if (value.color === 'red') {
                     if (!max) {
                         max = value.value;
@@ -145,7 +144,6 @@ export class Chart {
             if (min) {
                 this.yAxis.min = min;
             }
-            console.log(options.name, max, min);
         }
 
         this.tooltip.valueDecimals = options.decimals;
