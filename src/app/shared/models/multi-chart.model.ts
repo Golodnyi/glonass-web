@@ -130,9 +130,16 @@ export class MultiChart {
                 if (value.color === 'red') {
                     if (!max) {
                         max = value.value;
-                    } else if (max < value.value) {
+                    } else if (max < Number(value.value)) {
                         min = max;
                         max = value.value;
+                    } else if (max > Number(value.value)) {
+                        min = value.value;
+                    }
+
+                    if (options.id === 'vacuumTurbine') {
+                        min = max;
+                        max = 0;
                     }
                 }
             });

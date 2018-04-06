@@ -120,12 +120,20 @@ export class Chart {
             let max = 0;
 
             options.plotLines.forEach(value => {
+                console.log(Number(value.value));
                 if (value.color === 'red') {
                     if (!max) {
                         max = value.value;
-                    } else if (max < value.value) {
+                    } else if (max < Number(value.value)) {
                         min = max;
                         max = value.value;
+                    } else if (max > Number(value.value)) {
+                        min = value.value;
+                    }
+
+                    if (options.id === 'vacuumTurbine') {
+                        min = max;
+                        max = 0;
                     }
                 }
             });
@@ -137,6 +145,7 @@ export class Chart {
             if (min) {
                 this.yAxis.min = min;
             }
+            console.log(options.name, max, min);
         }
 
         this.tooltip.valueDecimals = options.decimals;
