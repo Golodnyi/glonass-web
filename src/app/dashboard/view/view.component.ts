@@ -61,6 +61,7 @@ export class ViewComponent implements OnDestroy {
     }
 
     public viewModeChange(event: any) {
+        localStorage.setItem('viewMode', event.value);
         this.router.navigate(['dashboard', 'view', this.car.id, event.value]);
     }
 

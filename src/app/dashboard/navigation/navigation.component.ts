@@ -78,7 +78,11 @@ export class NavigationComponent implements OnDestroy {
         if (obj instanceof Company) {
             this.router.navigate(['dashboard/company/' + obj.id]);
         } else if (obj instanceof Car) {
-            this.router.navigate(['dashboard/view/' + obj.id + '/charts']);
+            if (localStorage.getItem('viewMode')) {
+                this.router.navigate(['dashboard/view/' + obj.id + '/' + localStorage.getItem('viewMode')]);
+            } else {
+                this.router.navigate(['dashboard/view/' + obj.id + '/charts']);
+            }
         }
     }
 
