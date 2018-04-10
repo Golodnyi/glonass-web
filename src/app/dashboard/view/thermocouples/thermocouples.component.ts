@@ -13,6 +13,7 @@ import {AutoRefresh} from 'app/shared/models/auto-refresh.model';
 })
 export class ThermocouplesComponent implements OnDestroy {
     private subscriptionAutoRefresh: Subscription;
+    private subscriptionCarAutoRefresh: Subscription;
     private timer       = TimerObservable.create(0, 5000);
     private autoRefresh = new AutoRefresh();
     public options: any;
@@ -20,7 +21,7 @@ export class ThermocouplesComponent implements OnDestroy {
     public car: Car;
 
     constructor(private chartsService: ChartsService) {
-        this.chartsService.getCar().subscribe(car => {
+        this.subscriptionCarAutoRefresh = this.chartsService.getCar().subscribe(car => {
             if (!car) {
                 return false;
             }
@@ -64,6 +65,7 @@ export class ThermocouplesComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
+        this.subscriptionCarAutoRefresh.unsubscribe();
         this.subscriptionAutoRefresh.unsubscribe();
     }
 }
