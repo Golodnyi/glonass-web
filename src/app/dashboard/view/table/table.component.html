@@ -1,6 +1,8 @@
 <div class="col-md-12">
     <div>Данные:
-        <p-inputSwitch [(ngModel)]="inDrive" onLabel="В движении" offLabel="Все"></p-inputSwitch>
+        <p-selectButton *ngIf="!admin" [options]="filterUser" [multiple]="true" [(ngModel)]="filterSelected"></p-selectButton>
+        <p-selectButton *ngIf="admin" [options]="filter" [multiple]="true" [(ngModel)]="filterSelected"></p-selectButton>
     </div>
-    <app-table *ngIf="car" [car]="car.id" [move]="inDrive"></app-table>
+    <hr/>
+    <app-table *ngIf="car" [car]="car.id" [params]="filterSelected"></app-table>
 </div>

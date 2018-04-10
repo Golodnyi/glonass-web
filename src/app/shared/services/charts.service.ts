@@ -1,31 +1,31 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Router} from '@angular/router';
-import {MsgService} from './msg';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Filter} from '../models/filter.model';
-import {Subject} from 'rxjs/Subject';
-import {AutoRefresh} from '../models/auto-refresh.model';
-import {Error} from '../models/error.model';
-import {Sensor} from '../models/sensor.model';
-import {Car} from '../models/car.model';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import { Router } from '@angular/router';
+import { MsgService } from './msg';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Filter } from '../models/filter.model';
+import { Subject } from 'rxjs/Subject';
+import { AutoRefresh } from '../models/auto-refresh.model';
+import { Error } from '../models/error.model';
+import { Sensor } from '../models/sensor.model';
+import { Car } from '../models/car.model';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ChartsService {
-    private data: Subject<any>                        = new Subject();
-    private car: BehaviorSubject<Car>                 = new BehaviorSubject(null);
-    private filter: BehaviorSubject<Filter>           = new BehaviorSubject(new Filter());
-    private sensors: BehaviorSubject<Sensor[]>        = new BehaviorSubject([]);
+    private data: Subject<any> = new Subject();
+    private car: BehaviorSubject<Car> = new BehaviorSubject(null);
+    private filter: BehaviorSubject<Filter> = new BehaviorSubject(new Filter());
+    private sensors: BehaviorSubject<Sensor[]> = new BehaviorSubject([]);
     private autoRefresh: BehaviorSubject<AutoRefresh> = new BehaviorSubject(new AutoRefresh());
-    private host: string                              = environment.host;
+    private host: string = environment.host;
 
     constructor(private http: HttpClient,
-                private router: Router,
-                private msgService: MsgService) {
+        private router: Router,
+        private msgService: MsgService) {
     }
 
     public setFilter(filter: Filter) {
@@ -54,7 +54,7 @@ export class ChartsService {
 
     public mapData(car: Car): Observable<any> {
         const filter = this.filter.getValue();
-        let params   = '?';
+        let params = '?';
         if (filter.enabled) {
             if (!filter.last) {
                 params +=
@@ -75,9 +75,9 @@ export class ChartsService {
         if (car === null) {
             return;
         }
-        const filter      = this.filter.getValue();
+        const filter = this.filter.getValue();
         const autoRefresh = this.autoRefresh.getValue();
-        let params        = '?';
+        let params = '?';
         if (filter.enabled) {
             if (!Array.isArray(filter.charts) && filter.charts !== undefined) {
                 params += 'sensors[]=' + filter.charts + '&';
@@ -113,9 +113,9 @@ export class ChartsService {
         return this.sensors.asObservable();
     }
 
-    public getTable(car: number, move = false, page: number, sort = 'time', dir = 'desc'): Observable<any> {
+    public getTable(car: number, _params = [], page: number, sort = 'time', dir = 'desc'): Observable<any> {
         const filter = this.filter.getValue();
-        let params   = '?page=' + (page + 1) + '&';
+        let params = '?page=' + (page + 1) + '&';
         if (filter.enabled) {
             if (!Array.isArray(filter.charts) && filter.charts !== undefined) {
                 params += 'sensors[]=' + filter.charts + '&';
@@ -130,9 +130,17 @@ export class ChartsService {
                     '&';
             }
         }
-        if (move) {
-            params += 'drive=1&';
-        }
+
+        _params.forEach(p => {
+            if (p === 'drive') {
+                params += 'drive=1&';
+            } else if (p === 'mv') {
+                params += 'explained=1&';
+            } else if (p === 'nv') {
+                params += 'withEmptyValues=1&';
+            }
+        });
+
         params += 'sort=' + sort + '&sortDirection=' + dir;
         return this.http.get(this.host + '/v1/cars/' + car + '/report/table' + params)
             .map((response: any) => {

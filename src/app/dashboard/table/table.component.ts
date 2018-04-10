@@ -13,7 +13,7 @@ import {TimerObservable} from 'rxjs/observable/TimerObservable';
 })
 export class TableComponent implements OnChanges, OnDestroy {
     @Input() car;
-    @Input() move        = false;
+    @Input() params        = [];
     @Input() autoRefresh = false;
     @Input() filter: Filter;
     public table: any;
@@ -45,14 +45,14 @@ export class TableComponent implements OnChanges, OnDestroy {
             this.loadData(this.car);
         }
 
-        if (changes.move && !changes.move.firstChange) {
-            this.loadData(this.car, this.move);
+        if (changes.params && !changes.params.firstChange) {
+            this.loadData(this.car, this.params);
         }
     }
 
     public paginate(event) {
         this.page = event.page;
-        this.loadData(this.car, this.move, this.page, this.tsort, (this.tdir === -1 ? 'asc' : 'desc'));
+        this.loadData(this.car, this.params, this.page, this.tsort, (this.tdir === -1 ? 'asc' : 'desc'));
     }
 
     ngOnDestroy() {
@@ -71,10 +71,10 @@ export class TableComponent implements OnChanges, OnDestroy {
 
         this.tsort = event.field;
         this.tdir  = event.order;
-        this.loadData(this.car, this.move, this.page, this.tsort, (this.tdir === -1 ? 'asc' : 'desc'));
+        this.loadData(this.car, this.params, this.page, this.tsort, (this.tdir === -1 ? 'asc' : 'desc'));
     }
 
-    private loadData(car, move = false, page = 0, sort = 'time', dir = 'desc') {
+    private loadData(car, params = [], page = 0, sort = 'time', dir = 'desc') {
         if (car === undefined) {
             return;
         }
@@ -90,7 +90,7 @@ export class TableComponent implements OnChanges, OnDestroy {
                     if (!page && !filter.enabled) {
                         this.subscriptionAutoRefresh = this.timer.subscribe(
                             () => {
-                                this.chartsService.getTable(car, move, page, sort, dir).subscribe(
+                                this.chartsService.getTable(car, params, page, sort, dir).subscribe(
                                     table => {
                                         this.keys    = this.keysPipe.transform(table.headers);
                                         this.table   = table;
@@ -100,7 +100,7 @@ export class TableComponent implements OnChanges, OnDestroy {
                             }
                         );
                     } else {
-                        this.chartsService.getTable(car, move, page, sort, dir).subscribe(
+                        this.chartsService.getTable(car, params, page, sort, dir).subscribe(
                             table => {
                                 this.keys    = this.keysPipe.transform(table.headers);
                                 this.table   = table;
