@@ -43,7 +43,7 @@ export class CompanyComponent implements OnDestroy {
                                 cars => {
                                     subdiv.cars = cars;
                                     subdiv.cars.forEach(car => {
-                                        this.enginesService.get(company_id, subdiv.id, car.id, true).subscribe(engine => {
+                                        this.enginesService.getSync(company_id, subdiv.id, car.id).subscribe(engine => {
                                             car.engine = engine;
                                         });
 
