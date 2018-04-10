@@ -44,7 +44,7 @@ export class YmapsComponent implements OnDestroy, OnChanges {
             }
             if (this.map) {
                 this.map.geoObjects.each(item => {
-                    item.remove();
+                    this.map.geoObjects.remove(item);
                 });
                 // this.map.destroy();
             } else {
