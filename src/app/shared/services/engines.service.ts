@@ -49,6 +49,18 @@ export class EnginesService {
             });
     }
 
+    public getSync(company: number, subdivision: number, car: number): Observable<Engine> {
+        return this.http.get(
+            this.host + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine')
+            .map((response: any) => {
+                return Object.assign(new Engine(), response);
+            })
+            .catch((error: any) => {
+                Error.check(error, this.router, this.msgService);
+                return Observable.throw(error.error.message || 'Server error');
+            });
+    }
+
     public create(newEngine: NewEngine): Observable<BaseEngine> {
         return this.http.post(this.host + '/v1/engines', newEngine)
             .map((response: any) => {
