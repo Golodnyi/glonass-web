@@ -12,8 +12,8 @@
               field="{{key}}" sortable="custom"
               (sortFunction)="sort($event)">
         <ng-template let-row="rowData" pTemplate="body">
-            <div [class.alert-warning]="row['criticals'].warning.indexOf(key) !== -1"
-                 [class.alert-danger]="row['criticals'].danger.indexOf(key) !== -1">
+            <div [class.alert-warning]="row['criticals'].warning !== undefined && row['criticals'].warning.indexOf(key) !== -1"
+                 [class.alert-danger]="row['criticals'].danger !== undefined && row['criticals'].danger.indexOf(key) !== -1">
                 {{row[key]}}
             </div>
         </ng-template>

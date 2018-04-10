@@ -108,7 +108,7 @@ export class AuthService {
     public isAdmin(): boolean {
         const user: User = this.getCurrentUser();
         if (user && user.role) {
-            return !!user.role.is_global;
+            return !!Number(user.role.is_global);
         }
 
         return false;
