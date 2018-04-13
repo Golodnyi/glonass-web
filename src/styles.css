@@ -1,3 +1,7 @@
+body {
+    height: 100%;
+}
+
 .load {
     width: 90px;
     height: 90px;
@@ -47,15 +51,4 @@
 
 .ui-multiselect {
     padding: 0 !important;
-}
-
-#footer {
-    background: linear-gradient(0deg, #e5e8e9, #f0f1f2);
-    color: #000;
-    padding: 40px 0 80px 0;
-}
-
-#footer a {
-    color: #000;
-    text-decoration: underline;
 }

@@ -1,0 +1,10 @@
+#footer {
+    background: linear-gradient(0deg, #474e5c, #373e4c);
+    color: #fff;
+    padding: 40px 0 80px 0;
+}
+
+#footer a {
+    color: #fff;
+    text-decoration: underline;
+}
