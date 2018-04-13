@@ -23,6 +23,7 @@ h2 {
     width: 100%;
     height: 650px;
     background-image: url('/assets/images/jumbo.png');
+    background-repeat: no-repeat;
     background-position: center center;
 }
 
@@ -34,6 +35,7 @@ h2 {
 .laptop {
     position: absolute;
     background-image: url('/assets/images/laptop.png');
+    background-repeat: no-repeat;
     margin-left: -469px;
     width: 951px;
     height: 469px;
