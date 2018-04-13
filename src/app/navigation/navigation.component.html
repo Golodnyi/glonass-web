@@ -1,10 +1,10 @@
-<div class="container-fluid top-menu">
+<div *ngIf="router.url === '/'" class="container-fluid top-menu">
     <div class="row" style="height: 80px">
         <div class="col-md-6"  style="padding-top: 20px">
             <a href="/"><img src="assets/images/logo.png" height="40px"></a>
         </div>
         <div class="col-md-6">
-            <ul *ngIf="user" class="nav navbar-nav">
+            <ul *ngIf="user" class="auth pull-left">
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/dashboard">Личный кабинет</a>
                 </li>
@@ -27,7 +27,7 @@
     </div>
 </div>
 
-<!--nav class="navbar navbar-default">
+<nav *ngIf="router.url !== '/'" class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" routerLink="/">&nbsp;
@@ -53,4 +53,4 @@
             </ul>
         </div>
     </div>
-</nav!-->
+</nav>

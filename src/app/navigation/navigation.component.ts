@@ -11,7 +11,7 @@ import {NavigationStart, Router} from '@angular/router';
 export class NavigationComponent {
     public user: User;
 
-    constructor(private authService: AuthService, private router: Router) {
+    constructor(private authService: AuthService, public router: Router) {
         this.router.events.filter((e: any) => {
             return e instanceof NavigationStart;
         }).subscribe(() => {
