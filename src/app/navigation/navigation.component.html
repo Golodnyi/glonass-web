@@ -1,9 +1,9 @@
 <div *ngIf="router.url === '/'" class="container top-menu">
     <div class="row" style="height: 80px">
-        <div class="col-md-6"  style="padding-top: 20px">
-            <a href="/"><img src="assets/images/logo.png" height="40px"></a>
+        <div class="col-md-6" style="padding-top: 20px">
+            <img src="assets/images/logo.png" height="40px">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 hidden-sm hidden-xs">
             <ul *ngIf="user" class="auth pull-left">
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/dashboard">Личный кабинет</a>
@@ -14,14 +14,18 @@
             </ul>
 
             <ul class="auth pull-right">
-                <li *ngIf="!user"><a href="/login">Войти</a></li>
-                <li *ngIf="user"><a href="/logout">Выход</a></li>
+                <li *ngIf="!user">
+                    <a href="/login">Войти</a>
+                </li>
+                <li *ngIf="user">
+                    <a href="/logout">Выход</a>
+                </li>
             </ul>
 
             <!--ul class="lang pull-right">
                 <li><a href="#" class="btn btn-link">chn</a></li>
                 <li><a href="#" class="btn btn-link">eng</a></li>
-            </ul!-->
+            </ul-->
             <div class="clearfix"></div>
         </div>
     </div>
