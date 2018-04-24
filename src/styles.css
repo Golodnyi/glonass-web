@@ -1,6 +1,5 @@
 body {
     height: 100%;
-    font-size: calc(0.5vw + 0.6vh + 0.5vmin) !important;
 }
 
 .load {
