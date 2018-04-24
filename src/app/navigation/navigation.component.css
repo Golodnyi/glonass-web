@@ -1,3 +1,28 @@
-.no-style {
+.top-menu ul {
+    padding-top: 20px;
     list-style: none;
+    display: inline-block;
+}
+
+.top-menu ul li {
+    display: inline-block;
+}
+
+.auth a:active {
+    box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+}
+
+.auth a {
+    text-decoration: none;
+    display: inline-block;
+
+    border: 2px solid #337ab7;
+    padding: .6em 2em;
+    border-radius: 2px 2px 2px 2px;
+}
+
+.auth a:hover, .auth a:active {
+    color: #316088;
+    border: 2px solid #316088;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .1);
 }

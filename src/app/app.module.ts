@@ -14,6 +14,7 @@ import {MsgService} from './shared/services/msg';
 import {EnginesService} from './shared/services/engines.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NavigationComponent} from './navigation/navigation.component';
+import {FooterComponent} from './footer/footer.component';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -25,6 +26,7 @@ import {TokenInterceptor} from './shared/interceptors/TokenInterceptor';
     declarations: [
         AppComponent,
         NavigationComponent,
+        FooterComponent,
         HomeComponent,
         LoginComponent,
         LogoutComponent
