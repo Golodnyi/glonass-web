@@ -30,7 +30,7 @@
     "highcharts": "6.0.7",
     "moment": "2.18.1",
     "pdfmake": "0.1.33",
-    "primeng": "5.2.0",
+    "primeng": "5.2.6",
     "ts-helpers": "1.1.2"
   },
   "devDependencies": {
