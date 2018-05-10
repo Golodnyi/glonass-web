@@ -1,14 +1,11 @@
 <div class="row">
-    <div *ngFor="let s of state; let index = index">
+    <div *ngFor="let s of state" class="item">
         <app-admin-state *ngIf="s.issues.length" class="col-md-3" [state]="s" (showComments)="showComments(s)"></app-admin-state>
-        <div class="clearfix" *ngIf="!((index+1) % 4)"></div>
     </div>
 </div>
 <div class="row">
-    <div *ngFor="let s of state; let index = index">
-        <app-admin-state *ngIf="!s.issues.length" class="col-md-3" [state]="s"
-                         (showComments)="showComments(s)"></app-admin-state>
-        <div class="clearfix" *ngIf="!((index+1) % 4)"></div>
+    <div *ngFor="let s of state" class="item">
+        <app-admin-state *ngIf="!s.issues.length" class="col-md-3" [state]="s" (showComments)="showComments(s)"></app-admin-state>
     </div>
     <app-admin-modal [car]="car" [show]="showCommentsModal" (hideComments)="hideComments()"></app-admin-modal>
 </div>

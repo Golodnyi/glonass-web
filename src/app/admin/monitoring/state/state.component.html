@@ -3,7 +3,7 @@
     <div>
         <div class="alert alert-success" *ngIf="state.sensors.engine && online(state.date)">В сети</div>
         <div class="alert alert-info" *ngIf="!state.sensors.engine && online(state.date)">В сети</div>
-        <div class="alert alert-warning" *ngIf="!online(state.date)">Последний сеанс связи:
+        <div class="alert alert-warning" *ngIf="!online(state.date)">Посл. сеанс:
             {{lastDate(state.date)}}
         </div>
     </div>
