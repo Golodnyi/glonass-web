@@ -71,9 +71,25 @@
             <span *ngIf="!state.power" class="badge alert-danger">нет</span>
         </div>
         <div *ngIf="!compact">
-            Моточасы: {{state.motochas}} ч.
+            Моточасы: {{state.motochas}} ч. <button type="text" (click)="showMotochasFilter()" pButton label="Фильтр"></button>
         </div>
     </div>
+    <p-dialog header="Фильтр моточасов" [(visible)]="motochasFilter">
+        <form [formGroup]="formMotochasFilter" (ngSubmit)="onSubmitMotochasFilter()" novalidate class="input-group">
+            <label>Кол-во моточасов</label>
+            <br/>
+            <input formControlName="motochas" pInput required/>
+            <hr *ngIf="motochasFilterAnswer"/>
+            <div *ngIf="motochasFilterAnswer">
+                <span *ngIf="!motochasFilterAnswer.reached">Дата не найдена</span>
+                <span *ngIf="motochasFilterAnswer.reached">Дата: {{motochasFilterAnswer.date | date:'dd.MM.y HH:mm'}}</span>
+            </div>
+            <hr/>
+            <button type="submit" class="ui-button-success" [disabled]="!formMotochasFilter.valid || submitMotochasFilter" icon="fa-check" pButton label="Принять"></button>
+        </form>
+    </p-dialog>
+    
+    
     <div *ngIf="!compact && state.maintenances.length && user && user.role">
         <div class="alert" *ngIf="scheduled(state)">До ТО: {{state.maintenances.scheduled.limits.hours -
             state.maintenances.scheduled.value.hours}} ч.

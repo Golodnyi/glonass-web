@@ -9,12 +9,15 @@ import {MsgService} from '../../shared/services/msg';
 import {Car} from '../../shared/models/car.model';
 import {AuthService} from '../../shared/services/auth.service';
 import {User} from '../../shared/models/user.model';
+import { MotochasFilterForm } from './shared/motochasFilter.form';
+import { MotochasService } from './shared/motochas.service';
+import { MotochasFilter } from './shared/motochasFilter.model';
 
 @Component({
     selector   : 'app-state',
     templateUrl: './state.component.html',
     styleUrls  : ['./state.component.css'],
-    providers  : [ResetForm, ResetService]
+    providers  : [ResetForm, ResetService, MotochasFilterForm, MotochasService]
 })
 export class StateComponent implements OnChanges, OnDestroy {
     @Input() state: State;
@@ -27,13 +30,17 @@ export class StateComponent implements OnChanges, OnDestroy {
     public displayHistory         = false;
     public displayGarantedHistory = false;
     public form: FormGroup;
+    public formMotochasFilter: FormGroup;
     public submit: boolean;
+    public submitMotochasFilter: boolean;
     public history                = [];
     public garantedHistory        = [];
     public user: User;
     private audio                 = new Audio();
     private resetData: any;
-
+    public motochasFilter         = false
+    private motochasFilterVal     = 0;
+    public motochasFilterAnswer: MotochasFilter;
     public static unMute(id) {
         if (localStorage.getItem('mute_' + id) !== null) {
             localStorage.removeItem('mute_' + id);
@@ -57,8 +64,16 @@ export class StateComponent implements OnChanges, OnDestroy {
         return state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours > 0;
     };
 
-    constructor(private resetForm: ResetForm, private resetService: ResetService, private msg: MsgService,
-                private authService: AuthService) {
+    /**
+     * TODO: раскидать все всплывающие окна по отдельным компонентам
+     */
+    constructor(
+        private resetForm: ResetForm,
+        private motochasFilterForm: MotochasFilterForm,
+        private resetService: ResetService,
+        private motochasService: MotochasService,
+        private msg: MsgService,
+        private authService: AuthService) {
         moment.locale('ru');
         this.form = this.resetForm.create();
         this.form.valueChanges
@@ -71,6 +86,13 @@ export class StateComponent implements OnChanges, OnDestroy {
                 this.resetData           = data;
                 this.resetData.engine_id = this.car.engine.id;
             });
+
+        this.formMotochasFilter = this.motochasFilterForm.create();
+        this.formMotochasFilter.valueChanges
+            .subscribe((data) => {
+                this.motochasFilterVal = data.motochas;
+            });
+
         this.audio.src = '/assets/signal.wav';
         this.audio.load();
         this.user = this.authService.getCurrentUser();
@@ -179,6 +201,20 @@ export class StateComponent implements OnChanges, OnDestroy {
             },
             error => {
                 this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+            }
+        );
+    }
+
+    public showMotochasFilter() {
+        this.motochasFilter = true;
+    }
+
+    public onSubmitMotochasFilter() {
+        this.submitMotochasFilter = true;
+        this.motochasService.get(this.car, this.motochasFilterVal).subscribe(
+            response => {
+                this.motochasFilterAnswer = response;
+                this.submitMotochasFilter = false;
             }
         );
     }
