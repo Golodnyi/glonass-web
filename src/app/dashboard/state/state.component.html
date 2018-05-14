@@ -110,10 +110,11 @@
         </div>
         <div *ngIf="garanted(state)" class="alert">
             {{ 'dashboard.warrantyServiceIsOver' | 
-            translate: {
-                days: (state.maintenances.capital.limits.days - state.maintenances.capital.value.days),
-                machineHours: (state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours)
-            }
+                translate: {
+                    days: (state.maintenances.capital.limits.days - state.maintenances.capital.value.days),
+                    machineHours: (state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours)
+                }
+            }}
             <span *ngIf="user && user.role.is_global == 1 && car.engine" class="btn-st">
                 <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton icon="fa-refresh"
                         title="{{ 'dashboard.extendWarrantyService' | translate }}"></button>
