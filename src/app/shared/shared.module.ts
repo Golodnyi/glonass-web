@@ -8,6 +8,7 @@ import {TablePipe} from './pipes/table.pipe';
 import {KeysPipe} from './pipes/keys.pipe';
 import {ColorPipe} from './pipes/color.pipe';
 import {AllowPortsPipe} from './pipes/allowports.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @NgModule({
     imports     : [

@@ -6,26 +6,22 @@
         <div class="col-md-6 hidden-sm hidden-xs">
             <ul *ngIf="user" class="auth pull-left">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/dashboard">Личный кабинет</a>
+                    <a class="nav-link" routerLink="/dashboard">{{'home.personalArea' | translate}}</a>
                 </li>
                 <li *ngIf="user.role.is_global == 1" class="nav-item">
-                    <a class="nav-link" routerLink="/admin">Администрирование</a>
+                    <a class="nav-link" routerLink="/admin">{{'home.administration' | translate}}</a>
                 </li>
             </ul>
 
             <ul class="auth pull-right">
                 <li *ngIf="!user">
-                    <a href="/login">Войти</a>
+                    <a href="/login">{{'home.signin' | translate}}</a>
                 </li>
                 <li *ngIf="user">
-                    <a href="/logout">Выход</a>
+                    <a href="/logout">{{'home.signout' | translate}}</a>
                 </li>
             </ul>
 
-            <!--ul class="lang pull-right">
-                <li><a href="#" class="btn btn-link">chn</a></li>
-                <li><a href="#" class="btn btn-link">eng</a></li>
-            </ul-->
             <div class="clearfix"></div>
         </div>
     </div>
@@ -41,18 +37,28 @@
         <div id="navbar" class="navbar-default">
             <ul *ngIf="user" class="nav navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/dashboard">Личный кабинет</a>
+                    <a class="nav-link" routerLink="/dashboard">{{'home.personalArea' | translate}}</a>
                 </li>
                 <li *ngIf="user.role.is_global == 1" class="nav-item">
-                    <a class="nav-link" routerLink="/admin">Администрирование</a>
+                    <a class="nav-link" routerLink="/admin">{{'home.administration' | translate}}</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li *ngIf="isAdmin()" class="nav-item">
+                    <div class="language">
+                        <label for="staticEmail" class="language col-sm-4 col-form-label">Language:</label>
+                        <div class="col-sm-8">
+                            <select #langSelect class="form-control form-control-sm" (change)="changeLanguage(langSelect.value)">
+                                <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ langAliases[lang] }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
                 <li *ngIf="!user" class="nav-item">
-                    <a class="nav-link" routerLink="/login">Вход</a>
+                    <a class="nav-link" routerLink="/login">{{'home.signin' | translate}}</a>
                 </li>
                 <li class="no-style" *ngIf="user">
-                    <a routerLink="/logout">Выход</a>
+                    <a routerLink="/logout">{{'home.signout' | translate}}</a>
                 </li>
             </ul>
         </div>

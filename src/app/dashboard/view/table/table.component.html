@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    <div>Данные:
+    <div>{{ 'dashboard.data' | translate }}:
         <p-selectButton *ngIf="!admin" [options]="filterUser" [multiple]="true" [(ngModel)]="filterSelected"></p-selectButton>
         <p-selectButton *ngIf="admin" [options]="filter" [multiple]="true" [(ngModel)]="filterSelected"></p-selectButton>
     </div>

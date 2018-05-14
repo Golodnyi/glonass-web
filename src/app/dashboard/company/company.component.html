@@ -1,13 +1,12 @@
 <div class="row">
     <div class="col-md-12">
         <p-tabView>
-            <p-tabPanel header="Состояние">
+            <p-tabPanel header="{{'dashboard.state' | translate}}">
                 <p-accordion *ngIf="subdivisions.length" [multiple]="true">
-                    <p-accordionTab *ngFor="let subdivision of subdivisions" header="{{subdivision.name}}"
-                                    [selected]="true">
+                    <p-accordionTab *ngFor="let subdivision of subdivisions" header="{{subdivision.name}}" [selected]="true">
                         <div class="row">
                             <div *ngIf="!subdivision.cars.length" class="col-md-pull-12">
-                                Машины отсутствуют
+                                {{'dashboard.noData' | translate}}
                             </div>
                             <div *ngIf="subdivision.cars.length">
                                 <div *ngFor="let car of subdivision.cars;">
@@ -18,13 +17,13 @@
                     </p-accordionTab>
                 </p-accordion>
                 <div *ngIf="!subdivisions.length" class="alert alert-danger">
-                    Нет данных о состоянии
+                    {{'dashboard.noData' | translate}}
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="Карта">
+            <p-tabPanel header="{{'dashboard.map' | translate}}">
                 <app-ymaps *ngIf="mapCars.length" [cars]="mapCars" [polyLines]="mapPolyLines" [zoom]="4"></app-ymaps>
                 <div *ngIf="!mapCars.length" class="alert alert-danger">
-                    Нет данных для карты
+                    {{'dashboard.noData' | translate}}
                 </div>
             </p-tabPanel>
         </p-tabView>

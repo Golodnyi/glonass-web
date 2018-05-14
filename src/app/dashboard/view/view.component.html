@@ -1,12 +1,12 @@
 <div class="row">
     <div class="col-md-12">
         <p-tabView *ngIf="car">
-            <p-tabPanel header="Информация" class="panel">
+            <p-tabPanel header="{{ 'dashboard.information' | translate }}" class="panel">
                 <div class="row">
                     <div class="col-md-6">
-                        <span>Данные по {{car.name}}</span>
+                        <span>{{ 'dashboard.dataOn' | translate: {value: car.name} }}</span>
                         <br/>
-                        <span *ngIf="engine && engineModel">Двигатель: {{engine.esn}} ({{engineModel.name}})</span>
+                        <span *ngIf="engine && engineModel">{{ 'dashboard.engine' | translate }} {{engine.esn}} ({{engineModel.name}})</span>
                     </div>
                     <div class="col-md-6">
                         <p-selectButton [options]="viewModeButtons" [(ngModel)]="viewMode" tabindex="1"
@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="Фильтр">
+            <p-tabPanel header="{{ 'dashboard.filter' | translate }}">
                 <div class="row">
                     <div class="col-md-12">
                         <app-filter *ngIf="filter" [filter]="filter" [car]="car"></app-filter>

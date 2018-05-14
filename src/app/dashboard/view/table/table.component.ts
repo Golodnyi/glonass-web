@@ -5,6 +5,7 @@ import { Car } from '../../../shared/models/car.model';
 import { SelectItem } from 'primeng/primeng';
 import { AuthService } from '../../../shared/services/auth.service';
 import { User } from '../../../shared/models/user.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-table-view',
@@ -20,17 +21,26 @@ export class TableComponent implements OnDestroy {
     public filterUser: SelectItem[] = [];
     public admin: boolean;
 
-    constructor(private chartsService: ChartsService, private authService: AuthService) {
+    constructor(private translateService: TranslateService, private chartsService: ChartsService, private authService: AuthService) {
         this.admin = this.authService.isAdmin();
 
         this.filter = [];
         this.filterUser = [];
 
-        this.filter.push({ label: 'В движении', value: 'drive' });
-        this.filter.push({ label: 'Микровольты', value: 'mv' });
-        this.filter.push({ label: 'Невалидные данные', value: 'nv' });
+        this.translateService.stream(
+            [
+                'dashboard.inMove',
+                'dashboard.microvolts',
+                'dashboard.invalidData'
+            ]).subscribe(value => {
+                this.filter = [];
+                this.filter.push({ label: value['dashboard.inMove'], value: 'drive' });
+                this.filter.push({ label: value['dashboard.microvolts'], value: 'mv' });
+                this.filter.push({ label: value['dashboard.invalidData'], value: 'nv' });
 
-        this.filterUser.push({ label: 'В движении', value: 'drive' });
+                this.filterUser.push({ label: value['dashboard.inMove'], value: 'drive' });
+            });
+
 
         this.subscription.add(
             this.chartsService.getCar().subscribe(car => {

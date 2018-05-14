@@ -1,20 +1,20 @@
 <form [formGroup]="form" class="input-group" novalidate (ngSubmit)="onSubmit()">
-    <p-checkbox formControlName="last" binary="true" label="Последние данные"></p-checkbox>
+    <p-checkbox formControlName="last" binary="true" label="{{ 'dashboard.lastData' | translate }}"></p-checkbox>
     <div [hidden]="form.get('last').value">
         <hr/>
-        <label for="before">С:</label>
+        <label for="before">{{ 'dashboard.from' | translate }}:</label>
         <p-calendar id="before" formControlName="before" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
-        <label for="after">ПО:</label>
+        <label for="after">{{ 'dashboard.to' | translate }}:</label>
         <p-calendar id="after" formControlName="after" dateFormat="dd.mm.yy" [locale]="ru"></p-calendar>
     </div>
     <hr/>
     <div *ngIf="sensors.length">
-        <p-multiSelect defaultLabel="Датчики" id="charts" [options]="sensors|DropDown:false"
+        <p-multiSelect defaultLabel="{{ 'dashboard.sensors' | translate }}" id="charts" [options]="sensors|DropDown:false"
                        formControlName="charts"></p-multiSelect>
         <hr/>
     </div>
     <button class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton type="submit"
-            label="Применить"></button>
-    <button class="ui-button-danger" [disabled]="filter.enabled !== true" pButton label="Отключить"
+            label="{{ 'dashboard.apply' | translate }}"></button>
+    <button class="ui-button-danger" [disabled]="filter.enabled !== true" pButton label="{{ 'dashboard.disable' | translate }}"
             (click)="onDisabled()"></button>
 </form>

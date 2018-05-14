@@ -1,11 +1,11 @@
 <div class="col-md-12">
     <div *ngIf="options && options.data && options.data.length">
-        <h2 class="text-center">График</h2>
+        <h2 class="text-center">{{ 'dashboard.chart' | translate }}</h2>
         <app-multi-chart [options]="options" [data]="options.data"></app-multi-chart>
-        <h2 class="text-center">Таблица</h2>
+        <h2 class="text-center">{{ 'dashboard.table' | translate }}</h2>
         <app-thermocouples-table *ngIf="car" [car]="car.id" [move]="false"></app-thermocouples-table>
     </div>
     <div *ngIf="options && options.data && !options.data.length">
-        <h2 class="text-center">Термопары не установлены</h2>
+        <h2 class="text-center">{{ 'dashboard.thermocouplesNotUnstalled' | translate }}</h2>
     </div>
 </div>

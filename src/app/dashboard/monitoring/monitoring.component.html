@@ -3,25 +3,25 @@
         <span *ngIf="errorIcon">
             <i class="fa fa-exclamation-triangle" style="color: darkred;"></i>
         </span>
-        Двигатель: {{car.engine.name}}, шасси: {{car.name}}
+        {{ 'dashboard.engine' | translate }}: {{car.engine.name}}, {{ 'dashboard.chassis' | translate }}: {{car.name}}
     </p-header>
     <table class="table table-striped">
         <tbody>
         <tr *ngFor="let sensor of status.sensors">
             <td>{{sensor.name}}</td>
             <td *ngIf="!status.issue_locations.hasOwnProperty(sensor.id)">
-                <span class="label label-success">норма</span>
+                <span class="label label-success">{{ 'dashboard.normal' | translate }}</span>
             </td>
             <td *ngIf="status.issue_locations.hasOwnProperty(sensor.id)">
                 <div *ngFor="let error of showError(sensor.id)" style="cursor: pointer;" (click)="showDetailsError(error.key)">
                     <span class="label label-danger">{{error.name}}</span>
-                    <i class="fa fa-question-circle-o" aria-hidden="true">&nbsp;подробнее</i>
+                    <i class="fa fa-question-circle-o" aria-hidden="true">&nbsp;{{ 'dashboard.details' | translate }}</i>
                 </div>
             </td>
         </tr>
         </tbody>
     </table>
-    <button class="btn btn-sm" routerLink="/dashboard/view/{{car.id}}/charts">Подробнее</button>
+    <button class="btn btn-sm" routerLink="/dashboard/view/{{car.id}}/charts">{{ 'dashboard.details' | translate }}</button>
     <div style="float: right">
         <button *ngIf="!isMuted()" class="btn btn-success" (click)="mute()">
             <span class="fa fa-music"></span>
@@ -31,7 +31,7 @@
         </button>
     </div>
 </p-panel>
-<p-dialog header="Подробности" modal="modal" width="720" [(visible)]="detailsError" (onHide)="hideModal()">
+<p-dialog header="{{ 'dashboard.details' | translate }}" modal="modal" width="720" [(visible)]="detailsError" (onHide)="hideModal()">
     <div class="progress-width">
         <div class="row">
             <div class="vertical-text _orange" [style.margin-left.%]="greenWidth"><span class="text-transform-orange">{{dateList[1]}}</span></div>
@@ -52,13 +52,13 @@
     </div>
     <hr/>
     <div class="row">
-        <h4 *ngIf="forecasts.length">Прогноз:</h4>
+        <h4 *ngIf="forecasts.length">{{ 'dashboard.forecast' | translate }}:</h4>
         <ul>
             <li *ngFor="let forecast of forecasts">
                 {{forecast.name}}
             </li>
         </ul>
-        <h4 *ngIf="reasons.length">Возможные причины:</h4>
+        <h4 *ngIf="reasons.length">{{ 'dashboard.possibleReasons' | translate }}:</h4>
         <ul>
             <li *ngFor="let reason of reasons">
                 <strong>{{reason.name}}</strong>

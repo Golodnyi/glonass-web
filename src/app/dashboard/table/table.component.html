@@ -1,9 +1,9 @@
 <div class="load" *ngIf="loading">
-    Загрузка...
+    {{ 'dashboard.loading' | translate }}
     <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
 </div>
 <p-dataTable *ngIf="table && !loading" [value]="table.rows" scrollable="true" scrollHeight="400px">
-    <p-column header="Время" field="time" sortable="custom" (sortFunction)="sort($event)">
+    <p-column header="{{ 'dashboard.time' | translate }}" field="time" sortable="custom" (sortFunction)="sort($event)">
         <ng-template let-row="rowData" pTemplate="body">
             {{row['time'] | date: 'dd.MM.yyyy H:mm:ss'}}
         </ng-template>
