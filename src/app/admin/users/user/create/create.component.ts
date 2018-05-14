@@ -8,6 +8,7 @@ import {Role} from '../../../../shared/models/role.model';
 import {UserForm} from '../shared/user.form';
 import {CompaniesService} from '../../../../shared/services/companies.service';
 import {Company} from '../../../../shared/models/company.model';
+import { Error } from '../../../../shared/models/error.model';
 
 @Component({
     selector   : 'app-user-create',
@@ -41,7 +42,7 @@ export class UserCreateComponent {
                 this.roles = roles;
             },
             error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }
@@ -57,7 +58,7 @@ export class UserCreateComponent {
             },
             error => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }

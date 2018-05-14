@@ -31,7 +31,6 @@ export class EnginesService {
                 }, error => {
                     this.engine.next(new Engine());
                     Error.check(error, this.router, this.msgService);
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
                 });
         }
         return this.engine.asObservable();

@@ -6,6 +6,7 @@ import {UserUpdateForm} from '../shared/user.update.form';
 import {Role} from '../../../../shared/models/role.model';
 import {FormGroup} from '@angular/forms';
 import {MsgService} from '../../../../shared/services/msg';
+import { Error } from '../../../../shared/models/error.model';
 
 @Component({
     selector   : 'app-user-update',
@@ -44,7 +45,7 @@ export class UserUpdateComponent {
                 this.roles = roles;
             },
             error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }
@@ -60,7 +61,7 @@ export class UserUpdateComponent {
             },
             error => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }

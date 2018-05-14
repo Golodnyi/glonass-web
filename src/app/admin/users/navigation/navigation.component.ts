@@ -4,6 +4,7 @@ import {UsersService} from '../../../shared/services/users.service';
 import {User} from '../../../shared/models/user.model';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
+import { Error } from '../../../shared/models/error.model';
 
 @Component({
     selector   : 'app-navigation',
@@ -22,7 +23,7 @@ export class NavigationComponent implements OnDestroy {
                     this.users = users;
                 },
                 error => {
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+                    Error.check(error, this.router, this.msgService);
                 }
             )
         );

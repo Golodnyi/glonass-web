@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {Observable} from 'rxjs/Observable';
 import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import { Error } from '../models/error.model';
 
 @Injectable()
 export class AuthService {
@@ -61,7 +62,7 @@ export class AuthService {
                     },
                     error => {
                         localStorage.clear();
-                        this.msg.notice(MsgService.ERROR, 'Ошибка получения пользователя', error);
+                        Error.check(error, this.router, this.msg);
                     }
                 );
             })

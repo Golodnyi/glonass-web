@@ -4,9 +4,10 @@ import {MsgService} from '../../../../shared/services/msg';
 import {CompaniesService} from '../../../../shared/services/companies.service';
 import {Subdivision} from '../../../../shared/models/subdivision.model';
 import {SubdivisionsService} from '../../../../shared/services/subdivisions.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormGroup} from '@angular/forms';
 import {SubdivisionUpdateForm} from '../shared/update.form';
+import { Error } from '../../../../shared/models/error.model';
 
 @Component({
     selector   : 'app-subdivision-update',
@@ -26,7 +27,8 @@ export class SubdivisionUpdateComponent {
                 private subdivisionsService: SubdivisionsService,
                 private route: ActivatedRoute,
                 private companiesService: CompaniesService,
-                private subdivisionUpdateForm: SubdivisionUpdateForm) {
+                private subdivisionUpdateForm: SubdivisionUpdateForm,
+                private router: Router) {
         this.route.params.subscribe(params => {
             const company_id: number     = +params['company'];
             const subdivision_id: number = +params['subdivision'];
@@ -39,7 +41,7 @@ export class SubdivisionUpdateComponent {
                     });
                 },
                 error => {
-                    this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                    Error.check(error, this.router, this.msg);
                 }
             );
         });
@@ -48,7 +50,7 @@ export class SubdivisionUpdateComponent {
                 this.companies = companies;
             },
             error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }
@@ -62,7 +64,7 @@ export class SubdivisionUpdateComponent {
             },
             error => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }
@@ -73,7 +75,7 @@ export class SubdivisionUpdateComponent {
                 () => {
                 },
                 error => {
-                    this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                    Error.check(error, this.router, this.msg);
                 }
             );
         }

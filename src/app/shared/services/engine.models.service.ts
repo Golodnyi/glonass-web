@@ -32,7 +32,6 @@ export class EngineModelsService {
                 }, error => {
                     this.models.next([]);
                     Error.check(error, this.router, this.msgService);
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
                 });
         }
         return this.models.asObservable();
@@ -44,7 +43,6 @@ export class EngineModelsService {
                 return Object.assign(new EngineModel(), response);
             }, error => {
                 Error.check(error, this.router, this.msgService);
-                this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
             });
     }
 }

@@ -12,6 +12,7 @@ import {Company} from '../../../../shared/models/company.model';
 import {Subdivision} from '../../../../shared/models/subdivision.model';
 import {CarModel} from '../../../../shared/models/car-model.model';
 import {CarModelsService} from '../../../../shared/services/car.models.service';
+import { Error } from '../../../../shared/models/error.model';
 
 @Component({
     selector   : 'app-car-create',
@@ -79,7 +80,7 @@ export class CarCreateComponent implements OnDestroy {
             },
             error => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }

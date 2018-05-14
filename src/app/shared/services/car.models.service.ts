@@ -32,7 +32,6 @@ export class CarModelsService {
                 }, error => {
                     this.models.next([]);
                     Error.check(error, this.router, this.msgService);
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
                 });
         }
         return this.models.asObservable();

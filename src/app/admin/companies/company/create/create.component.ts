@@ -8,6 +8,7 @@ import {CompanyForm} from '../shared/company.form';
 import {FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Calendar} from '../../../../shared/models/calendar.model';
+import { Error } from '../../../../shared/models/error.model';
 
 @Component({
     selector   : 'app-company-create',
@@ -50,7 +51,7 @@ export class CompanyCreateComponent {
             },
             error => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }

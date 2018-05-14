@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {AuthService} from '../shared/services/auth.service';
 import {MsgService} from '../shared/services/msg';
+import { Error } from '../shared/models/error.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector   : 'app-logout',
@@ -10,7 +12,8 @@ import {MsgService} from '../shared/services/msg';
 export class LogoutComponent {
 
     constructor(private authService: AuthService,
-                private msgService: MsgService) {
+                private msgService: MsgService,
+                private router: Router) {
         this.authService.logout().subscribe(
             logout => {
                 if (logout === false) {
@@ -19,7 +22,7 @@ export class LogoutComponent {
                 }
             },
             error => {
-                this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msgService);
             }
         );
     }

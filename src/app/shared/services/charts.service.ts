@@ -101,7 +101,6 @@ export class ChartsService {
                 this.sensors.next(response.allowedSensors);
             }, error => {
                 Error.check(error, this.router, this.msgService);
-                this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
             });
     }
 
@@ -163,7 +162,6 @@ export class ChartsService {
                 return response;
             }, error => {
                 Error.check(error, this.router, this.msgService);
-                this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
             });
     }
 
@@ -173,7 +171,6 @@ export class ChartsService {
                 return response;
             }, error => {
                 Error.check(error, this.router, this.msgService);
-                this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
             });
     }
 }

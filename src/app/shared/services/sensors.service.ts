@@ -26,7 +26,6 @@ export class SensorsService {
                     this.sensors.next(response);
                 }, error => {
                     Error.check(error, this.router, this.msgService);
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
                 });
         }
         return this.sensors.asObservable();

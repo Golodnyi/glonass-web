@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import {CompanyForm} from '../shared/company.form';
 import {FormGroup} from '@angular/forms';
 import {Calendar} from '../../../../shared/models/calendar.model';
+import { Error } from '../../../../shared/models/error.model';
 
 @Component({
     selector   : 'app-company-update',
@@ -57,7 +58,7 @@ export class CompanyUpdateComponent {
             },
             error => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }
@@ -69,7 +70,7 @@ export class CompanyUpdateComponent {
                     this.router.navigate(['/admin/companies']);
                 },
                 error => {
-                    this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                    Error.check(error, this.router, this.msg);
                 }
             );
         }

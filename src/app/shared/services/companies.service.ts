@@ -32,7 +32,6 @@ export class CompaniesService {
                     error => {
                         this.companies.next([]);
                         Error.check(error, this.router, this.msgService);
-                        this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
                     });
         }
         return this.companies.asObservable();
@@ -46,7 +45,6 @@ export class CompaniesService {
                 }, error => {
                     this.company.next(new Company());
                     Error.check(error, this.router, this.msgService);
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
                 });
         }
         return this.company.asObservable();

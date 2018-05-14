@@ -4,6 +4,8 @@ import {Comment} from '../shared/comment.model';
 import {CommentForm} from './shared/comment.form';
 import {MsgService} from '../../../shared/services/msg';
 import {FormGroup} from '@angular/forms';
+import { Router } from '@angular/router';
+import { Error } from '../../../shared/models/error.model';
 
 @Component({
     selector   : 'app-admin-modal',
@@ -19,7 +21,11 @@ export class ModalComponent implements OnChanges {
     private message: string;
 
     public comments: Comment[] = [];
-    constructor(private commentsService: CommentsService, private commentForm: CommentForm, private msg: MsgService) {
+    constructor(
+        private commentsService: CommentsService,
+        private commentForm: CommentForm,
+        private msg: MsgService,
+        private router: Router) {
         this.update();
         this.form = this.commentForm.create();
         this.form.valueChanges.subscribe((data) => {
@@ -52,7 +58,7 @@ export class ModalComponent implements OnChanges {
                 this.update();
                 this.msg.notice(MsgService.SUCCESS, 'Успех', 'Комментарий добавлен');
             }, error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }

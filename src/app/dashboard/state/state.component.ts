@@ -12,6 +12,8 @@ import {User} from '../../shared/models/user.model';
 import { MotochasFilterForm } from './shared/motochasFilter.form';
 import { MotochasService } from './shared/motochas.service';
 import { MotochasFilter } from './shared/motochasFilter.model';
+import { Error } from '../../shared/models/error.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector   : 'app-state',
@@ -73,7 +75,8 @@ export class StateComponent implements OnChanges, OnDestroy {
         private resetService: ResetService,
         private motochasService: MotochasService,
         private msg: MsgService,
-        private authService: AuthService) {
+        private authService: AuthService,
+        private router: Router) {
         moment.locale('ru');
         this.form = this.resetForm.create();
         this.form.valueChanges
@@ -152,7 +155,7 @@ export class StateComponent implements OnChanges, OnDestroy {
             },
             error => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }
@@ -166,7 +169,7 @@ export class StateComponent implements OnChanges, OnDestroy {
             },
             error => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);                
             }
         );
     }
@@ -181,7 +184,7 @@ export class StateComponent implements OnChanges, OnDestroy {
                 this.displayHistory = true;
             },
             error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }
@@ -200,7 +203,7 @@ export class StateComponent implements OnChanges, OnDestroy {
                 this.displayGarantedHistory = true;
             },
             error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }

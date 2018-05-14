@@ -34,7 +34,6 @@ export class CarsService {
                 }, error => {
                     this.cars.next([]);
                     Error.check(error, this.router, this.msgService);
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
                 });
         }
         return this.cars.asObservable();
@@ -58,7 +57,6 @@ export class CarsService {
                 }, error => {
                     this.car.next(new Car());
                     Error.check(error, this.router, this.msgService);
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
                 });
         }
         return this.car.asObservable();
@@ -71,7 +69,6 @@ export class CarsService {
             }, error => {
                 this.car.next(new Car());
                 Error.check(error, this.router, this.msgService);
-                this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
             });
     }
 

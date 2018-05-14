@@ -33,7 +33,6 @@ export class SubdivisionsService {
                 }, error => {
                     this.subdivisions.next([]);
                     Error.check(error, this.router, this.msgService);
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
                 });
         }
         return this.subdivisions.asObservable();
@@ -80,7 +79,6 @@ export class SubdivisionsService {
                 }, error => {
                     this.subdivision.next(new Subdivision());
                     Error.check(error, this.router, this.msgService);
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
                 });
         }
         return this.subdivision.asObservable();

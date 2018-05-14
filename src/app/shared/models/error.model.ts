@@ -8,8 +8,7 @@ import { MsgService } from '../services/msg';
 export class Error {
     static check(error: any, router: Router, msgService: MsgService) {
         if (error.status !== 200 && error.status !== 304 && error.status !== 0) {
-            console.log('error', error);
-            msgService.notice(MsgService.ERROR, error.status, error.error.message);
+            msgService.notice(MsgService.ERROR, error.status, error.error.message || 'Server Error');
 
             if (error.status === 401) {
                 localStorage.clear();

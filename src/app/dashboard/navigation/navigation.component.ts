@@ -9,6 +9,7 @@ import {TreePipe} from '../../shared/pipes/tree.pipe';
 import {Subdivision} from '../../shared/models/subdivision.model';
 import {Car} from '../../shared/models/car.model';
 import {Subscription} from 'rxjs/Subscription';
+import { Error } from '../../shared/models/error.model';
 
 @Component({
     selector   : 'app-navigation',
@@ -33,7 +34,7 @@ export class NavigationComponent implements OnDestroy {
                     this.companies = companies;
                 },
                 error => {
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+                    Error.check(error, this.router, this.msgService);
                 }
             )
         );
@@ -54,7 +55,7 @@ export class NavigationComponent implements OnDestroy {
                         event.node.children = this.tree.transform(subdivisions);
                     },
                     error => {
-                        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+                        Error.check(error, this.router, this.msgService);
                     }
                 )
             );
@@ -66,7 +67,7 @@ export class NavigationComponent implements OnDestroy {
                         event.node.children = this.tree.transform(cars, true, true);
                     },
                     error => {
-                        this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
+                        Error.check(error, this.router, this.msgService);
                     }
                 )
             );

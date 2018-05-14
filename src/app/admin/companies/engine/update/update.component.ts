@@ -13,6 +13,7 @@ import {EnginesService} from '../../../../shared/services/engines.service';
 import {EngineModelsService} from '../../../../shared/services/engine.models.service';
 import {EngineUpdateForm} from '../shared/update.form';
 import {BaseEngine} from '../../../../shared/models/baseEngine.model';
+import { Error } from '../../../../shared/models/error.model';
 
 @Component({
     selector   : 'app-update',
@@ -100,7 +101,7 @@ export class EngineUpdateComponent implements OnInit {
             },
             error => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }

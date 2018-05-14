@@ -8,6 +8,7 @@ import {SubdivisionsService} from '../../../../shared/services/subdivisions.serv
 import {FormGroup} from '@angular/forms';
 import {SubdivisionCreateForm} from '../shared/create.form';
 import {Router} from '@angular/router';
+import { Error } from '../../../../shared/models/error.model';
 
 @Component({
     selector   : 'app-subdivision-create',
@@ -40,7 +41,7 @@ export class SubdivisionCreateComponent {
                 this.companies = companies;
             },
             error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }
@@ -62,7 +63,7 @@ export class SubdivisionCreateComponent {
             },
             error => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }

@@ -10,6 +10,7 @@ import {Subdivision} from '../../../../shared/models/subdivision.model';
 import {CarModel} from '../../../../shared/models/car-model.model';
 import {Subscription} from 'rxjs/Subscription';
 import {CarUpdateForm} from '../shared/update.form';
+import { Error } from '../../../../shared/models/error.model';
 
 @Component({
     selector   : 'app-car-update',
@@ -82,7 +83,7 @@ export class CarUpdateComponent implements OnDestroy {
             },
             error => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }

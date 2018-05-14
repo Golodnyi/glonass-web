@@ -14,6 +14,7 @@ import {EngineCreateForm} from '../shared/create.form';
 import {NewEngine} from '../shared/newEngine.model';
 import {EnginesService} from '../../../../shared/services/engines.service';
 import {EngineModelsService} from '../../../../shared/services/engine.models.service';
+import { Error } from '../../../../shared/models/error.model';
 
 @Component({
     selector   : 'app-engine-create',
@@ -126,7 +127,7 @@ export class EngineCreateComponent implements OnInit {
             },
             error => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
+                Error.check(error, this.router, this.msg);
             }
         );
     }
