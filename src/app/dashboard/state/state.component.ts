@@ -169,7 +169,7 @@ export class StateComponent implements OnChanges, OnDestroy {
             },
             error => {
                 this.submit = false;
-                Error.check(error, this.router, this.msg);                
+                Error.check(error, this.router, this.msg);
             }
         );
     }
