@@ -29,6 +29,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from '../environments/environment';
 import { DropdownModule } from 'primeng/dropdown';
 import { ErrorService } from './shared/services/error.service';
+import { SharedModule } from './shared/shared.module';
+import { KeysPipe } from './shared/pipes/keys.pipe';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
     return new TranslateHttpLoader(httpClient, environment.lang, '.json');
@@ -51,6 +53,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
         BrowserModule,
         HttpClientModule,
         AppRoutingModule,
+        SharedModule,
         GrowlModule,
         MessagesModule,
         BrowserAnimationsModule,
@@ -66,7 +69,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
         DropdownModule
     ],
     providers   : [
-        MsgService, UsersService, AuthService, AuthGuard, GuestGuard, AdminGuard, ChartsService, EnginesService,
+        MsgService, UsersService, AuthService, AuthGuard, GuestGuard, AdminGuard, ChartsService, EnginesService, KeysPipe,
         ErrorService,
         {
             provide : HTTP_INTERCEPTORS,

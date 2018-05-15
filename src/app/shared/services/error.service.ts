@@ -4,22 +4,35 @@ import 'rxjs/add/operator/catch';
 import { Router } from '@angular/router';
 import { MsgService } from '../services/msg';
 import { TranslateService } from '@ngx-translate/core';
+import { Error } from '../models/error.model';
+import { KeysPipe } from '../pipes/keys.pipe';
 
 @Injectable()
 export class ErrorService {
-    constructor(private router: Router, private msgService: MsgService, private translate: TranslateService) {
+    constructor(
+        private router: Router,
+        private msgService: MsgService,
+        private translate: TranslateService,
+        private keysPipe: KeysPipe) {
     }
 
     public check(error: any) {
         if (error.status !== 200 && error.status !== 304 && error.status !== 0) {
+            const e: Error = Object.assign(new Error(), error.error);
 
-            this.translate.get(
-                error.error.message,
-                error.error.params ?
-                    error.error.params :
-                    {}
-            ).subscribe(
+            this.keysPipe.transform(e.sources).forEach(
+                k => {
+                    this.translate.get(e.sources[k]).subscribe(
+                        msg => {
+                            e.params[k] = msg;
+                        }
+                    );
+                }
+            );
+
+            this.translate.get(e.message, e.params).subscribe(
                 msg => {
+                    console.log('show error');
                     this.msgService.notice(MsgService.ERROR, error.status, msg || 'Server Error');
                 }
             );
