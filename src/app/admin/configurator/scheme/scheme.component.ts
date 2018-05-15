@@ -1,7 +1,7 @@
-import {Component, Input} from '@angular/core';
-import {OnChanges} from '@angular/core/src/metadata/lifecycle_hooks';
-import {SchemeService} from '../shared/scheme.service';
-import {Scheme} from 'app/admin/configurator/shared/scheme.model';
+import { Component, Input } from '@angular/core';
+import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
+import { SchemeService } from '../shared/scheme.service';
+import { Scheme } from 'app/admin/configurator/shared/scheme.model';
 
 @Component({
     selector   : 'app-scheme',

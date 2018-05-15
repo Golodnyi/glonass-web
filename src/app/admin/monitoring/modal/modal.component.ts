@@ -1,17 +1,15 @@
-import {Component, Input, OnChanges, Output, EventEmitter} from '@angular/core';
-import {CommentsService} from '../shared/comments.service';
-import {Comment} from '../shared/comment.model';
-import {CommentForm} from './shared/comment.form';
-import {MsgService} from '../../../shared/services/msg';
-import {FormGroup} from '@angular/forms';
-import { Router } from '@angular/router';
-import { Error } from '../../../shared/models/error.model';
+import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import { CommentsService } from '../shared/comments.service';
+import { Comment } from '../shared/comment.model';
+import { CommentForm } from './shared/comment.form';
+import { MsgService } from '../../../shared/services/msg';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector   : 'app-admin-modal',
     templateUrl: 'modal.component.html',
     styleUrls  : ['modal.component.css'],
-    providers: [CommentsService, CommentForm]
+    providers  : [CommentsService, CommentForm]
 })
 export class ModalComponent implements OnChanges {
     @Input() show: boolean;
@@ -21,11 +19,10 @@ export class ModalComponent implements OnChanges {
     private message: string;
 
     public comments: Comment[] = [];
-    constructor(
-        private commentsService: CommentsService,
-        private commentForm: CommentForm,
-        private msg: MsgService,
-        private router: Router) {
+
+    constructor(private commentsService: CommentsService,
+                private commentForm: CommentForm,
+                private msg: MsgService) {
         this.update();
         this.form = this.commentForm.create();
         this.form.valueChanges.subscribe((data) => {
@@ -57,8 +54,6 @@ export class ModalComponent implements OnChanges {
             () => {
                 this.update();
                 this.msg.notice(MsgService.SUCCESS, 'Успех', 'Комментарий добавлен');
-            }, error => {
-                Error.check(error, this.router, this.msg);
             }
         );
     }

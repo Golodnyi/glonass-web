@@ -1,7 +1,7 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import {Filter} from '../../shared/models/filter.model';
+import { Filter } from '../../shared/models/filter.model';
 
 @Component({
     selector   : 'app-pdf',

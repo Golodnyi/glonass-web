@@ -1,20 +1,19 @@
-import {Component, OnInit} from '@angular/core';
-import {Car} from '../../../../shared/models/car.model';
-import {FormGroup} from '@angular/forms';
-import {Company} from '../../../../shared/models/company.model';
-import {Subdivision} from '../../../../shared/models/subdivision.model';
-import {CarModel} from '../../../../shared/models/car-model.model';
-import {Subscription} from 'rxjs/Subscription';
-import {MsgService} from '../../../../shared/services/msg';
-import {CarsService} from '../../../../shared/services/cars.service';
-import {Router} from '@angular/router';
-import {CompaniesService} from '../../../../shared/services/companies.service';
-import {SubdivisionsService} from '../../../../shared/services/subdivisions.service';
-import {EngineCreateForm} from '../shared/create.form';
-import {NewEngine} from '../shared/newEngine.model';
-import {EnginesService} from '../../../../shared/services/engines.service';
-import {EngineModelsService} from '../../../../shared/services/engine.models.service';
-import { Error } from '../../../../shared/models/error.model';
+import { Component, OnInit } from '@angular/core';
+import { Car } from '../../../../shared/models/car.model';
+import { FormGroup } from '@angular/forms';
+import { Company } from '../../../../shared/models/company.model';
+import { Subdivision } from '../../../../shared/models/subdivision.model';
+import { CarModel } from '../../../../shared/models/car-model.model';
+import { Subscription } from 'rxjs/Subscription';
+import { MsgService } from '../../../../shared/services/msg';
+import { CarsService } from '../../../../shared/services/cars.service';
+import { Router } from '@angular/router';
+import { CompaniesService } from '../../../../shared/services/companies.service';
+import { SubdivisionsService } from '../../../../shared/services/subdivisions.service';
+import { EngineCreateForm } from '../shared/create.form';
+import { NewEngine } from '../shared/newEngine.model';
+import { EnginesService } from '../../../../shared/services/engines.service';
+import { EngineModelsService } from '../../../../shared/services/engine.models.service';
 
 @Component({
     selector   : 'app-engine-create',
@@ -125,9 +124,8 @@ export class EngineCreateComponent implements OnInit {
                     ]
                 );
             },
-            error => {
+            () => {
                 this.submit = false;
-                Error.check(error, this.router, this.msg);
             }
         );
     }

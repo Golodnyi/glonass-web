@@ -3,7 +3,8 @@
         <p-tabView>
             <p-tabPanel header="{{'dashboard.state' | translate}}">
                 <p-accordion *ngIf="subdivisions.length" [multiple]="true">
-                    <p-accordionTab *ngFor="let subdivision of subdivisions" header="{{subdivision.name}}" [selected]="true">
+                    <p-accordionTab *ngFor="let subdivision of subdivisions" header="{{subdivision.name}}"
+                                    [selected]="true">
                         <div class="row">
                             <div *ngIf="!subdivision.cars.length" class="col-md-pull-12">
                                 {{'dashboard.noData' | translate}}

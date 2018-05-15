@@ -96,15 +96,15 @@ export class MultiChart {
     constructor(options: any) {
         options.data.forEach(option => {
             this.series.push({
-                data   : option.data,
-                name   : option.name,
-                type   : 'column',
-                color  : option.color,
+                data        : option.data,
+                name        : option.name,
+                type        : 'column',
+                color       : option.color,
                 dataGrouping: {
                     groupPixelWidth: 5,
-                    approximation: 'average'
+                    approximation  : 'average'
                 },
-                tooltip: {
+                tooltip     : {
                     valueSuffix: ' ' + option.unit,
                     pointFormat: '{point.x:%d.%m %H:%M:%S} <span style="color: ' + option.color + '"> ' + option.name +
                     ' </span>: <b>{point.y}</b>',
@@ -113,11 +113,11 @@ export class MultiChart {
             });
         });
 
-        this.xAxis                 = {
+        this.xAxis = {
             crosshair: true,
             events   : null
         };
-        this.yAxis                 = {
+        this.yAxis = {
             plotBands: options.plotBands,
             plotLines: options.plotLines
         };

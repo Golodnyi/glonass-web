@@ -1,21 +1,17 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Router} from '@angular/router';
-import {environment} from '../../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import {Scheme} from './scheme.model';
-import {Error} from '../../../shared/models/error.model';
-import {MsgService} from '../../../shared/services/msg';
-import {SchemeItem} from './schemeItem.model';
-import {SchemePostItem} from './schemePostItem.model';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Scheme } from './scheme.model';
+import { SchemeItem } from './schemeItem.model';
+import { SchemePostItem } from './schemePostItem.model';
+import { ErrorService } from '../../../shared/services/error.service';
 
 @Injectable()
 export class SchemeService {
     private host: string = environment.host;
 
-    constructor(private http: HttpClient,
-                private router: Router,
-                private msgService: MsgService) {
+    constructor(private http: HttpClient, private errorService: ErrorService) {
     }
 
     public overallScheme(car: number): Observable<Scheme> {
@@ -23,7 +19,7 @@ export class SchemeService {
             .map((response: any) => {
                 return response;
             }).catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -33,7 +29,7 @@ export class SchemeService {
             .map((response: any) => {
                 return response;
             }).catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -43,7 +39,7 @@ export class SchemeService {
             .map((response: any) => {
                 return response;
             }).catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -66,13 +62,12 @@ export class SchemeService {
                 return response;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
 
     public createOverallScheme(car: number, sensor: SchemeItem): Observable<any> {
-        console.log(sensor);
         const data        = new SchemePostItem();
         data.id           = car;
         data.sensor_id    = sensor.id;
@@ -85,14 +80,12 @@ export class SchemeService {
             delete data.limits;
         }
 
-        console.log(data);
-
         return this.http.post(this.host + '/v1/cars/' + car + '/overall-scheme', data)
             .map((response: any) => {
                 return response;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }

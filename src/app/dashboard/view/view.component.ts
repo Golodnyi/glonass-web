@@ -13,10 +13,10 @@ import { BaseEngine } from '../../shared/models/baseEngine.model';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-view',
+    selector   : 'app-view',
     templateUrl: './view.component.html',
-    styleUrls: ['./view.component.css'],
-    providers: [EngineModelsService]
+    styleUrls  : ['./view.component.css'],
+    providers  : [EngineModelsService]
 })
 export class ViewComponent implements OnDestroy {
 
@@ -25,18 +25,18 @@ export class ViewComponent implements OnDestroy {
     public engine: BaseEngine;
     public engineModel: EngineModel;
     public viewModeButtons: SelectItem[] = [];
-    public viewMode = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+    public viewMode                      = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
     private subscriptionFilter: Subscription;
     private subscriptionAutoRefresh: Subscription;
-    private subscription: Subscription = new Subscription();
+    private subscription: Subscription   = new Subscription();
 
     constructor(private route: ActivatedRoute,
-        private router: Router,
-        private chartsService: ChartsService,
-        private carsService: CarsService,
-        private enginesService: EnginesService,
-        private engineModelsService: EngineModelsService,
-        private translateService: TranslateService) {
+                private router: Router,
+                private chartsService: ChartsService,
+                private carsService: CarsService,
+                private enginesService: EnginesService,
+                private engineModelsService: EngineModelsService,
+                private translateService: TranslateService) {
         this.translateService.stream(
             [
                 'dashboard.charts',
@@ -44,12 +44,12 @@ export class ViewComponent implements OnDestroy {
                 'dashboard.thermocouples',
                 'dashboard.map'
             ]).subscribe(value => {
-                this.viewModeButtons = [];
-                this.viewModeButtons.push({ label: value['dashboard.charts'], value: 'charts' });
-                this.viewModeButtons.push({ label: value['dashboard.map'], value: 'map' });
-                this.viewModeButtons.push({ label: value['dashboard.table'], value: 'table' });
-                this.viewModeButtons.push({ label: value['dashboard.thermocouples'], value: 'thermocouples' });
-            });
+            this.viewModeButtons = [];
+            this.viewModeButtons.push({label: value['dashboard.charts'], value: 'charts'});
+            this.viewModeButtons.push({label: value['dashboard.map'], value: 'map'});
+            this.viewModeButtons.push({label: value['dashboard.table'], value: 'table'});
+            this.viewModeButtons.push({label: value['dashboard.thermocouples'], value: 'thermocouples'});
+        });
 
         this.filterInit();
         this.subscription.add(
@@ -79,14 +79,14 @@ export class ViewComponent implements OnDestroy {
 
     private filterInit() {
         this.subscription.add(this.route.queryParams.subscribe(filter => {
-            if (Object.keys(filter).length) {
-                this.filter = new Filter(filter);
-                this.chartsService.setFilter(this.filter);
-            } else {
-                this.filter = new Filter();
-                this.chartsService.setFilter(this.filter);
-            }
-        })
+                if (Object.keys(filter).length) {
+                    this.filter = new Filter(filter);
+                    this.chartsService.setFilter(this.filter);
+                } else {
+                    this.filter = new Filter();
+                    this.chartsService.setFilter(this.filter);
+                }
+            })
         );
     }
 

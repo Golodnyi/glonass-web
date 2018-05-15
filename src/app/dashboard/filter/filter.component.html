@@ -9,12 +9,14 @@
     </div>
     <hr/>
     <div *ngIf="sensors.length">
-        <p-multiSelect defaultLabel="{{ 'dashboard.sensors' | translate }}" id="charts" [options]="sensors|DropDown:false"
+        <p-multiSelect defaultLabel="{{ 'dashboard.sensors' | translate }}" id="charts"
+                       [options]="sensors|DropDown:false"
                        formControlName="charts"></p-multiSelect>
         <hr/>
     </div>
     <button class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton type="submit"
             label="{{ 'dashboard.apply' | translate }}"></button>
-    <button class="ui-button-danger" [disabled]="filter.enabled !== true" pButton label="{{ 'dashboard.disable' | translate }}"
+    <button class="ui-button-danger" [disabled]="filter.enabled !== true" pButton
+            label="{{ 'dashboard.disable' | translate }}"
             (click)="onDisabled()"></button>
 </form>

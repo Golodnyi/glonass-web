@@ -8,7 +8,8 @@
             {{row['time'] | date: 'dd.MM.yyyy H:mm:ss'}}
         </ng-template>
     </p-column>
-    <p-column footer="{{table.headers[key]?.model}} {{table.headers[key]?.port}}" *ngFor="let key of keys" header="{{table.headers[key].name}} ({{table.headers[key].unit}})"
+    <p-column footer="{{table.headers[key]?.model}} {{table.headers[key]?.port}}" *ngFor="let key of keys"
+              header="{{table.headers[key].name}} ({{table.headers[key].unit}})"
               field="{{key}}" sortable="custom"
               (sortFunction)="sort($event)">
         <ng-template let-row="rowData" pTemplate="body">

@@ -4,27 +4,27 @@ import { Subscription } from 'rxjs/Subscription';
 import { Car } from '../../../shared/models/car.model';
 import { SelectItem } from 'primeng/primeng';
 import { AuthService } from '../../../shared/services/auth.service';
-import { User } from '../../../shared/models/user.model';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-table-view',
+    selector   : 'app-table-view',
     templateUrl: './table.component.html',
-    styleUrls: ['./table.component.css']
+    styleUrls  : ['./table.component.css']
 })
 export class TableComponent implements OnDestroy {
     public car: Car;
     public inDrive: boolean;
     private subscription: Subscription = new Subscription();
-    public selectedFilter: string[] = [];
-    public filter: SelectItem[] = [];
-    public filterUser: SelectItem[] = [];
+    public selectedFilter: string[]    = [];
+    public filter: SelectItem[]        = [];
+    public filterUser: SelectItem[]    = [];
     public admin: boolean;
 
-    constructor(private translateService: TranslateService, private chartsService: ChartsService, private authService: AuthService) {
+    constructor(private translateService: TranslateService, private chartsService: ChartsService,
+                private authService: AuthService) {
         this.admin = this.authService.isAdmin();
 
-        this.filter = [];
+        this.filter     = [];
         this.filterUser = [];
 
         this.translateService.stream(
@@ -33,14 +33,13 @@ export class TableComponent implements OnDestroy {
                 'dashboard.microvolts',
                 'dashboard.invalidData'
             ]).subscribe(value => {
-                this.filter = [];
-                this.filter.push({ label: value['dashboard.inMove'], value: 'drive' });
-                this.filter.push({ label: value['dashboard.microvolts'], value: 'mv' });
-                this.filter.push({ label: value['dashboard.invalidData'], value: 'nv' });
+            this.filter = [];
+            this.filter.push({label: value['dashboard.inMove'], value: 'drive'});
+            this.filter.push({label: value['dashboard.microvolts'], value: 'mv'});
+            this.filter.push({label: value['dashboard.invalidData'], value: 'nv'});
 
-                this.filterUser.push({ label: value['dashboard.inMove'], value: 'drive' });
-            });
-
+            this.filterUser.push({label: value['dashboard.inMove'], value: 'drive'});
+        });
 
         this.subscription.add(
             this.chartsService.getCar().subscribe(car => {

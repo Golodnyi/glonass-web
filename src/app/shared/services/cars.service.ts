@@ -1,15 +1,13 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Router} from '@angular/router';
-import {Error} from '../models/error.model';
-import {Car} from '../models/car.model';
-import {MsgService} from './msg';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {State} from '../../dashboard/state/shared/state.model';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import { Car } from '../models/car.model';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { State } from '../../dashboard/state/shared/state.model';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class CarsService {
@@ -18,8 +16,7 @@ export class CarsService {
     private host: string                 = environment.host;
 
     constructor(private http: HttpClient,
-                private router: Router,
-                private msgService: MsgService) {
+                private errorService: ErrorService) {
     }
 
     public all(company: number, subdivision: number, resync = false): Observable<Car[]> {
@@ -33,7 +30,7 @@ export class CarsService {
                     this.cars.next(cars);
                 }, error => {
                     this.cars.next([]);
-                    Error.check(error, this.router, this.msgService);
+                    this.errorService.check(error);
                 });
         }
         return this.cars.asObservable();
@@ -44,7 +41,7 @@ export class CarsService {
             .map((response: any) => {
                 return response;
             }).catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -56,7 +53,7 @@ export class CarsService {
                     this.car.next(Object.assign(new Car(), response));
                 }, error => {
                     this.car.next(new Car());
-                    Error.check(error, this.router, this.msgService);
+                    this.errorService.check(error);
                 });
         }
         return this.car.asObservable();
@@ -68,7 +65,7 @@ export class CarsService {
                 return Object.assign(new Car(), response);
             }, error => {
                 this.car.next(new Car());
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
             });
     }
 
@@ -85,7 +82,7 @@ export class CarsService {
                 return carObj;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -105,7 +102,7 @@ export class CarsService {
                 return carObj;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -116,7 +113,7 @@ export class CarsService {
                 return Object.assign(new State(), response);
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }

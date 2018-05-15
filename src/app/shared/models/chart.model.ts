@@ -94,23 +94,23 @@ export class Chart {
     };
 
     constructor(options: any) {
-        this.series                = [{
-            data   : options.data,
-            name   : options.name,
-            type   : 'column',
-            tooltip: {
+        this.series = [{
+            data        : options.data,
+            name        : options.name,
+            type        : 'column',
+            tooltip     : {
                 valueSuffix: ' ' + options.unit
             },
             dataGrouping: {
                 groupPixelWidth: 5,
-                approximation: 'average'
+                approximation  : 'average'
             }
         }];
-        this.xAxis                 = {
+        this.xAxis  = {
             crosshair: true,
         };
 
-        this.yAxis                 = {
+        this.yAxis = {
             plotBands: options.plotBands,
             plotLines: options.plotLines
         };

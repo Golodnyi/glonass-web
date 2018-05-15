@@ -1,19 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {Car} from '../../../../shared/models/car.model';
-import {FormGroup} from '@angular/forms';
-import {Company} from '../../../../shared/models/company.model';
-import {Subdivision} from '../../../../shared/models/subdivision.model';
-import {CarModel} from '../../../../shared/models/car-model.model';
-import {Subscription} from 'rxjs/Subscription';
-import {MsgService} from '../../../../shared/services/msg';
-import {ActivatedRoute, Router} from '@angular/router';
-import {CompaniesService} from '../../../../shared/services/companies.service';
-import {NewEngine} from '../shared/newEngine.model';
-import {EnginesService} from '../../../../shared/services/engines.service';
-import {EngineModelsService} from '../../../../shared/services/engine.models.service';
-import {EngineUpdateForm} from '../shared/update.form';
-import {BaseEngine} from '../../../../shared/models/baseEngine.model';
-import { Error } from '../../../../shared/models/error.model';
+import { Component, OnInit } from '@angular/core';
+import { Car } from '../../../../shared/models/car.model';
+import { FormGroup } from '@angular/forms';
+import { Company } from '../../../../shared/models/company.model';
+import { Subdivision } from '../../../../shared/models/subdivision.model';
+import { CarModel } from '../../../../shared/models/car-model.model';
+import { Subscription } from 'rxjs/Subscription';
+import { MsgService } from '../../../../shared/services/msg';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CompaniesService } from '../../../../shared/services/companies.service';
+import { NewEngine } from '../shared/newEngine.model';
+import { EnginesService } from '../../../../shared/services/engines.service';
+import { EngineModelsService } from '../../../../shared/services/engine.models.service';
+import { EngineUpdateForm } from '../shared/update.form';
+import { BaseEngine } from '../../../../shared/models/baseEngine.model';
 
 @Component({
     selector   : 'app-update',
@@ -99,9 +98,8 @@ export class EngineUpdateComponent implements OnInit {
                     ]
                 );
             },
-            error => {
+            () => {
                 this.submit = false;
-                Error.check(error, this.router, this.msg);
             }
         );
     }

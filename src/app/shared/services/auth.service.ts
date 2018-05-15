@@ -1,18 +1,17 @@
-import {Injectable} from '@angular/core';
-import {User} from '../models/user.model';
+import { Injectable } from '@angular/core';
+import { User } from '../models/user.model';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Auth} from '../../login/shared/models/auth.model';
-import {MsgService} from './msg';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import {JwtHelper} from 'angular2-jwt';
-import {UsersService} from './users.service';
-import {Router} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
-import {Observable} from 'rxjs/Observable';
-import {TimerObservable} from 'rxjs/observable/TimerObservable';
-import { Error } from '../models/error.model';
+import { Auth } from '../../login/shared/models/auth.model';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { JwtHelper } from 'angular2-jwt';
+import { UsersService } from './users.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class AuthService {
@@ -27,7 +26,7 @@ export class AuthService {
     constructor(private http: HttpClient,
                 private usersService: UsersService,
                 private router: Router,
-                private msg: MsgService) {
+                private errorService: ErrorService) {
         AuthService.isLoggedIn();
     }
 
@@ -62,11 +61,12 @@ export class AuthService {
                     },
                     error => {
                         localStorage.clear();
-                        Error.check(error, this.router, this.msg);
+                        this.errorService.check(error);
                     }
                 );
             })
             .catch((error: any) => {
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -90,6 +90,7 @@ export class AuthService {
                 return true;
             })
             .catch((error: any) => {
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -102,6 +103,7 @@ export class AuthService {
                 return true;
             })
             .catch((error: any) => {
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -121,7 +123,7 @@ export class AuthService {
         const refresh       = localStorage.getItem('Refresh');
 
         if (!user || !authorization || !refresh) {
-            localStorage.clear();
+            return false;
         } else if (user) {
             if (!this.subscriptionRefreshToken) {
                 this.subscriptionRefreshToken = this.timer.subscribe(

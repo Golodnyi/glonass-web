@@ -1,6 +1,6 @@
-import {Component, Input, OnChanges, OnDestroy} from '@angular/core';
-import {MapCar} from './shared/map-car.model';
-import {MapPolyLines} from './shared/map-polylines.model';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { MapCar } from './shared/map-car.model';
+import { MapPolyLines } from './shared/map-polylines.model';
 
 /// <reference path="./typings/ymaps.d.ts" />
 @Component({
@@ -52,7 +52,7 @@ export class YmapsComponent implements OnDestroy, OnChanges {
                     center  : this.center,
                     zoom    : (!this.zoom ? 12 : this.zoom),
                     controls: ['smallMapDefaultSet', 'rulerControl'],
-                    type: 'yandex#hybrid'
+                    type    : 'yandex#hybrid'
                 });
             }
 

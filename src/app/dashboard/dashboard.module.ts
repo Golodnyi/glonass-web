@@ -47,7 +47,7 @@ import { MonitoringService } from './monitoring/shared/monitoring.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-    imports: [
+    imports     : [
         CommonModule,
         DashboardRoutingModule,
         TreeModule,
@@ -77,7 +77,7 @@ import { TranslateModule } from '@ngx-translate/core';
         ChartsComponent, MapComponent, TableViewComponent, ThermocouplesTableComponent, ThermocouplesComponent,
         WelcomeComponent
     ],
-    providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService,
+    providers   : [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService,
         MonitoringService]
 })
 export class DashboardModule {

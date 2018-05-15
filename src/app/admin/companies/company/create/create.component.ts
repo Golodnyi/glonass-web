@@ -1,14 +1,13 @@
-import {Component} from '@angular/core';
-import {Company} from '../../../../shared/models/company.model';
-import {MsgService} from '../../../../shared/services/msg';
-import {AuthService} from '../../../../shared/services/auth.service';
-import {CompaniesService} from '../../../../shared/services/companies.service';
+import { Component } from '@angular/core';
+import { Company } from '../../../../shared/models/company.model';
+import { MsgService } from '../../../../shared/services/msg';
+import { AuthService } from '../../../../shared/services/auth.service';
+import { CompaniesService } from '../../../../shared/services/companies.service';
 import * as moment from 'moment';
-import {CompanyForm} from '../shared/company.form';
-import {FormGroup} from '@angular/forms';
-import {Router} from '@angular/router';
-import {Calendar} from '../../../../shared/models/calendar.model';
-import { Error } from '../../../../shared/models/error.model';
+import { CompanyForm } from '../shared/company.form';
+import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Calendar } from '../../../../shared/models/calendar.model';
 
 @Component({
     selector   : 'app-company-create',
@@ -49,9 +48,8 @@ export class CompanyCreateComponent {
                 this.msg.notice(MsgService.SUCCESS, 'Сохранено', 'Компания ' + this.company.name + ' создана');
                 this.router.navigate(['/admin/companies/company', this.company.id]);
             },
-            error => {
+            () => {
                 this.submit = false;
-                Error.check(error, this.router, this.msg);
             }
         );
     }

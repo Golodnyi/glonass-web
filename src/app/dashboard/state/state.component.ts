@@ -1,19 +1,17 @@
-import {Component, Input, OnChanges, OnDestroy} from '@angular/core';
-import {State} from './shared/state.model';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { State } from './shared/state.model';
 import * as moment from 'moment';
-import {Calendar} from '../../shared/models/calendar.model';
-import {FormGroup} from '@angular/forms';
-import {ResetForm} from './shared/reset.form';
-import {ResetService} from './shared/reset.service';
-import {MsgService} from '../../shared/services/msg';
-import {Car} from '../../shared/models/car.model';
-import {AuthService} from '../../shared/services/auth.service';
-import {User} from '../../shared/models/user.model';
+import { Calendar } from '../../shared/models/calendar.model';
+import { FormGroup } from '@angular/forms';
+import { ResetForm } from './shared/reset.form';
+import { ResetService } from './shared/reset.service';
+import { MsgService } from '../../shared/services/msg';
+import { Car } from '../../shared/models/car.model';
+import { AuthService } from '../../shared/services/auth.service';
+import { User } from '../../shared/models/user.model';
 import { MotochasFilterForm } from './shared/motochasFilter.form';
 import { MotochasService } from './shared/motochas.service';
 import { MotochasFilter } from './shared/motochasFilter.model';
-import { Error } from '../../shared/models/error.model';
-import { Router } from '@angular/router';
 
 @Component({
     selector   : 'app-state',
@@ -43,6 +41,7 @@ export class StateComponent implements OnChanges, OnDestroy {
     public motochasFilter         = false
     private motochasFilterVal     = 0;
     public motochasFilterAnswer: MotochasFilter;
+
     public static unMute(id) {
         if (localStorage.getItem('mute_' + id) !== null) {
             localStorage.removeItem('mute_' + id);
@@ -69,14 +68,12 @@ export class StateComponent implements OnChanges, OnDestroy {
     /**
      * TODO: раскидать все всплывающие окна по отдельным компонентам
      */
-    constructor(
-        private resetForm: ResetForm,
-        private motochasFilterForm: MotochasFilterForm,
-        private resetService: ResetService,
-        private motochasService: MotochasService,
-        private msg: MsgService,
-        private authService: AuthService,
-        private router: Router) {
+    constructor(private resetForm: ResetForm,
+                private motochasFilterForm: MotochasFilterForm,
+                private resetService: ResetService,
+                private motochasService: MotochasService,
+                private msg: MsgService,
+                private authService: AuthService) {
         moment.locale('ru');
         this.form = this.resetForm.create();
         this.form.valueChanges
@@ -153,9 +150,8 @@ export class StateComponent implements OnChanges, OnDestroy {
                 this.msg.notice(MsgService.SUCCESS, 'Гарантийное обслуживание', 'продлено');
                 this.displayGaranted = false;
             },
-            error => {
+            () => {
                 this.submit = false;
-                Error.check(error, this.router, this.msg);
             }
         );
     }
@@ -167,9 +163,8 @@ export class StateComponent implements OnChanges, OnDestroy {
                 this.msg.notice(MsgService.SUCCESS, 'Техническое обслуживание', 'проведено');
                 this.display = false;
             },
-            error => {
+            () => {
                 this.submit = false;
-                Error.check(error, this.router, this.msg);
             }
         );
     }
@@ -182,9 +177,6 @@ export class StateComponent implements OnChanges, OnDestroy {
                     this.history.push(d);
                 });
                 this.displayHistory = true;
-            },
-            error => {
-                Error.check(error, this.router, this.msg);
             }
         );
     }
@@ -201,9 +193,6 @@ export class StateComponent implements OnChanges, OnDestroy {
                     this.garantedHistory.push(d);
                 });
                 this.displayGarantedHistory = true;
-            },
-            error => {
-                Error.check(error, this.router, this.msg);
             }
         );
     }

@@ -1,7 +1,7 @@
-import {IUser} from './user.model';
-import {ITree} from './tree.model';
-import {ICompany} from './company.model';
-import {Car} from './car.model';
+import { IUser } from './user.model';
+import { ITree } from './tree.model';
+import { ICompany } from './company.model';
+import { Car } from './car.model';
 
 export interface ISubdivision {
     id: number;

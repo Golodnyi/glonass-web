@@ -1,6 +1,6 @@
-import {IUser} from './user.model';
-import {ITree} from './tree.model';
-import {Subdivision} from './subdivision.model';
+import { IUser } from './user.model';
+import { ITree } from './tree.model';
+import { Subdivision } from './subdivision.model';
 
 export interface ICompany {
     id: number;

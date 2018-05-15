@@ -48,8 +48,11 @@
                     <div class="language">
                         <label for="staticEmail" class="language col-sm-4 col-form-label">Language:</label>
                         <div class="col-sm-8">
-                            <select #langSelect class="form-control form-control-sm" (change)="changeLanguage(langSelect.value)">
-                                <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ langAliases[lang] }}</option>
+                            <select #langSelect class="form-control form-control-sm"
+                                    (change)="changeLanguage(langSelect.value)">
+                                <option *ngFor="let lang of translate.getLangs()" [value]="lang"
+                                        [selected]="lang === translate.currentLang">{{ langAliases[lang] }}
+                                </option>
                             </select>
                         </div>
                     </div>

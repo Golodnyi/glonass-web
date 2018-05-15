@@ -1,4 +1,4 @@
-import {SchemeModel} from './schemeModel.model';
+import { SchemeModel } from './schemeModel.model';
 
 export interface ISchemeItem {
     id: string;

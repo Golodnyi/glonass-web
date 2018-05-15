@@ -28,6 +28,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from '../environments/environment';
 import { DropdownModule } from 'primeng/dropdown';
+import { ErrorService } from './shared/services/error.service';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
     return new TranslateHttpLoader(httpClient, environment.lang, '.json');
@@ -45,7 +46,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
         LoginComponent,
         LogoutComponent
     ],
-    imports: [
+    imports     : [
         RouterModule,
         BrowserModule,
         HttpClientModule,
@@ -57,22 +58,23 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
         ReactiveFormsModule,
         TranslateModule.forRoot({
             loader: {
-                provide: TranslateLoader,
+                provide   : TranslateLoader,
                 useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
+                deps      : [HttpClient]
             }
         }),
         DropdownModule
     ],
-    providers: [
+    providers   : [
         MsgService, UsersService, AuthService, AuthGuard, GuestGuard, AdminGuard, ChartsService, EnginesService,
+        ErrorService,
         {
-            provide: HTTP_INTERCEPTORS,
+            provide : HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,
-            multi: true
+            multi   : true
         }
     ],
-    bootstrap: [AppComponent]
+    bootstrap   : [AppComponent]
 })
 export class AppModule {
 }

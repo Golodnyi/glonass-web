@@ -1,12 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Company} from '../models/company.model';
-import {Router} from '@angular/router';
-import {Error} from '../models/error.model';
-import {MsgService} from './msg';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Company } from '../models/company.model';
+import { MsgService } from './msg';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class CompaniesService {
@@ -15,8 +14,8 @@ export class CompaniesService {
     private host: string                          = environment.host;
 
     constructor(private http: HttpClient,
-                private router: Router,
-                private msgService: MsgService) {
+                private msgService: MsgService,
+                private errorService: ErrorService) {
     }
 
     public all(resync = false): Observable<Company[]> {
@@ -31,7 +30,7 @@ export class CompaniesService {
                     },
                     error => {
                         this.companies.next([]);
-                        Error.check(error, this.router, this.msgService);
+                        this.errorService.check(error);
                     });
         }
         return this.companies.asObservable();
@@ -44,7 +43,7 @@ export class CompaniesService {
                     this.company.next(Object.assign(new Company(), response));
                 }, error => {
                     this.company.next(new Company());
-                    Error.check(error, this.router, this.msgService);
+                    this.errorService.check(error);
                 });
         }
         return this.company.asObservable();
@@ -65,7 +64,7 @@ export class CompaniesService {
                 return companyObj;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -83,7 +82,7 @@ export class CompaniesService {
                 return companyObj;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -102,7 +101,7 @@ export class CompaniesService {
                 return true;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }

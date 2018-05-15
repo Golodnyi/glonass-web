@@ -60,7 +60,8 @@ h2 {
 .step {
     position: relative;
 }
-.step+.step:before {
+
+.step + .step:before {
     content: "\e258";
     position: absolute;
     display: block;
@@ -69,15 +70,15 @@ h2 {
     color: #316088;
     font-size: 4em;
     opacity: .5;
-    left:-40px;
-    top:30px;
-;
+    left: -40px;
+    top: 30px;;
 }
 
 .li-ok, .li-bull {
     position: relative;
     padding-left: 36px;
 }
+
 .li-ok:before, .li-bull:before {
     content: "";
     position: absolute;
@@ -86,8 +87,9 @@ h2 {
     font-family: "Glyphicons Halflings";
     font-size: inherit;
     left: 0;
-    top:0;
+    top: 0;
 }
+
 .li-ok:before {
     content: "\e013";
 }
@@ -128,7 +130,7 @@ h2 {
 a.btn-white-transparent {
     text-decoration: none;
     display: inline-block;
-    
+
     border: 2px solid rgba(255, 255, 255, 0.8);
     padding: .6em 2em;
     border-radius: 2px 2px 2px 2px;
@@ -162,9 +164,8 @@ a.btn-white-transparent:hover, a.btn-white-transparent:active {
     background-size: cover;
     color: #eee;
     padding: 160px 0;
-    overflow: hidden;   
+    overflow: hidden;
 }
-
 
 @media (max-width: 767px) {
 
@@ -210,11 +211,17 @@ a.btn-white-transparent:hover, a.btn-white-transparent:active {
     .content-panel > * {
         display: inline-block;
     }
+
     .content-panel > img {
-        width: 80px; margin-right: 20px;
+        width: 80px;
+        margin-right: 20px;
         display: inline-block;
     }
-    .step+.step:before {display: none}
+
+    .step + .step:before {
+        display: none
+    }
+
     .step .desc {
         display: flex;
         justify-content: center;
@@ -222,27 +229,36 @@ a.btn-white-transparent:hover, a.btn-white-transparent:active {
     }
 
     .paper {
-       margin-top: -70px;
+        margin-top: -70px;
     }
+
     .pit-row {
         padding: 60px 0;
     }
+
     .sm-hidden {
         display: none;
     }
 
 }
+
 @media (min-width: 768px) and (max-width: 991px) {
     html {
         overflow-x: hidden;
     }
-    .step+.step:before {display: none}
+
+    .step + .step:before {
+        display: none
+    }
+
     .sm-hidden {
         display: none;
     }
+
     .after-laptop-row {
         padding-top: 100px;
     }
+
     .paper {
         margin-top: -70px;
 
@@ -262,14 +278,17 @@ a.btn-white-transparent:hover, a.btn-white-transparent:active {
         left: 50%;
     }
 }
+
 @media (min-width: 992px) and (max-width: 1199px) {
     .hidden-md {
         display: none !important;
     }
+
     .md-centered {
         text-align: center;
     }
 }
+
 @media (min-width: 1200px) {
     .hidden-lg {
         display: none !important;
@@ -280,6 +299,7 @@ a.btn-white-transparent:hover, a.btn-white-transparent:active {
     .container {
         width: 90%;
     }
+
     body {
         font-size: 2rem;
     }

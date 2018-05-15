@@ -1,4 +1,5 @@
-<p-panel *ngIf="state && car" header="{{ 'dashboard.stateOn' | translate: {value: car.name} }}" [toggleable]="toggleable">
+<p-panel *ngIf="state && car" header="{{ 'dashboard.stateOn' | translate: {value: car.name} }}"
+         [toggleable]="toggleable">
     <div>
         <div class="alert alert-danger" *ngFor="let issue of state.issues">
             <div class="text-left">
@@ -10,7 +11,8 @@
                 <li *ngFor="let forecast of issue.forecast">
                     {{forecast.name}}
                 </li>
-            </ul>disable
+            </ul>
+            disable
             <hr/>
             <div class="text-right">
                 <button *ngIf="!isMuted(issue.id)" class="btn btn-success" (click)="mute(issue.id)">
@@ -71,7 +73,9 @@
             <span *ngIf="!state.power" class="badge alert-danger">{{ 'dashboard.no' | translate }}</span>
         </div>
         <div *ngIf="!compact">
-            {{ 'dashboard.machineHours' | translate }}: {{state.motochas}} {{ 'dashboard.h' | translate }} <button type="text" (click)="showMotochasFilter()" pButton label="{{ 'dashboard.filter' | translate }}"></button>
+            {{ 'dashboard.machineHours' | translate }}: {{state.motochas}} {{ 'dashboard.h' | translate }}
+            <button type="text" (click)="showMotochasFilter()" pButton
+                    label="{{ 'dashboard.filter' | translate }}"></button>
         </div>
     </div>
     <p-dialog header="{{ 'dashboard.filterMachineHours' | translate }}" [(visible)]="motochasFilter">
@@ -85,13 +89,16 @@
                 <span *ngIf="motochasFilterAnswer.reached">{{ 'dashboard.date' | translate }}: {{motochasFilterAnswer.date | date:'dd.MM.y HH:mm'}}</span>
             </div>
             <hr/>
-            <button type="submit" class="ui-button-success" [disabled]="!formMotochasFilter.valid || submitMotochasFilter" icon="fa-check" pButton label="{{ 'dashboard.apply' | translate }}"></button>
+            <button type="submit" class="ui-button-success"
+                    [disabled]="!formMotochasFilter.valid || submitMotochasFilter" icon="fa-check" pButton
+                    label="{{ 'dashboard.apply' | translate }}"></button>
         </form>
     </p-dialog>
-    
-    
-    <div *ngIf="!compact && state.maintenances.length && user && user.role">
-        <div class="alert" *ngIf="scheduled(state)">{{ 'dashboard.toMaintenance' | translate: (state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours) }}
+
+
+    <div *ngIf="!compact && state.maintenances && user && user.role">
+        <div class="alert" *ngIf="scheduled(state)">{{ 'dashboard.toMaintenance' | translate:
+            (state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours) }}
             <span *ngIf="user && user.role.is_global == 1 && car.engine" class="btn-st">
                 <button type="text" (click)="showTODialog()" pButton icon="fa-refresh"
                         title="{{ 'dashboard.carryOutMaintenance' | translate }}"></button>
@@ -109,11 +116,11 @@
             </span>
         </div>
         <div *ngIf="garanted(state)" class="alert">
-            {{ 'dashboard.warrantyServiceIsOver' | 
-                translate: {
-                    days: (state.maintenances.capital.limits.days - state.maintenances.capital.value.days),
-                    machineHours: (state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours)
-                }
+            {{ 'dashboard.warrantyServiceIsOver' |
+            translate: {
+            days: (state.maintenances.capital.limits.days - state.maintenances.capital.value.days),
+            machineHours: (state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours)
+            }
             }}
             <span *ngIf="user && user.role.is_global == 1 && car.engine" class="btn-st">
                 <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton icon="fa-refresh"
@@ -123,7 +130,7 @@
             </span>
         </div>
         <div *ngIf="!garanted(state)" class="alert alert-danger">
-                {{ 'dashboard.warrantyServiceCompleted' | translate }}
+            {{ 'dashboard.warrantyServiceCompleted' | translate }}
             <span *ngIf="user && user.role.is_global == 1 && car.engine" class="btn-st">
                 <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton icon="fa-refresh"
                         title="{{ 'dashboard.extendWarrantyService' | translate }}"></button>
@@ -174,7 +181,8 @@
         <span class="badge">{{h.created_at | date:'dd.MM.y HH:mm'}}</span> {{h.comment}}
     </div>
 </p-dialog>
-<p-dialog header="{{ 'dashboard.historyWarrantyService' | translate }}" #dialogGarantedHistory [(visible)]="displayGarantedHistory">
+<p-dialog header="{{ 'dashboard.historyWarrantyService' | translate }}" #dialogGarantedHistory
+          [(visible)]="displayGarantedHistory">
     <div *ngFor="let h of garantedHistory" [class.alert-success]="h.active">
         <span class="badge">{{h.date | date:'dd.MM.y HH:mm'}}</span> {{h.comment}}
     </div>

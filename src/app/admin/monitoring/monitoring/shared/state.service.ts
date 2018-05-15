@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Router} from '@angular/router';
-import {MsgService} from '../../../../shared/services/msg';
-import {environment} from '../../../../../environments/environment';
-import {Error} from '../../../../shared/models/error.model';
-import {HttpClient} from '@angular/common/http';
+import { Router } from '@angular/router';
+import { MsgService } from '../../../../shared/services/msg';
+import { environment } from '../../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { ErrorService } from '../../../../shared/services/error.service';
 
 @Injectable()
 export class StateService {
@@ -14,7 +14,8 @@ export class StateService {
 
     constructor(private http: HttpClient,
                 private router: Router,
-                private msgService: MsgService) {
+                private msgService: MsgService,
+                private errorService: ErrorService) {
     }
 
     public getMonitor(warning: boolean): Observable<any> {
@@ -23,7 +24,7 @@ export class StateService {
                 .map((response: any) => {
                     return response;
                 }).catch((error: any) => {
-                    Error.check(error, this.router, this.msgService);
+                    this.errorService.check(error);
                     return Observable.throw(error.error.message || 'Server error');
                 });
         }
@@ -32,7 +33,7 @@ export class StateService {
             .map((response: any) => {
                 return response;
             }).catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }

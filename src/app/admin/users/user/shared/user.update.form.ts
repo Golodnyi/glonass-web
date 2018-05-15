@@ -1,6 +1,6 @@
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Injectable} from '@angular/core';
-import {User} from '../../../../shared/models/user.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { User } from '../../../../shared/models/user.model';
 
 @Injectable()
 export class UserUpdateForm {

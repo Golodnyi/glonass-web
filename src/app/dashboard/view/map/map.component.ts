@@ -1,9 +1,9 @@
-import {Component, OnDestroy} from '@angular/core';
-import {ChartsService} from '../../../shared/services/charts.service';
-import {Car} from '../../../shared/models/car.model';
-import {Subscription} from 'rxjs/Subscription';
-import {MapCar} from '../../ymaps/shared/map-car.model';
-import {MapPolyLines} from '../../ymaps/shared/map-polylines.model';
+import { Component, OnDestroy } from '@angular/core';
+import { ChartsService } from '../../../shared/services/charts.service';
+import { Car } from '../../../shared/models/car.model';
+import { Subscription } from 'rxjs/Subscription';
+import { MapCar } from '../../ymaps/shared/map-car.model';
+import { MapPolyLines } from '../../ymaps/shared/map-polylines.model';
 
 @Component({
     selector   : 'app-map-view',

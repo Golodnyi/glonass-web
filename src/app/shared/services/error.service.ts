@@ -13,7 +13,12 @@ export class ErrorService {
     public check(error: any) {
         if (error.status !== 200 && error.status !== 304 && error.status !== 0) {
 
-            this.translate.get(error.error.message, error.error.params ? error.error.message : {}).subscribe(
+            this.translate.get(
+                error.error.message,
+                error.error.params ?
+                    error.error.params :
+                    {}
+            ).subscribe(
                 msg => {
                     this.msgService.notice(MsgService.ERROR, error.status, msg || 'Server Error');
                 }

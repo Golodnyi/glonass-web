@@ -1,13 +1,13 @@
-import {Component, OnDestroy} from '@angular/core';
-import {CarsService} from '../../shared/services/cars.service';
-import {Subscription} from 'rxjs/Subscription';
-import {ActivatedRoute} from '@angular/router';
-import {SubdivisionsService} from '../../shared/services/subdivisions.service';
-import {Subdivision} from '../../shared/models/subdivision.model';
-import {ChartsService} from '../../shared/services/charts.service';
-import {MapCar} from '../ymaps/shared/map-car.model';
-import {MapPolyLines} from '../ymaps/shared/map-polylines.model';
-import {EnginesService} from '../../shared/services/engines.service';
+import { Component, OnDestroy } from '@angular/core';
+import { CarsService } from '../../shared/services/cars.service';
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute } from '@angular/router';
+import { SubdivisionsService } from '../../shared/services/subdivisions.service';
+import { Subdivision } from '../../shared/models/subdivision.model';
+import { ChartsService } from '../../shared/services/charts.service';
+import { MapCar } from '../ymaps/shared/map-car.model';
+import { MapPolyLines } from '../ymaps/shared/map-polylines.model';
+import { EnginesService } from '../../shared/services/engines.service';
 
 @Component({
     selector   : 'app-company',
@@ -15,10 +15,10 @@ import {EnginesService} from '../../shared/services/engines.service';
     styleUrls  : ['./company.component.css']
 })
 export class CompanyComponent implements OnDestroy {
-    public subdivisions: Subdivision[]        = [];
-    public mapCars: MapCar[]                  = [];
-    public mapPolyLines: MapPolyLines[]       = [];
-    private subscription: Subscription        = new Subscription();
+    public subdivisions: Subdivision[]  = [];
+    public mapCars: MapCar[]            = [];
+    public mapPolyLines: MapPolyLines[] = [];
+    private subscription: Subscription  = new Subscription();
     private mpl: MapPolyLines[];
     private mc: MapCar[];
 

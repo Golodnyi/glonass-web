@@ -1,8 +1,6 @@
-import {Component} from '@angular/core';
-import {MsgService} from './shared/services/msg';
-import {Message} from 'primeng/primeng';
-import {User} from './shared/models/user.model';
-import {AuthService} from './shared/services/auth.service';
+import { Component } from '@angular/core';
+import { MsgService } from './shared/services/msg';
+import { Message } from 'primeng/primeng';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -12,9 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
     public growl: Message[] = [];
-    public user: User;
 
-    constructor(private msgService: MsgService, private authService: AuthService, public translate: TranslateService) {
+    constructor(private msgService: MsgService, public translate: TranslateService) {
         translate.addLangs(['en', 'ru', 'cn']);
         translate.setDefaultLang('ru');
         const browserLang = translate.getBrowserLang();
@@ -25,8 +22,6 @@ export class AppComponent {
         } else {
             translate.use('ru');
         }
-
-        this.user = this.authService.getCurrentUser();
 
         this.msgService.getNotice().subscribe(
             notice => {

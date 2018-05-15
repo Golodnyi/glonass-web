@@ -2,7 +2,6 @@ import { Component, OnDestroy } from '@angular/core';
 import { CompaniesService } from '../../../shared/services/companies.service';
 import { SubdivisionsService } from '../../../shared/services/subdivisions.service';
 import { CarsService } from '../../../shared/services/cars.service';
-import { MsgService } from '../../../shared/services/msg';
 import { EnginesService } from '../../../shared/services/engines.service';
 import { Router } from '@angular/router';
 import { TreePipe } from '../../../shared/pipes/tree.pipe';
@@ -11,33 +10,28 @@ import { Subdivision } from '../../../shared/models/subdivision.model';
 import { Car } from '../../../shared/models/car.model';
 import { Engine } from '../../../shared/models/engine.model';
 import { Subscription } from 'rxjs/Subscription';
-import { Error } from '../../../shared/models/error.model';
 
 @Component({
-    selector: 'app-navigation',
+    selector   : 'app-navigation',
     templateUrl: './navigation.component.html',
-    styleUrls: ['./navigation.component.css']
+    styleUrls  : ['./navigation.component.css']
 })
 export class NavigationComponent implements OnDestroy {
 
     public companies: Company[];
     private companySubscribe: Subscription = new Subscription();
-    private treeSubscribe = [];
+    private treeSubscribe                  = [];
 
     constructor(private companiesService: CompaniesService,
-        private subdivisionsService: SubdivisionsService,
-        private carsService: CarsService,
-        private msgService: MsgService,
-        private enginesService: EnginesService,
-        private router: Router,
-        private tree: TreePipe) {
+                private subdivisionsService: SubdivisionsService,
+                private carsService: CarsService,
+                private enginesService: EnginesService,
+                private router: Router,
+                private tree: TreePipe) {
         this.companySubscribe.add(
             this.companiesService.all(true).subscribe(
                 companies => {
                     this.companies = companies;
-                },
-                error => {
-                    Error.check(error, this.router, this.msgService);
                 }
             )
         );
@@ -56,9 +50,6 @@ export class NavigationComponent implements OnDestroy {
                 this.subdivisionsService.all(obj.id, true).subscribe(
                     subdivision => {
                         event.node.children = this.tree.transform(subdivision, false, true);
-                    },
-                    error => {
-                        Error.check(error, this.router, this.msgService);
                     }
                 )
             );
@@ -68,9 +59,6 @@ export class NavigationComponent implements OnDestroy {
                 this.carsService.all(parentObj[0].id, obj.id, true).subscribe(
                     cars => {
                         event.node.children = this.tree.transform(cars, false, true);
-                    },
-                    error => {
-                        Error.check(error, this.router, this.msgService);
                     }
                 )
             );
@@ -84,9 +72,6 @@ export class NavigationComponent implements OnDestroy {
                         if (engine.id) {
                             event.node.children = this.tree.transform([engine], true, true);
                         }
-                    },
-                    error => {
-                        Error.check(error, this.router, this.msgService);
                     }
                 )
             );

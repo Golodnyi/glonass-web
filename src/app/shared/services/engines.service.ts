@@ -1,16 +1,14 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Router} from '@angular/router';
-import {Error} from '../models/error.model';
-import {MsgService} from './msg';
-import {Engine} from '../models/engine.model';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {environment} from '../../../environments/environment';
-import {NewEngine} from '../../admin/companies/engine/shared/newEngine.model';
-import {BaseEngine} from '../models/baseEngine.model';
-import {HttpClient} from '@angular/common/http';
+import { Engine } from '../models/engine.model';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { environment } from '../../../environments/environment';
+import { NewEngine } from '../../admin/companies/engine/shared/newEngine.model';
+import { BaseEngine } from '../models/baseEngine.model';
+import { HttpClient } from '@angular/common/http';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class EnginesService {
@@ -18,8 +16,7 @@ export class EnginesService {
     private host: string                    = environment.host;
 
     constructor(private http: HttpClient,
-                private router: Router,
-                private msgService: MsgService) {
+                private errorService: ErrorService) {
     }
 
     public get(company: number, subdivision: number, car: number, resync = false): Observable<any> {
@@ -30,7 +27,7 @@ export class EnginesService {
                     this.engine.next(Object.assign(new Engine(), response));
                 }, error => {
                     this.engine.next(new Engine());
-                    Error.check(error, this.router, this.msgService);
+                    this.errorService.check(error);
                 });
         }
         return this.engine.asObservable();
@@ -43,7 +40,7 @@ export class EnginesService {
                 return Object.assign(new BaseEngine(), response);
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -55,7 +52,7 @@ export class EnginesService {
                 return Object.assign(new Engine(), response);
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -66,7 +63,7 @@ export class EnginesService {
                 return Object.assign(new BaseEngine(), response);
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -77,7 +74,7 @@ export class EnginesService {
                 return Object.assign(new BaseEngine(), response);
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
