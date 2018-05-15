@@ -32,7 +32,6 @@ export class ErrorService {
 
             this.translate.get(e.message, e.params).subscribe(
                 msg => {
-                    console.log('show error');
                     this.msgService.notice(MsgService.ERROR, error.status, msg || 'Server Error');
                 }
             );
