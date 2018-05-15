@@ -1,5 +1,4 @@
-<p-panel *ngIf="state && car" header="{{ 'dashboard.stateOn' | translate: {value: car.name} }}"
-         [toggleable]="toggleable">
+<p-panel *ngIf="state && car" header="{{ 'dashboard.stateOn' | translate: {value: car.name} }}" [toggleable]="toggleable">
     <div>
         <div class="alert alert-danger" *ngFor="let issue of state.issues">
             <div class="text-left">
@@ -74,8 +73,7 @@
         </div>
         <div *ngIf="!compact">
             {{ 'dashboard.machineHours' | translate }}: {{state.motochas}} {{ 'dashboard.h' | translate }}
-            <button type="text" (click)="showMotochasFilter()" pButton
-                    label="{{ 'dashboard.filter' | translate }}"></button>
+            <button type="text" (click)="showMotochasFilter()" pButton label="{{ 'dashboard.filter' | translate }}"></button>
         </div>
     </div>
     <p-dialog header="{{ 'dashboard.filterMachineHours' | translate }}" [(visible)]="motochasFilter">
@@ -83,80 +81,57 @@
             <label>{{ 'dashboard.numberMachineHours' | translate }}</label>
             <br/>
             <input formControlName="motochas" pInput required/>
-            <hr *ngIf="motochasFilterAnswer"/>
+            <hr *ngIf="motochasFilterAnswer" />
             <div *ngIf="motochasFilterAnswer">
                 <span *ngIf="!motochasFilterAnswer.reached">{{ 'dashboard.dateNotFound' | translate }}</span>
                 <span *ngIf="motochasFilterAnswer.reached">{{ 'dashboard.date' | translate }}: {{motochasFilterAnswer.date | date:'dd.MM.y HH:mm'}}</span>
             </div>
             <hr/>
-            <button type="submit" class="ui-button-success"
-                    [disabled]="!formMotochasFilter.valid || submitMotochasFilter" icon="fa-check" pButton
-                    label="{{ 'dashboard.apply' | translate }}"></button>
+            <button type="submit" class="ui-button-success" [disabled]="!formMotochasFilter.valid || submitMotochasFilter" icon="fa-check"
+                pButton label="{{ 'dashboard.apply' | translate }}"></button>
         </form>
     </p-dialog>
 
 
     <div *ngIf="!compact && state.maintenances && user && user.role">
-        <div class="alert" *ngIf="scheduled(state)">{{ 'dashboard.toMaintenance' | translate:
-            (state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours) }}
+        <div class="alert" [class.alert-danger]="!scheduled(state)">
+            <span *ngIf="scheduled(state)">{{ 'dashboard.toMaintenance' | translate: (state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours) }}</span>
+            <span *ngIf="!scheduled(state)">{{ 'dashboard.needMaintenance' | translate }}</span>
             <span *ngIf="user && user.role.is_global == 1 && car.engine" class="btn-st">
-                <button type="text" (click)="showTODialog()" pButton icon="fa-refresh"
-                        title="{{ 'dashboard.carryOutMaintenance' | translate }}"></button>
-                <button type="text" (click)="showTOHistory()" pButton icon="fa-info"
-                        title="{{ 'dashboard.historyMaintenance' | translate }}"></button>
+                <button type="text" (click)="showMaintenanceDialog()" pButton icon="fa-refresh" title="{{ 'dashboard.carryOutMaintenance' | translate }}"></button>
+                <button type="text" (click)="showMaintenanceHistory()" pButton icon="fa-info" title="{{ 'dashboard.historyMaintenance' | translate }}"></button>
             </span>
         </div>
-        <div *ngIf="!scheduled(state)" class="alert alert-danger">
-            {{ 'dashboard.needMaintenance' | translate }}
+
+        <div class="alert" [class.alert-danger]="!garanted(state)">
+            <span *ngIf="garanted(state)">{{ 'dashboard.warrantyServiceIsOver' | translate: { days: (state.maintenances.capital.limits.days - state.maintenances.capital.value.days),
+            machineHours: (state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours) } }}</span>
+            <span *ngIf="!garanted(state)">
+                {{ 'dashboard.warrantyServiceCompleted' | translate }}
+            </span>
             <span *ngIf="user && user.role.is_global == 1 && car.engine" class="btn-st">
-                <button type="text" (click)="showTODialog()" pButton icon="fa-refresh"
-                        title="{{ 'dashboard.carryOutMaintenance' | translate }}"></button>
-                <button type="text" (click)="showTOHistory()" pButton icon="fa-info"
-                        title="{{ 'dashboard.historyMaintenance' | translate }}"></button>
+                <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton icon="fa-refresh" title="{{ 'dashboard.extendWarrantyService' | translate }}"></button>
+                <button type="text" class="ui-button-success" (click)="showGarantedHistory()" pButton icon="fa-info" title="{{ 'dashboard.historyWarrantyService' | translate }}"></button>
             </span>
         </div>
-        <div *ngIf="garanted(state)" class="alert">
-            {{ 'dashboard.warrantyServiceIsOver' |
-            translate: {
-            days: (state.maintenances.capital.limits.days - state.maintenances.capital.value.days),
-            machineHours: (state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours)
-            }
-            }}
-            <span *ngIf="user && user.role.is_global == 1 && car.engine" class="btn-st">
-                <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton icon="fa-refresh"
-                        title="{{ 'dashboard.extendWarrantyService' | translate }}"></button>
-                <button type="text" class="ui-button-success" (click)="showGarantedHistory()" pButton icon="fa-info"
-                        title="{{ 'dashboard.historyWarrantyService' | translate }}"></button>
-            </span>
-        </div>
-        <div *ngIf="!garanted(state)" class="alert alert-danger">
-            {{ 'dashboard.warrantyServiceCompleted' | translate }}
-            <span *ngIf="user && user.role.is_global == 1 && car.engine" class="btn-st">
-                <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton icon="fa-refresh"
-                        title="{{ 'dashboard.extendWarrantyService' | translate }}"></button>
-                <button type="text" class="ui-button-success" (click)="showGarantedHistory()" pButton icon="fa-info"
-                        title="{{ 'dashboard.historyWarrantyService' | translate }}"></button>
-            </span>
-        </div>
+
     </div>
     <div *ngIf="!compact" class="label label-default">
         {{ 'dashboard.InformationFor' | translate: {value: state.time} }}
     </div>
 </p-panel>
-<p-blockUI [blocked]="display || displayGaranted || displayHistory || displayGarantedHistory"></p-blockUI>
+<p-blockUI [blocked]="display || displayGaranted"></p-blockUI>
 <p-dialog header="{{ 'dashboard.maintenance' | translate }}" #dialog [(visible)]="display">
     <form [formGroup]="form" (ngSubmit)="onSubmitTO()" novalidate class="dialog input-group">
         <label>{{ 'dashboard.date' | translate }} {{ 'dashboard.maintenance' | translate }}</label>
         <br/>
-        <p-calendar formControlName="created_at" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24" required
-                    [locale]="ru"></p-calendar>
+        <p-calendar formControlName="created_at" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24" required [locale]="ru"></p-calendar>
         <br/>
         <label>{{ 'dashboard.comment' | translate }}</label>
         <br/>
         <textarea formControlName="comment" pInputTextarea required></textarea>
         <div class="bottom">
-            <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton
-                    label="{{ 'dashboard.reset' | translate }}"></button>
+            <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton label="{{ 'dashboard.reset' | translate }}"></button>
         </div>
     </form>
 </p-dialog>
@@ -164,26 +139,15 @@
     <form [formGroup]="form" (ngSubmit)="onSubmitGaranted()" novalidate class="dialog input-group">
         <label>{{ 'dashboard.dateStartWarrantyService' | translate }}</label>
         <br/>
-        <p-calendar formControlName="created_at" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24" required
-                    [locale]="ru"></p-calendar>
+        <p-calendar formControlName="created_at" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24" required [locale]="ru"></p-calendar>
         <br/>
         <label>{{ 'dashboard.comment' | translate }}</label>
         <br/>
         <textarea formControlName="comment" pInputTextarea required></textarea>
         <div class="bottom">
-            <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton
-                    label="{{ 'dashboard.reset' | translate }}"></button>
+            <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton label="{{ 'dashboard.reset' | translate }}"></button>
         </div>
     </form>
 </p-dialog>
-<p-dialog header="{{ 'dashboard.historyMaintenance' | translate }}" #dialogHistory [(visible)]="displayHistory">
-    <div *ngFor="let h of history">
-        <span class="badge">{{h.created_at | date:'dd.MM.y HH:mm'}}</span> {{h.comment}}
-    </div>
-</p-dialog>
-<p-dialog header="{{ 'dashboard.historyWarrantyService' | translate }}" #dialogGarantedHistory
-          [(visible)]="displayGarantedHistory">
-    <div *ngFor="let h of garantedHistory" [class.alert-success]="h.active">
-        <span class="badge">{{h.date | date:'dd.MM.y HH:mm'}}</span> {{h.comment}}
-    </div>
-</p-dialog>
+<app-garanted-history (hide)="garantedHistoryHide($event)" [car]="car" [visible]="displayGarantedHistory"></app-garanted-history>
+<app-maintenance-history (hide)="maintenanceHistoryHide($event)" [car]="car" [visible]="displayMaintenanceHistory"></app-maintenance-history>

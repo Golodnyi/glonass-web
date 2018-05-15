@@ -44,9 +44,11 @@ import { MonitoringComponent } from './monitoring/monitoring.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { MonitoringService } from './monitoring/shared/monitoring.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { GarantedHistoryComponent } from './state/modals/garanted-history/garanted-history.component';
+import { MaintenanceHistoryComponent } from './state/modals/maintenance-history/maintenance-history.component';
 
 @NgModule({
-    imports     : [
+    imports: [
         CommonModule,
         DashboardRoutingModule,
         TreeModule,
@@ -68,15 +70,15 @@ import { TranslateModule } from '@ngx-translate/core';
         BlockUIModule,
         InputTextareaModule,
         DataTableModule,
-        TranslateModule
+        TranslateModule,
     ],
     declarations: [
         DashboardComponent, NavigationComponent, ViewComponent, StateComponent, MonitoringComponent,
         FilterComponent, YmapsComponent, CompanyComponent, TableComponent,
         ChartsComponent, MapComponent, TableViewComponent, ThermocouplesTableComponent, ThermocouplesComponent,
-        WelcomeComponent
+        WelcomeComponent, GarantedHistoryComponent, MaintenanceHistoryComponent
     ],
-    providers   : [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService,
+    providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService,
         MonitoringService]
 })
 export class DashboardModule {
