@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { User } from '../shared/models/user.model';
 import { AuthService } from '../shared/services/auth.service';
-import { NavigationStart, Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-    selector   : 'app-navigation',
+    selector: 'app-navigation',
     templateUrl: './navigation.component.html',
-    styleUrls  : ['./navigation.component.css']
+    styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent {
     public user: User;
@@ -17,15 +17,12 @@ export class NavigationComponent {
         'en': 'English',
         'cn': 'Chinese'
     };
-    private subscribe: Subscription;
 
     constructor(private authService: AuthService, public router: Router, public translate: TranslateService) {
-        if (this.subscribe) {
-            this.subscribe.unsubscribe();
-        }
+        this.setLanguage();
 
-        this.subscribe = this.router.events.filter((e: any) => {
-            return e instanceof NavigationStart;
+        this.router.events.filter((e: any) => {
+            return e instanceof NavigationEnd;
         }).subscribe((e) => {
             this.user = this.authService.getCurrentUser();
         });
@@ -38,5 +35,18 @@ export class NavigationComponent {
     public changeLanguage(lang) {
         localStorage.setItem('language', lang);
         this.translate.use(lang);
+    }
+
+    private setLanguage() {
+        this.translate.addLangs(['en', 'ru', 'cn']);
+        this.translate.setDefaultLang('ru');
+        const browserLang = this.translate.getBrowserLang();
+        if (localStorage.getItem('language') && localStorage.getItem('language').match(/en|ru|cn/)) {
+            this.translate.use(localStorage.getItem('language'));
+        } else if (browserLang.match(/en|ru|cn/)) {
+            this.translate.use(browserLang);
+        } else {
+            this.translate.use('ru');
+        }
     }
 }

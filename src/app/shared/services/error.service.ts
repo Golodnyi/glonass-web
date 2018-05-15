@@ -25,7 +25,9 @@ export class ErrorService {
             );
 
             if (error.status === 401) {
-                localStorage.clear();
+                localStorage.removeItem('Authorization');
+                localStorage.removeItem('Refresh');
+                localStorage.removeItem('User');
                 this.router.navigate(['/login']);
             }
         }
