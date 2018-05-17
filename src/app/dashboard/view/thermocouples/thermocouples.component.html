@@ -1,7 +1,7 @@
 <div class="col-md-12">
     <div *ngIf="options && options.data && options.data.length">
         <h2 class="text-center">{{ 'dashboard.chart' | translate }}</h2>
-        <app-multi-chart [options]="options" [data]="options.data"></app-multi-chart>
+        <app-multi-chart [options]="options | chartTranslate" [data]="options.data"></app-multi-chart>
         <h2 class="text-center">{{ 'dashboard.table' | translate }}</h2>
         <app-thermocouples-table *ngIf="car" [car]="car.id" [move]="false"></app-thermocouples-table>
     </div>
