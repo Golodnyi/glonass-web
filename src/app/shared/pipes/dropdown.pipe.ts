@@ -35,8 +35,6 @@ export class DropDownPipe implements PipeTransform {
                     }
                 );
             }
-
- 
         });
         return items;
     }
