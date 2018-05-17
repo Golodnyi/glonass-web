@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class AllowPortsPipe implements PipeTransform {
     transform(ports: any[], allowPorts: any[]): any[] {
         return ports.filter(port => {
-            port.name = this.translateService.instant(port.name);
+            port.label = this.translateService.instant(port.label);
             return allowPorts.indexOf(port.value) !== -1;
         });
     }

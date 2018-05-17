@@ -8,6 +8,7 @@ import { DropdownModule, InputTextModule, PanelModule, CheckboxModule, ButtonMod
 import { SharedModule } from 'app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { SensorComponent } from './sensor/sensor.component';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 
 @NgModule({
     imports     : [
@@ -20,9 +21,11 @@ import { SensorComponent } from './sensor/sensor.component';
         PanelModule,
         InputTextModule,
         CheckboxModule,
-        ButtonModule
+        ButtonModule,
+        TranslateModule
     ],
-    declarations: [ConfiguratorComponent, NavigationComponent, SchemeComponent, SensorComponent]
+    declarations: [ConfiguratorComponent, NavigationComponent, SchemeComponent, SensorComponent],
+    providers: [TranslatePipe]
 })
 export class ConfiguratorModule {
 }

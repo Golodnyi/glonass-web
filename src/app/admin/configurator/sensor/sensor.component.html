@@ -1,4 +1,4 @@
-<p-panel *ngIf="sensor || new" header="{{sensor.name}}" [toggleable]="false">
+<p-panel *ngIf="sensor || new" header="{{sensor.name | translate}}" [toggleable]="false">
     <div *ngIf=!new>
         <label>Порт: </label>
         <p-dropdown [options]="allowedPorts|AllowPorts:sensor.model.allowedPorts" [(ngModel)]="sensor.model.port"
