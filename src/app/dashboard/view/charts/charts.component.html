@@ -1,6 +1,6 @@
 <div class="col-md-12">
     <div *ngIf="options.length">
-        <p-panel class="col-md-6" *ngFor="let option of options;" header="{{option.name}}" [toggleable]="true">
+        <p-panel class="col-md-6" *ngFor="let option of options;" header="{{option.name | translate}}" [toggleable]="true">
             <app-chart [options]="option ? option : {}" [data]="option ? option.data : []"></app-chart>
         </p-panel>
     </div>

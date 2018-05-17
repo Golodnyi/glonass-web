@@ -1,3 +1,5 @@
+import { TranslateService } from "@ngx-translate/core";
+
 export interface ISensor {
     id: number;
     name: string;

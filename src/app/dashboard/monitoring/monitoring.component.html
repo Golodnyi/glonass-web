@@ -8,7 +8,7 @@
     <table class="table table-striped">
         <tbody>
         <tr *ngFor="let sensor of status.sensors">
-            <td>{{sensor.name}}</td>
+            <td>{{sensor.name | translate}}</td>
             <td *ngIf="!status.issue_locations.hasOwnProperty(sensor.id)">
                 <span class="label label-success">{{ 'dashboard.normal' | translate }}</span>
             </td>

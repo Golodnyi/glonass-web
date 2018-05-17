@@ -9,7 +9,7 @@
         </ng-template>
     </p-column>
     <p-column footer="{{table.headers[key]?.model}} {{table.headers[key]?.port}}" *ngFor="let key of keys"
-              header="{{table.headers[key].name}} ({{table.headers[key].unit}})"
+              header="{{table.headers[key].name | translate}} ({{table.headers[key].unit | translate}})"
               field="{{key}}" sortable="custom"
               (sortFunction)="sort($event)">
         <ng-template let-row="rowData" pTemplate="body">

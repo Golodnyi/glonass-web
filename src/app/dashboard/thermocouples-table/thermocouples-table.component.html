@@ -8,7 +8,7 @@
             {{row['time'] | date: 'dd.MM.yyyy H:mm:ss'}}
         </ng-template>
     </p-column>
-    <p-column *ngFor="let key of keys" header="{{table.headers[key].name}}"
+    <p-column *ngFor="let key of keys" header="{{table.headers[key].name | translate}}"
               field="{{key}}">
         <ng-template let-row="rowData" pTemplate="body">
             <div [class.alert-warning]="row['criticals'].warning !== undefined && row['criticals'].warning.indexOf(key) !== -1"

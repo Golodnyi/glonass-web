@@ -3,6 +3,7 @@ import * as Highcharts from 'highcharts/highstock';
 import * as HighchartsExporting from 'highcharts/modules/exporting';
 import * as HighchartsOfflineExporting from 'highcharts/modules/offline-exporting';
 import { MultiChart } from '../models/multi-chart.model';
+import { TranslateService } from '@ngx-translate/core';
 
 window['Highcharts'] = Highcharts;
 HighchartsExporting(Highcharts);

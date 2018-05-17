@@ -55,39 +55,39 @@ export class Chart {
         buttons     : [{
             type : 'hour',
             count: 1,
-            text : '1ч'
+            text : '1h'
         }, {
             type : 'hour',
             count: 3,
-            text : '3ч'
+            text : '3h'
         }, {
             type : 'hour',
             count: 6,
-            text : '6ч'
+            text : '6h'
         }, {
             type : 'hour',
             count: 12,
-            text : '12ч'
+            text : '12h'
         }, {
             type : 'day',
             count: 1,
-            text : '1д'
+            text : '1d'
         }, {
             type : 'day',
             count: 3,
-            text : '3д'
+            text : '3d'
         }, {
             type : 'week',
             count: 1,
-            text : '1н'
+            text : '1w'
         }, {
             type : 'month',
             count: 1,
-            text : '1м'
+            text : '1m'
         }, {
             type : 'all',
             count: 1,
-            text : 'Все'
+            text : 'All'
         }],
         inputEnabled: false,
         selected    : 8

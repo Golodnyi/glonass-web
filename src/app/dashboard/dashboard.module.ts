@@ -43,7 +43,7 @@ import { ThermocouplesComponent } from './view/thermocouples/thermocouples.compo
 import { MonitoringComponent } from './monitoring/monitoring.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { MonitoringService } from './monitoring/shared/monitoring.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { GarantedHistoryComponent } from './state/modals/garanted-history/garanted-history.component';
 import { MaintenanceHistoryComponent } from './state/modals/maintenance-history/maintenance-history.component';
 
@@ -78,7 +78,7 @@ import { MaintenanceHistoryComponent } from './state/modals/maintenance-history/
         ChartsComponent, MapComponent, TableViewComponent, ThermocouplesTableComponent, ThermocouplesComponent,
         WelcomeComponent, GarantedHistoryComponent, MaintenanceHistoryComponent
     ],
-    providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, ChartsService, SensorsService,
+    providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, TranslatePipe, ChartsService, SensorsService,
         MonitoringService]
 })
 export class DashboardModule {
