@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { SchemeService } from '../shared/scheme.service';
 import { Scheme } from 'app/admin/configurator/shared/scheme.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector   : 'app-scheme',
@@ -18,7 +19,7 @@ export class SchemeComponent implements OnChanges {
     public sensorNames  = [];
     public sensorModels = [];
 
-    constructor(private schemeService: SchemeService) {
+    constructor(private schemeService: SchemeService, private translateService: TranslateService) {
         if (this.car && this.car !== undefined) {
             this.viewScheme();
         }
@@ -39,6 +40,7 @@ export class SchemeComponent implements OnChanges {
             scheme => {
                 scheme.forEach(
                     item => {
+                        item.name = this.translateService.instant(item.name);
                         this.sensorNames.push({value: item.id, label: item.name});
                     }
                 );
