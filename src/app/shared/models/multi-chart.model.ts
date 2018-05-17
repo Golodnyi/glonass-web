@@ -87,7 +87,7 @@ export class MultiChart {
         }, {
             type : 'all',
             count: 1,
-            text : 'Все'
+            text : 'All'
         }],
         inputEnabled: false,
         selected    : 8
