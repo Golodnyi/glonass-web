@@ -76,22 +76,6 @@
             <button type="text" (click)="showMotochasFilter()" pButton label="{{ 'dashboard.filter' | translate }}"></button>
         </div>
     </div>
-    <p-dialog header="{{ 'dashboard.filterMachineHours' | translate }}" [(visible)]="motochasFilter">
-        <form [formGroup]="formMotochasFilter" (ngSubmit)="onSubmitMotochasFilter()" novalidate class="input-group">
-            <label>{{ 'dashboard.numberMachineHours' | translate }}</label>
-            <br/>
-            <input formControlName="motochas" pInput required/>
-            <hr *ngIf="motochasFilterAnswer" />
-            <div *ngIf="motochasFilterAnswer">
-                <span *ngIf="!motochasFilterAnswer.reached">{{ 'dashboard.dateNotFound' | translate }}</span>
-                <span *ngIf="motochasFilterAnswer.reached">{{ 'dashboard.date' | translate }}: {{motochasFilterAnswer.date | date:'dd.MM.y HH:mm'}}</span>
-            </div>
-            <hr/>
-            <button type="submit" class="ui-button-success" [disabled]="!formMotochasFilter.valid || submitMotochasFilter" icon="fa-check"
-                pButton label="{{ 'dashboard.apply' | translate }}"></button>
-        </form>
-    </p-dialog>
-
 
     <div *ngIf="!compact && state.maintenances && user && user.role">
         <div class="alert" [class.alert-danger]="!scheduled(state)">
@@ -151,3 +135,4 @@
 </p-dialog>
 <app-garanted-history (hide)="garantedHistoryHide($event)" [car]="car" [visible]="displayGarantedHistory"></app-garanted-history>
 <app-maintenance-history (hide)="maintenanceHistoryHide($event)" [car]="car" [visible]="displayMaintenanceHistory"></app-maintenance-history>
+<app-motochas-filter (hide)="motochasFilterHide($event)" [car]="car" [visible]="displayMotochasFilter"></app-motochas-filter>

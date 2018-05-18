@@ -46,6 +46,7 @@ import { MonitoringService } from './monitoring/shared/monitoring.service';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { GarantedHistoryComponent } from './state/modals/garanted-history/garanted-history.component';
 import { MaintenanceHistoryComponent } from './state/modals/maintenance-history/maintenance-history.component';
+import { MotochasFilterComponent } from './state/modals/motochas-filter/motochas-filter.component';
 
 @NgModule({
     imports: [
@@ -76,7 +77,7 @@ import { MaintenanceHistoryComponent } from './state/modals/maintenance-history/
         DashboardComponent, NavigationComponent, ViewComponent, StateComponent, MonitoringComponent,
         FilterComponent, YmapsComponent, CompanyComponent, TableComponent,
         ChartsComponent, MapComponent, TableViewComponent, ThermocouplesTableComponent, ThermocouplesComponent,
-        WelcomeComponent, GarantedHistoryComponent, MaintenanceHistoryComponent
+        WelcomeComponent, GarantedHistoryComponent, MaintenanceHistoryComponent, MotochasFilterComponent
     ],
     providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, TranslatePipe, ChartsService, SensorsService,
         MonitoringService]

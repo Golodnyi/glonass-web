@@ -9,15 +9,12 @@ import { MsgService } from '../../shared/services/msg';
 import { Car } from '../../shared/models/car.model';
 import { AuthService } from '../../shared/services/auth.service';
 import { User } from '../../shared/models/user.model';
-import { MotochasFilterForm } from './shared/motochasFilter.form';
-import { MotochasService } from './shared/motochas.service';
-import { MotochasFilter } from './shared/motochasFilter.model';
 
 @Component({
     selector: 'app-state',
     templateUrl: './state.component.html',
     styleUrls: ['./state.component.css'],
-    providers: [ResetForm, ResetService, MotochasFilterForm, MotochasService]
+    providers: [ResetForm, ResetService]
 })
 export class StateComponent implements OnChanges, OnDestroy {
     @Input() state: State;
@@ -30,17 +27,13 @@ export class StateComponent implements OnChanges, OnDestroy {
     public displayMaintenanceHistory = false;
     public displayGarantedHistory = false;
     public form: FormGroup;
-    public formMotochasFilter: FormGroup;
     public submit: boolean;
-    public submitMotochasFilter: boolean;
     public history = [];
     public garantedHistory = [];
     public user: User;
     private audio = new Audio();
     private resetData: any;
-    public motochasFilter = false
-    private motochasFilterVal = 0;
-    public motochasFilterAnswer: MotochasFilter;
+    public displayMotochasFilter = false
 
     public static unMute(id) {
         if (localStorage.getItem('mute_' + id) !== null) {
@@ -69,9 +62,7 @@ export class StateComponent implements OnChanges, OnDestroy {
      * TODO: раскидать все всплывающие окна по отдельным компонентам
      */
     constructor(private resetForm: ResetForm,
-        private motochasFilterForm: MotochasFilterForm,
         private resetService: ResetService,
-        private motochasService: MotochasService,
         private msg: MsgService,
         private authService: AuthService) {
         moment.locale('ru');
@@ -85,12 +76,6 @@ export class StateComponent implements OnChanges, OnDestroy {
                 this.submit = false;
                 this.resetData = data;
                 this.resetData.engine_id = this.car.engine.id;
-            });
-
-        this.formMotochasFilter = this.motochasFilterForm.create();
-        this.formMotochasFilter.valueChanges
-            .subscribe((data) => {
-                this.motochasFilterVal = data.motochas;
             });
 
         this.audio.src = '/assets/signal.wav';
@@ -174,17 +159,13 @@ export class StateComponent implements OnChanges, OnDestroy {
     }
 
     public showMotochasFilter() {
-        this.motochasFilter = true;
+        this.displayMotochasFilter = true;
     }
 
-    public onSubmitMotochasFilter() {
-        this.submitMotochasFilter = true;
-        this.motochasService.get(this.car, this.motochasFilterVal).subscribe(
-            response => {
-                this.motochasFilterAnswer = response;
-                this.submitMotochasFilter = false;
-            }
-        );
+    public motochasFilterHide(hide: boolean) {
+        if (hide) {
+            this.displayMotochasFilter = false;
+        }
     }
 
     public maintenanceHistoryHide(hide: boolean) {

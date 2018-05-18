@@ -1,0 +1,17 @@
+<p-blockUI [blocked]="visible"></p-blockUI>
+
+<p-dialog (onHide)="onHide()" (onShow)="onShow()" header="{{ 'dashboard.filterMachineHours' | translate }}" [(visible)]="visible">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="input-group">
+      <label>{{ 'dashboard.numberMachineHours' | translate }}</label>
+      <br/>
+      <input formControlName="motochas" pInput required/>
+      <hr *ngIf="data" />
+      <div *ngIf="data">
+          <span *ngIf="!data.reached">{{ 'dashboard.dateNotFound' | translate }}</span>
+          <span *ngIf="data.reached">{{ 'dashboard.date' | translate }}: {{data.date | date:'dd.MM.y HH:mm'}}</span>
+      </div>
+      <hr/>
+      <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check"
+          pButton label="{{ 'dashboard.apply' | translate }}"></button>
+  </form>
+</p-dialog>
