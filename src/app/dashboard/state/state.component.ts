@@ -14,26 +14,20 @@ import { User } from '../../shared/models/user.model';
     selector: 'app-state',
     templateUrl: './state.component.html',
     styleUrls: ['./state.component.css'],
-    providers: [ResetForm, ResetService]
+    providers: [ResetService, ResetForm]
 })
 export class StateComponent implements OnChanges, OnDestroy {
     @Input() state: State;
     @Input() car: Car;
     @Input() toggleable = true;
     @Input() compact = false;
-    public ru = new Calendar();
-    public display = false;
+    public displayMaintenance = false;
     public displayGaranted = false;
     public displayMaintenanceHistory = false;
     public displayGarantedHistory = false;
     public displayMotochasFilter = false
-    public form: FormGroup;
-    public submit: boolean;
-    public history = [];
-    public garantedHistory = [];
     public user: User;
     private audio = new Audio();
-    private resetData: any;
 
     public static unMute(id) {
         if (localStorage.getItem('mute_' + id) !== null) {
@@ -61,23 +55,7 @@ export class StateComponent implements OnChanges, OnDestroy {
     /**
      * TODO: раскидать все всплывающие окна по отдельным компонентам
      */
-    constructor(private resetForm: ResetForm,
-        private resetService: ResetService,
-        private msg: MsgService,
-        private authService: AuthService) {
-        moment.locale('ru');
-        this.form = this.resetForm.create();
-        this.form.valueChanges
-            .map((value) => {
-                value.created_at = moment(value.created_at).format();
-                return value;
-            })
-            .subscribe((data) => {
-                this.submit = false;
-                this.resetData = data;
-                this.resetData.engine_id = this.car.engine.id;
-            });
-
+    constructor(private authService: AuthService) {
         this.audio.src = '/assets/signal.wav';
         this.audio.load();
         this.user = this.authService.getCurrentUser();
@@ -121,37 +99,23 @@ export class StateComponent implements OnChanges, OnDestroy {
     }
 
     public showMaintenanceDialog() {
-        this.display = true;
+        this.displayMaintenance = true;
+    }
+
+    public maintenanceHide(hide: boolean) {
+        if (hide) {
+            this.displayMaintenance = false;
+        }
     }
 
     public showGarantedDialog() {
         this.displayGaranted = true;
     }
 
-    public onSubmitGaranted() {
-        this.submit = true;
-        this.resetService.resetGaranted(this.resetData).subscribe(
-            () => {
-                this.msg.notice(MsgService.SUCCESS, 'Гарантийное обслуживание', 'продлено');
-                this.displayGaranted = false;
-            },
-            () => {
-                this.submit = false;
-            }
-        );
-    }
-
-    public onSubmitTO() {
-        this.submit = true;
-        this.resetService.reset(this.resetData).subscribe(
-            () => {
-                this.msg.notice(MsgService.SUCCESS, 'Техническое обслуживание', 'проведено');
-                this.display = false;
-            },
-            () => {
-                this.submit = false;
-            }
-        );
+    public garantedHide(hide: boolean) {
+        if (hide) {
+            this.displayGaranted = false;
+        }
     }
 
     ngOnDestroy() {

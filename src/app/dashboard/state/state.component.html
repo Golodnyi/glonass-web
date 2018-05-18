@@ -79,7 +79,7 @@
 
     <div *ngIf="!compact && state.maintenances && user && user.role">
         <div class="alert" [class.alert-danger]="!scheduled(state)">
-            <span *ngIf="scheduled(state)">{{ 'dashboard.toMaintenance' | translate: (state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours) }}</span>
+            <span *ngIf="scheduled(state)">{{ 'dashboard.toMaintenance' | translate: {value: (state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours)} }}</span>
             <span *ngIf="!scheduled(state)">{{ 'dashboard.needMaintenance' | translate }}</span>
             <span *ngIf="user && user.role.is_global == 1 && car.engine" class="btn-st">
                 <button type="text" (click)="showMaintenanceDialog()" pButton icon="fa-refresh" title="{{ 'dashboard.carryOutMaintenance' | translate }}"></button>
@@ -100,39 +100,12 @@
         </div>
 
     </div>
-    <div *ngIf="!compact" class="label label-default">
-        {{ 'dashboard.InformationFor' | translate: {value: state.time} }}
+    <div *ngIf="!compact && state" class="label label-default">
+        {{ 'dashboard.informationFor' | translate: {value: state.time} }}
     </div>
 </p-panel>
-<p-blockUI [blocked]="display || displayGaranted"></p-blockUI>
-<p-dialog header="{{ 'dashboard.maintenance' | translate }}" #dialog [(visible)]="display">
-    <form [formGroup]="form" (ngSubmit)="onSubmitTO()" novalidate class="dialog input-group">
-        <label>{{ 'dashboard.date' | translate }} {{ 'dashboard.maintenance' | translate }}</label>
-        <br/>
-        <p-calendar formControlName="created_at" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24" required [locale]="ru"></p-calendar>
-        <br/>
-        <label>{{ 'dashboard.comment' | translate }}</label>
-        <br/>
-        <textarea formControlName="comment" pInputTextarea required></textarea>
-        <div class="bottom">
-            <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton label="{{ 'dashboard.reset' | translate }}"></button>
-        </div>
-    </form>
-</p-dialog>
-<p-dialog header="{{ 'dashboard.warrantyService' | translate }}" #dialogGaranted [(visible)]="displayGaranted">
-    <form [formGroup]="form" (ngSubmit)="onSubmitGaranted()" novalidate class="dialog input-group">
-        <label>{{ 'dashboard.dateStartWarrantyService' | translate }}</label>
-        <br/>
-        <p-calendar formControlName="created_at" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24" required [locale]="ru"></p-calendar>
-        <br/>
-        <label>{{ 'dashboard.comment' | translate }}</label>
-        <br/>
-        <textarea formControlName="comment" pInputTextarea required></textarea>
-        <div class="bottom">
-            <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton label="{{ 'dashboard.reset' | translate }}"></button>
-        </div>
-    </form>
-</p-dialog>
 <app-garanted-history (hide)="garantedHistoryHide($event)" [car]="car" [visible]="displayGarantedHistory"></app-garanted-history>
 <app-maintenance-history (hide)="maintenanceHistoryHide($event)" [car]="car" [visible]="displayMaintenanceHistory"></app-maintenance-history>
 <app-motochas-filter (hide)="motochasFilterHide($event)" [car]="car" [visible]="displayMotochasFilter"></app-motochas-filter>
+<app-garanted (hide)="garantedHide($event)" [car]="car" [visible]="displayGaranted"></app-garanted>
+<app-maintenance (hide)="maintenanceHide($event)" [car]="car" [visible]="displayMaintenance"></app-maintenance>
