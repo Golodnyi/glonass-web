@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Car } from '../../../../shared/models/car.model';
 import { ResetService } from '../../shared/reset.service';
 

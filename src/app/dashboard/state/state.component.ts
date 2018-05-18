@@ -1,11 +1,8 @@
 import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { State } from './shared/state.model';
 import * as moment from 'moment';
-import { Calendar } from '../../shared/models/calendar.model';
-import { FormGroup } from '@angular/forms';
 import { ResetForm } from './shared/reset.form';
 import { ResetService } from './shared/reset.service';
-import { MsgService } from '../../shared/services/msg';
 import { Car } from '../../shared/models/car.model';
 import { AuthService } from '../../shared/services/auth.service';
 import { User } from '../../shared/models/user.model';

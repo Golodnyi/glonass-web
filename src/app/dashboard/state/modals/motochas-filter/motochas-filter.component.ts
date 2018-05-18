@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MotochasFilterForm } from './shared/motochasFilter.form';
 import { MotochasService } from './shared/motochas.service';
 import { Car } from '../../../../shared/models/car.model';
