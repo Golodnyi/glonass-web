@@ -26,6 +26,7 @@ export class StateComponent implements OnChanges, OnDestroy {
     public displayGaranted = false;
     public displayMaintenanceHistory = false;
     public displayGarantedHistory = false;
+    public displayMotochasFilter = false
     public form: FormGroup;
     public submit: boolean;
     public history = [];
@@ -33,7 +34,6 @@ export class StateComponent implements OnChanges, OnDestroy {
     public user: User;
     private audio = new Audio();
     private resetData: any;
-    public displayMotochasFilter = false
 
     public static unMute(id) {
         if (localStorage.getItem('mute_' + id) !== null) {
