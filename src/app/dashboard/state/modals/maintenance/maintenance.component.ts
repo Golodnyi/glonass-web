@@ -5,6 +5,7 @@ import { ResetForm } from '../../shared/reset.form';
 import { MsgService } from '../../../../shared/services/msg';
 import { FormGroup } from '@angular/forms';
 import * as moment from 'moment';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-maintenance',
@@ -22,7 +23,8 @@ export class MaintenanceComponent {
   constructor(
     private resetService: ResetService,
     private resetForm: ResetForm,
-    private msg: MsgService) {
+    private msg: MsgService,
+    private translateService: TranslateService) {
     this.form = this.resetForm.create();
     this.form.valueChanges
       .map((value) => {
@@ -40,7 +42,7 @@ export class MaintenanceComponent {
     this.submit = true;
     this.resetService.reset(this.data).subscribe(
       () => {
-        this.msg.notice(MsgService.SUCCESS, 'Техническое обслуживание', 'проведено');
+        this.msg.notice(MsgService.SUCCESS, this.translateService.instant('maintenance'), this.translateService.instant('carriedOut'));
         this.submit = false;
       },
       () => {

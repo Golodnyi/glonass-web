@@ -5,6 +5,7 @@ import { ResetService } from '../../shared/reset.service';
 import { ResetForm } from '../../shared/reset.form';
 import { Car } from '../../../../shared/models/car.model';
 import { MsgService } from '../../../../shared/services/msg';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-garanted',
@@ -22,7 +23,8 @@ export class GarantedComponent {
   constructor(
     private resetService: ResetService,
     private resetForm: ResetForm,
-    private msg: MsgService) {
+    private msg: MsgService,
+    private translateService: TranslateService) {
     this.form = this.resetForm.create();
     this.form.valueChanges
       .map((value) => {
@@ -40,7 +42,7 @@ export class GarantedComponent {
     this.submit = true;
     this.resetService.resetGaranted(this.data).subscribe(
       () => {
-        this.msg.notice(MsgService.SUCCESS, 'Гарантийное обслуживание', 'продлено');
+        this.msg.notice(MsgService.SUCCESS, this.translateService.instant('warrantyService'), this.translateService.instant('prolonged'));
         this.submit = false;
       },
       () => {
