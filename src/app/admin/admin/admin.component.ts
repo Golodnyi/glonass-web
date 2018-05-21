@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/primeng';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector   : 'app-admin',
@@ -12,25 +13,25 @@ export class AdminComponent implements OnInit {
     usersActions: MenuItem[]     = [];
     rolesActions: MenuItem[]     = [];
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private translateService: TranslateService) {
         this.companiesActions = [
             {
-                label: 'Создать компанию', command: () => {
+                label: this.translateService.instant('admin.createCompany'), command: () => {
                 this.router.navigate(['/admin/companies/company/create']);
             }
             },
             {
-                label: 'Создать подразделение', command: () => {
+                label: this.translateService.instant('admin.createSubdivision'), command: () => {
                 this.router.navigate(['/admin/companies/subdivision/create']);
             }
             },
             {
-                label: 'Создать машину', command: () => {
+                label: this.translateService.instant('admin.createCar'), command: () => {
                 this.router.navigate(['/admin/companies/car/create']);
             }
             },
             {
-                label: 'Создать двигатель', command: () => {
+                label: this.translateService.instant('admin.createEngine'), command: () => {
                 this.router.navigate(['/admin/companies/engine/create']);
             }
             }
@@ -38,7 +39,7 @@ export class AdminComponent implements OnInit {
 
         this.usersActions = [
             {
-                label: 'Создать пользователя', command: () => {
+                label: this.translateService.instant('admin.createUser'), command: () => {
                 this.router.navigate(['/admin/users/user/create']);
             }
             }
@@ -46,7 +47,7 @@ export class AdminComponent implements OnInit {
 
         this.rolesActions = [
             {
-                label: 'Создать роль', command: () => {
+                label: this.translateService.instant('admin.createRole'), command: () => {
             }
             }
         ];
