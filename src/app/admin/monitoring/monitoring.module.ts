@@ -7,6 +7,7 @@ import { PanelModule, DialogModule } from 'primeng/primeng';
 import { ModalComponent } from './modal/modal.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/components/button/button';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports     : [
@@ -16,7 +17,8 @@ import { ButtonModule } from 'primeng/components/button/button';
         DialogModule,
         ButtonModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        TranslateModule
     ],
     declarations: [MonitoringComponent, StateComponent, ModalComponent]
 })

@@ -3,15 +3,14 @@
         <div class="alert alert-danger" *ngFor="let issue of state.issues">
             <div class="text-left">
                 <span class="fa fa-warning">&nbsp;</span>
-                <strong>{{issue.name}}</strong>
+                <strong>{{issue.name | translate}}</strong>
             </div>
             <div class="text-left" *ngIf="issue.forecast.length">{{ 'dashboard.forecast' | translate }}:</div>
             <ul>
                 <li *ngFor="let forecast of issue.forecast">
-                    {{forecast.name}}
+                    {{forecast.name | translate}}
                 </li>
             </ul>
-            disable
             <hr/>
             <div class="text-right">
                 <button *ngIf="!isMuted(issue.id)" class="btn btn-success" (click)="mute(issue.id)">

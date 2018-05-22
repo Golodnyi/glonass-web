@@ -11,9 +11,13 @@
         <div class="alert alert-danger" *ngFor="let issue of state.issues">
             <div class="text-left">
                 <span class="fa fa-warning">&nbsp;</span>
-                <strong>{{issue.name}}</strong>
+                <strong>{{issue.name | translate}}</strong>
             </div>
-            <div class="text-left">Прогноз: {{issue.forecast}}</div>
+            <ul>
+                <li *ngFor="let forecast of issue.forecast">
+                    {{forecast.name | translate}}
+                </li>
+            </ul>
         </div>
         <div class="alert alert-success" *ngIf="!state.issues.length">
             <span class="fa fa-check">&nbsp;</span>Проблем не обнаружено
