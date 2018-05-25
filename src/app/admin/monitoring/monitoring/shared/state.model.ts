@@ -1,6 +1,6 @@
-import {Company} from '../../../../shared/models/company.model';
-import {CarModel} from '../../../../shared/models/car-model.model';
-import {Subdivision} from '../../../../shared/models/subdivision.model';
+import { Company } from '../../../../shared/models/company.model';
+import { CarModel } from '../../../../shared/models/car-model.model';
+import { Subdivision } from '../../../../shared/models/subdivision.model';
 
 export interface IState {
     company: Company;

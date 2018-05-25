@@ -1,4 +1,4 @@
-import {IIssue} from '../../state/shared/issue.model';
+import { IIssue } from '../../state/shared/issue.model';
 export interface IMonitoring {
     issue_locations: any;
     issues: IIssue[];

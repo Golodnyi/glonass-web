@@ -1,13 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Router} from '@angular/router';
-import {Error} from '../models/error.model';
-import {MsgService} from './msg';
-import {Subject} from 'rxjs/Subject';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import { Subject } from 'rxjs/Subject';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class SensorsService {
@@ -15,8 +13,7 @@ export class SensorsService {
     private host: string            = environment.host;
 
     constructor(private http: HttpClient,
-                private router: Router,
-                private msgService: MsgService) {
+                private errorService: ErrorService) {
     }
 
     public all(car: number, resync = false): Observable<any> {
@@ -25,8 +22,7 @@ export class SensorsService {
                 .subscribe((response: any) => {
                     this.sensors.next(response);
                 }, error => {
-                    Error.check(error, this.router, this.msgService);
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
+                    this.errorService.check(error);
                 });
         }
         return this.sensors.asObservable();

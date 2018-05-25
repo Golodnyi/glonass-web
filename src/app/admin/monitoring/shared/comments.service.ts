@@ -1,21 +1,18 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {Comment} from './comment.model';
-import {Error} from '../../../shared/models/error.model';
-import {MsgService} from '../../../shared/services/msg';
-import {environment} from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Comment } from './comment.model';
+import { environment } from '../../../../environments/environment';
+import { ErrorService } from '../../../shared/services/error.service';
 
 @Injectable()
 export class CommentsService {
-    private host: string                 = environment.host;
+    private host: string = environment.host;
 
     constructor(private http: HttpClient,
-                private router: Router,
-                private msgService: MsgService) {
+                private errorService: ErrorService) {
     }
 
     public all(car: number): Observable<Comment[]> {
@@ -23,7 +20,7 @@ export class CommentsService {
             .map((response: any) => {
                 return response;
             }).catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -34,7 +31,7 @@ export class CommentsService {
                 return response;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }

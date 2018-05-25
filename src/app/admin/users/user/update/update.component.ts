@@ -1,11 +1,11 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {UsersService} from '../../../../shared/services/users.service';
-import {User} from '../../../../shared/models/user.model';
-import {UserUpdateForm} from '../shared/user.update.form';
-import {Role} from '../../../../shared/models/role.model';
-import {FormGroup} from '@angular/forms';
-import {MsgService} from '../../../../shared/services/msg';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UsersService } from '../../../../shared/services/users.service';
+import { User } from '../../../../shared/models/user.model';
+import { UserUpdateForm } from '../shared/user.update.form';
+import { Role } from '../../../../shared/models/role.model';
+import { FormGroup } from '@angular/forms';
+import { MsgService } from '../../../../shared/services/msg';
 
 @Component({
     selector   : 'app-user-update',
@@ -42,9 +42,6 @@ export class UserUpdateComponent {
         this.usersService.roles().subscribe(
             roles => {
                 this.roles = roles;
-            },
-            error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
             }
         );
     }
@@ -58,9 +55,8 @@ export class UserUpdateComponent {
                 this.msg.notice(MsgService.SUCCESS, 'Изменено', 'Пользователь ' + user.login + ' изменен');
                 this.router.navigate(['/admin/users/user/', user.id]);
             },
-            error => {
+            () => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
             }
         );
     }

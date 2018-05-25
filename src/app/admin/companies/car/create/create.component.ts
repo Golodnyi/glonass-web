@@ -1,17 +1,17 @@
-import {Component, OnDestroy} from '@angular/core';
-import {MsgService} from '../../../../shared/services/msg';
-import {FormGroup} from '@angular/forms';
-import {Router} from '@angular/router';
-import {CarCreateForm} from '../shared/create.form';
-import {CarsService} from '../../../../shared/services/cars.service';
-import {Car} from '../../../../shared/models/car.model';
-import {Subscription} from 'rxjs/Subscription';
-import {CompaniesService} from '../../../../shared/services/companies.service';
-import {SubdivisionsService} from '../../../../shared/services/subdivisions.service';
-import {Company} from '../../../../shared/models/company.model';
-import {Subdivision} from '../../../../shared/models/subdivision.model';
-import {CarModel} from '../../../../shared/models/car-model.model';
-import {CarModelsService} from '../../../../shared/services/car.models.service';
+import { Component, OnDestroy } from '@angular/core';
+import { MsgService } from '../../../../shared/services/msg';
+import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CarCreateForm } from '../shared/create.form';
+import { CarsService } from '../../../../shared/services/cars.service';
+import { Car } from '../../../../shared/models/car.model';
+import { Subscription } from 'rxjs/Subscription';
+import { CompaniesService } from '../../../../shared/services/companies.service';
+import { SubdivisionsService } from '../../../../shared/services/subdivisions.service';
+import { Company } from '../../../../shared/models/company.model';
+import { Subdivision } from '../../../../shared/models/subdivision.model';
+import { CarModel } from '../../../../shared/models/car-model.model';
+import { CarModelsService } from '../../../../shared/services/car.models.service';
 
 @Component({
     selector   : 'app-car-create',
@@ -77,9 +77,8 @@ export class CarCreateComponent implements OnDestroy {
                     ]
                 );
             },
-            error => {
+            () => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
             }
         );
     }

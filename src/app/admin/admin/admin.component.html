@@ -1,8 +1,8 @@
 <p-toolbar>
-    <p-splitButton label="Компании" (onClick)="company()" [model]="companiesActions"></p-splitButton>
-    <p-splitButton label="Пользователи" (onClick)="users()" [model]="usersActions"></p-splitButton>
-    <p-splitButton label="Роли" (onClick)="roles()" [model]="rolesActions"></p-splitButton>
-    <button pButton label="Мониторинг" (click)="monitor()"></button>
-    <button pButton label="Конфигуратор" (click)="configurator()"></button>
+    <p-splitButton label="{{ 'admin.companies' | translate }}" (onClick)="company()" [model]="companiesActions"></p-splitButton>
+    <p-splitButton label="{{ 'admin.users' | translate }}" (onClick)="users()" [model]="usersActions"></p-splitButton>
+    <p-splitButton label="{{ 'admin.roles' | translate }}" (onClick)="roles()" [model]="rolesActions"></p-splitButton>
+    <button pButton label="{{ 'admin.monitoring' | translate }}" (click)="monitor()"></button>
+    <button pButton label="{{ 'admin.configurator' | translate }}" (click)="configurator()"></button>
 </p-toolbar>
 <router-outlet></router-outlet>

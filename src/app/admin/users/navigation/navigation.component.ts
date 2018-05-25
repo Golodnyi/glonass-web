@@ -1,9 +1,8 @@
-import {Component, OnDestroy} from '@angular/core';
-import {MsgService} from '../../../shared/services/msg';
-import {UsersService} from '../../../shared/services/users.service';
-import {User} from '../../../shared/models/user.model';
-import {Router} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, OnDestroy } from '@angular/core';
+import { UsersService } from '../../../shared/services/users.service';
+import { User } from '../../../shared/models/user.model';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector   : 'app-navigation',
@@ -15,14 +14,12 @@ export class NavigationComponent implements OnDestroy {
     public users: User[];
     private usersSubscribe: Subscription = new Subscription();
 
-    constructor(private msgService: MsgService, private usersService: UsersService, private router: Router) {
+    constructor(private usersService: UsersService,
+                private router: Router) {
         this.usersSubscribe.add(
             this.usersService.all().subscribe(
                 users => {
                     this.users = users;
-                },
-                error => {
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error);
                 }
             )
         );

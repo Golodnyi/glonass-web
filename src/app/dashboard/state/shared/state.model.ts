@@ -1,6 +1,7 @@
 import * as moment from 'moment';
-import {IIssue} from './issue.model';
-import {Maintenances} from './maintenances.model';
+import { IIssue } from './issue.model';
+import { IBattery } from './battery.model';
+import { IMaintenances } from './maintenances.model';
 
 export interface IState {
     time: string;
@@ -15,7 +16,8 @@ export interface IState {
     imei: number;
     issues: IIssue[];
     maintenance_date: string;
-    maintenances: Maintenances;
+    maintenances: IMaintenances;
+    battery: IBattery
 }
 
 export class State implements IState {
@@ -29,11 +31,11 @@ export class State implements IState {
     public roaming: boolean;
     public power: boolean;
     public motochas          = 0;
-    public imei = 0;
+    public imei              = 0;
     public issues: IIssue[]  = [];
     public maintenance_date: string;
-    public maintenances: Maintenances;
-
+    public maintenances: IMaintenances;
+    public battery: IBattery
     get time() {
         return this.last_time;
     }

@@ -1,40 +1,45 @@
-import {Injectable} from '@angular/core';
-import {User} from '../models/user.model';
+import { Injectable } from '@angular/core';
+import { User } from '../models/user.model';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Auth} from '../../login/shared/models/auth.model';
-import {MsgService} from './msg';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import {JwtHelper} from 'angular2-jwt';
-import {UsersService} from './users.service';
-import {Router} from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
-import {Observable} from 'rxjs/Observable';
-import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import { Auth } from '../../login/shared/models/auth.model';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { JwtHelper } from 'angular2-jwt';
+import { UsersService } from './users.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class AuthService {
     private host: string = environment.host;
-    private timer        = TimerObservable.create(0, 600000);
-    private subscriptionRefreshToken: Subscription;
+    private timer = TimerObservable.create(0, 600000);
+    private subscription: Subscription;
+
+    public static destroyAuthizozationDate() {
+        localStorage.removeItem('Authorization');
+        localStorage.removeItem('Refresh');
+        localStorage.removeItem('User');
+    }
 
     public static isLoggedIn(): boolean {
         return !!localStorage.getItem('Authorization');
     };
 
     constructor(private http: HttpClient,
-                private usersService: UsersService,
-                private router: Router,
-                private msg: MsgService) {
-        AuthService.isLoggedIn();
+        private usersService: UsersService,
+        private router: Router,
+        private errorService: ErrorService) {
     }
 
     public login(auth: Auth): Observable<boolean> {
         return this.http.post(this.host + '/v1/auth/login', auth).map(
             (data: any) => {
                 const jwtHelper: JwtHelper = new JwtHelper();
-                const token: any           = jwtHelper.decodeToken(data.accessToken);
+                const token: any = jwtHelper.decodeToken(data.accessToken);
 
                 if (!token) {
                     return false;
@@ -46,11 +51,12 @@ export class AuthService {
 
                 localStorage.setItem('Authorization', data.accessToken);
                 localStorage.setItem('Refresh', data.refreshToken);
+                localStorage.setItem('User', JSON.stringify({}));
 
                 this.usersService.current().subscribe(
                     (payload: any) => {
                         const user: User = Object.assign(new User(), payload.user);
-                        user.role        = payload.role;
+                        user.role = payload.role;
                         localStorage.setItem('User', JSON.stringify(user));
 
                         if (!user.company_id) {
@@ -60,21 +66,22 @@ export class AuthService {
                         }
                     },
                     error => {
-                        localStorage.clear();
-                        this.msg.notice(MsgService.ERROR, 'Ошибка получения пользователя', error);
+                        AuthService.destroyAuthizozationDate();
                     }
                 );
             })
             .catch((error: any) => {
+                AuthService.destroyAuthizozationDate();
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
 
     public refreshToken(): Observable<boolean> {
-        return this.http.post(this.host + '/v1/auth/refresh', {refreshToken: localStorage.getItem('Refresh')}).map(
+        return this.http.post(this.host + '/v1/auth/refresh', { refreshToken: localStorage.getItem('Refresh') }).map(
             (data: any) => {
                 const jwtHelper: JwtHelper = new JwtHelper();
-                const token: any           = jwtHelper.decodeToken(data.accessToken);
+                const token: any = jwtHelper.decodeToken(data.accessToken);
 
                 if (!token) {
                     return false;
@@ -89,18 +96,20 @@ export class AuthService {
                 return true;
             })
             .catch((error: any) => {
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
 
     public logout(): Observable<boolean> {
-        return this.http.post(this.host + '/v1/auth/logout', {refreshToken: localStorage.getItem('Refresh')})
+        return this.http.post(this.host + '/v1/auth/logout', { refreshToken: localStorage.getItem('Refresh') })
             .map(() => {
-                localStorage.clear();
+                AuthService.destroyAuthizozationDate();
                 this.router.navigate(['/']);
                 return true;
             })
             .catch((error: any) => {
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -115,23 +124,23 @@ export class AuthService {
     }
 
     public getCurrentUser(): any {
-        const user          = localStorage.getItem('User');
+        const user = localStorage.getItem('User');
         const authorization = localStorage.getItem('Authorization');
-        const refresh       = localStorage.getItem('Refresh');
+        const refresh = localStorage.getItem('Refresh');
 
         if (!user || !authorization || !refresh) {
-            localStorage.clear();
-        } else if (user) {
-            if (!this.subscriptionRefreshToken) {
-                this.subscriptionRefreshToken = this.timer.subscribe(
-                    () => {
-                        this.refreshToken().subscribe();
-                    }
-                );
-            }
-            return JSON.parse(user);
+            AuthService.destroyAuthizozationDate();
+            return false;
         }
 
-        return false;
+        if (!this.subscription) {
+            this.subscription = this.timer.subscribe(
+                () => {
+                    this.refreshToken().subscribe();
+                }
+            );
+        }
+
+        return JSON.parse(user);
     }
 }

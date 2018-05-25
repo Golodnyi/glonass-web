@@ -1,6 +1,6 @@
-import {Report} from './report.model';
-import {Maintenance} from './maintenance.model';
-import {Value} from './value.model';
+import { Report } from './report.model';
+import { Maintenance } from './maintenance.model';
+import { Value } from './value.model';
 
 export interface ICapital {
     report: Report;

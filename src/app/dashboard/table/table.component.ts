@@ -1,9 +1,9 @@
-import {Component, Input, OnChanges, OnDestroy} from '@angular/core';
-import {ChartsService} from '../../shared/services/charts.service';
-import {KeysPipe} from '../../shared/pipes/keys.pipe';
-import {Subscription} from 'rxjs/Subscription';
-import {Filter} from '../../shared/models/filter.model';
-import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { ChartsService } from '../../shared/services/charts.service';
+import { KeysPipe } from '../../shared/pipes/keys.pipe';
+import { Subscription } from 'rxjs/Subscription';
+import { Filter } from '../../shared/models/filter.model';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 @Component({
     selector   : 'app-table',
@@ -13,7 +13,7 @@ import {TimerObservable} from 'rxjs/observable/TimerObservable';
 })
 export class TableComponent implements OnChanges, OnDestroy {
     @Input() car;
-    @Input() params        = [];
+    @Input() params      = [];
     @Input() autoRefresh = false;
     @Input() filter: Filter;
     public table: any;

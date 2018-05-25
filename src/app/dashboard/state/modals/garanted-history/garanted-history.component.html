@@ -1,0 +1,8 @@
+<p-blockUI [blocked]="visible"></p-blockUI>
+
+<p-dialog (onHide)="onHide()" (onShow)="onShow()" header="{{ 'dashboard.historyWarrantyService' | translate }}" [(visible)]="visible">
+  <div *ngFor="let history of histories">
+      <span class="badge">{{history.date | date:'dd.MM.y HH:mm'}}</span> {{history.comment}}
+  </div>
+  <div *ngIf="!histories.length">{{ 'dashboard.noData' | translate }}</div>
+</p-dialog>

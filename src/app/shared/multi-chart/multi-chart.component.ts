@@ -1,8 +1,8 @@
-import {Component, ElementRef, Input, OnChanges, OnDestroy} from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnDestroy } from '@angular/core';
 import * as Highcharts from 'highcharts/highstock';
 import * as HighchartsExporting from 'highcharts/modules/exporting';
 import * as HighchartsOfflineExporting from 'highcharts/modules/offline-exporting';
-import {MultiChart} from '../models/multi-chart.model';
+import { MultiChart } from '../models/multi-chart.model';
 
 window['Highcharts'] = Highcharts;
 HighchartsExporting(Highcharts);
@@ -44,8 +44,6 @@ export class MultiChartComponent implements OnDestroy, OnChanges {
                 }
             });
             this.chart = new Highcharts.stockChart(this.el.nativeElement, config);
-            // TODO: получение SVG графика
-            // console.log(this.chart.getSVG());
         }
     }
 

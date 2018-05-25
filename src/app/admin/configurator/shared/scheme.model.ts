@@ -1,4 +1,4 @@
-import {ISchemeItem} from './schemeItem.model';
+import { ISchemeItem } from './schemeItem.model';
 
 export interface IScheme {
     sensors: ISchemeItem[];

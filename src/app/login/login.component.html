@@ -1,8 +1,8 @@
-<form [formGroup]="form" class="form-signin" (ngSubmit)="onSubmit()" novalidate>
-    <h2 class="form-signin-heading">Авторизация</h2>
-    <label for="email" class="sr-only">Имя пользователя</label>
-    <input formControlName="email" type="email" id="email" class="form-control" placeholder="email или логин" autofocus>
-    <label for="password" class="sr-only">Пароль</label>
-    <input formControlName="password" type="password" id="password" class="form-control" placeholder="пароль">
-    <button type="submit" [disabled]="!form.valid || submit" class="btn btn-success">Войти</button>
+<form [formGroup]="form" class="form-signin" (submit)="onSubmit()" novalidate>
+    <h2 class="form-signin-heading">{{ 'home.authorization' | translate }}</h2>
+    <label for="email" class="sr-only">{{ 'home.username' | translate }}</label>
+    <input formControlName="email" type="text" id="email" class="form-control" placeholder="{{ 'home.username' | translate }}" autofocus>
+    <label for="password" class="sr-only">{{ 'home.password' | translate }}</label>
+    <input formControlName="password" type="password" id="password" class="form-control" placeholder="{{ 'home.password' | translate }}">
+    <button type="submit" [disabled]="!form.valid || submit" class="btn btn-success">{{ 'home.enter' | translate }}</button>
 </form>

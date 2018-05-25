@@ -1,13 +1,13 @@
-import {Component} from '@angular/core';
-import {UsersService} from '../../../../shared/services/users.service';
-import {FormGroup} from '@angular/forms';
-import {User} from '../../../../shared/models/user.model';
-import {MsgService} from '../../../../shared/services/msg';
-import {Router} from '@angular/router';
-import {Role} from '../../../../shared/models/role.model';
-import {UserForm} from '../shared/user.form';
-import {CompaniesService} from '../../../../shared/services/companies.service';
-import {Company} from '../../../../shared/models/company.model';
+import { Component } from '@angular/core';
+import { UsersService } from '../../../../shared/services/users.service';
+import { FormGroup } from '@angular/forms';
+import { User } from '../../../../shared/models/user.model';
+import { MsgService } from '../../../../shared/services/msg';
+import { Router } from '@angular/router';
+import { Role } from '../../../../shared/models/role.model';
+import { UserForm } from '../shared/user.form';
+import { CompaniesService } from '../../../../shared/services/companies.service';
+import { Company } from '../../../../shared/models/company.model';
 
 @Component({
     selector   : 'app-user-create',
@@ -39,9 +39,6 @@ export class UserCreateComponent {
         this.usersService.roles().subscribe(
             roles => {
                 this.roles = roles;
-            },
-            error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
             }
         );
     }
@@ -55,9 +52,8 @@ export class UserCreateComponent {
                 this.msg.notice(MsgService.SUCCESS, 'Создано', 'Пользователь ' + user.login + ' создан');
                 this.router.navigate(['/admin/users/user/', user.id]);
             },
-            error => {
+            () => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
             }
         );
     }

@@ -1,14 +1,12 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Router} from '@angular/router';
-import {Error} from '../models/error.model';
-import {MsgService} from './msg';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {CarModel} from '../models/car-model.model';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { CarModel } from '../models/car-model.model';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class CarModelsService {
@@ -16,8 +14,7 @@ export class CarModelsService {
     private host: string                        = environment.host;
 
     constructor(private http: HttpClient,
-                private router: Router,
-                private msgService: MsgService) {
+                private errorService: ErrorService) {
     }
 
     public all(resync = false): Observable<CarModel[]> {
@@ -31,8 +28,7 @@ export class CarModelsService {
                     this.models.next(models);
                 }, error => {
                     this.models.next([]);
-                    Error.check(error, this.router, this.msgService);
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
+                    this.errorService.check(error);
                 });
         }
         return this.models.asObservable();

@@ -1,14 +1,13 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Router} from '@angular/router';
-import {Error} from '../models/error.model';
-import {Subdivision} from '../models/subdivision.model';
-import {MsgService} from './msg';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import { Subdivision } from '../models/subdivision.model';
+import { MsgService } from './msg';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class SubdivisionsService {
@@ -17,8 +16,8 @@ export class SubdivisionsService {
     private host: string                                 = environment.host;
 
     constructor(private http: HttpClient,
-                private router: Router,
-                private msgService: MsgService) {
+                private msgService: MsgService,
+                private errorService: ErrorService) {
     }
 
     public all(company: number, resync = false): Observable<Subdivision[]> {
@@ -32,8 +31,7 @@ export class SubdivisionsService {
                     this.subdivisions.next(subdivisions);
                 }, error => {
                     this.subdivisions.next([]);
-                    Error.check(error, this.router, this.msgService);
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
+                    this.errorService.check(error);
                 });
         }
         return this.subdivisions.asObservable();
@@ -48,7 +46,7 @@ export class SubdivisionsService {
                 });
                 return subdivisions;
             }).catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -66,7 +64,7 @@ export class SubdivisionsService {
                 return subdivisionObj;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -79,8 +77,7 @@ export class SubdivisionsService {
                     this.subdivision.next(Object.assign(new Subdivision(), response));
                 }, error => {
                     this.subdivision.next(new Subdivision());
-                    Error.check(error, this.router, this.msgService);
-                    this.msgService.notice(MsgService.ERROR, 'Ошибка', error.error.message || 'Server error');
+                    this.errorService.check(error);
                 });
         }
         return this.subdivision.asObservable();
@@ -102,7 +99,7 @@ export class SubdivisionsService {
                 return subdivisionObj;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -121,7 +118,7 @@ export class SubdivisionsService {
                 return true;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }

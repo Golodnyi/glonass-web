@@ -1,8 +1,6 @@
-import {Component} from '@angular/core';
-import {MsgService} from './shared/services/msg';
-import {Message} from 'primeng/primeng';
-import {User} from './shared/models/user.model';
-import {AuthService} from './shared/services/auth.service';
+import { Component } from '@angular/core';
+import { MsgService } from './shared/services/msg';
+import { Message } from 'primeng/primeng';
 
 @Component({
     selector   : 'app-run',
@@ -11,11 +9,12 @@ import {AuthService} from './shared/services/auth.service';
 })
 export class AppComponent {
     public growl: Message[] = [];
-    public user: User;
 
-    constructor(private msgService: MsgService, private authService: AuthService) {
-        this.user = this.authService.getCurrentUser();
+    constructor(private msgService: MsgService) {
+        this.setMessages();
+    }
 
+    private setMessages() {
         this.msgService.getNotice().subscribe(
             notice => {
                 this.growl = [];

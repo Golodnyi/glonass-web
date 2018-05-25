@@ -1,5 +1,5 @@
-import {Component, Input, EventEmitter, Output} from '@angular/core';
-import {State} from '../monitoring/shared/state.model';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { State } from '../monitoring/shared/state.model';
 import * as moment from 'moment';
 
 @Component({

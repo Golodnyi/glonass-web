@@ -1,5 +1,5 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import {isArray} from 'util';
+import { Pipe, PipeTransform } from '@angular/core';
+import { isArray } from 'util';
 
 @Pipe({name: 'table'})
 export class TablePipe implements PipeTransform {

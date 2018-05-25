@@ -1,13 +1,13 @@
-import {Component} from '@angular/core';
-import {Company} from '../../../../shared/models/company.model';
-import {MsgService} from '../../../../shared/services/msg';
-import {AuthService} from '../../../../shared/services/auth.service';
-import {CompaniesService} from '../../../../shared/services/companies.service';
-import {Subdivision} from '../../../../shared/models/subdivision.model';
-import {SubdivisionsService} from '../../../../shared/services/subdivisions.service';
-import {FormGroup} from '@angular/forms';
-import {SubdivisionCreateForm} from '../shared/create.form';
-import {Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { Company } from '../../../../shared/models/company.model';
+import { MsgService } from '../../../../shared/services/msg';
+import { AuthService } from '../../../../shared/services/auth.service';
+import { CompaniesService } from '../../../../shared/services/companies.service';
+import { Subdivision } from '../../../../shared/models/subdivision.model';
+import { SubdivisionsService } from '../../../../shared/services/subdivisions.service';
+import { FormGroup } from '@angular/forms';
+import { SubdivisionCreateForm } from '../shared/create.form';
+import { Router } from '@angular/router';
 
 @Component({
     selector   : 'app-subdivision-create',
@@ -38,9 +38,6 @@ export class SubdivisionCreateComponent {
         this.companiesService.all(false).subscribe(
             companies => {
                 this.companies = companies;
-            },
-            error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
             }
         );
     }
@@ -60,9 +57,8 @@ export class SubdivisionCreateComponent {
                         this.subdivision.id
                     ]);
             },
-            error => {
+            () => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
             }
         );
     }

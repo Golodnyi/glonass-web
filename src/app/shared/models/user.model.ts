@@ -1,4 +1,4 @@
-import {IRole} from './role.model';
+import { IRole } from './role.model';
 
 export interface IUser {
     id: number;

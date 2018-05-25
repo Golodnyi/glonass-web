@@ -1,5 +1,5 @@
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {Injectable} from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommentForm {
@@ -10,7 +10,7 @@ export class CommentForm {
 
     public create() {
         this.form = this.fb.group({
-            message : [''],
+            message: [''],
         });
 
         return this.form;

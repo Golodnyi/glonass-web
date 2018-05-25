@@ -1,178 +1,110 @@
-<p-panel *ngIf="state && car" header="Состояние {{car.name}}" [toggleable]="toggleable">
+<p-panel *ngIf="state && car" header="{{ 'dashboard.stateOn' | translate: {value: car.name} }}" [toggleable]="toggleable">
     <div>
         <div class="alert alert-danger" *ngFor="let issue of state.issues">
             <div class="text-left">
                 <span class="fa fa-warning">&nbsp;</span>
-                <strong>{{issue.name}}</strong>
+                <strong>{{issue.name | translate}}</strong>
             </div>
-            <div class="text-left" *ngIf="issue.forecast.length">Прогноз:</div>
+            <div class="text-left" *ngIf="issue.forecast.length">{{ 'dashboard.forecast' | translate }}:</div>
             <ul>
                 <li *ngFor="let forecast of issue.forecast">
-                    {{forecast.name}}
+                    {{forecast.name | translate}}
                 </li>
             </ul>
             <hr/>
             <div class="text-right">
                 <button *ngIf="!isMuted(issue.id)" class="btn btn-success" (click)="mute(issue.id)">
                     <span class="fa fa-music">&nbsp;</span>
-                    включен
+                    {{ 'dashboard.enabled' | translate }}
                 </button>
                 <button *ngIf="isMuted(issue.id)" class="btn btn-danger" (click)="unMute(issue.id)">
                     <span class="fa fa-music">&nbsp;</span>
-                    отключен
+                    {{ 'dashboard.disabled' | translate }}
                 </button>
             </div>
         </div>
         <div class="alert alert-success" *ngIf="!state.issues.length">
-            <span class="fa fa-check">&nbsp;</span>Проблем не обнаружено
+            <span class="fa fa-check">&nbsp;</span>{{ 'dashboard.noProblemsFound' | translate }}
         </div>
     </div>
     <div class="alert alert-success">
         <div>
-            IMEI:
+            {{ 'dashboard.imei' | translate }}:
             <span class="badge alert-success">{{state.imei}}</span>
         </div>
         <div>
-            Статус:
-            <span *ngIf="online(state)" class="badge alert-success">в сети</span>
-            <span *ngIf="!online(state)" class="badge alert-danger">не в сети</span>
+            {{ 'dashboard.status' | translate }}:
+            <span *ngIf="online(state)" class="badge alert-success">{{ 'dashboard.online' | translate }}</span>
+            <span *ngIf="!online(state)" class="badge alert-danger">{{ 'dashboard.offline' | translate }}</span>
         </div>
         <div>
-            Двигатель:
-            <span *ngIf="state.engine" class="badge alert-success">работает</span>
-            <span *ngIf="!state.engine" class="badge alert-danger">заглушен</span>
+            {{ 'dashboard.engine' | translate }}:
+            <span *ngIf="state.engine" class="badge alert-success">{{ 'dashboard.working' | translate }}</span>
+            <span *ngIf="!state.engine" class="badge alert-danger">{{ 'dashboard.muffled' | translate }}</span>
         </div>
         <div *ngIf="!compact">
-            GSM:
-            <span *ngIf="state.gsm" class="badge alert-success">вкл</span>
-            <span *ngIf="!state.gsm" class="badge alert-danger">выкл</span>
+            {{ 'dashboard.gsm' | translate }}:
+            <span *ngIf="state.gsm" class="badge alert-success">{{ 'dashboard.on' | translate }}</span>
+            <span *ngIf="!state.gsm" class="badge alert-danger">{{ 'dashboard.off' | translate }}</span>
         </div>
         <div *ngIf="!compact">
-            Время:
-            <span *ngIf="state.watch" class="badge alert-success">синхронизовано</span>
-            <span *ngIf="!state.watch" class="badge alert-danger">не синхронизовано</span>
+            {{ 'dashboard.time' | translate }}:
+            <span *ngIf="state.watch" class="badge alert-success">{{ 'dashboard.synchronized' | translate }}</span>
+            <span *ngIf="!state.watch" class="badge alert-danger">{{ 'dashboard.notSynchronized' | translate }}</span>
         </div>
         <div *ngIf="!compact">
-            Сеть:
-            <span *ngIf="state.network" class="badge alert-success">вкл</span>
-            <span *ngIf="!state.network" class="badge alert-danger">выкл</span>
+            {{ 'dashboard.network' | translate }}:
+            <span *ngIf="state.network" class="badge alert-success">{{ 'dashboard.on' | translate }}</span>
+            <span *ngIf="!state.network" class="badge alert-danger">{{ 'dashboard.off' | translate }}</span>
         </div>
         <div *ngIf="!compact">
-            Сигнал: {{state.networkSignal}}%
+            {{ 'dashboard.signal' | translate }}: {{state.networkSignal}}%
         </div>
         <div *ngIf="!compact">
-            Роуминг:
-            <span *ngIf="state.roaming" class="badge alert-danger">да</span>
-            <span *ngIf="!state.roaming" class="badge alert-success">нет</span>
+            {{ 'dashboard.roaming' | translate }}:
+            <span *ngIf="state.roaming" class="badge alert-danger">{{ 'dashboard.yes' | translate }}</span>
+            <span *ngIf="!state.roaming" class="badge alert-success">{{ 'dashboard.no' | translate }}</span>
         </div>
         <div *ngIf="!compact">
-            Питание:
-            <span *ngIf="state.power" class="badge alert-success">да</span>
-            <span *ngIf="!state.power" class="badge alert-danger">нет</span>
+            {{ 'dashboard.power' | translate }}:
+            <span *ngIf="state.power" class="badge alert-success">{{ 'dashboard.yes' | translate }}</span>
+            <span *ngIf="!state.power" class="badge alert-danger">{{ 'dashboard.no' | translate }}</span>
         </div>
         <div *ngIf="!compact">
-            Моточасы: {{state.motochas}} ч. <button type="text" (click)="showMotochasFilter()" pButton label="Фильтр"></button>
+            {{ 'dashboard.machineHours' | translate }}: {{state.motochas}} {{ 'dashboard.h' | translate }}
+            <button type="text" (click)="showMotochasFilter()" pButton label="{{ 'dashboard.filter' | translate }}"></button>
         </div>
     </div>
-    <p-dialog header="Фильтр моточасов" [(visible)]="motochasFilter">
-        <form [formGroup]="formMotochasFilter" (ngSubmit)="onSubmitMotochasFilter()" novalidate class="input-group">
-            <label>Кол-во моточасов</label>
-            <br/>
-            <input formControlName="motochas" pInput required/>
-            <hr *ngIf="motochasFilterAnswer"/>
-            <div *ngIf="motochasFilterAnswer">
-                <span *ngIf="!motochasFilterAnswer.reached">Дата не найдена</span>
-                <span *ngIf="motochasFilterAnswer.reached">Дата: {{motochasFilterAnswer.date | date:'dd.MM.y HH:mm'}}</span>
-            </div>
-            <hr/>
-            <button type="submit" class="ui-button-success" [disabled]="!formMotochasFilter.valid || submitMotochasFilter" icon="fa-check" pButton label="Принять"></button>
-        </form>
-    </p-dialog>
-    
-    
-    <div *ngIf="!compact && state.maintenances.length && user && user.role">
-        <div class="alert" *ngIf="scheduled(state)">До ТО: {{state.maintenances.scheduled.limits.hours -
-            state.maintenances.scheduled.value.hours}} ч.
+
+    <div *ngIf="!compact && state.maintenances && user && user.role">
+        <div class="alert" [class.alert-danger]="!scheduled(state)">
+            <span *ngIf="scheduled(state)">{{ 'dashboard.toMaintenance' | translate: {value: (state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours)} }}</span>
+            <span *ngIf="!scheduled(state)">{{ 'dashboard.needMaintenance' | translate }}</span>
             <span *ngIf="user && user.role.is_global == 1 && car.engine" class="btn-st">
-                <button type="text" (click)="showTODialog()" pButton icon="fa-refresh"
-                        title="Провести техническое обслуживание"></button>
-                <button type="text" (click)="showTOHistory()" pButton icon="fa-info"
-                        title="История технического обслуживания"></button>
+                <button type="text" (click)="showMaintenanceDialog()" pButton icon="fa-refresh" title="{{ 'dashboard.carryOutMaintenance' | translate }}"></button>
+                <button type="text" (click)="showMaintenanceHistory()" pButton icon="fa-info" title="{{ 'dashboard.historyMaintenance' | translate }}"></button>
             </span>
         </div>
-        <div *ngIf="!scheduled(state)" class="alert alert-danger">
-            Необходимо пройти ТО
+
+        <div class="alert" [class.alert-danger]="!garanted(state)">
+            <span *ngIf="garanted(state)">{{ 'dashboard.warrantyServiceIsOver' | translate: { days: (state.maintenances.capital.limits.days - state.maintenances.capital.value.days),
+            machineHours: (state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours) } }}</span>
+            <span *ngIf="!garanted(state)">
+                {{ 'dashboard.warrantyServiceCompleted' | translate }}
+            </span>
             <span *ngIf="user && user.role.is_global == 1 && car.engine" class="btn-st">
-                <button type="text" (click)="showTODialog()" pButton icon="fa-refresh"
-                        title="Провести техническое обслуживание"></button>
-                <button type="text" (click)="showTOHistory()" pButton icon="fa-info"
-                        title="История технического обслуживания"></button>
+                <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton icon="fa-refresh" title="{{ 'dashboard.extendWarrantyService' | translate }}"></button>
+                <button type="text" class="ui-button-success" (click)="showGarantedHistory()" pButton icon="fa-info" title="{{ 'dashboard.historyWarrantyService' | translate }}"></button>
             </span>
         </div>
-        <div *ngIf="garanted(state)" class="alert">Гарантийное обслуживание заканчивается через
-            {{state.maintenances.capital.limits.days - state.maintenances.capital.value.days}}
-            д. или {{state.maintenances.capital.limits.hours - state.maintenances.capital.value.hours}} моточасов.
-            <span *ngIf="user && user.role.is_global == 1 && car.engine" class="btn-st">
-                <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton icon="fa-refresh"
-                        title="Продлить гарантийное обслуживание"></button>
-                <button type="text" class="ui-button-success" (click)="showGarantedHistory()" pButton icon="fa-info"
-                        title="История гарантийного обслуживания"></button>
-            </span>
-        </div>
-        <div *ngIf="!garanted(state)" class="alert alert-danger">
-            Гарантийное обслуживание завершено
-            <span *ngIf="user && user.role.is_global == 1 && car.engine" class="btn-st">
-                <button type="text" class="ui-button-success" (click)="showGarantedDialog()" pButton icon="fa-refresh"
-                        title="Продлить гарантийное обслуживание"></button>
-                <button type="text" class="ui-button-success" (click)="showGarantedHistory()" pButton icon="fa-info"
-                        title="История гарантийного обслуживания"></button>
-            </span>
-        </div>
+
     </div>
-    <div *ngIf="!compact" class="label label-default">
-        Информация за {{state.time}}
+    <div *ngIf="!compact && state" class="label label-default">
+        {{ 'dashboard.informationFor' | translate: {value: state.time} }}
     </div>
 </p-panel>
-<p-blockUI [blocked]="display || displayGaranted || displayHistory || displayGarantedHistory"></p-blockUI>
-<p-dialog header="Техническое обслуживание" #dialog [(visible)]="display">
-    <form [formGroup]="form" (ngSubmit)="onSubmitTO()" novalidate class="dialog input-group">
-        <label>Дата ТО</label>
-        <br/>
-        <p-calendar formControlName="created_at" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24" required
-                    [locale]="ru"></p-calendar>
-        <br/>
-        <label>Комментарий</label>
-        <br/>
-        <textarea formControlName="comment" pInputTextarea required></textarea>
-        <div class="bottom">
-            <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton
-                    label="Сбросить"></button>
-        </div>
-    </form>
-</p-dialog>
-<p-dialog header="Гарантийное обслуживание" #dialogGaranted [(visible)]="displayGaranted">
-    <form [formGroup]="form" (ngSubmit)="onSubmitGaranted()" novalidate class="dialog input-group">
-        <label>Дата с которой начать гарантийное обслуживание</label>
-        <br/>
-        <p-calendar formControlName="created_at" dateFormat="dd.mm.yy" showTime="showTime" hourFormat="24" required
-                    [locale]="ru"></p-calendar>
-        <br/>
-        <label>Комментарий</label>
-        <br/>
-        <textarea formControlName="comment" pInputTextarea required></textarea>
-        <div class="bottom">
-            <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton
-                    label="Сбросить"></button>
-        </div>
-    </form>
-</p-dialog>
-<p-dialog header="История технического обслуживания" #dialogHistory [(visible)]="displayHistory">
-    <div *ngFor="let h of history">
-        <span class="badge">{{h.created_at | date:'dd.MM.y HH:mm'}}</span> {{h.comment}}
-    </div>
-</p-dialog>
-<p-dialog header="История гарантийного обслуживания" #dialogGarantedHistory [(visible)]="displayGarantedHistory">
-    <div *ngFor="let h of garantedHistory" [class.alert-success]="h.active">
-        <span class="badge">{{h.date | date:'dd.MM.y HH:mm'}}</span> {{h.comment}}
-    </div>
-</p-dialog>
+<app-garanted-history (hide)="garantedHistoryHide($event)" [car]="car" [visible]="displayGarantedHistory"></app-garanted-history>
+<app-maintenance-history (hide)="maintenanceHistoryHide($event)" [car]="car" [visible]="displayMaintenanceHistory"></app-maintenance-history>
+<app-motochas-filter (hide)="motochasFilterHide($event)" [car]="car" [visible]="displayMotochasFilter"></app-motochas-filter>
+<app-garanted (hide)="garantedHide($event)" [car]="car" [visible]="displayGaranted"></app-garanted>
+<app-maintenance (hide)="maintenanceHide($event)" [car]="car" [visible]="displayMaintenance"></app-maintenance>

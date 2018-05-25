@@ -1,8 +1,8 @@
-import {Component, OnDestroy} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
-import {StateService} from './shared/state.service';
-import {State} from './shared/state.model';
-import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+import { StateService } from './shared/state.service';
+import { State } from './shared/state.model';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 @Component({
     selector   : 'app-monitoring',
@@ -51,7 +51,7 @@ export class MonitoringComponent implements OnDestroy {
 
     public showComments(s: State) {
         this.showCommentsModal = true;
-        this.car = s.id;
+        this.car               = s.id;
     }
 
     public hideComments() {

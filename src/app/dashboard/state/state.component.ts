@@ -1,46 +1,31 @@
-import {Component, Input, OnChanges, OnDestroy} from '@angular/core';
-import {State} from './shared/state.model';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { State } from './shared/state.model';
 import * as moment from 'moment';
-import {Calendar} from '../../shared/models/calendar.model';
-import {FormGroup} from '@angular/forms';
-import {ResetForm} from './shared/reset.form';
-import {ResetService} from './shared/reset.service';
-import {MsgService} from '../../shared/services/msg';
-import {Car} from '../../shared/models/car.model';
-import {AuthService} from '../../shared/services/auth.service';
-import {User} from '../../shared/models/user.model';
-import { MotochasFilterForm } from './shared/motochasFilter.form';
-import { MotochasService } from './shared/motochas.service';
-import { MotochasFilter } from './shared/motochasFilter.model';
+import { ResetForm } from './shared/reset.form';
+import { ResetService } from './shared/reset.service';
+import { Car } from '../../shared/models/car.model';
+import { AuthService } from '../../shared/services/auth.service';
+import { User } from '../../shared/models/user.model';
 
 @Component({
-    selector   : 'app-state',
+    selector: 'app-state',
     templateUrl: './state.component.html',
-    styleUrls  : ['./state.component.css'],
-    providers  : [ResetForm, ResetService, MotochasFilterForm, MotochasService]
+    styleUrls: ['./state.component.css'],
+    providers: [ResetService, ResetForm]
 })
 export class StateComponent implements OnChanges, OnDestroy {
     @Input() state: State;
     @Input() car: Car;
-    @Input() toggleable           = true;
-    @Input() compact              = false;
-    public ru                     = new Calendar();
-    public display                = false;
-    public displayGaranted        = false;
-    public displayHistory         = false;
+    @Input() toggleable = true;
+    @Input() compact = false;
+    public displayMaintenance = false;
+    public displayGaranted = false;
+    public displayMaintenanceHistory = false;
     public displayGarantedHistory = false;
-    public form: FormGroup;
-    public formMotochasFilter: FormGroup;
-    public submit: boolean;
-    public submitMotochasFilter: boolean;
-    public history                = [];
-    public garantedHistory        = [];
+    public displayMotochasFilter = false
     public user: User;
-    private audio                 = new Audio();
-    private resetData: any;
-    public motochasFilter         = false
-    private motochasFilterVal     = 0;
-    public motochasFilterAnswer: MotochasFilter;
+    private audio = new Audio();
+
     public static unMute(id) {
         if (localStorage.getItem('mute_' + id) !== null) {
             localStorage.removeItem('mute_' + id);
@@ -67,32 +52,7 @@ export class StateComponent implements OnChanges, OnDestroy {
     /**
      * TODO: раскидать все всплывающие окна по отдельным компонентам
      */
-    constructor(
-        private resetForm: ResetForm,
-        private motochasFilterForm: MotochasFilterForm,
-        private resetService: ResetService,
-        private motochasService: MotochasService,
-        private msg: MsgService,
-        private authService: AuthService) {
-        moment.locale('ru');
-        this.form = this.resetForm.create();
-        this.form.valueChanges
-            .map((value) => {
-                value.created_at = moment(value.created_at).format();
-                return value;
-            })
-            .subscribe((data) => {
-                this.submit              = false;
-                this.resetData           = data;
-                this.resetData.engine_id = this.car.engine.id;
-            });
-
-        this.formMotochasFilter = this.motochasFilterForm.create();
-        this.formMotochasFilter.valueChanges
-            .subscribe((data) => {
-                this.motochasFilterVal = data.motochas;
-            });
-
+    constructor(private authService: AuthService) {
         this.audio.src = '/assets/signal.wav';
         this.audio.load();
         this.user = this.authService.getCurrentUser();
@@ -135,87 +95,57 @@ export class StateComponent implements OnChanges, OnDestroy {
         }
     }
 
-    public showTODialog() {
-        this.display = true;
+    public showMaintenanceDialog() {
+        this.displayMaintenance = true;
+    }
+
+    public maintenanceHide(hide: boolean) {
+        if (hide) {
+            this.displayMaintenance = false;
+        }
     }
 
     public showGarantedDialog() {
         this.displayGaranted = true;
     }
 
-    public onSubmitGaranted() {
-        this.submit = true;
-        this.resetService.resetGaranted(this.resetData).subscribe(
-            () => {
-                this.msg.notice(MsgService.SUCCESS, 'Гарантийное обслуживание', 'продлено');
-                this.displayGaranted = false;
-            },
-            error => {
-                this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
-            }
-        );
-    }
-
-    public onSubmitTO() {
-        this.submit = true;
-        this.resetService.reset(this.resetData).subscribe(
-            () => {
-                this.msg.notice(MsgService.SUCCESS, 'Техническое обслуживание', 'проведено');
-                this.display = false;
-            },
-            error => {
-                this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
-            }
-        );
-    }
-
-    public showTOHistory() {
-        this.resetService.all(this.car).subscribe(
-            data => {
-                this.history = [];
-                data.forEach(d => {
-                    this.history.push(d);
-                });
-                this.displayHistory = true;
-            },
-            error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
-            }
-        );
+    public garantedHide(hide: boolean) {
+        if (hide) {
+            this.displayGaranted = false;
+        }
     }
 
     ngOnDestroy() {
         this.audio.pause();
     }
 
-    public showGarantedHistory() {
-        this.resetService.allGaranted(this.car).subscribe(
-            data => {
-                this.garantedHistory = [];
-                data.forEach(d => {
-                    this.garantedHistory.push(d);
-                });
-                this.displayGarantedHistory = true;
-            },
-            error => {
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
-            }
-        );
-    }
-
     public showMotochasFilter() {
-        this.motochasFilter = true;
+        this.displayMotochasFilter = true;
     }
 
-    public onSubmitMotochasFilter() {
-        this.submitMotochasFilter = true;
-        this.motochasService.get(this.car, this.motochasFilterVal).subscribe(
-            response => {
-                this.motochasFilterAnswer = response;
-                this.submitMotochasFilter = false;
-            }
-        );
+    public motochasFilterHide(hide: boolean) {
+        if (hide) {
+            this.displayMotochasFilter = false;
+        }
+    }
+
+    public maintenanceHistoryHide(hide: boolean) {
+        if (hide) {
+            this.displayMaintenanceHistory = false;
+        }
+    }
+
+    public garantedHistoryHide(hide: boolean) {
+        if (hide) {
+            this.displayGarantedHistory = false;
+        }
+    }
+
+    public showGarantedHistory() {
+        this.displayGarantedHistory = true;
+    }
+
+    public showMaintenanceHistory() {
+        this.displayMaintenanceHistory = true;
     }
 }

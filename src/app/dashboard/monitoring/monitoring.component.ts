@@ -1,9 +1,9 @@
-import {Component, OnChanges, OnDestroy, Input} from '@angular/core';
-import {MonitoringService} from './shared/monitoring.service';
-import {Car} from '../../shared/models/car.model';
-import {Monitoring} from './shared/monitoring.model';
-import {Subscription} from 'rxjs/Subscription';
-import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import { Component, OnChanges, OnDestroy, Input } from '@angular/core';
+import { MonitoringService } from './shared/monitoring.service';
+import { Car } from '../../shared/models/car.model';
+import { Monitoring } from './shared/monitoring.model';
+import { Subscription } from 'rxjs/Subscription';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import * as moment from 'moment';
 
 @Component({
@@ -19,20 +19,20 @@ import * as moment from 'moment';
 export class MonitoringComponent implements OnChanges, OnDestroy {
     @Input() car: Car;
     public status: Monitoring;
-    public detailsError = false;
-    public reasons: any[]   = [];
-    public forecasts: any[] = [];
+    public detailsError                = false;
+    public reasons: any[]              = [];
+    public forecasts: any[]            = [];
     public minDuration: number;
     public maxDuration: number;
     public duration: number;
-    public dateList: string[] = ['', '', ''];
+    public dateList: string[]          = ['', '', ''];
     public greenWidth: number;
     public orangeWidth: number;
     public orangeLabelWidth: number;
     public redWidth: number;
-    public errorIcon = false;
+    public errorIcon                   = false;
     private currentError: number;
-    private audio = new Audio();
+    private audio                      = new Audio();
     private subscription: Subscription = new Subscription();
     private timer                      = TimerObservable.create(0, 5000);
 
@@ -82,7 +82,7 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
         }
 
         const errors = [];
-        const codes = [];
+        const codes  = [];
 
         this.status.issue_locations[id].forEach(code => {
             codes.push(code);
@@ -120,21 +120,21 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
     }
 
     public reinitError(error_id) {
-        this.currentError = error_id;
-        this.dateList[0]   = moment.unix(this.status.issues[error_id].createdAt / 1000).format('DD.MM.YY HH:mm');
-        this.dateList[1]   = moment.unix(this.status.issues[error_id].createdAt / 1000
+        this.currentError     = error_id;
+        this.dateList[0]      = moment.unix(this.status.issues[error_id].createdAt / 1000).format('DD.MM.YY HH:mm');
+        this.dateList[1]      = moment.unix(this.status.issues[error_id].createdAt / 1000
             + this.status.issues[error_id].minDuration / 1000).format('DD.MM.YY HH:mm');
-        this.dateList[2]   = moment.unix(this.status.issues[error_id].createdAt / 1000
+        this.dateList[2]      = moment.unix(this.status.issues[error_id].createdAt / 1000
             + this.status.issues[error_id].maxDuration / 1000).format('DD.MM.YY HH:mm');
-        this.forecasts    = this.status.issues[error_id].forecast;
-        this.reasons      = this.status.issues[error_id].reasons;
-        this.minDuration  = this.status.issues[error_id].minDuration;
-        this.maxDuration  = this.status.issues[error_id].maxDuration;
-        this.duration     = this.status.issues[error_id].duration;
-        this.greenWidth   = this.greenProgressWidth();
-        this.orangeWidth  = this.orangeProgressWidth();
-        this.orangeLabelWidth  = this.orangeProgressWidth(true);
-        this.redWidth     = this.redProgressWidth();
+        this.forecasts        = this.status.issues[error_id].forecast;
+        this.reasons          = this.status.issues[error_id].reasons;
+        this.minDuration      = this.status.issues[error_id].minDuration;
+        this.maxDuration      = this.status.issues[error_id].maxDuration;
+        this.duration         = this.status.issues[error_id].duration;
+        this.greenWidth       = this.greenProgressWidth();
+        this.orangeWidth      = this.orangeProgressWidth();
+        this.orangeLabelWidth = this.orangeProgressWidth(true);
+        this.redWidth         = this.redProgressWidth();
     }
 
     public showDetailsError(error_id) {

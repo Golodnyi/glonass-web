@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {CompaniesService} from 'app/shared/services/companies.service';
-import {SubdivisionsService} from 'app/shared/services/subdivisions.service';
-import {CarsService} from 'app/shared/services/cars.service';
-import {Company} from 'app/shared/models/company.model';
-import {Subdivision} from 'app/shared/models/subdivision.model';
-import {Car} from 'app/shared/models/car.model';
-import {OnDestroy} from '@angular/core/src/metadata/lifecycle_hooks';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { CompaniesService } from 'app/shared/services/companies.service';
+import { SubdivisionsService } from 'app/shared/services/subdivisions.service';
+import { CarsService } from 'app/shared/services/cars.service';
+import { Company } from 'app/shared/models/company.model';
+import { Subdivision } from 'app/shared/models/subdivision.model';
+import { Car } from 'app/shared/models/car.model';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector   : 'app-navigation',

@@ -1,18 +1,18 @@
 <div class="load" *ngIf="loading">
-    Загрузка...
+    {{ 'dashboard.loading' | translate }}
     <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
 </div>
 <p-dataTable *ngIf="table && !loading" [value]="table.rows" scrollable="true" scrollHeight="400px">
-    <p-column header="Время" field="time" [style]="{'width':'120px'}">
+    <p-column header="{{ 'dashboard.time' | translate }}" field="time" [style]="{'width':'120px'}">
         <ng-template let-row="rowData" pTemplate="body">
             {{row['time'] | date: 'dd.MM.yyyy H:mm:ss'}}
         </ng-template>
     </p-column>
-    <p-column *ngFor="let key of keys" header="{{table.headers[key].name}}"
+    <p-column *ngFor="let key of keys" header="{{table.headers[key].name | translate}}"
               field="{{key}}">
         <ng-template let-row="rowData" pTemplate="body">
-            <div [class.alert-warning]="row['criticals'].warning.indexOf(key) !== -1"
-                 [class.alert-danger]="row['criticals'].danger.indexOf(key) !== -1">
+            <div [class.alert-warning]="row['criticals'].warning !== undefined && row['criticals'].warning.indexOf(key) !== -1"
+                 [class.alert-danger]="row['criticals'].danger !== undefined && row['criticals'].danger.indexOf(key) !== -1">
                 {{row[key]}}
             </div>
         </ng-template>

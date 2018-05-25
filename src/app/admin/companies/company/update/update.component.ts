@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Company} from '../../../../shared/models/company.model';
-import {CompaniesService} from '../../../../shared/services/companies.service';
-import {MsgService} from '../../../../shared/services/msg';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Company } from '../../../../shared/models/company.model';
+import { CompaniesService } from '../../../../shared/services/companies.service';
+import { MsgService } from '../../../../shared/services/msg';
 import * as moment from 'moment';
-import {CompanyForm} from '../shared/company.form';
-import {FormGroup} from '@angular/forms';
-import {Calendar} from '../../../../shared/models/calendar.model';
+import { CompanyForm } from '../shared/company.form';
+import { FormGroup } from '@angular/forms';
+import { Calendar } from '../../../../shared/models/calendar.model';
 
 @Component({
     selector   : 'app-company-update',
@@ -55,9 +55,8 @@ export class CompanyUpdateComponent {
                 this.submit  = false;
                 this.msg.notice(MsgService.SUCCESS, 'Сохранено', 'Компания успешно изменена.');
             },
-            error => {
+            () => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
             }
         );
     }
@@ -67,9 +66,6 @@ export class CompanyUpdateComponent {
             this.companiesService.delete(this.company).take(1).subscribe(
                 () => {
                     this.router.navigate(['/admin/companies']);
-                },
-                error => {
-                    this.msg.notice(MsgService.ERROR, 'Ошибка', error);
                 }
             );
         }

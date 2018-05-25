@@ -1,22 +1,19 @@
-import {Injectable} from '@angular/core';
-import {User} from '../models/user.model';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { User } from '../models/user.model';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {Router} from '@angular/router';
-import {Error} from '../models/error.model';
-import {Role} from '../models/role.model';
-import {MsgService} from './msg';
-import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import { Role } from '../models/role.model';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class UsersService {
     private host: string = environment.host;
 
     constructor(private http: HttpClient,
-                private router: Router,
-                private msgService: MsgService) {
+                private errorService: ErrorService) {
     }
 
     public all(): Observable<User[]> {
@@ -30,7 +27,7 @@ export class UsersService {
                 return usersObj;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -41,7 +38,7 @@ export class UsersService {
                 return Object.assign(new User(), response);
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -52,7 +49,7 @@ export class UsersService {
                 return response;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -63,7 +60,7 @@ export class UsersService {
                 return Object.assign(new Role(), response);
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -78,7 +75,7 @@ export class UsersService {
                 return roles;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -89,7 +86,7 @@ export class UsersService {
                 return response;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }
@@ -100,7 +97,7 @@ export class UsersService {
                 return response;
             })
             .catch((error: any) => {
-                Error.check(error, this.router, this.msgService);
+                this.errorService.check(error);
                 return Observable.throw(error.error.message || 'Server error');
             });
     }

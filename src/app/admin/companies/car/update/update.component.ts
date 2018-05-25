@@ -1,15 +1,15 @@
-import {Component, OnDestroy} from '@angular/core';
-import {MsgService} from '../../../../shared/services/msg';
-import {CarsService} from '../../../../shared/services/cars.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SubdivisionsService} from '../../../../shared/services/subdivisions.service';
-import {CarModelsService} from '../../../../shared/services/car.models.service';
-import {Car} from '../../../../shared/models/car.model';
-import {FormGroup} from '@angular/forms';
-import {Subdivision} from '../../../../shared/models/subdivision.model';
-import {CarModel} from '../../../../shared/models/car-model.model';
-import {Subscription} from 'rxjs/Subscription';
-import {CarUpdateForm} from '../shared/update.form';
+import { Component, OnDestroy } from '@angular/core';
+import { MsgService } from '../../../../shared/services/msg';
+import { CarsService } from '../../../../shared/services/cars.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SubdivisionsService } from '../../../../shared/services/subdivisions.service';
+import { CarModelsService } from '../../../../shared/services/car.models.service';
+import { Car } from '../../../../shared/models/car.model';
+import { FormGroup } from '@angular/forms';
+import { Subdivision } from '../../../../shared/models/subdivision.model';
+import { CarModel } from '../../../../shared/models/car-model.model';
+import { Subscription } from 'rxjs/Subscription';
+import { CarUpdateForm } from '../shared/update.form';
 
 @Component({
     selector   : 'app-car-update',
@@ -80,9 +80,8 @@ export class CarUpdateComponent implements OnDestroy {
                     ]
                 );
             },
-            error => {
+            () => {
                 this.submit = false;
-                this.msg.notice(MsgService.ERROR, 'Ошибка', error);
             }
         );
     }

@@ -1,6 +1,5 @@
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Injectable} from '@angular/core';
-import * as moment from 'moment';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class MotochasFilterForm {

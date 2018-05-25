@@ -1,15 +1,16 @@
-import {Component, OnDestroy} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ChartsService} from '../../shared/services/charts.service';
-import {CarsService} from '../../shared/services/cars.service';
-import {Car} from '../../shared/models/car.model';
-import {Subscription} from 'rxjs/Subscription';
-import {Filter} from '../../shared/models/filter.model';
-import {EnginesService} from '../../shared/services/engines.service';
-import {SelectItem} from 'primeng/primeng';
-import {EngineModelsService} from '../../shared/services/engine.models.service';
-import {EngineModel} from '../../shared/models/engine-model.model';
-import {BaseEngine} from '../../shared/models/baseEngine.model';
+import { Component, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ChartsService } from '../../shared/services/charts.service';
+import { CarsService } from '../../shared/services/cars.service';
+import { Car } from '../../shared/models/car.model';
+import { Subscription } from 'rxjs/Subscription';
+import { Filter } from '../../shared/models/filter.model';
+import { EnginesService } from '../../shared/services/engines.service';
+import { SelectItem } from 'primeng/primeng';
+import { EngineModelsService } from '../../shared/services/engine.models.service';
+import { EngineModel } from '../../shared/models/engine-model.model';
+import { BaseEngine } from '../../shared/models/baseEngine.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector   : 'app-view',
@@ -34,11 +35,22 @@ export class ViewComponent implements OnDestroy {
                 private chartsService: ChartsService,
                 private carsService: CarsService,
                 private enginesService: EnginesService,
-                private engineModelsService: EngineModelsService) {
-        this.viewModeButtons.push({label: 'Графики', value: 'charts'});
-        this.viewModeButtons.push({label: 'Таблица', value: 'table'});
-        this.viewModeButtons.push({label: 'Термопары', value: 'thermocouples'});
-        this.viewModeButtons.push({label: 'Карта', value: 'map'});
+                private engineModelsService: EngineModelsService,
+                private translateService: TranslateService) {
+        this.translateService.stream(
+            [
+                'dashboard.charts',
+                'dashboard.table',
+                'dashboard.thermocouples',
+                'dashboard.map'
+            ]).subscribe(value => {
+            this.viewModeButtons = [];
+            this.viewModeButtons.push({label: value['dashboard.charts'], value: 'charts'});
+            this.viewModeButtons.push({label: value['dashboard.map'], value: 'map'});
+            this.viewModeButtons.push({label: value['dashboard.table'], value: 'table'});
+            this.viewModeButtons.push({label: value['dashboard.thermocouples'], value: 'thermocouples'});
+        });
+
         this.filterInit();
         this.subscription.add(
             this.route.params.subscribe(params => {
