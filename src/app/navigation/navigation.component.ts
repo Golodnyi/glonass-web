@@ -40,13 +40,16 @@ export class NavigationComponent {
     private setLanguage() {
         this.translate.addLangs(['en', 'ru', 'cn']);
         this.translate.setDefaultLang('ru');
-        const browserLang = this.translate.getBrowserLang();
+        // const browserLang = this.translate.getBrowserLang();
         if (localStorage.getItem('language') && localStorage.getItem('language').match(/en|ru|cn/)) {
             this.translate.use(localStorage.getItem('language'));
-        } else if (browserLang.match(/en|ru|cn/)) {
-            this.translate.use(browserLang);
         } else {
             this.translate.use('ru');
         }
+        /** else if (browserLang.match(/en|ru|cn/)) {
+            this.translate.use(browserLang);
+        } else {
+            this.translate.use('ru');
+        } **/
     }
 }
