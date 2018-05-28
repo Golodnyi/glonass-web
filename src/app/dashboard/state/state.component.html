@@ -76,7 +76,7 @@
         </div>
     </div>
 
-    <div *ngIf="!compact && state.maintenances && user && user.role">
+    <div *ngIf="!compact && state.maintenances && state.maintenances.scheduled && user && user.role">
         <div class="alert" [class.alert-danger]="!scheduled(state)">
             <span *ngIf="scheduled(state)">{{ 'dashboard.toMaintenance' | translate: {value: (state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours)} }}</span>
             <span *ngIf="!scheduled(state)">{{ 'dashboard.needMaintenance' | translate }}</span>
