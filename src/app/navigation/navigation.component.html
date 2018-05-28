@@ -1,9 +1,10 @@
 <div *ngIf="router.url === '/'" class="container top-menu">
     <div class="row" style="height: 80px">
-        <div class="col-md-6" style="padding-top: 20px">
+        <div class="col-md-6 col-xs-9" style="padding-top: 20px">
             <img src="assets/images/logo.png" height="40px">
         </div>
-        <div class="col-md-6 hidden-sm hidden-xs">
+        <div class="col-md-6 col-xs-3">
+
             <ul *ngIf="user" class="auth pull-left">
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/dashboard">{{'home.personalArea' | translate}}</a>
@@ -21,7 +22,6 @@
                     <a href="/logout">{{'home.signout' | translate}}</a>
                 </li>
             </ul>
-
             <div class="clearfix"></div>
         </div>
     </div>
