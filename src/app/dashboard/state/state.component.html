@@ -67,8 +67,7 @@
         </div>
         <div *ngIf="!compact">
             {{ 'dashboard.power' | translate }}:
-            <span *ngIf="state.power" class="badge alert-success">{{ 'dashboard.yes' | translate }}</span>
-            <span *ngIf="!state.power" class="badge alert-danger">{{ 'dashboard.no' | translate }}</span>
+            <span class="badge alert-success">{{state.battery.powerVoltage}} {{"unit.volt" | translate}} / {{state.battery.chargeVoltage}} {{"unit.volt" | translate}} ({{state.battery.chargeLevel}}%)</span>
         </div>
         <div *ngIf="!compact">
             {{ 'dashboard.machineHours' | translate }}: {{state.motochas}} {{ 'dashboard.h' | translate }}
