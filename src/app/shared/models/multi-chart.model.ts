@@ -15,7 +15,8 @@ export class MultiChart {
         shadow: true,
         style: {
             fontSize: '10px'
-        }
+        },
+        valueDecimals: 1
     };
     public scrollbar = {
         liveRedraw: true
