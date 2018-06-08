@@ -5,7 +5,7 @@
 <p-dataTable *ngIf="table && !loading" [value]="table.rows" scrollable="true" scrollHeight="400px">
     <p-column header="{{ 'dashboard.time' | translate }}" field="time" sortable="custom" (sortFunction)="sort($event)">
         <ng-template let-row="rowData" pTemplate="body">
-            {{row['time'] | date: 'dd.MM.yyyy H:mm:ss'}}
+            {{row['time'] | date: 'dd.MM.yyyy HH:mm:ss'}}
         </ng-template>
     </p-column>
     <p-column footer="{{table.headers[key]?.model | translate}} {{table.headers[key]?.port}}" *ngFor="let key of keys"

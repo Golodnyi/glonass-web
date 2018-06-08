@@ -11,17 +11,8 @@ export class MultiChart {
         reflow       : false
     };
     public tooltip       = {
-        positioner     : function () {
-            return {
-                x: this.chart.chartWidth - this.label.width,
-                y: -10
-            };
-        },
-        borderWidth    : 0,
-        valueDecimals  : 0,
-        backgroundColor: 'none',
-        headerFormat   : '',
-        shadow         : false,
+        backgroundColor: '#fff',
+        shadow         : true,
         style          : {
             fontSize: '10px'
         }
@@ -98,17 +89,18 @@ export class MultiChart {
             this.series.push({
                 data        : option.data,
                 name        : option.name,
-                type        : 'column',
+                step        : true,
                 color       : option.color,
-                dataGrouping: {
-                    groupPixelWidth: 5,
-                    approximation  : 'average'
-                },
                 tooltip     : {
                     valueSuffix: ' ' + option.unit,
-                    pointFormat: '{point.x:%d.%m %H:%M:%S} <span style="color: ' + option.color + '"> ' + option.name +
+                    pointFormat: '{point.x:%d.%m %H:%M:%S} <span style="color: '
+                    + option.color + '"> ' + option.name +
                     ' </span>: <b>{point.y}</b>',
                     split      : true
+                },
+                dataGrouping: {
+                    groupPixelWidth: 20,
+                    approximation  : 'average'
                 }
             });
         });
@@ -121,37 +113,6 @@ export class MultiChart {
             plotBands: options.plotBands,
             plotLines: options.plotLines
         };
-
-        if (options.plotLines && options.plotLines !== undefined) {
-            let min = 0;
-            let max = 0;
-
-            options.plotLines.forEach(value => {
-                if (value.color === 'red') {
-                    if (!max) {
-                        max = value.value;
-                    } else if (max < Number(value.value)) {
-                        min = max;
-                        max = value.value;
-                    } else if (max > Number(value.value)) {
-                        min = value.value;
-                    }
-
-                    if (options.id === 'vacuumTurbine') {
-                        min = max;
-                        max = 0;
-                    }
-                }
-            });
-
-            if (max) {
-                this.yAxis.max = max;
-            }
-
-            if (min) {
-                this.yAxis.min = min;
-            }
-        }
 
         this.tooltip.valueDecimals = options.decimals;
     }
