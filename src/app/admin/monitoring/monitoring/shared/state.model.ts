@@ -8,7 +8,10 @@ export interface IState {
     issues: any;
     model: CarModel;
     name: string;
+    date: string;
     subdivision: Subdivision;
+    sensors: any;
+    engine_model: any;
 }
 
 export class State implements IState {
@@ -17,5 +20,8 @@ export class State implements IState {
     public issues: any;
     public model: CarModel;
     public name: string;
+    public date: string;
     public subdivision: Subdivision;
+    public sensors: any;
+    public engine_model: any;
 }
