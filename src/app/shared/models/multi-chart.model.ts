@@ -1,119 +1,118 @@
 export class MultiChart {
-    public series        = [];
+    public series = [];
     public xAxis;
     public yAxis;
-    public chart         = {
-        marginLeft   : 0,
-        spacingTop   : 20,
+    public chart = {
+        marginLeft: 0,
+        spacingTop: 20,
         spacingBottom: 0,
-        width        : 600,
-        height       : 680,
-        reflow       : false
+        width: 600,
+        height: 680,
+        reflow: false
     };
-    public tooltip       = {
+    public tooltip = {
         backgroundColor: '#fff',
-        shadow         : true,
-        style          : {
+        shadow: true,
+        style: {
             fontSize: '10px'
         }
     };
-    public scrollbar     = {
+    public scrollbar = {
         liveRedraw: true
     };
-    public navigator     = {
+    public navigator = {
         adaptToUpdatedData: true
     };
-    public plotOptions   = {
+    public plotOptions = {
         pie: {
-            size      : '100%',
+            size: '100%',
             dataLabels: {
                 enabled: false
             }
         }
     };
-    public credits       = {
+    public credits = {
         enabled: false
     };
-    public legend        = {
+    public legend = {
         enabled: true
     };
-    public boost         = {
+    public boost = {
         useGPUTranslations: true,
-        usePreAllocated   : true,
-        seriesThreshold   : 5,
+        usePreAllocated: true,
+        seriesThreshold: 5,
     };
     public rangeSelector = {
-        buttons     : [{
-            type : 'hour',
+        buttons: [{
+            type: 'hour',
             count: 1,
-            text : '1h'
+            text: '1h'
         }, {
-            type : 'hour',
+            type: 'hour',
             count: 3,
-            text : '3h'
+            text: '3h'
         }, {
-            type : 'hour',
+            type: 'hour',
             count: 6,
-            text : '6h'
+            text: '6h'
         }, {
-            type : 'hour',
+            type: 'hour',
             count: 12,
-            text : '12h'
+            text: '12h'
         }, {
-            type : 'day',
+            type: 'day',
             count: 1,
-            text : '1d'
+            text: '1d'
         }, {
-            type : 'day',
+            type: 'day',
             count: 3,
-            text : '3d'
+            text: '3d'
         }, {
-            type : 'week',
+            type: 'week',
             count: 1,
-            text : '1w'
+            text: '1w'
         }, {
-            type : 'month',
+            type: 'month',
             count: 1,
-            text : '1m'
+            text: '1m'
         }, {
-            type : 'all',
+            type: 'all',
             count: 1,
-            text : 'All'
+            text: 'All'
         }],
         inputEnabled: false,
-        selected    : 8
+        selected: 8
     };
 
     constructor(options: any) {
         options.data.forEach(option => {
             this.series.push({
-                data        : option.data,
-                name        : option.name,
-                step        : true,
-                color       : option.color,
-                tooltip     : {
+                type: 'spline',
+                data: option.data,
+                name: option.name,
+                color: option.color,
+                tooltip: {
                     valueSuffix: ' ' + option.unit,
                     pointFormat: '{point.x:%d.%m %H:%M:%S} <span style="color: '
-                    + option.color + '"> ' + option.name +
-                    ' </span>: <b>{point.y}</b>',
-                    split      : true
+                        + option.color + '"> ' + option.name +
+                        ' </span>: <b>{point.y}</b>',
+                    split: true,
+                    valueDecimals: option.decimals
                 },
                 dataGrouping: {
-                    groupPixelWidth: 20,
-                    approximation  : 'average'
+                    groupPixelWidth: 30,
+                    approximation: 'average'
                 }
             });
         });
 
         this.xAxis = {
             crosshair: true,
-            events   : null
+            events: null
         };
         this.yAxis = {
             plotBands: options.plotBands,
             plotLines: options.plotLines
         };
-
-        this.tooltip.valueDecimals = options.decimals;
     }
 }
