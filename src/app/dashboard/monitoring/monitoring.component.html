@@ -15,7 +15,7 @@
             <td *ngIf="status.issue_locations.hasOwnProperty(sensor.id)">
                 <div *ngFor="let error of showError(sensor.id)" style="cursor: pointer;"
                      (click)="showDetailsError(error.key)">
-                    <span class="label label-danger">{{error.name}}</span>
+                    <span class="label label-danger">{{error.name | translate}}</span>
                     <i class="fa fa-question-circle-o" aria-hidden="true">&nbsp;{{ 'dashboard.details' | translate
                         }}</i>
                 </div>
@@ -61,16 +61,16 @@
         <h4 *ngIf="forecasts.length">{{ 'dashboard.forecast' | translate }}:</h4>
         <ul>
             <li *ngFor="let forecast of forecasts">
-                {{forecast.name}}
+                {{forecast.name | translate}}
             </li>
         </ul>
         <h4 *ngIf="reasons.length">{{ 'dashboard.possibleReasons' | translate }}:</h4>
         <ul>
             <li *ngFor="let reason of reasons">
-                <strong>{{reason.name}}</strong>
+                <strong>{{reason.name | translate}}</strong>
                 <div *ngIf="reason.solutions">
                     <div *ngFor="let solution of reason.solutions" class="alert alert-info">
-                        {{solution.name}}
+                        {{solution.name | translate}}
                     </div>
                 </div>
             </li>
