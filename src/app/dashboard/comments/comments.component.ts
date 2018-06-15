@@ -11,6 +11,8 @@ import { CommentsService } from '../../admin/monitoring/shared/comments.service'
 export class CommentsComponent implements OnChanges {
   @Input() car: Car;
   public comments = [];
+  public displayAppendComment: boolean;
+
   constructor(private commentsService: CommentsService) { }
 
   ngOnChanges(changes: any) {
@@ -22,4 +24,13 @@ export class CommentsComponent implements OnChanges {
     });
   }
 
+  public appendHide(hide: boolean) {
+    if (hide) {
+      this.displayAppendComment = false;
+    }
+  }
+
+  public showAppendComment() {
+    this.displayAppendComment = true;
+  }
 }

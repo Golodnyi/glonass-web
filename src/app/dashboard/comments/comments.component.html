@@ -4,5 +4,7 @@
     <span class="badge">{{comment.created_at | date:'dd.MM.y HH:mm'}}</span> {{comment.message}}
   </div>
   <hr/>
-  <button class="btn btn-sm btn-success">{{ 'admin.append' | translate }}</button>
+  <button class="btn btn-sm btn-success" (click)="showAppendComment()">{{ 'admin.append' | translate }}</button>
 </p-panel>
+
+<app-append-comment (hide)="appendHide($event)" [car]="car" [visible]="displayAppendComment"></app-append-comment>

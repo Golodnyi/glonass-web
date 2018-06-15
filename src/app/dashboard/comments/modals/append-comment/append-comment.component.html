@@ -1,0 +1,12 @@
+<p-blockUI [blocked]="visible"></p-blockUI>
+
+<p-dialog (onHide)="onHide()" (onShow)="onShow()" header="{{ 'dashboard.comment' | translate }}" #dialogComment [(visible)]="visible">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="dialog input-group">
+      <label>{{ 'dashboard.comment' | translate }}</label>
+      <br/>
+      <textarea formControlName="comment" pInputTextarea required></textarea>
+      <div class="bottom">
+          <button type="submit" class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-check" pButton label="{{ 'dashboard.apply' | translate }}"></button>
+      </div>
+  </form>
+</p-dialog>
