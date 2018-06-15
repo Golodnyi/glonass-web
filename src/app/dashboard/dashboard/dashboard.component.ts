@@ -7,6 +7,7 @@ import { EnginesService } from '../../shared/services/engines.service';
 import { Engine } from '../../shared/models/engine.model';
 import { Car } from '../../shared/models/car.model';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
     selector   : 'app-dashboard',
@@ -22,7 +23,8 @@ export class DashboardComponent implements OnDestroy {
 
     constructor(private carsService: CarsService,
                 private chartsService: ChartsService,
-                private engineService: EnginesService) {
+                private engineService: EnginesService,
+                private authService: AuthService) {
         this.subscription.add(
             this.chartsService.getCar().subscribe(car => {
                 this.car = car;
@@ -60,5 +62,9 @@ export class DashboardComponent implements OnDestroy {
             this.subscriptionTimer.unsubscribe();
         }
         this.subscription.unsubscribe();
+    }
+
+    public isAdmin(): boolean {
+        return this.authService.isAdmin();
     }
 }
