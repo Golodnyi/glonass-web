@@ -42,7 +42,11 @@ export class MaintenanceComponent {
     this.submit = true;
     this.resetService.reset(this.data).subscribe(
       () => {
-        this.msg.notice(MsgService.SUCCESS, this.translateService.instant('maintenance'), this.translateService.instant('carriedOut'));
+        this.msg.notice(
+          MsgService.SUCCESS,
+          this.translateService.instant('dashboard.maintenance'),
+          this.translateService.instant('dashboard.carriedOut')
+        );
         this.submit = false;
       },
       () => {

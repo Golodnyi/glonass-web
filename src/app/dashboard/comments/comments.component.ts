@@ -19,13 +19,19 @@ export class CommentsComponent implements OnChanges {
     if (changes.car.currentValue === null) {
       return;
     }
-    this.commentsService.all(this.car.id).subscribe(comments => {
+
+    this.updateComments(this.car);
+  }
+
+  private updateComments(car: Car) {
+    this.commentsService.all(car.id).subscribe(comments => {
       this.comments = comments;
     });
   }
 
   public appendHide(hide: boolean) {
     if (hide) {
+      this.updateComments(this.car);
       this.displayAppendComment = false;
     }
   }
