@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Car } from '../../shared/models/car.model';
 import { CommentsService } from '../../admin/monitoring/shared/comments.service';
 
