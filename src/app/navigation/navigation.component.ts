@@ -14,8 +14,7 @@ export class NavigationComponent {
     public user: User;
     public langAliases = {
         'ru': 'Русский',
-        'en': 'English',
-        'cn': 'Chinese'
+        'en': 'English'
     };
 
     constructor(private authService: AuthService, public router: Router, public translate: TranslateService) {
@@ -38,10 +37,10 @@ export class NavigationComponent {
     }
 
     private setLanguage() {
-        this.translate.addLangs(['en', 'ru', 'cn']);
+        this.translate.addLangs(['en', 'ru']);
         this.translate.setDefaultLang('ru');
         // const browserLang = this.translate.getBrowserLang();
-        if (localStorage.getItem('language') && localStorage.getItem('language').match(/en|ru|cn/)) {
+        if (localStorage.getItem('language') && localStorage.getItem('language').match(/en|ru/)) {
             this.translate.use(localStorage.getItem('language'));
         } else {
             this.translate.use('ru');
