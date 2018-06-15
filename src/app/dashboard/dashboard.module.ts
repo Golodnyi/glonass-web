@@ -49,6 +49,8 @@ import { MaintenanceHistoryComponent } from './state/modals/maintenance-history/
 import { MotochasFilterComponent } from './state/modals/motochas-filter/motochas-filter.component';
 import { GarantedComponent } from './state/modals/garanted/garanted.component';
 import { MaintenanceComponent } from './state/modals/maintenance/maintenance.component';
+import { CommentsComponent } from './comments/comments.component';
+import { AppendCommentComponent } from './comments/modals/append-comment/append-comment.component';
 
 @NgModule({
     imports: [
@@ -80,7 +82,7 @@ import { MaintenanceComponent } from './state/modals/maintenance/maintenance.com
         FilterComponent, YmapsComponent, CompanyComponent, TableComponent,
         ChartsComponent, MapComponent, TableViewComponent, ThermocouplesTableComponent, ThermocouplesComponent,
         WelcomeComponent, GarantedHistoryComponent, MaintenanceHistoryComponent, MotochasFilterComponent,
-        GarantedComponent, MaintenanceComponent
+        GarantedComponent, MaintenanceComponent, CommentsComponent, AppendCommentComponent
     ],
     providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, TranslatePipe, ChartsService, SensorsService,
         MonitoringService]

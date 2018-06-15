@@ -12,6 +12,7 @@ export interface IState {
     subdivision: Subdivision;
     sensors: any;
     engine_model: any;
+    telemetry_device: any;
 }
 
 export class State implements IState {
@@ -24,4 +25,5 @@ export class State implements IState {
     public subdivision: Subdivision;
     public sensors: any;
     public engine_model: any;
+    public telemetry_device: any;
 }

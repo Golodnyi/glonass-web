@@ -42,7 +42,11 @@ export class GarantedComponent {
     this.submit = true;
     this.resetService.resetGaranted(this.data).subscribe(
       () => {
-        this.msg.notice(MsgService.SUCCESS, this.translateService.instant('warrantyService'), this.translateService.instant('prolonged'));
+        this.msg.notice(
+          MsgService.SUCCESS,
+          this.translateService.instant('dashboard.warrantyService'),
+          this.translateService.instant('dashboard.prolonged')
+        );
         this.submit = false;
       },
       () => {

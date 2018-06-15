@@ -5,6 +5,9 @@
     <div class="row">
         <app-state [state]="state" [car]="car"></app-state>
     </div>
+    <div class="row" *ngIf="isAdmin()">
+        <app-comments [car]="car"></app-comments>
+    </div>
 </div>
 <div class="col-md-9">
     <router-outlet></router-outlet>
