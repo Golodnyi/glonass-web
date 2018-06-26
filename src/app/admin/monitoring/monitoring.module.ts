@@ -8,6 +8,7 @@ import { ModalComponent } from './modal/modal.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/components/button/button';
 import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
     imports     : [
@@ -18,7 +19,8 @@ import { TranslateModule } from '@ngx-translate/core';
         ButtonModule,
         FormsModule,
         ReactiveFormsModule,
-        TranslateModule
+        TranslateModule,
+        SharedModule
     ],
     declarations: [MonitoringComponent, StateComponent, ModalComponent]
 })
