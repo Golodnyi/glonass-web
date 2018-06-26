@@ -15,7 +15,7 @@
             <td *ngIf="status.issue_locations.hasOwnProperty(sensor.id)">
                 <div *ngFor="let error of showError(sensor.id)" style="cursor: pointer;"
                      (click)="showDetailsError(error.key)">
-                    <span class="label label-danger">{{error.name | translate}}</span>
+                    <span class="label label-danger">{{error.name.message | translate: (error.name.sources | TranslateWithSource)}}</span>
                     <i class="fa fa-question-circle-o" aria-hidden="true">&nbsp;{{ 'dashboard.details' | translate
                         }}</i>
                 </div>
