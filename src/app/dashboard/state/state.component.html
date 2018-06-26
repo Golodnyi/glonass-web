@@ -3,7 +3,7 @@
         <div class="alert alert-danger" *ngFor="let issue of state.issues">
             <div class="text-left">
                 <span class="fa fa-warning">&nbsp;</span>
-                <strong>{{issue.name | translate}}</strong>
+                <strong>{{issue.name.message | translate: (issue.name.sources | TranslateWithSource)}}</strong>
             </div>
             <div class="text-left" *ngIf="issue.forecast.length">{{ 'dashboard.forecast' | translate }}:</div>
             <ul>

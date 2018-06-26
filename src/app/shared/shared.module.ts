@@ -9,16 +9,19 @@ import { ColorPipe } from './pipes/color.pipe';
 import { AllowPortsPipe } from './pipes/allowports.pipe';
 import { TreePipe } from './pipes/tree.pipe';
 import { ChartTranslatePipe } from './pipes/chartTranslate.pipe';
+import { TranslateWithSource } from './pipes/translateWithSource.pipe';
 
 @NgModule({
     imports     : [
         CommonModule
     ],
     declarations: [
-        TreePipe, DropDownPipe, ChartComponent, MultiChartComponent, TablePipe, KeysPipe, ColorPipe, AllowPortsPipe, ChartTranslatePipe
+        TreePipe, DropDownPipe, ChartComponent, MultiChartComponent, TablePipe, KeysPipe, ColorPipe,
+        AllowPortsPipe, ChartTranslatePipe, TranslateWithSource
     ],
     exports     : [
-        TreePipe, DropDownPipe, ChartComponent, MultiChartComponent, TablePipe, KeysPipe, ColorPipe, AllowPortsPipe, ChartTranslatePipe
+        TreePipe, DropDownPipe, ChartComponent, MultiChartComponent, TablePipe, KeysPipe, ColorPipe,
+        AllowPortsPipe, ChartTranslatePipe, TranslateWithSource
     ]
 })
 export class SharedModule {
