@@ -1,11 +1,12 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { State } from '../monitoring/shared/state.model';
 import * as moment from 'moment';
+import { isComponentView } from '@angular/core/src/view/util';
 
 @Component({
-    selector   : 'app-admin-state',
+    selector: 'app-admin-state',
     templateUrl: './state.component.html',
-    styleUrls  : ['./state.component.css'],
+    styleUrls: ['./state.component.css'],
 })
 export class StateComponent {
     @Input() state: State;
@@ -30,4 +31,49 @@ export class StateComponent {
     public showModal() {
         this.showComments.emit(true);
     }
+
+    public toogle(event: any, id: number) {
+        let collapsed = [];
+        if (localStorage.getItem('collapsed')) {
+            collapsed = JSON.parse(localStorage.getItem('collapsed'));
+        }
+
+        if (event.collapsed) {
+            let exist = false;
+            collapsed.forEach(item => {
+                if (item === id) {
+                    exist = true;
+                    return false;
+                }
+            });
+
+            if (!exist) {
+                collapsed.push(id);
+            }
+        } else {
+            collapsed = collapsed.filter(item => {
+                return item !== id;
+            });
+        }
+
+        localStorage.setItem('collapsed', JSON.stringify(collapsed));
+    }
+
+    public isClosed(id: number): boolean {
+        let collapsed = [];
+        if (localStorage.getItem('collapsed')) {
+            collapsed = JSON.parse(localStorage.getItem('collapsed'));
+        }
+
+        let closed = true;
+        collapsed.forEach(item => {
+            if (item === id) {
+                closed = false;
+                return false;
+            }
+        });
+
+        return closed;
+    }
 }
+
