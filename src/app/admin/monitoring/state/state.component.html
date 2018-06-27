@@ -1,5 +1,10 @@
-<p-panel *ngIf="state" header="{{state.model.name}} {{state.name}} {{state.engine_model ? state.engine_model.name : ''}}"
-         [toggleable]="false">
+<p-panel *ngIf="state" [toggleable]="true" [collapsed]="true">
+         <p-header>
+            <span *ngIf="state.issues.length">
+                <i class="fa fa-exclamation-triangle" style="color: darkred;"></i>
+            </span>
+            <span style="font-size: 12px;">{{state.model.name}} {{state.name}} {{state.engine_model ? state.engine_model.name : ''}}</span>
+        </p-header>
     <div>
         <div class="alert alert-success" *ngIf="state.sensors.engine && online(state.date)">В сети</div>
         <div class="alert alert-info" *ngIf="!state.sensors.engine && online(state.date)">В сети</div>
