@@ -1,4 +1,4 @@
-<p-panel *ngIf="state" [toggleable]="true" [collapsed]="true">
+<p-panel *ngIf="state" [toggleable]="true" [collapsed]="isClosed(state.id)" (onBeforeToggle)="toogle($event, state.id)">
          <p-header>
             <span *ngIf="state.issues.length">
                 <i class="fa fa-exclamation-triangle" style="color: darkred;"></i>
