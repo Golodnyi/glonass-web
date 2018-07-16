@@ -115,34 +115,13 @@ export class Chart {
             plotLines: options.plotLines
         };
 
-        if (options.plotLines && options.plotLines !== undefined) {
-            let min = 0;
-            let max = 0;
-
-            options.plotLines.forEach(value => {
-                if (value.color === 'red') {
-                    if (!max) {
-                        max = value.value;
-                    } else if (max < Number(value.value)) {
-                        min = max;
-                        max = value.value;
-                    } else if (max > Number(value.value)) {
-                        min = value.value;
-                    }
-
-                    if (options.id === 'vacuumTurbine') {
-                        min = max;
-                        max = 0;
-                    }
-                }
-            });
-
-            if (max) {
-                this.yAxis.max = max;
+        if (options.displayLimits && options.displayLimits !== undefined) {
+            if (options.displayLimits[0] !== false) {
+                this.yAxis.min = options.displayLimits[0];
             }
 
-            if (min) {
-                this.yAxis.min = min;
+            if (options.displayLimits[1] !== false) {
+                this.yAxis.max = options.displayLimits[1];
             }
         }
 

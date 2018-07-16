@@ -107,6 +107,16 @@ export class MultiChart {
             });
         });
 
+        if (options.displayLimits && options.displayLimits !== undefined) {
+            if (options.displayLimits[0] !== false) {
+                this.yAxis.min = options.displayLimits[0];
+            }
+
+            if (options.displayLimits[1] !== false) {
+                this.yAxis.max = options.displayLimits[1];
+            }
+        }
+
         this.xAxis = {
             crosshair: true,
             events: null
