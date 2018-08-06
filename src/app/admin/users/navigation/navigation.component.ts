@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { UsersService } from '../../../shared/services/users.service';
 import { User } from '../../../shared/models/user.model';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector   : 'app-navigation',

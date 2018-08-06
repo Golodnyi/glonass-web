@@ -1,8 +1,9 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
+
 import { Role } from '../models/role.model';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -28,7 +29,7 @@ export class UsersService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 
@@ -39,7 +40,7 @@ export class UsersService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 
@@ -50,7 +51,7 @@ export class UsersService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 
@@ -61,7 +62,7 @@ export class UsersService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 
@@ -76,7 +77,7 @@ export class UsersService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 
@@ -87,7 +88,7 @@ export class UsersService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 
@@ -98,7 +99,7 @@ export class UsersService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 }

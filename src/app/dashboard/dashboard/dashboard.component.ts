@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { CarsService } from '../../shared/services/cars.service';
 import { ChartsService } from '../../shared/services/charts.service';
 import { IState } from '../state/shared/state.model';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { EnginesService } from '../../shared/services/engines.service';
 import { Engine } from '../../shared/models/engine.model';
 import { Car } from '../../shared/models/car.model';

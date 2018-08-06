@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { Company } from '../../../../shared/models/company.model';
 import { Subdivision } from '../../../../shared/models/subdivision.model';
 import { CarModel } from '../../../../shared/models/car-model.model';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { MsgService } from '../../../../shared/services/msg';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompaniesService } from '../../../../shared/services/companies.service';

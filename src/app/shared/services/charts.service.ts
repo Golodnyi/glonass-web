@@ -1,10 +1,7 @@
+
+import {throwError as observableThrowError,  Observable ,  BehaviorSubject ,  Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Filter } from '../models/filter.model';
-import { Subject } from 'rxjs/Subject';
 import { AutoRefresh } from '../models/auto-refresh.model';
 import { Sensor } from '../models/sensor.model';
 import { Car } from '../models/car.model';
@@ -64,7 +61,7 @@ export class ChartsService {
                 return response;
             }).catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 
@@ -143,7 +140,7 @@ export class ChartsService {
                 return response;
             }).catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 

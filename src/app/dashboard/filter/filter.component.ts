@@ -6,7 +6,7 @@ import { Calendar } from '../../shared/models/calendar.model';
 import { ChartsService } from '../../shared/services/charts.service';
 import { Car } from '../../shared/models/car.model';
 import { Sensor } from '../../shared/models/sensor.model';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { CarCreateForm } from '../shared/create.form';
 import { CarsService } from '../../../../shared/services/cars.service';
 import { Car } from '../../../../shared/models/car.model';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { CompaniesService } from '../../../../shared/services/companies.service';
 import { SubdivisionsService } from '../../../../shared/services/subdivisions.service';
 import { Company } from '../../../../shared/models/company.model';

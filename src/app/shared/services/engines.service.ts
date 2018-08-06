@@ -1,9 +1,9 @@
+
+import {throwError as observableThrowError,  Observable ,  BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
+
 import { Engine } from '../models/engine.model';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { environment } from '../../../environments/environment';
 import { NewEngine } from '../../admin/companies/engine/shared/newEngine.model';
 import { BaseEngine } from '../models/baseEngine.model';
@@ -41,7 +41,7 @@ export class EnginesService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 
@@ -53,7 +53,7 @@ export class EnginesService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 
@@ -64,7 +64,7 @@ export class EnginesService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 
@@ -75,7 +75,7 @@ export class EnginesService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 }
