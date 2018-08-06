@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ChartsService } from '../../shared/services/charts.service';
 import { CarsService } from '../../shared/services/cars.service';
 import { Car } from '../../shared/models/car.model';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { Filter } from '../../shared/models/filter.model';
 import { EnginesService } from '../../shared/services/engines.service';
 import { SelectItem } from 'primeng/primeng';

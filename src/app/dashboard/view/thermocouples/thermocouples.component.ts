@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ChartsService } from 'app/shared/services/charts.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { Car } from 'app/shared/models/car.model';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';

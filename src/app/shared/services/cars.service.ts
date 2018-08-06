@@ -1,9 +1,9 @@
+
+import {throwError as observableThrowError,  Observable ,  BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
+
 import { Car } from '../models/car.model';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { State } from '../../dashboard/state/shared/state.model';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -42,7 +42,7 @@ export class CarsService {
                 return response;
             }).catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 
@@ -83,7 +83,7 @@ export class CarsService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 
@@ -103,7 +103,7 @@ export class CarsService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 
@@ -114,7 +114,7 @@ export class CarsService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 }

@@ -6,7 +6,7 @@ import { Company } from 'app/shared/models/company.model';
 import { Subdivision } from 'app/shared/models/subdivision.model';
 import { Car } from 'app/shared/models/car.model';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector   : 'app-navigation',

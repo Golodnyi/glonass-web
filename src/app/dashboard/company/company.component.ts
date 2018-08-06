@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { CarsService } from '../../shared/services/cars.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { SubdivisionsService } from '../../shared/services/subdivisions.service';
 import { Subdivision } from '../../shared/models/subdivision.model';

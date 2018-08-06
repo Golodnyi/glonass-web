@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ChartsService } from '../../../shared/services/charts.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { Car } from '../../../shared/models/car.model';
 import { SelectItem } from 'primeng/primeng';
 import { AuthService } from '../../../shared/services/auth.service';

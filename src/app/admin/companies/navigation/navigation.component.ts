@@ -9,7 +9,7 @@ import { Company } from '../../../shared/models/company.model';
 import { Subdivision } from '../../../shared/models/subdivision.model';
 import { Car } from '../../../shared/models/car.model';
 import { Engine } from '../../../shared/models/engine.model';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector   : 'app-navigation',

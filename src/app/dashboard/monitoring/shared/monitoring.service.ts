@@ -1,5 +1,6 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { MsgService } from '../../../shared/services/msg';
@@ -25,7 +26,7 @@ export class MonitoringService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 }

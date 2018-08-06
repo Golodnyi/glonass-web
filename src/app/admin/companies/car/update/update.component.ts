@@ -8,7 +8,7 @@ import { Car } from '../../../../shared/models/car.model';
 import { FormGroup } from '@angular/forms';
 import { Subdivision } from '../../../../shared/models/subdivision.model';
 import { CarModel } from '../../../../shared/models/car-model.model';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { CarUpdateForm } from '../shared/update.form';
 
 @Component({

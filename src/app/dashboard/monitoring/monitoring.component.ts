@@ -2,7 +2,7 @@ import { Component, OnChanges, OnDestroy, Input } from '@angular/core';
 import { MonitoringService } from './shared/monitoring.service';
 import { Car } from '../../shared/models/car.model';
 import { Monitoring } from './shared/monitoring.model';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import * as moment from 'moment';
 

@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { ChartsService } from '../../../shared/services/charts.service';
 import { Car } from '../../../shared/models/car.model';
 import { AutoRefresh } from '../../../shared/models/auto-refresh.model';

@@ -3,7 +3,7 @@ import { User } from '../shared/models/user.model';
 import { AuthService } from '../shared/services/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-navigation',

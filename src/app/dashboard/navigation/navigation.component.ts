@@ -7,7 +7,7 @@ import { Company } from '../../shared/models/company.model';
 import { TreePipe } from '../../shared/pipes/tree.pipe';
 import { Subdivision } from '../../shared/models/subdivision.model';
 import { Car } from '../../shared/models/car.model';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector   : 'app-navigation',

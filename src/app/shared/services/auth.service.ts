@@ -1,15 +1,15 @@
+
+import {throwError as observableThrowError,  Subscription ,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
+
 import { Auth } from '../../login/shared/models/auth.model';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { UsersService } from './users.service';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { ErrorService } from './error.service';
 
@@ -38,7 +38,7 @@ export class AuthService {
     public login(auth: Auth): Observable<boolean> {
         return this.http.post(this.host + '/v1/auth/login', auth).map(
             (data: any) => {
-                const jwtHelper: JwtHelper = new JwtHelper();
+                const jwtHelper = new JwtHelperService();
                 const token: any = jwtHelper.decodeToken(data.accessToken);
 
                 if (!token) {
@@ -73,14 +73,14 @@ export class AuthService {
             .catch((error: any) => {
                 AuthService.destroyAuthizozationDate();
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 
     public refreshToken(): Observable<boolean> {
         return this.http.post(this.host + '/v1/auth/refresh', { refreshToken: localStorage.getItem('Refresh') }).map(
             (data: any) => {
-                const jwtHelper: JwtHelper = new JwtHelper();
+                const jwtHelper = new JwtHelperService();
                 const token: any = jwtHelper.decodeToken(data.accessToken);
 
                 if (!token) {
@@ -97,7 +97,7 @@ export class AuthService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 
@@ -110,7 +110,7 @@ export class AuthService {
             })
             .catch((error: any) => {
                 this.errorService.check(error);
-                return Observable.throw(error.error.message || 'Server error');
+                return observableThrowError(error.error.message || 'Server error');
             });
     }
 

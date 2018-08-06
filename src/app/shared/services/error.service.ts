@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
+
 import { Router } from '@angular/router';
 import { MsgService } from '../services/msg';
 import { TranslateService } from '@ngx-translate/core';
