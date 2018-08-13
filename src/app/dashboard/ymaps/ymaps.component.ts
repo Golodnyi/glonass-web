@@ -51,8 +51,7 @@ export class YmapsComponent implements OnDestroy, OnChanges {
                 this.map = new ymaps.Map('ymap', {
                     center  : this.center,
                     zoom    : (!this.zoom ? 12 : this.zoom),
-                    controls: ['smallMapDefaultSet', 'rulerControl'],
-                    type    : 'yandex#hybrid'
+                    controls: ['smallMapDefaultSet', 'rulerControl']
                 });
             }
 
