@@ -13,7 +13,6 @@ declare namespace ymaps {
         center: number[];
         controls: string[];
         zoom: number;
-        type: string;
     }
 
     export class Placemark {
