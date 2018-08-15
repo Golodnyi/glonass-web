@@ -8,6 +8,7 @@
             <ul *ngIf="user" class="auth pull-left">
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/dashboard">{{'home.personalArea' | translate}}</a>
+                    &nbsp;
                 </li>
                 <li *ngIf="user.role.is_global == 1" class="nav-item">
                     <a class="nav-link" routerLink="/admin">{{'home.administration' | translate}}</a>
