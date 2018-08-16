@@ -1,3 +1,4 @@
+import { RoadMapService } from './roadmap/shared/roadmap.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -86,7 +87,7 @@ import { RoadmapComponent } from './roadmap/roadmap.component';
         GarantedComponent, MaintenanceComponent, CommentsComponent, AppendCommentComponent, RoadmapComponent
     ],
     providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, TranslatePipe, ChartsService, SensorsService,
-        MonitoringService]
+        MonitoringService, RoadMapService]
 })
 export class DashboardModule {
 }

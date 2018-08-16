@@ -11,8 +11,7 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-roadmap',
   templateUrl: './roadmap.component.html',
-  styleUrls: ['./roadmap.component.css'],
-  providers: [RoadMapService]
+  styleUrls: ['./roadmap.component.css']
 })
 export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
   public map: any;

@@ -83,6 +83,16 @@ export class SubdivisionsService {
         return this.subdivision.asObservable();
     }
 
+    public get_resync(company: number, subdivision: number, resync = false): Observable<Subdivision> {
+        return this.http.get(
+            this.host + '/v1/companies/' + company + '/subdivisions/' + subdivision)
+            .map((response: any) => {
+                return response;
+            }, error => {
+                return observableThrowError(error.error.message || 'Server error');
+            });
+    }
+
     public update(subdivision: Subdivision): Observable<Subdivision> {
         return this.http.put(this.host + '/v1/companies/' + subdivision.company_id + '/subdivisions/' + subdivision.id,
             subdivision)
