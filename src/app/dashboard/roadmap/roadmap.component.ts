@@ -112,10 +112,9 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
         alt += roadMaps.points[key][2];
         roadMaps.edges[key].forEach(edge => {
           point.push([roadMaps.points[edge][1], roadMaps.points[edge][0]]);
-          alt += roadMaps.points[key][2];
+          alt += roadMaps.points[edge][2];
         });
-        alt /= roadMaps.edges[key].length;
-
+        alt /= roadMaps.edges[key].length + 1;
         const elevation = parseInt(this.roadMaps[0].elevation, 10);
         const normal_alt = alt - elevation;
 
