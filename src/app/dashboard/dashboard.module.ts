@@ -51,6 +51,7 @@ import { GarantedComponent } from './state/modals/garanted/garanted.component';
 import { MaintenanceComponent } from './state/modals/maintenance/maintenance.component';
 import { CommentsComponent } from './comments/comments.component';
 import { AppendCommentComponent } from './comments/modals/append-comment/append-comment.component';
+import { RoadmapComponent } from './roadmap/roadmap.component';
 
 @NgModule({
     imports: [
@@ -82,7 +83,7 @@ import { AppendCommentComponent } from './comments/modals/append-comment/append-
         FilterComponent, YmapsComponent, CompanyComponent, TableComponent,
         ChartsComponent, MapComponent, TableViewComponent, ThermocouplesTableComponent, ThermocouplesComponent,
         WelcomeComponent, GarantedHistoryComponent, MaintenanceHistoryComponent, MotochasFilterComponent,
-        GarantedComponent, MaintenanceComponent, CommentsComponent, AppendCommentComponent
+        GarantedComponent, MaintenanceComponent, CommentsComponent, AppendCommentComponent, RoadmapComponent
     ],
     providers: [CompaniesService, SubdivisionsService, CarsService, TreePipe, TranslatePipe, ChartsService, SensorsService,
         MonitoringService]
