@@ -21,9 +21,9 @@ export class MapComponent implements OnDestroy {
             if (car === null) {
                 return;
             }
-
+            this.subdivisions = [];
             this.subdivisionsService.get_resync(1, car.subdivision_id).subscribe(subs => {
-                this.subdivisions.push(subs);
+                this.subdivisions = [subs];
             });
         });
     }
