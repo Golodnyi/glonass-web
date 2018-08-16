@@ -31,22 +31,19 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
     private chartsService: ChartsService
   ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   private buildTrack() {
     this.subdivisions.forEach((subdivision, index) => {
       this.carService.all_sync(1, subdivision.id).subscribe(cars => {
         cars.forEach(car => {
-          this.roadMapService.car(car).subscribe(
-            location => {
-              location.name = car.name;
-              this.cars.push(location);
-              if ((index + 1) === this.subdivisions.length) {
-                this.addCars();
-              }
+          this.roadMapService.car(car).subscribe(location => {
+            location.name = car.name;
+            this.cars.push(location);
+            if (index + 1 === this.subdivisions.length) {
+              this.addCars();
             }
-          );
+          });
         });
       });
       this.roadMapService.get(subdivision.id).subscribe(data => {
@@ -54,7 +51,7 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
         if (this.roadMaps.length === this.subdivisions.length) {
           this.buildRoadMap();
         }
-      })
+      });
     });
   }
 
@@ -81,7 +78,7 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
       this.map = new ymaps.Map('ymap', {
         center: this.center,
         zoom: !this.zoom ? 12 : this.zoom,
-        controls: ['smallMapDefaultSet', 'rulerControl'],
+        controls: ['smallMapDefaultSet', 'rulerControl']
       });
 
       this.buildPoints();
@@ -114,34 +111,19 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
           point.push([roadMaps.points[edge][1], roadMaps.points[edge][0]]);
           alt += roadMaps.points[edge][2];
         });
-        alt /= roadMaps.edges[key].length + 1;
-        const elevation = parseInt(this.roadMaps[0].elevation, 10);
-        const normal_alt = alt - elevation;
+        alt /= roadMaps.edges[key].length + 1; // +1 т.к. 109 строка складывает дополнительное значение
+        const normal_alt =
+          ((alt - this.roadMaps[0].altRange[0]) * 100) /
+          (this.roadMaps[0].altRange[0] - this.roadMaps[0].altRange[1]);
 
-        if (Math.abs(normal_alt) <= 10) {
-          color = 'rgba(0, 0, 0, 1)';
-        } else if (normal_alt <= -11 && normal_alt >= -50) {
-          color = 'rgba(85, 85, 85, 1)';
-        } else if (normal_alt <= -51 && normal_alt >= -100) {
-          color = 'rgba(170, 170, 170, 1)';
-        } else if (normal_alt <= -100) {
-          color = 'rgba(200, 200, 200, 1)';
-        } else if (normal_alt >= 11 && normal_alt <= 50) {
-          color = 'rgba(85, 0, 0, 1)';
-        } else if (normal_alt >= 51 && normal_alt <= 100) {
-          color = 'rgba(170, 0, 0, 1)';
-        } else {
-          color = 'rgba(200, 0, 0, 1)';
-        }
-
-        this.addPoint(point, color, alt);
+        this.addPoint(point, this.hslToHex(normal_alt, 100, 50), alt);
       });
     });
   }
 
   private addPoint(points, color, alt) {
     ymaps.ready().then(() => {
-    this.map.geoObjects.add(
+      this.map.geoObjects.add(
         new ymaps.Polyline(
           points,
           {
@@ -154,27 +136,74 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
           }
         )
       );
-    })
+    });
   }
 
   private addCars() {
     ymaps.ready().then(() => {
       this.cars.forEach(car => {
-        this.map.geoObjects.add(new ymaps.Placemark([car.location[1], car.location[2]], {
-            iconContent: car.name,
-            hintContent: moment.unix(car.location[0] / 1000).format('DD.MM.YYYY H:mm')
-        }, {
-            iconLayout   : 'default#imageWithContent',
-            iconImageHref: '/assets/car.png',
-            iconImageSize: [32, 32],
-            iconContentOffset: [-10, -34],
-            iconContentLayout: ymaps.templateLayoutFactory.createClass(
-              `<div class="contentLayout" title="$[properties.hintContent]">
+        this.map.geoObjects.add(
+          new ymaps.Placemark(
+            [car.location[1], car.location[2]],
+            {
+              iconContent: car.name,
+              hintContent: moment
+                .unix(car.location[0] / 1000)
+                .format('DD.MM.YYYY H:mm')
+            },
+            {
+              iconLayout: 'default#imageWithContent',
+              iconImageHref: '/assets/car.png',
+              iconImageSize: [32, 32],
+              iconContentOffset: [-10, -34],
+              iconContentLayout: ymaps.templateLayoutFactory.createClass(
+                `<div class="contentLayout" title="$[properties.hintContent]">
                 $[properties.iconContent]
               </div>`
-            )
-        }));
+              )
+            }
+          )
+        );
       });
     });
+  }
+
+  private hslToHex(h, s, l) {
+    h /= 360;
+    s /= 100;
+    l /= 100;
+    let r, g, b;
+    if (s === 0) {
+      r = g = b = l; // achromatic
+    } else {
+      const hue2rgb = (p, q, t) => {
+        if (t < 0) {
+          t += 1;
+        }
+        if (t > 1) {
+          t -= 1;
+        }
+        if (t < 1 / 6) {
+          return p + (q - p) * 6 * t;
+        }
+        if (t < 1 / 2) {
+          return q;
+        }
+        if (t < 2 / 3) {
+          return p + (q - p) * (2 / 3 - t) * 6;
+        }
+        return p;
+      };
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const p = 2 * l - q;
+      r = hue2rgb(p, q, h + 1 / 3);
+      g = hue2rgb(p, q, h);
+      b = hue2rgb(p, q, h - 1 / 3);
+    }
+    const toHex = x => {
+      const hex = Math.round(x * 255).toString(16);
+      return hex.length === 1 ? '0' + hex : hex;
+    };
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
   }
 }
