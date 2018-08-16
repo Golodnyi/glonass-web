@@ -26,4 +26,8 @@ declare namespace ymaps {
     export class Circle {
         constructor([], {}, {});
     }
+
+    namespace templateLayoutFactory {
+        function createClass(template: string, overrides?: object, staticMethods?: object);
+    }
 }

@@ -19,21 +19,15 @@ export class CompanyComponent implements OnDestroy {
     public mapCars: MapCar[]            = [];
     public mapPolyLines: MapPolyLines[] = [];
     private subscription: Subscription  = new Subscription();
-    private mpl: MapPolyLines[];
-    private mc: MapCar[];
 
-    constructor(private subdivisionsService: SubdivisionsService,
-                private carsService: CarsService,
-                private enginesService: EnginesService,
-                private route: ActivatedRoute,
-                private chartsService: ChartsService) {
-        /**
-         * TODO: нужен рефакторинг
-         */
+    constructor(
+        private subdivisionsService: SubdivisionsService,
+        private route: ActivatedRoute,
+        private carsService: CarsService,
+        private enginesService: EnginesService
+    ) {
         this.subscription.add(
             this.route.params.subscribe(params => {
-                this.mc          = [];
-                this.mpl         = [];
                 const company_id = +params['company'];
                 this.subdivisionsService.all_resync(company_id).subscribe(
                     subdivisions => {
@@ -46,40 +40,12 @@ export class CompanyComponent implements OnDestroy {
                                         this.enginesService.getSync(company_id, subdiv.id, car.id).subscribe(engine => {
                                             car.engine = engine;
                                         });
-
-                                        this.chartsService.mapData(car).subscribe(data => {
-                                            if (data && data.length) {
-                                                const mCar = new MapCar();
-                                                mCar.name  = car.name;
-                                                mCar.point = [data[data.length - 1][1], data[data.length - 1][2]];
-
-                                                const polyLines = new MapPolyLines();
-                                                polyLines.name  = 'Маршрут';
-                                                polyLines.color = '#' + Math.random().toString(16).substr(-6);
-                                                let clr         = '#000';
-                                                data.forEach(d => {
-                                                    if (d[3] === 'g') {
-                                                        clr = '#00AA00';
-                                                    } else if (d[3] === 'r') {
-                                                        clr = '#AA0000';
-                                                    } else if (d[3] === 'y') {
-                                                        clr = '#FFD700';
-                                                    }
-                                                    polyLines.points.push([d[1], d[2], clr]);
-                                                });
-
-                                                this.mc.push(mCar);
-                                                this.mpl.push(polyLines);
-                                            }
-                                        });
                                     });
                                 }
                             );
                         });
                     }
                 );
-                this.mapCars      = this.mc;
-                this.mapPolyLines = this.mpl;
             })
         );
     }

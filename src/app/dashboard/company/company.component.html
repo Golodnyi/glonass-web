@@ -21,11 +21,8 @@
                     {{'dashboard.noData' | translate}}
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="{{'dashboard.map' | translate}}">
-                <app-ymaps *ngIf="mapCars.length" [cars]="mapCars" [polyLines]="mapPolyLines" [zoom]="4"></app-ymaps>
-                <div *ngIf="!mapCars.length" class="alert alert-danger">
-                    {{'dashboard.noData' | translate}}
-                </div>
+            <p-tabPanel *ngIf="subdivisions.length" header="{{'dashboard.map' | translate}}">
+                <app-roadmap [subdivisions]="subdivisions"></app-roadmap>
             </p-tabPanel>
         </p-tabView>
     </div>
