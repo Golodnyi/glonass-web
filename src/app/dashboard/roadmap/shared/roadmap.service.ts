@@ -16,7 +16,6 @@ export class RoadMapService {
     }
 
     public get(subdivision: number): Observable<any> {
-        console.log(subdivision);
         return this.http.get(this.host + '/v1/subdivisions/' + subdivision + '/roadmap')
             .map((response: any) => {
                 return response;
