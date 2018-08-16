@@ -96,10 +96,12 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
     this.roadMaps.forEach(roadMaps => {
       Object.keys(roadMaps.edges).forEach(key => {
         if (!change) {
-          this.map.panTo([roadMaps.points[key][1], roadMaps.points[key][0]], {
-            flying: false
+          ymaps.ready().then(() => {
+            this.map.panTo([roadMaps.points[key][1], roadMaps.points[key][0]], {
+              flying: false
+            });
+            change = true;
           });
-          change = true;
         }
 
         const point = [];
@@ -139,37 +141,41 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private addPoint(points, color, alt) {
+    ymaps.ready().then(() => {
     this.map.geoObjects.add(
-      new ymaps.Polyline(
-        points,
-        {
-          hintContent: 'Высота: ' + parseInt(alt, 10) + 'м.'
-        },
-        {
-          strokeColor: color,
-          strokeWidth: 4,
-          strokeStyle: '2 0'
-        }
-      )
-    );
+        new ymaps.Polyline(
+          points,
+          {
+            hintContent: 'Высота: ' + parseInt(alt, 10) + 'м.'
+          },
+          {
+            strokeColor: color,
+            strokeWidth: 4,
+            strokeStyle: '2 0'
+          }
+        )
+      );
+    })
   }
 
   private addCars() {
-    this.cars.forEach(car => {
-      this.map.geoObjects.add(new ymaps.Placemark([car.location[1], car.location[2]], {
-          iconContent: car.name,
-          hintContent: moment.unix(car.location[0] / 1000).format('DD.MM.YYYY H:mm')
-      }, {
-          iconLayout   : 'default#imageWithContent',
-          iconImageHref: '/assets/car.png',
-          iconImageSize: [32, 32],
-          iconContentOffset: [-10, -34],
-          iconContentLayout: ymaps.templateLayoutFactory.createClass(
-            `<div class="contentLayout" title="$[properties.hintContent]">
-              $[properties.iconContent]
-            </div>`
-          )
-      }));
-  });
+    ymaps.ready().then(() => {
+      this.cars.forEach(car => {
+        this.map.geoObjects.add(new ymaps.Placemark([car.location[1], car.location[2]], {
+            iconContent: car.name,
+            hintContent: moment.unix(car.location[0] / 1000).format('DD.MM.YYYY H:mm')
+        }, {
+            iconLayout   : 'default#imageWithContent',
+            iconImageHref: '/assets/car.png',
+            iconImageSize: [32, 32],
+            iconContentOffset: [-10, -34],
+            iconContentLayout: ymaps.templateLayoutFactory.createClass(
+              `<div class="contentLayout" title="$[properties.hintContent]">
+                $[properties.iconContent]
+              </div>`
+            )
+        }));
+      });
+    });
   }
 }
