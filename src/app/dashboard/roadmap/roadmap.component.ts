@@ -6,6 +6,7 @@ import { RoadMapService } from './shared/roadmap.service';
 import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
 import { ChartsService } from '../../shared/services/charts.service';
 import * as moment from 'moment';
+import { Alert } from 'selenium-webdriver';
 
 /// <reference path="./typings/ymaps.d.ts" />
 @Component({
@@ -102,7 +103,6 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
         }
 
         const point = [];
-        let color;
 
         let alt = 0;
         point.push([roadMaps.points[key][1], roadMaps.points[key][0]]);
@@ -113,10 +113,10 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
         });
         alt /= roadMaps.edges[key].length + 1; // +1 т.к. 109 строка складывает дополнительное значение
         const normal_alt =
-          ((alt - this.roadMaps[0].altRange[0]) * 100) /
-          (this.roadMaps[0].altRange[0] - this.roadMaps[0].altRange[1]);
+          ((alt - roadMaps.altRange[0]) * 100) /
+          (roadMaps.altRange[1] - roadMaps.altRange[0]) * 3.6;
 
-        this.addPoint(point, this.hslToHex(normal_alt, 100, 50), alt);
+          this.addPoint(point, this.hslToHex(normal_alt, 100, 50), alt);
       });
     });
   }
@@ -176,23 +176,23 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
     if (s === 0) {
       r = g = b = l; // achromatic
     } else {
-      const hue2rgb = (p, q, t) => {
-        if (t < 0) {
-          t += 1;
+      const hue2rgb = (p1, q1, t1) => {
+        if (t1 < 0) {
+          t1 += 1;
         }
-        if (t > 1) {
-          t -= 1;
+        if (t1 > 1) {
+          t1 -= 1;
         }
-        if (t < 1 / 6) {
-          return p + (q - p) * 6 * t;
+        if (t1 < 1 / 6) {
+          return p1 + (q1 - p1) * 6 * t1;
         }
-        if (t < 1 / 2) {
-          return q;
+        if (t1 < 1 / 2) {
+          return q1;
         }
-        if (t < 2 / 3) {
-          return p + (q - p) * (2 / 3 - t) * 6;
+        if (t1 < 2 / 3) {
+          return p1 + (q1 - p1) * (2 / 3 - t1) * 6;
         }
-        return p;
+        return p1;
       };
       const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
       const p = 2 * l - q;
