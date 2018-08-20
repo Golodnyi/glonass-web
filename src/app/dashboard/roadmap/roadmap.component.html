@@ -1,1 +1,11 @@
+<div *ngIf="roadMaps.length" style="text-align: center;">
+    {{roadMaps[0].altRange[0] | number}} м.
+    <span *ngFor="let i of
+    [
+    60, 75, 90, 105, 120, 135, 150, 165, 180,
+    195, 210, 225, 240, 255, 270, 285, 300, 315, 330, 345, 360
+    ]" [style.background-color]="getSpectrum(i)" class="spectrum"></span>
+    {{roadMaps[0].altRange[1] | number}} м.
+</div>
+
 <div id="ymap"></div>
