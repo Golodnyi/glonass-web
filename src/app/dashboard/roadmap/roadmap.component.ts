@@ -23,7 +23,7 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
   private cars = [];
   public polyLines: any;
   private center = [55.75370903771494, 37.61981338262558];
-  private roadMaps = [];
+  public roadMaps = [];
   private points = [];
 
   constructor(
@@ -113,12 +113,16 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
         });
         alt /= roadMaps.edges[key].length + 1; // +1 т.к. 109 строка складывает дополнительное значение
         const normal_alt =
-          ((alt - roadMaps.altRange[0]) * 100) /
-          (roadMaps.altRange[1] - roadMaps.altRange[0]) * 3.6;
+          (((alt - roadMaps.altRange[0]) * 100) /
+          (roadMaps.altRange[1] - roadMaps.altRange[0]) * 3) + 60;
 
           this.addPoint(point, this.hslToHex(normal_alt, 100, 50), alt);
       });
     });
+  }
+
+  public getSpectrum(i: number) {
+    return this.hslToHex(i, 100, 50);
   }
 
   private addPoint(points, color, alt) {
