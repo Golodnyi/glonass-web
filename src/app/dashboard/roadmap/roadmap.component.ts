@@ -1,12 +1,9 @@
 import { CarsService } from './../../shared/services/cars.service';
 import { Subdivision } from './../../shared/models/subdivision.model';
-import { MapCar } from './../ymaps/shared/map-car.model';
-import { Subscription, Subscriber } from 'rxjs';
 import { RoadMapService } from './shared/roadmap.service';
 import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
 import { ChartsService } from '../../shared/services/charts.service';
 import * as moment from 'moment';
-import { Alert } from 'selenium-webdriver';
 
 /// <reference path="./typings/ymaps.d.ts" />
 @Component({
@@ -24,7 +21,7 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
   public polyLines: any;
   private center = [55.75370903771494, 37.61981338262558];
   public roadMaps = [];
-  private points = [];
+  public filterDate = new Date();
 
   constructor(
     private roadMapService: RoadMapService,
@@ -34,11 +31,20 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {}
 
+  public filter() {
+    this.destroy();
+    this.buildTrack();
+  }
+
   private buildTrack() {
+    this.roadMaps = [];
+    this.cars = [];
+
     this.subdivisions.forEach((subdivision, index) => {
       this.carService.all_sync(1, subdivision.id).subscribe(cars => {
         cars.forEach(car => {
-          this.roadMapService.car(car).subscribe(location => {
+          const timestamp = Number(moment(this.filterDate).format('x'));
+          this.roadMapService.car(car, timestamp).subscribe(location => {
             location.name = car.name;
             this.cars.push(location);
             if (index + 1 === this.subdivisions.length) {
@@ -59,7 +65,6 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
   private destroy() {
     if (this.map) {
       this.map.destroy();
-      this.points = [];
       this.roadMaps = [];
       this.cars = [];
     }

@@ -25,8 +25,8 @@ export class RoadMapService {
             });
     }
 
-    public car(car: Car) {
-        return this.http.get(this.host + '/v1/cars/' + car.id + '/location')
+    public car(car: Car, filterDate: number) {
+        return this.http.get(this.host + '/v1/cars/' + car.id + '/location?at=' + filterDate)
             .map((response: any) => {
                 return response;
             }).catch((error: any) => {
