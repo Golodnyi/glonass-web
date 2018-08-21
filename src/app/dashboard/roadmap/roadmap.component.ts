@@ -45,10 +45,12 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
         cars.forEach(car => {
           const timestamp = Number(moment(this.filterDate).format('x'));
           this.roadMapService.car(car, timestamp).subscribe(location => {
-            location.name = car.name;
-            this.cars.push(location);
-            if (index + 1 === this.subdivisions.length) {
-              this.addCars();
+            if (location.location.length) {
+              location.name = car.name;
+              this.cars.push(location);
+              if (index + 1 === this.subdivisions.length) {
+                this.addCars();
+              }
             }
           });
         });
