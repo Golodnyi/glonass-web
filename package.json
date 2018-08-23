@@ -19,7 +19,7 @@
     "@angular/forms": "6.1.1",
     "@angular/http": "6.1.1",
     "@angular/platform-browser": "6.1.1",
-    "@angular/platform-browser-dynamhttps://bitbucket.org/dashboard/repositoriesic": "6.1.1",
+    "@angular/platform-browser-dynamic": "6.1.1",
     "@angular/router": "6.1.1",
     "@auth0/angular-jwt": "^2.0.0",
     "@ngx-translate/core": "^10.0.0",
