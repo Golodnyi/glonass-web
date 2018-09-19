@@ -4,7 +4,7 @@
                 <i class="fa fa-exclamation-triangle" style="color: darkred;">&nbsp;</i>
             </span>
             <span *ngIf="noConnections(state.date)" title="Не выходил на связь более 2-х дней">
-                <i class="fa fa-thumbs-down">&nbsp;</i>
+                <i class="fa fa-clock-o">&nbsp;</i>
             </span>
             <span class="title" title="{{state.model.name}} {{state.name}} {{state.engine_model ? state.engine_model.name : ''}}">{{state.model.name}} {{state.name}} {{state.engine_model ? state.engine_model.name : ''}}</span>
         </p-header>
