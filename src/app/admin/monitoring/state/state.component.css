@@ -1,0 +1,8 @@
+.title {
+    width: 80%;
+    overflow: hidden;
+    display:inline-block;
+    font-size: 11px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

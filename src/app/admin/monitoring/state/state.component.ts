@@ -16,6 +16,10 @@ export class StateComponent {
         return (Number(moment().format('X')) - Number(timestamp) / 1000) < 3600;
     };
 
+    public noConnections(timestamp: number) {
+        return (Number(moment().format('X')) - Number(timestamp) / 1000) > 172800;
+    }
+
     public static lastDate(timestamp: number) {
         return moment.unix(timestamp / 1000).format('DD.MM.YYYY H:mm');
     };

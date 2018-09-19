@@ -121,7 +121,7 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
         alt /= roadMaps.edges[key].length + 1; // +1 т.к. 109 строка складывает дополнительное значение
         const normal_alt =
           (((alt - roadMaps.altRange[0]) * 100) /
-          (roadMaps.altRange[1] - roadMaps.altRange[0]) * 3) + 60;
+          (roadMaps.altRange[1] - roadMaps.altRange[0]) * 1.2) + 240;
 
           this.addPoint(point, this.hslToHex(normal_alt, 100, 50), alt);
       });

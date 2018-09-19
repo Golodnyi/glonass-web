@@ -1,9 +1,12 @@
 <p-panel *ngIf="state" [toggleable]="true" [collapsed]="isClosed(state.id)" (onBeforeToggle)="toogle($event, state.id)">
          <p-header>
-            <span *ngIf="state.issues.length">
-                <i class="fa fa-exclamation-triangle" style="color: darkred;"></i>
+            <span *ngIf="state.issues.length" title="Обнаружены проблемы">
+                <i class="fa fa-exclamation-triangle" style="color: darkred;">&nbsp;</i>
             </span>
-            <span style="font-size: 11px;">{{state.model.name}} {{state.name}} {{state.engine_model ? state.engine_model.name : ''}}</span>
+            <span *ngIf="noConnections(state.date)" title="Не выходил на связь более 2-х дней">
+                <i class="fa fa-thumbs-down">&nbsp;</i>
+            </span>
+            <span class="title" title="{{state.model.name}} {{state.name}} {{state.engine_model ? state.engine_model.name : ''}}">{{state.model.name}} {{state.name}} {{state.engine_model ? state.engine_model.name : ''}}</span>
         </p-header>
     <div>
         <div class="alert alert-success" *ngIf="state.sensors.engine && online(state.date)">В сети</div>
