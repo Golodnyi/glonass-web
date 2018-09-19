@@ -20,6 +20,10 @@ export class StateComponent {
         return moment.unix(timestamp / 1000).format('DD.MM.YYYY H:mm');
     };
 
+    public noConnections(timestamp: number) {
+        return (Number(moment().format('X')) - Number(timestamp) / 1000) > 172800;
+    }
+
     public online(timestamp: number) {
         return StateComponent.online(timestamp);
     };
