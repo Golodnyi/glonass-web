@@ -18,10 +18,30 @@
     <![endif]-->
     <style>
         .load {
-            width: 90px;
-            height: 90px;
-            padding: 10px;
-            margin: auto;
+            margin: 0px;
+            padding: 0px;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #6d7b92;
+            text-align: center;
+        }
+
+        .load .center {
+            position: absolute;
+            width: 161px;
+            height: 201.8px;
+            top: calc(50% - 100.54px);
+            left: calc(50% - 91px);
+            text-align: center;
+        }
+
+        .load .center h4 {
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
         }
     </style>
 </head>
@@ -30,8 +50,10 @@
 <div class="container-fluid">
     <app-run>
         <div class="load">
-            Loading...
-            <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+            <div class="center">
+                <img src="/assets/images/getpart.png"/>
+                <h4>Loading</h4>
+            </div>
         </div>
     </app-run>
 </div>
