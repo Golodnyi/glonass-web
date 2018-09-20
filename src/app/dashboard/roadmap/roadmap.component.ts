@@ -32,8 +32,10 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit() {}
 
   public filter() {
-    this.destroy();
-    this.buildTrack();
+    this.destroy(false);
+    ymaps.ready().then(() => {
+      this.buildTrack();
+    });
   }
 
   private buildTrack() {
@@ -45,7 +47,7 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
         cars.forEach(car => {
           const timestamp = Number(moment(this.filterDate).format('x'));
           this.roadMapService.car(car, timestamp).subscribe(location => {
-            if (location.location.length) {
+            if (location.location !== null && location.location.length) {
               location.name = car.name;
               this.cars.push(location);
               if (index + 1 === this.subdivisions.length) {
@@ -58,55 +60,49 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
       this.roadMapService.get(subdivision.id).subscribe(data => {
         this.roadMaps.push(data);
         if (this.roadMaps.length === this.subdivisions.length) {
-          this.buildRoadMap();
+          this.buildPoints();
         }
       });
     });
   }
 
-  private destroy() {
+  private destroy(destroyMap: boolean) {
     if (this.map) {
-      this.map.destroy();
       this.roadMaps = [];
       this.cars = [];
+      this.map.geoObjects.removeAll();
+      if (destroyMap) {
+        this.map.destroy();
+      }
     }
   }
 
   ngOnDestroy() {
-    this.destroy();
+    this.destroy(true);
   }
 
   ngOnChanges() {
-    this.destroy();
-    this.buildTrack();
+    this.destroy(false);
+    ymaps.ready().then(() => {
+      this.buildTrack();
+    });
   }
 
-  private buildRoadMap() {
-    ymaps.ready().then(() => {
+  private buildPoints() {
+    if (!this.map) {
       this.map = new ymaps.Map('ymap', {
         center: this.center,
         zoom: !this.zoom ? 12 : this.zoom,
         controls: ['smallMapDefaultSet', 'rulerControl']
       });
+    }
 
-      this.buildPoints();
-
-      // this.map.geoObjects.add(this.polyLines);
-      // this.map.setBounds(this.polyLines.geometry.getBounds());
-    });
-  }
-
-  private buildPoints() {
     let change = false;
     this.roadMaps.forEach(roadMaps => {
       Object.keys(roadMaps.edges).forEach(key => {
         if (!change) {
-          ymaps.ready().then(() => {
-            this.map.panTo([roadMaps.points[key][1], roadMaps.points[key][0]], {
-              flying: false
-            });
-            change = true;
-          });
+          this.map.setCenter([roadMaps.points[key][1], roadMaps.points[key][0]]);
+          change = true;
         }
 
         const point = [];
@@ -133,49 +129,45 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private addPoint(points, color, alt) {
-    ymaps.ready().then(() => {
-      this.map.geoObjects.add(
-        new ymaps.Polyline(
-          points,
-          {
-            hintContent: 'Высота: ' + parseInt(alt, 10) + 'м.'
-          },
-          {
-            strokeColor: color,
-            strokeWidth: 4,
-            strokeStyle: '2 0'
-          }
-        )
-      );
-    });
+    this.map.geoObjects.add(
+      new ymaps.Polyline(
+        points,
+        {
+          hintContent: 'Высота: ' + parseInt(alt, 10) + 'м.'
+        },
+        {
+          strokeColor: color,
+          strokeWidth: 4,
+          strokeStyle: '2 0'
+        }
+      )
+    );
   }
 
   private addCars() {
-    ymaps.ready().then(() => {
-      this.cars.forEach(car => {
-        this.map.geoObjects.add(
-          new ymaps.Placemark(
-            [car.location[1], car.location[2]],
-            {
-              iconContent: car.name,
-              hintContent: moment
-                .unix(car.location[0] / 1000)
-                .format('DD.MM.YYYY H:mm')
-            },
-            {
-              iconLayout: 'default#imageWithContent',
-              iconImageHref: '/assets/car.png',
-              iconImageSize: [32, 32],
-              iconContentOffset: [-10, -34],
-              iconContentLayout: ymaps.templateLayoutFactory.createClass(
-                `<div class="contentLayout" title="$[properties.hintContent]">
-                $[properties.iconContent]
-              </div>`
-              )
-            }
-          )
-        );
-      });
+    this.cars.forEach(car => {
+      this.map.geoObjects.add(
+        new ymaps.Placemark(
+          [car.location[1], car.location[2]],
+          {
+            iconContent: car.name,
+            hintContent: moment
+              .unix(car.location[0] / 1000)
+              .format('DD.MM.YYYY H:mm')
+          },
+          {
+            iconLayout: 'default#imageWithContent',
+            iconImageHref: '/assets/car.png',
+            iconImageSize: [32, 32],
+            iconContentOffset: [-10, -34],
+            iconContentLayout: ymaps.templateLayoutFactory.createClass(
+              `<div style="background: #fff" title="$[properties.hintContent]">
+              $[properties.iconContent]
+            </div>`
+            )
+          }
+        )
+      );
     });
   }
 
