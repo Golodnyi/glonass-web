@@ -53,7 +53,7 @@ export class RoadmapComponent implements OnDestroy, OnChanges {
               location.name = car.name;
               let exist = false;
               this.cars.forEach(c => {
-                if (c.id == car.id) {
+                if (c.id === car.id) {
                   exist = true;
                 }
               });
