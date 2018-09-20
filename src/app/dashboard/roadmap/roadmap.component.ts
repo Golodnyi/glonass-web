@@ -159,9 +159,9 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
             iconLayout: 'default#imageWithContent',
             iconImageHref: '/assets/car.png',
             iconImageSize: [32, 32],
-            iconContentOffset: [-10, -34],
+            iconContentOffset: [-16, 32],
             iconContentLayout: ymaps.templateLayoutFactory.createClass(
-              `<div style="background: #fff" title="$[properties.hintContent]">
+              `<div class="carHint" title="$[properties.hintContent]">
               $[properties.iconContent]
             </div>`
             )
