@@ -30,4 +30,9 @@ declare namespace ymaps {
     namespace templateLayoutFactory {
         function createClass(template: string, overrides?: object, staticMethods?: object);
     }
+
+    export class Clusterer {
+        constructor({});
+        add(a: any);
+    }
 }

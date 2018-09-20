@@ -1,8 +1,7 @@
 import { CarsService } from './../../shared/services/cars.service';
 import { Subdivision } from './../../shared/models/subdivision.model';
 import { RoadMapService } from './shared/roadmap.service';
-import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
-import { ChartsService } from '../../shared/services/charts.service';
+import { Component, OnDestroy, Input, OnChanges } from '@angular/core';
 import * as moment from 'moment';
 
 /// <reference path="./typings/ymaps.d.ts" />
@@ -11,12 +10,12 @@ import * as moment from 'moment';
   templateUrl: './roadmap.component.html',
   styleUrls: ['./roadmap.component.css']
 })
-export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
+export class RoadmapComponent implements OnDestroy, OnChanges {
   public map: any;
   @Input()
   subdivisions: Subdivision[];
   @Input()
-  zoom = 12;
+  zoom = 13;
   private cars = [];
   public polyLines: any;
   private center = [55.75370903771494, 37.61981338262558];
@@ -25,15 +24,12 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(
     private roadMapService: RoadMapService,
-    private carService: CarsService,
-    private chartsService: ChartsService
+    private carService: CarsService
   ) {}
 
-  ngOnInit() {}
-
   public filter() {
-    this.destroy(false);
     ymaps.ready().then(() => {
+      this.destroy(false);
       this.buildTrack();
     });
   }
@@ -41,7 +37,13 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
   private buildTrack() {
     this.roadMaps = [];
     this.cars = [];
-
+    let clusterer = new ymaps.Clusterer(
+      {
+        clusterDisableClickZoom: true,
+        gridSize: 96,
+        preset: 'islands#invertedDarkOrangeClusterIcons',
+      }
+    );
     this.subdivisions.forEach((subdivision, index) => {
       this.carService.all_sync(1, subdivision.id).subscribe(cars => {
         cars.forEach(car => {
@@ -51,7 +53,7 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
               location.name = car.name;
               this.cars.push(location);
               if (index + 1 === this.subdivisions.length) {
-                this.addCars();
+                this.addCars(clusterer);
               }
             }
           });
@@ -78,12 +80,16 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy() {
-    this.destroy(true);
+    ymaps.ready().then(() => {
+      this.destroy(true);
+    });
   }
 
   ngOnChanges() {
-    this.destroy(false);
+    console.log('onChange');
     ymaps.ready().then(() => {
+      console.log('map ready');
+      this.destroy(false);
       this.buildTrack();
     });
   }
@@ -144,16 +150,18 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
     );
   }
 
-  private addCars() {
+  private addCars(clusterer: any) {
+    let placemarks = [];
     this.cars.forEach(car => {
-      this.map.geoObjects.add(
-        new ymaps.Placemark(
+        placemarks.push(new ymaps.Placemark(
           [car.location[1], car.location[2]],
           {
             iconContent: car.name,
             hintContent: moment
               .unix(car.location[0] / 1000)
-              .format('DD.MM H:mm')
+              .format('DD.MM H:mm'),
+              clusterCaption: car.name,
+              balloonContentBody: "Данные за: " + moment.unix(car.location[0] / 1000).format('DD.MM.YYYY H:mm')
           },
           {
             iconLayout: 'default#imageWithContent',
@@ -167,9 +175,11 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
             </div>`
             )
           }
-        )
-      );
+        ));
     });
+
+    clusterer.add(placemarks);
+    this.map.geoObjects.add(clusterer);
   }
 
   private hslToHex(h, s, l) {
