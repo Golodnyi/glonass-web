@@ -2,13 +2,6 @@ body {
     height: 100%;
 }
 
-.load {
-    width: 90px;
-    height: 90px;
-    padding: 10px;
-    margin: auto;
-}
-
 .contentLayout {
     color: #000;
     background-color: #fff;
