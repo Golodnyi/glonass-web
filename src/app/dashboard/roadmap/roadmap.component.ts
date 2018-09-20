@@ -46,13 +46,22 @@ export class RoadmapComponent implements OnDestroy, OnChanges {
     );
     this.subdivisions.forEach((subdivision, index) => {
       this.carService.all_sync(1, subdivision.id).subscribe(cars => {
-        cars.forEach(car => {
+        cars.forEach((car, car_index) => {
           const timestamp = Number(moment(this.filterDate).format('x'));
           this.roadMapService.car(car, timestamp).subscribe(location => {
             if (location.location !== null && location.location.length) {
               location.name = car.name;
-              this.cars.push(location);
-              if (index + 1 === this.subdivisions.length) {
+              let exist = false;
+              this.cars.forEach(c => {
+                if (c.id == car.id) {
+                  exist = true;
+                }
+              });
+
+              if (!exist) {
+                this.cars.push(location);
+              }
+              if (index + 1 === this.subdivisions.length && car_index + 1 === cars.length) {
                 this.addCars(clusterer);
               }
             }
@@ -151,6 +160,7 @@ export class RoadmapComponent implements OnDestroy, OnChanges {
   }
 
   private addCars(clusterer: any) {
+    console.log('add_car', this.cars);
     const placemarks = [];
     this.cars.forEach(car => {
         placemarks.push(new ymaps.Placemark(
