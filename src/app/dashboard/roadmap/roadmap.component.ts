@@ -37,7 +37,7 @@ export class RoadmapComponent implements OnDestroy, OnChanges {
   private buildTrack() {
     this.roadMaps = [];
     this.cars = [];
-    let clusterer = new ymaps.Clusterer(
+    const clusterer = new ymaps.Clusterer(
       {
         clusterDisableClickZoom: true,
         gridSize: 96,
@@ -151,7 +151,7 @@ export class RoadmapComponent implements OnDestroy, OnChanges {
   }
 
   private addCars(clusterer: any) {
-    let placemarks = [];
+    const placemarks = [];
     this.cars.forEach(car => {
         placemarks.push(new ymaps.Placemark(
           [car.location[1], car.location[2]],
@@ -161,7 +161,7 @@ export class RoadmapComponent implements OnDestroy, OnChanges {
               .unix(car.location[0] / 1000)
               .format('DD.MM H:mm'),
               clusterCaption: car.name,
-              balloonContentBody: "Данные за: " + moment.unix(car.location[0] / 1000).format('DD.MM.YYYY H:mm')
+              balloonContentBody: 'Данные за: ' + moment.unix(car.location[0] / 1000).format('DD.MM.YYYY H:mm')
           },
           {
             iconLayout: 'default#imageWithContent',
