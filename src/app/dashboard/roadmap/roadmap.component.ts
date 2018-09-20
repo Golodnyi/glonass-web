@@ -153,7 +153,7 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
             iconContent: car.name,
             hintContent: moment
               .unix(car.location[0] / 1000)
-              .format('DD.MM.YYYY H:mm')
+              .format('DD.MM H:mm')
           },
           {
             iconLayout: 'default#imageWithContent',
@@ -161,8 +161,9 @@ export class RoadmapComponent implements OnInit, OnDestroy, OnChanges {
             iconImageSize: [32, 32],
             iconContentOffset: [-16, 32],
             iconContentLayout: ymaps.templateLayoutFactory.createClass(
-              `<div class="carHint" title="$[properties.hintContent]">
-              $[properties.iconContent]
+              `<div class="carHint" title="test">
+              $[properties.iconContent]<br/>
+              <span class="date">($[properties.hintContent])</span>
             </div>`
             )
           }
