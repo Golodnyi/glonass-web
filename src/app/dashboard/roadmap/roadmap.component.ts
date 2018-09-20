@@ -95,9 +95,7 @@ export class RoadmapComponent implements OnDestroy, OnChanges {
   }
 
   ngOnChanges() {
-    console.log('onChange');
     ymaps.ready().then(() => {
-      console.log('map ready');
       this.destroy(false);
       this.buildTrack();
     });
@@ -160,7 +158,6 @@ export class RoadmapComponent implements OnDestroy, OnChanges {
   }
 
   private addCars(clusterer: any) {
-    console.log('add_car', this.cars);
     const placemarks = [];
     this.cars.forEach(car => {
         placemarks.push(new ymaps.Placemark(
