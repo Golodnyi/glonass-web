@@ -34,7 +34,7 @@ export class MonitoringComponent implements OnChanges, OnDestroy {
     private currentError: number;
     private audio                      = new Audio();
     private subscription: Subscription = new Subscription();
-    private timer                      = TimerObservable.create(0, 5000);
+    private timer                      = TimerObservable.create(0, 60000);
 
     constructor(private monitoringService: MonitoringService) {
         this.audio.src = '/assets/signal.wav';
