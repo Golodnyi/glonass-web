@@ -1,0 +1,9 @@
+<form [formGroup]="form" class="input-group" novalidate (ngSubmit)="onSubmit()">
+    <label for="before">{{ 'dashboard.from' | translate }}:</label>
+    <p-calendar id="before" formControlName="before" dateFormat="dd.mm.yy"></p-calendar>
+    <label for="after">{{ 'dashboard.to' | translate }}:</label>
+    <p-calendar id="after" formControlName="after" dateFormat="dd.mm.yy"></p-calendar>
+    <hr/>
+    <button class="ui-button-success" [disabled]="!form.valid || submit" icon="fa-download" pButton type="submit"
+            label="{{ 'dashboard.download' | translate }}"></button>
+</form>

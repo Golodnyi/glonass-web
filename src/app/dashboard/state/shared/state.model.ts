@@ -17,12 +17,13 @@ export interface IState {
     issues: IIssue[];
     maintenance_date: string;
     maintenances: IMaintenances;
-    battery: IBattery
+    battery: IBattery,
 }
 
 export class State implements IState {
     public last_time: string = moment().format('DD.MM.YYYY HH:mm:ss');
-           timestamp: string;
+    timestamp: string;
+    first_event_base: string;
     public engine: boolean;
     public watch: boolean;
     public gsm: boolean;
@@ -43,5 +44,14 @@ export class State implements IState {
     set time(t) {
         this.timestamp = t;
         this.last_time = moment(t).format('DD.MM.YYYY HH:mm:ss');
+    }
+
+    get first_event() {
+        return this.first_event_base;
+    }
+
+    set first_event(t) {
+        this.timestamp = t;
+        this.first_event_base = moment(t).format('DD.MM.YYYY HH:mm:ss');
     }
 }

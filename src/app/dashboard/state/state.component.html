@@ -98,8 +98,10 @@
         </div>
 
     </div>
-    <div *ngIf="!compact && state" class="label label-default">
-        {{ 'dashboard.informationFor' | translate: {value: state.time} }}
+    <div *ngIf="!compact && state">
+        <span class="label label-default">{{ 'dashboard.informationFor' | translate: {value: state.time} }}</span>
+        <br/>
+        <span class="label label-default">{{ 'dashboard.firstInformation' | translate: {value: state.first_event_base} }}</span>
     </div>
 </p-panel>
 <app-garanted-history (hide)="garantedHistoryHide($event)" [car]="car" [visible]="displayGarantedHistory"></app-garanted-history>
