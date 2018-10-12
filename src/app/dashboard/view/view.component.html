@@ -21,6 +21,13 @@
                     </div>
                 </div>
             </p-tabPanel>
+            <p-tabPanel header="{{ 'dashboard.reports' | translate }}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <app-reports [car]="car"></app-reports>
+                    </div>
+                </div>
+            </p-tabPanel>
         </p-tabView>
         <hr/>
         <div class="row">

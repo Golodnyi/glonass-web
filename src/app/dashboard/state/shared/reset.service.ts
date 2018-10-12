@@ -1,11 +1,7 @@
 
 import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-
-
-import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
-import { MsgService } from '../../../shared/services/msg';
 import { Car } from '../../../shared/models/car.model';
 import { HttpClient } from '@angular/common/http';
 import { ErrorService } from '../../../shared/services/error.service';
@@ -15,8 +11,6 @@ export class ResetService {
     private host: string = environment.host;
 
     constructor(private http: HttpClient,
-                private router: Router,
-                private msgService: MsgService,
                 private errorService: ErrorService) {
     }
 
