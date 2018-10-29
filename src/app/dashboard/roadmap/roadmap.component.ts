@@ -97,19 +97,18 @@ export class RoadmapComponent implements OnDestroy, OnChanges {
   ngOnChanges() {
     ymaps.ready().then(() => {
       this.destroy(false);
+      if (!this.map) {
+        this.map = new ymaps.Map('ymap', {
+          center: this.center,
+          zoom: !this.zoom ? 12 : this.zoom,
+          controls: ['smallMapDefaultSet', 'rulerControl']
+        });
+      }
       this.buildTrack();
     });
   }
 
   private buildPoints() {
-    if (!this.map) {
-      this.map = new ymaps.Map('ymap', {
-        center: this.center,
-        zoom: !this.zoom ? 12 : this.zoom,
-        controls: ['smallMapDefaultSet', 'rulerControl']
-      });
-    }
-
     let change = false;
     this.roadMaps.forEach(roadMaps => {
       Object.keys(roadMaps.edges).forEach(key => {
