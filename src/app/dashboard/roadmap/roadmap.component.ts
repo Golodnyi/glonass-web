@@ -194,7 +194,7 @@ export class RoadmapComponent implements OnDestroy, OnChanges {
     l /= 100;
     let r, g, b;
     if (s === 0) {
-      r = g = b = l; // achromatic
+      r = g = b = l;
     } else {
       const hue2rgb = (p1, q1, t1) => {
         if (t1 < 0) {
