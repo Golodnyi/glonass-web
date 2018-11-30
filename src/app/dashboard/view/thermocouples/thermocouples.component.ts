@@ -13,6 +13,7 @@ import { AutoRefresh } from 'app/shared/models/auto-refresh.model';
 })
 export class ThermocouplesComponent implements OnDestroy {
     private subscriptionAutoRefresh: Subscription;
+    private subscriptionFilter: Subscription;
     private subscriptionCarAutoRefresh: Subscription;
     private timer       = TimerObservable.create(0, 5000);
     private autoRefresh = new AutoRefresh();
@@ -32,20 +33,46 @@ export class ThermocouplesComponent implements OnDestroy {
     }
 
     private autoUpdate(car: Car) {
+        if (!car) {
+            return false;
+        }
+
         if (this.subscriptionAutoRefresh) {
             this.subscriptionAutoRefresh.unsubscribe();
         }
-        this.subscriptionAutoRefresh = this.timer.subscribe(
-            () => {
-                this.chartsService.thermocouples(car, this.lastTime()).subscribe(
-                    thermocouples => {
-                        if (!this.options) {
-                            this.options = thermocouples;
-                        } else {
-                            this.options.data = thermocouples.data;
+
+        if (this.subscriptionFilter) {
+            this.subscriptionFilter.unsubscribe();
+        }
+
+        this.subscriptionFilter =
+        this.chartsService.getFilter().subscribe(
+            (filter) => {
+                if (filter.enabled && !filter.last) {
+                    this.chartsService.thermocouples(car, this.lastTime(), filter).subscribe(
+                        thermocouples => {
+                            if (!this.options) {
+                                this.options = thermocouples;
+                            } else {
+                                this.options.data = thermocouples.data;
+                            }
                         }
-                    }
-                );
+                    );
+                } else {
+                    this.subscriptionAutoRefresh = this.timer.subscribe(
+                        () => {
+                            this.chartsService.thermocouples(car, this.lastTime(), filter).subscribe(
+                                thermocouples => {
+                                    if (!this.options) {
+                                        this.options = thermocouples;
+                                    } else {
+                                        this.options.data = thermocouples.data;
+                                    }
+                                }
+                            );
+                        }
+                    );
+                }
             }
         );
     }

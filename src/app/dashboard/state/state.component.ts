@@ -49,9 +49,6 @@ export class StateComponent implements OnChanges, OnDestroy {
         return state.maintenances.scheduled.limits.hours - state.maintenances.scheduled.value.hours > 0;
     };
 
-    /**
-     * TODO: раскидать все всплывающие окна по отдельным компонентам
-     */
     constructor(private authService: AuthService) {
         this.audio.src = '/assets/signal.wav';
         this.audio.load();

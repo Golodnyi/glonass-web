@@ -144,14 +144,17 @@ export class ChartsService {
             });
     }
 
-    public thermocouples(car: Car, lastDate: number): Observable<any> {
-        let afterTime = '';
+    public thermocouples(car: Car, lastDate: number, filter: Filter): Observable<any> {
+        let params = '?';
 
-        if (lastDate) {
-            afterTime = '?afterTime=' + lastDate;
+        if (lastDate && (!filter || !filter.enabled || filter.last)) {
+            params += 'afterTime=' + lastDate + '&';
         }
 
-        return this.http.get(this.host + '/v1/cars/' + car.id + '/report/thermocouples' + afterTime)
+        if (filter && filter.enabled && !filter.last) {
+            params += 'dateFrom=' + encodeURIComponent(filter.before) + '&dateTo=' + encodeURIComponent(filter.after);
+        }
+        return this.http.get(this.host + '/v1/cars/' + car.id + '/report/thermocouples' + params)
             .map((response: any) => {
                 return response;
             }, error => {
@@ -159,8 +162,14 @@ export class ChartsService {
             });
     }
 
-    public thermocouplesTable(car: number, page: number): Observable<any> {
-        return this.http.get(this.host + '/v1/cars/' + car + '/report/thermocouples/table?page=' + (page + 1))
+    public thermocouplesTable(car: number, page: number, filter: Filter): Observable<any> {
+        let params = '';
+
+        if (filter && filter.enabled && !filter.last) {
+            params = '&dateFrom=' + encodeURIComponent(filter.before) + '&dateTo=' + encodeURIComponent(filter.after);
+        }
+
+        return this.http.get(this.host + '/v1/cars/' + car + '/report/thermocouples/table?page=' + (page + 1) + params)
             .map((response: any) => {
                 return response;
             }, error => {
