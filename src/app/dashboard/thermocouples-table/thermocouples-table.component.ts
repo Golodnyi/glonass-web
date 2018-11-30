@@ -83,14 +83,14 @@ export class ThermocouplesTableComponent implements OnChanges, OnDestroy {
         }
         this.subscription =
             this.chartsService.getFilter().subscribe(
-                () => {
+                (filter) => {
                     if (this.subscriptionAutoRefresh) {
                         this.subscriptionAutoRefresh.unsubscribe();
                     }
                     if (!page) {
                         this.subscriptionAutoRefresh = this.timer.subscribe(
                             () => {
-                                this.chartsService.thermocouplesTable(car, page).subscribe(
+                                this.chartsService.thermocouplesTable(car, page, filter).subscribe(
                                     table => {
                                         this.keys    = this.keysPipe.transform(table.headers, false);
                                         this.table   = table;
@@ -100,7 +100,7 @@ export class ThermocouplesTableComponent implements OnChanges, OnDestroy {
                             }
                         );
                     } else {
-                        this.chartsService.thermocouplesTable(car, page).subscribe(
+                        this.chartsService.thermocouplesTable(car, page, filter).subscribe(
                             table => {
                                 this.keys    = this.keysPipe.transform(table.headers, false);
                                 this.table   = table;
