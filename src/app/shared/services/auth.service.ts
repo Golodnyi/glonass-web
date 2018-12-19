@@ -1,5 +1,7 @@
 
-import {throwError as observableThrowError,  Subscription ,  Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+
+import { throwError as observableThrowError,  Subscription ,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 
@@ -36,7 +38,7 @@ export class AuthService {
     }
 
     public login(auth: Auth): Observable<boolean> {
-        return this.http.post(this.host + '/v1/auth/login', auth).map(
+        return this.http.post(this.host + '/v1/auth/login', auth).pipe(map(
             (data: any) => {
                 const jwtHelper = new JwtHelperService();
                 const token: any = jwtHelper.decodeToken(data.accessToken);
@@ -69,16 +71,16 @@ export class AuthService {
                         AuthService.destroyAuthizozationDate();
                     }
                 );
-            })
-            .catch((error: any) => {
+            }),
+            catchError((error: any) => {
                 AuthService.destroyAuthizozationDate();
                 this.errorService.check(error);
                 return observableThrowError(error.error.message || 'Server error');
-            });
+            }));
     }
 
     public refreshToken(): Observable<boolean> {
-        return this.http.post(this.host + '/v1/auth/refresh', { refreshToken: localStorage.getItem('Refresh') }).map(
+        return this.http.post(this.host + '/v1/auth/refresh', { refreshToken: localStorage.getItem('Refresh') }).pipe(map(
             (data: any) => {
                 const jwtHelper = new JwtHelperService();
                 const token: any = jwtHelper.decodeToken(data.accessToken);
@@ -94,24 +96,24 @@ export class AuthService {
                 localStorage.setItem('Authorization', data.accessToken);
                 localStorage.setItem('Refresh', data.refreshToken);
                 return true;
-            })
-            .catch((error: any) => {
+            }),
+            catchError((error: any) => {
                 this.errorService.check(error);
                 return observableThrowError(error.error.message || 'Server error');
-            });
+            }));
     }
 
     public logout(): Observable<boolean> {
-        return this.http.post(this.host + '/v1/auth/logout', { refreshToken: localStorage.getItem('Refresh') })
-            .map(() => {
+        return this.http.post(this.host + '/v1/auth/logout', { refreshToken: localStorage.getItem('Refresh') }).pipe(
+            map(() => {
                 AuthService.destroyAuthizozationDate();
                 this.router.navigate(['/']);
                 return true;
-            })
-            .catch((error: any) => {
+            }),
+            catchError((error: any) => {
                 this.errorService.check(error);
                 return observableThrowError(error.error.message || 'Server error');
-            });
+            }));
     }
 
     public isAdmin(): boolean {

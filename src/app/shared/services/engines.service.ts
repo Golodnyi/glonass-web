@@ -1,5 +1,7 @@
 
-import {throwError as observableThrowError,  Observable ,  BehaviorSubject } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
+import { throwError as observableThrowError,  Observable ,  BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 
@@ -35,47 +37,47 @@ export class EnginesService {
 
     public getBase(company: number, subdivision: number, car: number): Observable<BaseEngine> {
         return this.http.get(
-            this.host + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine')
-            .map((response: any) => {
+            this.host + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine').pipe(
+            map((response: any) => {
                 return Object.assign(new BaseEngine(), response);
-            })
-            .catch((error: any) => {
+            }),
+            catchError((error: any) => {
                 this.errorService.check(error);
                 return observableThrowError(error.error.message || 'Server error');
-            });
+            }));
     }
 
     public getSync(company: number, subdivision: number, car: number): Observable<Engine> {
         return this.http.get(
-            this.host + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine')
-            .map((response: any) => {
+            this.host + '/v1/companies/' + company + '/subdivisions/' + subdivision + '/cars/' + car + '/engine').pipe(
+            map((response: any) => {
                 return Object.assign(new Engine(), response);
-            })
-            .catch((error: any) => {
+            }),
+            catchError((error: any) => {
                 this.errorService.check(error);
                 return observableThrowError(error.error.message || 'Server error');
-            });
+            }));
     }
 
     public create(newEngine: NewEngine): Observable<BaseEngine> {
-        return this.http.post(this.host + '/v1/engines', newEngine)
-            .map((response: any) => {
+        return this.http.post(this.host + '/v1/engines', newEngine).pipe(
+            map((response: any) => {
                 return Object.assign(new BaseEngine(), response);
-            })
-            .catch((error: any) => {
+            }),
+            catchError((error: any) => {
                 this.errorService.check(error);
                 return observableThrowError(error.error.message || 'Server error');
-            });
+            }));
     }
 
     public update(newEngine: NewEngine): Observable<BaseEngine> {
-        return this.http.put(this.host + '/v1/engines/' + newEngine.engine.id, newEngine)
-            .map((response: any) => {
+        return this.http.put(this.host + '/v1/engines/' + newEngine.engine.id, newEngine).pipe(
+            map((response: any) => {
                 return Object.assign(new BaseEngine(), response);
-            })
-            .catch((error: any) => {
+            }),
+            catchError((error: any) => {
                 this.errorService.check(error);
                 return observableThrowError(error.error.message || 'Server error');
-            });
+            }));
     }
 }

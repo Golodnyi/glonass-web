@@ -1,5 +1,7 @@
 
-import {throwError as observableThrowError,  Observable ,  BehaviorSubject ,  Subject } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+
+import { throwError as observableThrowError,  Observable ,  BehaviorSubject ,  Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Filter } from '../models/filter.model';
 import { AutoRefresh } from '../models/auto-refresh.model';
@@ -56,13 +58,14 @@ export class ChartsService {
                     '&';
             }
         }
-        return this.http.get(this.host + '/v1/cars/' + car.id + '/report/map' + params)
-            .map((response: any) => {
+        return this.http.get(this.host + '/v1/cars/' + car.id + '/report/map' + params).pipe(
+            map((response: any) => {
                 return response;
-            }).catch((error: any) => {
+            }),
+            catchError((error: any) => {
                 this.errorService.check(error);
                 return observableThrowError(error.error.message || 'Server error');
-            });
+            }));
     }
 
     public resync(car: Car): void {
@@ -135,13 +138,14 @@ export class ChartsService {
         });
 
         params += 'sort=' + sort + '&sortDirection=' + dir;
-        return this.http.get(this.host + '/v1/cars/' + car + '/report/table' + params)
-            .map((response: any) => {
+        return this.http.get(this.host + '/v1/cars/' + car + '/report/table' + params).pipe(
+            map((response: any) => {
                 return response;
-            }).catch((error: any) => {
+            }),
+            catchError((error: any) => {
                 this.errorService.check(error);
                 return observableThrowError(error.error.message || 'Server error');
-            });
+            }));
     }
 
     public thermocouples(car: Car, lastDate: number, filter: Filter): Observable<any> {
@@ -154,12 +158,12 @@ export class ChartsService {
         if (filter && filter.enabled && !filter.last) {
             params += 'dateFrom=' + encodeURIComponent(filter.before) + '&dateTo=' + encodeURIComponent(filter.after);
         }
-        return this.http.get(this.host + '/v1/cars/' + car.id + '/report/thermocouples' + params)
-            .map((response: any) => {
+        return this.http.get(this.host + '/v1/cars/' + car.id + '/report/thermocouples' + params).pipe(
+            map((response: any) => {
                 return response;
             }, error => {
                 this.errorService.check(error);
-            });
+            }));
     }
 
     public thermocouplesTable(car: number, page: number, filter: Filter): Observable<any> {
@@ -169,11 +173,11 @@ export class ChartsService {
             params = '&dateFrom=' + encodeURIComponent(filter.before) + '&dateTo=' + encodeURIComponent(filter.after);
         }
 
-        return this.http.get(this.host + '/v1/cars/' + car + '/report/thermocouples/table?page=' + (page + 1) + params)
-            .map((response: any) => {
+        return this.http.get(this.host + '/v1/cars/' + car + '/report/thermocouples/table?page=' + (page + 1) + params).pipe(
+            map((response: any) => {
                 return response;
             }, error => {
                 this.errorService.check(error);
-            });
+            }));
     }
 }
