@@ -39,7 +39,7 @@ export class ReportsComponent implements OnInit {
     public onSubmit() {
         this.submit = true;
 
-        this.reportsService.get(this.car).subscribe(pdf => {
+        this.reportsService.get(this.car, this.report).subscribe(pdf => {
             console.log(pdf);
         });
     }

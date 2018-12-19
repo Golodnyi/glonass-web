@@ -6,7 +6,6 @@ export interface IReport {
 }
 
 export class Report implements IReport {
-    public before: string = moment(new Date(new Date().getFullYear(), new Date().getMonth() - 1))
-        .format('YYYY-MM-DD HH:mm:ss');
-    public after: string  = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+    public before: string = moment(new Date(new Date().getFullYear(), new Date().getMonth() - 1)).format();
+    public after: string  = moment(new Date()).format();
 }
