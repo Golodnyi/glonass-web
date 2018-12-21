@@ -94,7 +94,7 @@ export class MultiChart {
                 color: option.color,
                 tooltip: {
                     valueSuffix: ' ' + option.unit,
-                    pointFormat: '{point.x:%d.%m %H:%M:%S} <span style="color: '
+                    pointFormat: '<span style="color: '
                         + option.color + '"> ' + option.name +
                         ' </span>: <b>{point.y}</b>',
                     split: true,
