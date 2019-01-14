@@ -18,6 +18,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
   private addAuthenticationToken(req: HttpRequest<any>) {
     const token = localStorage.getItem('Authorization') || '';
+    console.log('Call addAuthenticationToken, token: ' + token);
 
     this.refreshTokenSubject.next(token);
     return req.clone({
@@ -32,35 +33,39 @@ export class TokenInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const authorization = localStorage.getItem('Authorization') || '';
-
+    const token = localStorage.getItem('Authorization') || '';
+    console.log('Run intercept, token: ' + token);
     const jwtHelper = new JwtHelperService();
 
-    if (!jwtHelper.isTokenExpired(authorization)) {
+    if (!jwtHelper.isTokenExpired(token)) {
+      console.log('Token not expired, continue work...');
       req = this.addAuthenticationToken(req);
       return next.handle(req);
     }
 
     if (this.refreshTokenInProgress) {
+      console.log('Token already in refresh progress');
       return this.refreshTokenSubject
         .filter(result => result !== null)
         .take(1)
-        .switchMap(() =>
+        .switchMap(() => {
+          console.log('Refresh complite');
           next.handle(this.addAuthenticationToken(req))
-        );
+        });
     } else {
       this.refreshTokenInProgress = true;
       this.refreshTokenSubject.next(null);
-
+      console.log('Token expired, send refresh request');
       return this.authService
         .refreshToken()
         .switchMap(() => {
           this.refreshTokenInProgress = false;
+          console.log('Refresh compite with service');
           return next.handle(this.addAuthenticationToken(req));
         })
         .catch((err: any) => {
           this.refreshTokenInProgress = false;
-
+          console.log('Error refresh token from service ' + err);
           this.authService.logout();
           return Observable.throw(err);
         });
