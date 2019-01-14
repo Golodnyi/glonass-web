@@ -48,8 +48,8 @@ export class TokenInterceptor implements HttpInterceptor {
       return this.refreshTokenSubject
         .filter(result => result !== null)
         .take(1)
-        .switchMap(() => {
-          console.log('Refresh complite');
+        .switchMap((result: any) => {
+          console.log('Refresh complite, token: ' + result);
           next.handle(this.addAuthenticationToken(req))
         });
     } else {
