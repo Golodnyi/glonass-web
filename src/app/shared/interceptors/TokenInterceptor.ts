@@ -33,7 +33,13 @@ export class TokenInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('Authorization') || '';
+    const token = localStorage.getItem('Authorization');
+
+    if (!token) {
+      console.log('empty token, continue without token');
+      return next.handle(req);
+    }
+
     console.log('Run intercept, token: ' + token);
     const jwtHelper = new JwtHelperService();
 
