@@ -17,7 +17,7 @@ import { ErrorService } from './error.service';
 
 @Injectable()
 export class AuthService {
-    private host: string = environment.host;
+    private authHost: string = environment.auth_host;
     private timer = TimerObservable.create(0, 600000);
     private subscription: Subscription;
 
@@ -38,7 +38,7 @@ export class AuthService {
     }
 
     public login(auth: Auth): Observable<boolean> {
-        return this.http.post(this.host + '/v1/auth/login', auth).pipe(map(
+        return this.http.post(this.authHost + '/v1/auth/login', auth).pipe(map(
             (data: any) => {
                 const jwtHelper = new JwtHelperService();
                 const token: any = jwtHelper.decodeToken(data.accessToken);
@@ -80,7 +80,7 @@ export class AuthService {
     }
 
     public refreshToken(): Observable<boolean> {
-        return this.http.post(this.host + '/v1/auth/refresh', { refreshToken: localStorage.getItem('Refresh') }).pipe(map(
+        return this.http.post(this.authHost + '/v1/auth/refresh', { refreshToken: localStorage.getItem('Refresh') }).pipe(map(
             (data: any) => {
                 const jwtHelper = new JwtHelperService();
                 const token: any = jwtHelper.decodeToken(data.accessToken);
@@ -104,7 +104,7 @@ export class AuthService {
     }
 
     public logout(): Observable<boolean> {
-        return this.http.post(this.host + '/v1/auth/logout', { refreshToken: localStorage.getItem('Refresh') }).pipe(
+        return this.http.post(this.authHost + '/v1/auth/logout', { refreshToken: localStorage.getItem('Refresh') }).pipe(
             map(() => {
                 AuthService.destroyAuthizozationDate();
                 this.router.navigate(['/']);
