@@ -18,8 +18,6 @@ import { ErrorService } from './error.service';
 @Injectable()
 export class AuthService {
     private authHost: string = environment.auth_host;
-    private timer = TimerObservable.create(0, 600000);
-    private subscription: Subscription;
 
     public static destroyAuthizozationDate() {
         localStorage.removeItem('Authorization');
@@ -82,17 +80,6 @@ export class AuthService {
     public refreshToken(): Observable<boolean> {
         return this.http.post(this.authHost + '/v1/auth/refresh', { refreshToken: localStorage.getItem('Refresh') }).pipe(map(
             (data: any) => {
-                const jwtHelper = new JwtHelperService();
-                const token: any = jwtHelper.decodeToken(data.accessToken);
-
-                if (!token) {
-                    return false;
-                }
-
-                if (jwtHelper.isTokenExpired(data.accessToken)) {
-                    return false;
-                }
-
                 localStorage.setItem('Authorization', data.accessToken);
                 localStorage.setItem('Refresh', data.refreshToken);
                 return true;
@@ -133,14 +120,6 @@ export class AuthService {
         if (!user || !authorization || !refresh) {
             AuthService.destroyAuthizozationDate();
             return false;
-        }
-
-        if (!this.subscription) {
-            this.subscription = this.timer.subscribe(
-                () => {
-                    this.refreshToken().subscribe();
-                }
-            );
         }
 
         return JSON.parse(user);
