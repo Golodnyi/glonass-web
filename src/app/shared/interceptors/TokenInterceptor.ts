@@ -16,13 +16,16 @@ export class TokenInterceptor implements HttpInterceptor {
 
   constructor(private authService: AuthService) {}
 
-  private addAuthenticationToken(req: HttpRequest<any>, authorization: string) {
+  private addAuthenticationToken(req: HttpRequest<any>) {
+    const token = localStorage.getItem('Authorization') || '';
+
+    this.refreshTokenSubject.next(token);
     return req.clone({
-      setHeaders: {
-        'Content-Type': 'application/json; charset=utf-8',
-        Authorization: 'Bearer ' + authorization
-      }
-    });
+        setHeaders: {
+          'Content-Type': 'application/json; charset=utf-8',
+          Authorization: 'Bearer ' + token
+        }
+      });
   }
 
   intercept(
@@ -34,7 +37,7 @@ export class TokenInterceptor implements HttpInterceptor {
     const jwtHelper = new JwtHelperService();
 
     if (!jwtHelper.isTokenExpired(authorization)) {
-      req = this.addAuthenticationToken(req, authorization);
+      req = this.addAuthenticationToken(req);
       return next.handle(req);
     }
 
@@ -43,7 +46,7 @@ export class TokenInterceptor implements HttpInterceptor {
         .filter(result => result !== null)
         .take(1)
         .switchMap(() =>
-          next.handle(this.addAuthenticationToken(req, authorization))
+          next.handle(this.addAuthenticationToken(req))
         );
     } else {
       this.refreshTokenInProgress = true;
@@ -52,12 +55,8 @@ export class TokenInterceptor implements HttpInterceptor {
       return this.authService
         .refreshToken()
         .switchMap(() => {
-          const token = localStorage.getItem('Authorization') || '';
-
           this.refreshTokenInProgress = false;
-          this.refreshTokenSubject.next(token);
-
-          return next.handle(this.addAuthenticationToken(req, token));
+          return next.handle(this.addAuthenticationToken(req));
         })
         .catch((err: any) => {
           this.refreshTokenInProgress = false;
