@@ -64,6 +64,7 @@ export class TokenInterceptor implements HttpInterceptor {
         .catch((err: any) => {
           this.refreshTokenInProgress = false;
           this.authService.logout();
+          console.log(err);
           return Observable.throw(err);
         });
     }
