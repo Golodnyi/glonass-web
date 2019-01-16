@@ -17,7 +17,6 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   private addAuthenticationToken(req: HttpRequest<any>) {
-    console.log('addAuthenticationToken');
     const token = localStorage.getItem('Authorization') || '';
 
     this.refreshTokenSubject.next(token);
@@ -34,40 +33,31 @@ export class TokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('Authorization');
-    console.log('intercept');
     if (!token) {
-      console.log('empty token');
       return next.handle(req);
     }
 
     const jwtHelper = new JwtHelperService();
 
     if (!jwtHelper.isTokenExpired(token)) {
-      console.log('valid token');
       req = this.addAuthenticationToken(req);
       return next.handle(req);
     }
 
     if (this.refreshTokenInProgress) {
-      console.log('token already update in progress');
-
       return next.handle(this.addAuthenticationToken(req));
     } else {
-      console.log('update token now');
-
       this.refreshTokenInProgress = true;
       this.refreshTokenSubject.next(null);
       return this.authService
         .refreshToken()
         .switchMap(() => {
-          console.log('service return token');
           this.refreshTokenInProgress = false;
           return next.handle(this.addAuthenticationToken(req));
         })
         .catch((err: any) => {
           this.refreshTokenInProgress = false;
           this.authService.logout();
-          console.log(err);
           return next.handle(this.addAuthenticationToken(req));
         });
     }
