@@ -51,13 +51,7 @@ export class TokenInterceptor implements HttpInterceptor {
     if (this.refreshTokenInProgress) {
       console.log('token already update in progress');
 
-      return this.refreshTokenSubject
-        .filter(result => result !== null)
-        .take(1)
-        .switchMap((result: any) => {
-          console.log('refreshTokenSubject return new token');
-          return next.handle(this.addAuthenticationToken(req));
-        });
+      return next.handle(this.addAuthenticationToken(req));
     } else {
       console.log('update token now');
 
