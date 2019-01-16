@@ -42,3 +42,4 @@ env.ts
 !/karma.conf.js
 package-lock.json
 src/assets/lang
+.angulardoc.json
