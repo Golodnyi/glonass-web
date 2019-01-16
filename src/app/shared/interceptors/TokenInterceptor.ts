@@ -18,7 +18,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
   private addAuthenticationToken(req: HttpRequest<any>) {
     console.log('addAuthenticationToken');
-    const token = localStorage.getItem('Authorization') || '';
+    const token = localStorage.getItem('Authorization') || null;
 
     this.refreshTokenSubject.next(token);
     return req.clone({
