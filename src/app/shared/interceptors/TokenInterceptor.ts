@@ -50,7 +50,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     if (this.refreshTokenInProgress) {
       console.log('token already update in progress');
-      if (req.url.indexOf('v1/auth/refresh') != -1) {
+      if (req.url.indexOf('v1/auth/refresh') !== -1) {
         console.log('found url for update token');
         return next.handle(this.addAuthenticationToken(req));
       }
